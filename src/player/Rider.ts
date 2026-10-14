@@ -4,7 +4,7 @@ import { ModelBatch } from './ModelBatch';
 /** Procedural seated racer. Fixed grips and articulated arms, no skeleton dependency. */
 export class Rider {
   readonly root=new THREE.Group();
-  readonly torso=new THREE.Group();
+  torso:THREE.Object3D=new THREE.Group();
   readonly grips=[new THREE.Vector3(-.4,.14,.93),new THREE.Vector3(.4,.14,.93)];
   private arms:{upper:THREE.Mesh;lower:THREE.Mesh;side:number}[]=[];
   private previousSpeed=0;
@@ -12,6 +12,7 @@ export class Rider {
   private lean=.15;
   private bank=0;
   private elapsed=false;
+  private assetBound=false;
   constructor(color='#126bba',simple=false){
     this.root.name=simple?'ai-rider':'player-rider';this.root.position.set(0,1.02,-.45);
     const suit=new THREE.MeshStandardMaterial({color:'#11263a',roughness:.75});
@@ -46,10 +47,16 @@ export class Rider {
     }
     this.update(0,0,0);
   }
-  update(time:number,speed:number,yawRate:number){
+  bindAsset(asset:THREE.Object3D){
+    if(!this.assetBound)this.root.traverse(o=>{if(o instanceof THREE.Mesh){o.geometry.dispose();(o.material as THREE.Material).dispose();}});
+    this.assetBound=true;
+    this.root.clear();this.root.add(asset);this.torso=asset.getObjectByName('RiderTorso')!;
+    this.arms=[-1,1].map(side=>({side,upper:asset.getObjectByName(`UpperArm_${side}`) as THREE.Mesh,lower:asset.getObjectByName(`Forearm_${side}`) as THREE.Mesh}));
+  }
+  update(time:number,speed:number,yawRate:number,landing=0){
     const dt=this.elapsed?Math.max(0,Math.min(.1,time-this.previousTime)):0;
     const acceleration=dt>0?(speed-this.previousSpeed)/dt:0;
-    const target=.15+Math.min(1.2,speed/50)*.14+Math.max(-.03,Math.min(.045,acceleration*.003));
+    const target=.15+Math.min(1.2,speed/50)*.14+Math.max(-.03,Math.min(.045,acceleration*.003))+landing;
     const smooth=this.elapsed?1-Math.exp(-dt*7):1;
     this.lean+=(target-this.lean)*smooth;this.bank+=(-yawRate*.16-this.bank)*smooth;
     this.torso.rotation.set(this.lean,0,this.bank);

@@ -1,0 +1,30 @@
+{
+  "author": "Original project artwork",
+  "method": "Curve-authored manifold lofts and layered articulated racer",
+  "assets": [
+    {
+      "file": "public/models/watercraft.glb",
+      "bytes": 1658964,
+      "triangles": 17224,
+      "draws": 5
+    },
+    {
+      "file": "public/models/rider.glb",
+      "bytes": 305904,
+      "triangles": 11968,
+      "draws": 19
+    },
+    {
+      "file": "public/models/watercraft-low.glb",
+      "bytes": 926268,
+      "triangles": 9592,
+      "draws": 5
+    },
+    {
+      "file": "public/models/rider-low.glb",
+      "bytes": 164872,
+      "triangles": 5784,
+      "draws": 19
+    }
+  ]
+}

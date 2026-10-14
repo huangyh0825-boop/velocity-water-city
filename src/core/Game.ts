@@ -26,6 +26,7 @@ import { RampDebug } from '../debug/RampDebug';
 import { CityEnvironment } from '../environment/CityEnvironment';
 import {CityDistricts} from '../environment/CityDistricts';
 import { CountdownCue } from '../audio/CountdownCue';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 export class Game {
   private renderer: THREE.WebGLRenderer;
   private scene = createScene();
@@ -65,18 +66,20 @@ export class Game {
   private previous = 0; private accumulator = 0; private time = 0;
   private paused = document.hidden; private low = false; private wallContact = false;
   private frameId = 0;
+  private reflection?:THREE.WebGLRenderTarget;
   constructor(private root: HTMLElement) {
     this.renderer = new THREE.WebGLRenderer({ antialias: !matchMedia('(pointer: coarse)').matches, powerPreference: 'high-performance', preserveDrawingBuffer: false });
     this.renderer.autoClear = true; // Clear every frame; no history accumulation or motion blur.
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping=THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure=1;
+    const generator=new THREE.PMREMGenerator(this.renderer),room=new RoomEnvironment();this.reflection=generator.fromScene(room,.04);this.scene.environment=this.reflection.texture;room.dispose();generator.dispose();
     this.renderer.domElement.className = 'game-canvas';
     this.renderer.domElement.setAttribute('aria-label', '3D 城市水道三圈竞速场景');
     root.append(this.renderer.domElement);
     this.ai.forEach(ai=>ai.setRamps(this.ramps));
     this.restart();
-    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low); this.resize(); },this.audio);
+    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low);void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(true)); this.resize(); },this.audio);
     this.debug=new RampDebug(root);this.ramps.onDecision=value=>this.debug.record(value);
     window.addEventListener('pointerdown',this.activateAudio);
     window.addEventListener('keydown',this.activateAudio);
@@ -152,9 +155,11 @@ export class Game {
           if(ai.flight.takeoff)this.spray.burst(ai.model.x,ai.model.z,ai.model.speed*.65,'takeoff');
           if(ai.flight.landed&&ai.flight.height<.2)this.spray.burst(ai.model.x,ai.model.z,ai.flight.landingSpeed,'landing');
         });
+        this.ai.forEach((ai,i)=>{if(ai.flight.landed)this.aiCraft[i].land();});
         for(const event of this.collisions.events) if(event.strength>2 && event.height<1.2 && this.impactLimiter.accept(event.key,this.time)) {this.spray.burst(event.x,event.z,event.strength,'collision');this.audio.event('collision',event.strength);}
         if(this.flight.takeoff) {this.spray.burst(this.craft.model.x,this.craft.model.z,this.craft.model.speed,'takeoff');this.audio.event('takeoff',this.craft.model.speed);}
         if(this.flight.landed) {
+          this.craft.land();
           if(this.flight.height<.2)this.spray.burst(this.craft.model.x,this.craft.model.z,this.flight.landingSpeed,'landing');
           this.audio.event('landing',this.flight.landingSpeed);
           const result=this.tricks.land(!this.wallContact && this.craft.model.speed>8 && !this.collisions.hasContact('player'));
@@ -184,6 +189,7 @@ export class Game {
     this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks); this.renderer.render(this.scene, this.camera.camera);
   };
   dispose() {
+    this.craft.dispose();this.aiCraft.forEach(c=>c.dispose());this.reflection?.dispose();
     cancelAnimationFrame(this.frameId); this.input.dispose();
     this.debug.dispose();
     window.removeEventListener('pointerdown',this.activateAudio);window.removeEventListener('keydown',this.activateAudio);this.audio.dispose();

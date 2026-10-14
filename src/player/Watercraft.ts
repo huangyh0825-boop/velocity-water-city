@@ -2,13 +2,26 @@ import * as THREE from 'three';
 import { DrivingModel, MAX_SPEED } from './DrivingModel';
 import { ModelBatch } from './ModelBatch';
 import { Rider } from './Rider';
+import {loadVisual} from './VisualAssets';
 export class Watercraft {
   readonly model: DrivingModel;
   readonly object = new THREE.Group();
   readonly visual = new THREE.Group();
   readonly rider:Rider;
+  assetLoaded=false;
+  assetError='';
+  private visualRequest=0;
+  private fallback:THREE.Object3D[]=[];
+  private asset?:THREE.Object3D;
+  private color:string;
+  private landingCompression=0;
+  private visualTime=0;
+  private shadow:THREE.Mesh<THREE.PlaneGeometry,THREE.ShaderMaterial>;
   constructor(scene: THREE.Scene, color = '#126bba', model = new DrivingModel(),simple=false) {
     this.model = model;
+    this.color=color;
+    this.shadow=new THREE.Mesh(new THREE.PlaneGeometry(2.2,5.2),new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{alpha:{value:.18}},vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec2 vUv;uniform float alpha;void main(){float d=length((vUv-.5)*vec2(2.,1.5));gl_FragColor=vec4(.015,.07,.10,alpha*(1.-smoothstep(.2,.65,d)));}'}));
+    this.shadow.rotation.x=-Math.PI/2;scene.add(this.shadow);
     this.object.add(this.visual);
     const silver = new THREE.MeshStandardMaterial({ color: '#c4d9e6', metalness: 0.72, roughness: 0.3 });
     const blue = new THREE.MeshStandardMaterial({ color, metalness: 0.55, roughness: 0.28 });
@@ -37,12 +50,28 @@ export class Watercraft {
     const glass=new THREE.MeshStandardMaterial({color:'#8fd5e7',metalness:.4,roughness:.16});
     part(new THREE.BoxGeometry(.7,.27,.07),glass,0,1.02,.76,1,1,1,new THREE.Euler(-.3,0,0));
     batch.build(this.visual);this.rider=new Rider(color,simple);this.visual.add(this.rider.root);
+    this.fallback=this.visual.children.filter(o=>o!==this.rider.root);
     scene.add(this.object);
+    if(typeof window!=='undefined')void this.setQuality(simple);
   }
+  async setQuality(low:boolean){
+    this.shadow.visible=!low;
+    const request=++this.visualRequest;
+    try{const [boat,racer]=await Promise.all([loadVisual('watercraft',low),loadVisual('rider',low)]);if(request!==this.visualRequest)return;
+      boat.traverse(o=>{if(o instanceof THREE.Mesh){const mat=o.material as THREE.MeshStandardMaterial;if(mat.name==='Paint'){o.material=mat.clone();o.material.userData.paletteClone=true;(o.material as THREE.MeshStandardMaterial).color.set(this.color);}o.castShadow=true;o.receiveShadow=true;}});
+      if(this.asset){this.asset.traverse(o=>{if(o instanceof THREE.Mesh&&(o.material as THREE.Material).userData.paletteClone)(o.material as THREE.Material).dispose();});this.visual.remove(this.asset);}
+      this.fallback.forEach(o=>{this.visual.remove(o);if(o instanceof THREE.Mesh){o.geometry.dispose();(o.material as THREE.Material).dispose();}});this.fallback=[];
+      this.visual.add(boat);this.asset=boat;this.rider.bindAsset(racer);this.assetLoaded=true;this.assetError='';
+    }catch(error){this.assetError=String(error);console.warn('GLB unavailable: fallback model retained',error);}
+  }
+  land(){this.landingCompression=.10;}
+  dispose(){this.visualRequest++;}
   sync(time: number, m: DrivingModel = this.model, height = 0, trick = {pitch:0,yaw:0}) {
+    this.shadow.position.set(m.x,.14,m.z);this.shadow.rotation.z=-m.heading;this.shadow.material.uniforms.alpha.value=.20*Math.exp(-height*.3);
     this.object.position.set(m.x, height + 0.16 + Math.sin(time * 3.2) * 0.07, m.z);
     this.object.rotation.set(-Math.min(1, m.speed / MAX_SPEED) * 0.035, m.heading, -m.yawRate * 0.22);
     this.visual.rotation.set(trick.pitch, trick.yaw, 0);
-    this.rider.update(time,m.speed,m.yawRate);
+    const dt=Math.max(0,Math.min(.1,time-this.visualTime));this.visualTime=time;
+    this.landingCompression*=Math.exp(-dt*10);this.rider.update(time,m.speed,m.yawRate,this.landingCompression);
   }
 }
