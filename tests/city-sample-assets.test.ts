@@ -6,7 +6,7 @@ test('Blender sample GLBs contain legal PBR maps, actual geometry LOD and clear 
  assert.ok(Math.hypot(center.x-route.center.x,center.z-route.center.z)<1e-5);assert.ok(Math.abs(heading-route.h)<1e-8);assert.equal(inCitySample(track,CITY_SAMPLE.center*Math.PI*2),true);assert.equal(inCitySample(track,.2*Math.PI*2),false);
  const counts:number[]=[];
  for(const file of ['waterfront.glb','waterfront-low.glb']){
-  const {bytes,json,bin}=glb('public/models/city-sample/'+file);assert.equal(bytes.readUInt32LE(0),0x46546c67);assert.ok(json.materials.some((m:any)=>m.normalTexture));assert.ok(json.materials.some((m:any)=>m.pbrMetallicRoughness.metallicRoughnessTexture));assert.ok(json.images.length>=7);assert.ok(json.meshes.length<=10);
+  const {bytes,json,bin}=glb('public/models/city-sample/'+file);assert.equal(bytes.readUInt32LE(0),0x46546c67);assert.ok(json.materials.some((m:any)=>m.normalTexture));assert.ok(json.materials.some((m:any)=>m.pbrMetallicRoughness.metallicRoughnessTexture));assert.ok(json.images.length>=7);assert.ok(json.meshes.length<=16);
   let triangles=0,bad=0;const world=new Matrix4().makeRotationY(heading).setPosition(center.x,0,center.z),point=new Vector3();
   const visit=(id:number,parent:Matrix4)=>{
    const node=json.nodes[id],local=node.matrix?new Matrix4().fromArray(node.matrix):new Matrix4().compose(new Vector3().fromArray(node.translation??[0,0,0]),new Quaternion().fromArray(node.rotation??[0,0,0,1]),new Vector3().fromArray(node.scale??[1,1,1])),matrix=parent.clone().multiply(local);

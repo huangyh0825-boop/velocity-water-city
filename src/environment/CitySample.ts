@@ -3,6 +3,7 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {CityTrack} from '../track/CityTrack';
 import {TAU} from '../track/Track';
 import {readableSign,disposeSign} from './ReadableSign';
+import {CityAtmosphere} from './CityAtmosphere';
 
 export const CITY_SAMPLE={center:.06,length:280} as const;
 export function inCitySample(track:CityTrack,angle:number){return Math.abs(angle/TAU-CITY_SAMPLE.center)*track.length<CITY_SAMPLE.length/2;}
@@ -11,6 +12,7 @@ export class CitySample {
  readonly root=new THREE.Group();loaded=false;error='';
  private generation=0;private disposed=false;private shadowWater:THREE.Mesh;private sun?:THREE.DirectionalLight;
  private cache=new Map<boolean,Promise<THREE.Group>>();
+ private atmosphere?:CityAtmosphere;private reflection?:THREE.WebGLRenderTarget;
  constructor(scene:THREE.Scene,private track:CityTrack,private ready:(loaded:boolean)=>void){
   this.root.name='blender-waterfront-sample';const a=CITY_SAMPLE.center*TAU,p=track.point(a);this.root.position.set(p.x,0,p.z);this.root.rotation.y=track.heading(a);scene.add(this.root);
   const vertices:number[]=[];
@@ -27,11 +29,20 @@ export class CitySample {
   try{
    let asset=this.cache.get(low);
    if(!asset){asset=new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}models/city-sample/waterfront${low?'-low':''}.glb`).then(g=>{
-    g.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.receiveShadow=true;const mats=Array.isArray(o.material)?o.material:[o.material];for(const mat of mats)if(mat instanceof THREE.MeshStandardMaterial){mat.envMapIntensity=.8;if(low){mat.normalMap=null;mat.needsUpdate=true;}else{for(const t of [mat.map,mat.normalMap,mat.roughnessMap,mat.metalnessMap])if(t)t.anisotropy=4;}}}});return g.scene;
+    g.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.receiveShadow=true;const mats=Array.isArray(o.material)?o.material:[o.material];for(const mat of mats)if(mat instanceof THREE.MeshStandardMaterial){mat.envMapIntensity=.5;if(/Graphite joint/.test(mat.name)){mat.color.set('#0b1921');mat.envMapIntensity=.16;mat.metalness=.15;}if(/Blue laminated/.test(mat.name)){mat.color.set('#388798');mat.metalness=.12;}if(/Silver blue/.test(mat.name)){mat.color.set('#6989a4');mat.metalness=.2;}if(/Marina teal/.test(mat.name)){mat.color.set('#79a78b');mat.metalness=.15;}if(/Concrete034/.test(mat.name))mat.color.set('#a9b7bb');if(low){mat.normalMap=null;mat.needsUpdate=true;}else{for(const t of [mat.map,mat.normalMap,mat.roughnessMap,mat.metalnessMap])if(t)t.anisotropy=4;}}}});return g.scene;
    });this.cache.set(low,asset);}
    const group=await asset;if(this.disposed||request!==this.generation)return;
-   this.releaseSigns();this.root.clear();this.root.add(group);this.loaded=true;this.error='';this.shadowWater.visible=!low;this.addSigns();if(this.sun)this.sun.shadow.needsUpdate=true;this.ready(true);
+   this.releaseSigns();this.atmosphere?.dispose();this.root.clear();this.root.add(group);this.loaded=true;this.error='';this.shadowWater.visible=!low;this.addSigns();this.atmosphere=new CityAtmosphere(this.track);this.atmosphere.setLow(low);this.root.add(this.atmosphere.root);if(this.sun)this.sun.shadow.needsUpdate=true;this.ready(true);
   }catch(e){if(request!==this.generation||this.disposed)return;this.error=String(e);this.cache.delete(low);console.error('City sample GLB failed; retaining existing district',e);if(!this.loaded)this.ready(false);}
+ }
+ update(time:number){this.atmosphere?.update(time);}
+ bakeReflections(renderer:THREE.WebGLRenderer,scene:THREE.Scene){
+  if(!this.loaded||!renderer.shadowMap.enabled)return;
+  if(!this.reflection){
+   const cube=new THREE.WebGLCubeRenderTarget(128,{type:THREE.HalfFloatType}),camera=new THREE.CubeCamera(1,1200,cube);camera.position.set(this.root.position.x,28,this.root.position.z);camera.update(renderer,scene);
+   const generator=new THREE.PMREMGenerator(renderer);this.reflection=generator.fromCubemap(cube.texture);generator.dispose();cube.dispose();
+  }
+  this.root.traverse(o=>{if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(m instanceof THREE.MeshStandardMaterial&&/glaz|glass|alloy|Metal032/i.test(m.name)){m.envMap=this.reflection!.texture;m.envMapIntensity=/alloy|Metal032/i.test(m.name)?.7:.3;m.needsUpdate=true;}});
  }
  private releaseSigns(){for(const child of [...this.root.children])if(child.userData.readableSign)disposeSign(child);}
  private addSigns(){
@@ -50,11 +61,12 @@ export class CitySample {
   if(!sun)return;const a=CITY_SAMPLE.center*TAU,p=this.track.point(a);
   sun.position.set(p.x-110,180,p.z+100);sun.target.position.set(p.x,0,p.z);scene.add(sun.target);
   this.sun=sun;sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-160,right:160,top:175,bottom:-175,near:1,far:450});sun.shadow.bias=-.00012;sun.shadow.normalBias=.08;sun.shadow.camera.updateProjectionMatrix();
+  for(const light of scene.children)if(light instanceof THREE.HemisphereLight)light.intensity=1.8;
   // District geometry and sun are static: refresh on asset/quality changes only.
   sun.shadow.autoUpdate=false;sun.shadow.needsUpdate=true;
  }
  dispose(){
-  this.disposed=true;this.generation++;this.ready(false);this.releaseSigns();this.root.removeFromParent();
+  this.disposed=true;this.generation++;this.ready(false);this.releaseSigns();this.atmosphere?.dispose();this.reflection?.dispose();this.root.removeFromParent();
   this.shadowWater.removeFromParent();this.shadowWater.geometry.dispose();(this.shadowWater.material as THREE.Material).dispose();
   for(const asset of this.cache.values())void asset.then(g=>g.traverse(o=>{
    if(o instanceof THREE.Mesh){o.geometry.dispose();for(const m of Array.isArray(o.material)?o.material:[o.material]){for(const value of Object.values(m))if(value instanceof THREE.Texture)value.dispose();m.dispose();}}

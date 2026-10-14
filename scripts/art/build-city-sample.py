@@ -4,7 +4,7 @@ Editable curves/loft meshes, bevels and UV/PBR survive in .blend; atrium boolean
 """
 import bpy, math, json, random
 from pathlib import Path
-from mathutils import Vector
+from mathutils import Vector,Matrix
 
 ROOT=Path(__file__).resolve().parents[2]
 SRC=ROOT/'assets/city-sample/source'; TEX=ROOT/'assets/city-sample/textures'
@@ -37,7 +37,7 @@ def pbr(name,prefix,metal=False):
     nm=nt.nodes.new('ShaderNodeNormalMap');nm.inputs['Strength'].default_value=.38 if metal else .5;nt.links.new(normal.outputs['Color'],nm.inputs['Color']);nt.links.new(nm.outputs['Normal'],b.inputs['Normal'])
     return m
 concrete=pbr('CC0_Concrete034', 'Concrete034');steel=pbr('CC0_Metal032','Metal032',True)
-white=material('Pearl ceramic',(.76,.83,.85),.12,.34)
+white=material('Pearl ceramic',(.48,.58,.64),.25,.32)
 dark=material('Graphite joint seals',(.032,.066,.087),.35,.52)
 glass=material('Blue laminated glazing',(.065,.23,.33),.48,.16)
 glass2=material('Silver blue glazing',(.14,.34,.43),.4,.22)
@@ -45,6 +45,12 @@ glow=material('Cyan guide lights',(.1,.72,.88),.2,.25)
 g=glow.node_tree.nodes.get('Principled BSDF');g.inputs['Emission Color'].default_value=(.1,.6,.9,1);g.inputs['Emission Strength'].default_value=.7
 warm=material('Occupied window interiors',(.45,.39,.23),0,.5)
 w=warm.node_tree.nodes.get('Principled BSDF');w.inputs['Emission Color'].default_value=(.3,.21,.09,1);w.inputs['Emission Strength'].default_value=.35
+bronze=material('Amber anodized alloy',(.44,.22,.065),.68,.32)
+paving=material('Graphite plaza paving',(.11,.16,.19),.08,.85)
+interior=material('Recessed lobby glass',(.08,.24,.28),.1,.16)
+interior.node_tree.nodes.get('Principled BSDF').inputs['Alpha'].default_value=.72
+interior.surface_render_method='DITHERED'
+green=material('Waterfront planted foliage',(.12,.27,.20),0,.9)
 
 # Original window atlas includes tint variation, recessed panes and interior shades.
 W,H=512,1024;image=bpy.data.images.new('Original curtain-wall atlas',width=W,height=H)
@@ -62,6 +68,21 @@ for y in range(H):
         pixels.extend((*c,1))
 image.pixels=pixels;image.filepath_raw=str(TEX/'original-curtain-wall.png');image.file_format='PNG';image.save()
 tex=glass.node_tree.nodes.new('ShaderNodeTexImage');tex.image=image;glass.node_tree.links.new(tex.outputs['Color'],glass.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
+# Original micro-normal and roughness atlas, independent from glass color.
+for kind in ['normal','roughness']:
+    atlas=bpy.data.images.new('Original glazing '+kind,width=W,height=H);data=[]
+    for y in range(H):
+        for x in range(W):
+            xx=x%64;yy=y%64
+            if kind=='normal':c=(.38 if xx==5 else .62 if xx==62 else .5,.38 if yy==5 else .62 if yy==62 else .5,1)
+            else:c=(.55,.55,.55) if xx<5 or yy<5 else tuple([.14+(x//64+y//64)%5*.025]*3)
+            data.extend((*c,1))
+    atlas.pixels=data;atlas.colorspace_settings.name='Non-Color';atlas.filepath_raw=str(TEX/f'original-glazing-{kind}.png');atlas.file_format='PNG';atlas.save()
+    for mat in [glass,glass2]:
+        n=mat.node_tree.nodes.new('ShaderNodeTexImage');n.image=atlas;b=mat.node_tree.nodes.get('Principled BSDF')
+        if kind=='normal':
+            normal=mat.node_tree.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.3;mat.node_tree.links.new(n.outputs['Color'],normal.inputs['Color']);mat.node_tree.links.new(normal.outputs['Normal'],b.inputs['Normal'])
+        else:mat.node_tree.links.new(n.outputs['Color'],b.inputs['Roughness'])
 
 def mesh(name,verts,faces,mat,uv=None):
     data=bpy.data.meshes.new(name);data.from_pydata(verts,[],faces);data.update()
@@ -111,6 +132,13 @@ for floor in range(23):
 framed('Aster',rings,glass,4)
 for i in [-1,1]:curve('Aster swept crown',[(i*9*(1-t*.4)+7*t*t,6+t*88,-12*(1-t*.35)) for t in [j/24 for j in range(25)]],.35,white)
 for i in range(5):extrude('Aster roof heat exchangers',rounded(1.3,2.2,16,i*2-2,0),85,86.5,dark,.16)
+# One landmark, with a recessed arrival lobby and articulated metallic service crown.
+extrude('Aster arrival portico',rounded(8,6,32,0,-16),4.5,5.2,steel,.16)
+extrude('Aster glazed arrival lobby',rounded(6.5,3.5,32,0,-15),.45,4.5,interior,.08)
+for x in [-5,0,5]:curve('Aster lobby jamb',[(x,.5,-18.5),(x,4.4,-18.5)],.12,bronze)
+curve('Aster lobby light lintel',[(-6,4.3,-18.7),(6,4.3,-18.7)],.07,glow)
+for i in range(9):curve('Aster roof radiator fin',[(-3+i*.9,84,-3),(-3+i*.9,88,-3)],.13,steel)
+ring('Aster crown antenna',ellipse(4,3,48,7,-2),87,.13,glow)
 
 # Split oval volumes twisted along their height, joined by elevated glazed skywalks.
 active=collection('02_Helix_Split_Tower')
@@ -127,14 +155,21 @@ for side in [-1,1]:
 for h in [34,64]:
     extrude('Helix connecting sky lobby',rounded(14,3.8,32),h,h+3.2,glass2,.2)
     ring('Helix sky lobby rim',rounded(14.2,4,32),h,.1,steel)
+extrude('Helix transit entrance canopy',ellipse(14,7,48,0,-17),4.8,5.6,dark,.2)
+extrude('Helix entrance glazing',rounded(10,3.5,32,0,-17),.4,4.8,interior,.1)
+for x in [-8,-4,0,4,8]:curve('Helix entrance mullion',[(x,.45,-20.5),(x,4.7,-20.5)],.1,bronze)
+for side in [-1,1]:
+    curve('Helix gold energy spine',[(side*(21-4*t),4+96*t,-9+5*t) for t in [i/30 for i in range(31)]],.22,bronze)
+    ring('Helix communications crown',ellipse(7,11,48,side*16,0),99,.18,glow)
 
-# Broad, stepped marina pavilion with a true boolean open roof atrium.
+# Broad, stepped marina pavilion with a distinct teal facade and true open roof atrium.
 active=collection('03_Marina_Atrium')
+glass3=glass.copy();glass3.name='Marina teal glazing'
 extrude('Marina curved podium',rounded(31,22),.35,2.5,concrete,.45)
 for level in range(3):
     rx=26-level*4;rz=17-level*3;z=-level*3;h=2.5+level*8.5
     outline=rounded(rx,rz,48,0,z)
-    framed('Marina storey',[(h,outline),(h+7.7,outline)],glass,4)
+    framed('Marina storey',[(h,outline),(h+7.7,outline)],glass3,4)
     roof=extrude('Marina balcony roof',rounded(rx+1.3,rz+1.3,48,0,z),h+7.7,h+8.5,white,.2)
     if level==2:
         bpy.ops.mesh.primitive_cylinder_add(vertices=48,radius=6,depth=5,location=v(0,h+8,-6));cutter=bpy.context.object
@@ -145,6 +180,11 @@ for level in range(3):
         x,zp=outline[j];curve('Marina balcony baluster',[(x,h+8.5,zp),(x,h+9.6,zp)],.045,steel)
     ring('Marina balcony handrail',outline,h+9.6,.07)
 for step in range(7):extrude('Marina terraced access stairs',rounded(12,1.3,32,0,20.5+step*.6),.35,.6+(6-step)*.27,concrete,.04)
+extrude('Marina storefront portico',rounded(13,3.3,40,0,-20),5.2,5.8,bronze,.16)
+extrude('Marina indoor commercial frontage',rounded(12,2,40,0,-20),.4,5.2,interior,.08)
+for x in range(-10,11,2):curve('Marina shop window divisions',[(x,.45,-22),(x,5,-22)],.07,steel)
+ring('Marina terrace amber band',rounded(28,19,48),10.8,.16,bronze)
+for i in range(5):extrude('Marina rooftop ventilator',rounded(1.1,2,16,10+i*1.7,-4),28,29.5,dark,.12)
 
 # Bridge: bevelled deck, ribbed elliptical arch, hangers, piers, bearing joints and rail.
 active=collection('04_Lumen_Bridge');bridge_z=20
@@ -164,6 +204,10 @@ for x in [-30.5,30.5]:
     extrude('Lumen sculpted pier',ellipse(2.4,5,32,x,bridge_z),.3,18.9,concrete,.25)
     ring('Pier collar',ellipse(2.65,5.2,32,x,bridge_z),16.8,.18,steel)
     extrude('Lumen pier foundation',rounded(4,6,32,x,bridge_z),.2,1.7,concrete,.18)
+    extrude('Lumen bridge service hatch',rounded(1,1.6,24,x,bridge_z-5.5),.4,3.3,dark,.12)
+    curve('Lumen access-ladder outer rail',[(x-.65,.5,bridge_z-6),(x-.65,17.5,bridge_z-6)],.09,steel)
+    curve('Lumen access-ladder inner rail',[(x+.65,.5,bridge_z-6),(x+.65,17.5,bridge_z-6)],.09,steel)
+    for h in range(1,18):curve('Lumen access ladder rung',[(x-.65,h,bridge_z-6),(x+.65,h,bridge_z-6)],.065,steel)
 
 # Curved quay follows exact immutable track samples, outside playable water.
 active=collection('05_Curve_Quay')
@@ -178,7 +222,7 @@ for side in [-1,1]:
     outer_land=[edge(p,145) for p in points]
     land=outer+list(reversed(outer_land))
     if side==1:land.reverse()
-    extrude('Curved urban block foundation',land,-.12,.30,concrete,.07)
+    extrude('Curved urban block foundation',land,-.12,.30,paving,.07)
     for offset in [2.1,3]:
         line=[edge(p,offset) for p in points];curve('Quay granite coping',[(x,.83,z) for x,z in line],.13,white)
     for offset,h in [(3,1.95),(3,1.38)]:curve('Continuous quay rail',[(x,h,z) for x,z in [edge(p,offset) for p in points]],.065,steel)
@@ -200,20 +244,122 @@ for side,z in [(1,-65),(-1,85)]:
 
 # Place reusable architectural modules into a layered streetscape, no random box skyline.
 stage=collection('06_Stage_Placements');active=stage
-placements=[('01_Aster_Curve_Tower',-61,-51,-.25,1),('02_Helix_Split_Tower',68,72,.2,.92),('03_Marina_Atrium',-66,86,.15,1),('01_Aster_Curve_Tower',65,-95,.6,.85),('02_Helix_Split_Tower',-103,27,-.4,.74),('03_Marina_Atrium',62,-12,-.2,.85)]
+placements=[('01_Aster_Curve_Tower',62,-84,.1,1),('02_Helix_Split_Tower',-68,58,-.18,1),('03_Marina_Atrium',70,68,.12,1)]
 for cname,x,z,rot,scale in placements:
     instance=bpy.data.objects.new(cname+' instance',None);instance.instance_type='COLLECTION';instance.instance_collection=collections[cname];instance.location=v(x,0,z);instance.rotation_euler.z=-rot;instance.scale=(scale,scale,scale);stage.objects.link(instance)
 # Move archetypes to a source-only collection using excluded root layer instead of relocation.
 for name in ['01_Aster_Curve_Tower','02_Helix_Split_Tower','03_Marina_Atrium']:
     scene.collection.children.unlink(collections[name])
 
+# Street-scale commercial arcade: shaped canopy, recessed glazing and warm interior panels.
+for side,index in [(-1,8),(1,18),(-1,45)]:
+    existing=set(active.objects)
+    p=points[index];x=p['x']+math.cos(p['heading'])*(p['width']+23)*side;z=p['z']-math.sin(p['heading'])*(p['width']+23)*side
+    shape=rounded(10,5.5,40,x,z)
+    extrude('Commercial concourse lower shell',shape,.4,1.1,dark,.15)
+    loft('Commercial concourse glass',[(1.1,shape),(6,shape)],interior)
+    extrude('Commercial swept canopy',rounded(12,7,40,x-side*1,z),6,6.9,steel,.25)
+    ring('Commercial canopy cyan trim',rounded(12,7,40,x-side*1,z),6.2,.065,glow)
+    for j in range(7):
+        x1=x-8+j*2.7;curve('Commercial facade jamb',[(x1,1,z-5.5),(x1,6,z-5.5)],.10,bronze)
+        extrude('Commercial occupied indoor booth',rounded(.8,.45,12,x1,z-4.5),1.2,3.8,warm,.05)
+    transform=Matrix.Translation(Vector(v(x,0,z)))@Matrix.Rotation(-p['heading'],4,'Z')@Matrix.Translation(-Vector(v(x,0,z)))
+    for o in set(active.objects)-existing:o.data.transform(transform)
+
+# Reusable maintenance pods: actual fins, pipes, ports and service ramps, all behind the banks.
+for side,index in [(-1,5),(1,12),(-1,22),(1,37),(-1,47),(1,52)]:
+    p=points[index];x=p['x']+math.cos(p['heading'])*(p['width']+8)*side;z=p['z']-math.sin(p['heading'])*(p['width']+8)*side
+    extrude('Maintenance platform',rounded(3.2,6,32,x,z),.65,1.0,steel,.16)
+    extrude('Service energy exchanger',rounded(1.65,2.3,24,x,z),1,3.6,dark,.25)
+    for fin in range(7):curve('Exchanger metallic cooling fin',[(x-1.6,1.5+fin*.25,z-2.35),(x+1.6,1.5+fin*.25,z-2.35)],.075,steel)
+    ring('Charging station power socket',ellipse(.62,.62,24,x,z),3.6,.12,bronze)
+    curve('Service station flexible coolant pipe',[(x+1.7,1.1,z-1),(x+2.4,1.6,z-1),(x+2.4,3.3,z),(x+1.5,3.3,z)],.18,bronze)
+    curve('Service charging indicator',[(x-1.75,1.2,z),(x-1.75,3.2,z)],.075,glow)
+    for i in range(3):extrude('Equipment access tread',rounded(2,.5,16,x,z+3+i*.7),.7,.95-i*.06,steel,.04)
+
+# Bridge-linked transit infrastructure uses the real shoreline, not a new drive route.
+for side in [-1,1]:
+    rail=[]
+    for p in points[2:-2]:
+        x=p['x']+math.cos(p['heading'])*(p['width']+17)*side;z=p['z']-math.sin(p['heading'])*(p['width']+17)*side
+        rail.append((x,22,z))
+    curve('Suspended transit structural tube',rail,.55,dark)
+    curve('Transit silver guide rail',[(x,h+.6,z) for x,h,z in rail],.15,steel)
+    curve('Transit luminous magnetic track',[(x,h-.4,z) for x,h,z in rail],.065,glow)
+    for i in range(5,len(points)-4,8):
+        p=points[i];x=p['x']+math.cos(p['heading'])*(p['width']+21)*side;z=p['z']-math.sin(p['heading'])*(p['width']+21)*side
+        curve('Transit tapering support',[(x,.35,z),(x,20,z),(x-side*4,22,z)],.35,steel)
+        extrude('Transit pier maintenance base',rounded(1.2,2,20,x,z),.35,2,dark,.13)
+
+# Limited skyline silhouettes, each with a distinct edited outline, not repeated boxes.
+for kind,x,z,height in [(0,-118,-92,58),(1,120,116,78),(2,-121,128,47)]:
+    rings=[]
+    for level in range(7):
+        t=level/6
+        if kind==0:outline=rounded(12*(1-.45*t),9,24,x+5*t,z)
+        elif kind==1:outline=ellipse(10*(1-.25*t),13*(1-.5*t),24,x+6*math.sin(t*math.pi),z)
+        else:outline=[(x+math.cos(i*math.tau/6+.2*t)*15*(1-.28*t),z+math.sin(i*math.tau/6+.2*t)*15*(1-.28*t)) for i in range(6)]
+        rings.append((.4+height*t,outline))
+    loft('District far skyline '+str(kind),rings,glass2 if kind==1 else dark)
+    for h,outline in rings:ring('Skyline structural setback',outline,h,.08,steel)
+    extrude('Skyline slotted rooftop',rings[-1][1],height+.4,height+1.2,white,.12)
+
+# Multi-height street lamps and recessed utility joints give foreground speed references.
+for side in [-1,1]:
+    for i in range(3,len(points)-3,4):
+        p=points[i];x=p['x']+math.cos(p['heading'])*(p['width']+5.3)*side;z=p['z']-math.sin(p['heading'])*(p['width']+5.3)*side
+        curve('Racing boulevard swept light pole',[(x,.7,z),(x,6.6,z),(x-side*1.5,7.1,z)],.09,dark)
+        curve('Racing boulevard signal lamp',[(x-side*.3,6.85,z),(x-side*1.5,7.1,z)],.09,glow)
+        ring('Service manhole rim',ellipse(.9,.9,20,x+side*3,z),.36,.07,steel)
+
+# Waterfront planted strips and shelters add inhabited scale without more skyscrapers.
+for side,index in [(-1,11),(1,6),(-1,37),(1,45),(-1,51),(1,24)]:
+    p=points[index];x=p['x']+math.cos(p['heading'])*(p['width']+13)*side;z=p['z']-math.sin(p['heading'])*(p['width']+13)*side
+    extrude('Recessed linear planter',rounded(2,5,24,x,z),.35,.85,dark,.12)
+    extrude('Planter planting bed',rounded(1.8,4.8,24,x,z),.8,.9,green,.07)
+    for j in range(11):
+        xx=x+math.sin(j*7)*1.1;zz=z-4+j*.8
+        outline=ellipse(.8,.8,12,xx,zz)
+        loft('Pruned waterfront shrub',[(.9,outline),(1.6,ellipse(.65,.65,12,xx,zz)),(1.85,ellipse(.12,.12,12,xx,zz))],green)
+    curve('Planter metallic seat edge',[(x-2.1,.8,z-4.5),(x-2.1,.8,z+4.5)],.16,steel)
+
+for side in [-1,1]:
+    # Short concourse shelters, not an enclosed roof over the driving waterway.
+    for start in [9,35]:
+        section=points[start:start+12];verts=[]
+        for p in section:
+            for offset,height in [(6,7.8),(13,8.6),(13,8.95),(6,8.15)]:
+                x=p['x']+math.cos(p['heading'])*(p['width']+offset)*side;z=p['z']-math.sin(p['heading'])*(p['width']+offset)*side;verts.append(v(x,height,z))
+        faces=[(j*4+k,j*4+(k+1)%4,(j+1)*4+(k+1)%4,(j+1)*4+k) for j in range(len(section)-1) for k in range(4)]
+        mesh('Waterfront swept concourse canopy',verts,faces,dark)
+        for index in [0,5,10]:
+            p=section[index];x=p['x']+math.cos(p['heading'])*(p['width']+13)*side;z=p['z']-math.sin(p['heading'])*(p['width']+13)*side
+            curve('Concourse canopy support',[(x,.4,z),(x,8.6,z)],.18,steel)
+        line=[]
+        for p in section:
+            x=p['x']+math.cos(p['heading'])*(p['width']+6)*side;z=p['z']-math.sin(p['heading'])*(p['width']+6)*side;line.append((x,7.9,z))
+        curve('Concourse cyan soffit',line,.06,glow)
+
+# Advertising hardware is also authored, with open frames and safe, bank-side foundations.
+for side,index in [(-1,18),(1,39)]:
+    p=points[index];x=p['x']+math.cos(p['heading'])*(p['width']+13)*side;z=p['z']-math.sin(p['heading'])*(p['width']+13)*side
+    curve('Hologram frame left',[(x-6,.4,z),(x-6,15,z)],.22,dark)
+    curve('Hologram frame right',[(x+6,.4,z),(x+6,15,z)],.22,dark)
+    curve('Hologram frame crown',[(x-6,15,z),(x+6,15,z)],.17,steel)
+    curve('Hologram power footing',[(x-6,.5,z),(x+6,.5,z)],.25,steel)
+
+# Race screen hangs below the existing bridge deck instead of stacking a new gantry near CP01.
+for x in [-13.5,13.5]:curve('Bridge race fascia bracket',[(x,19.1,15),(x,15.8,15)],.12,steel)
+
 # Original inset advertising fascia, continuous rounded frame and illuminated perimeter.
 advert_positions=[]
 for side,index in [(-1,21),(1,47)]:
     p=points[index];x=p['x']+math.cos(p['heading'])*(p['width']+7)*side;z=p['z']-math.sin(p['heading'])*(p['width']+7)*side
     advert_positions.append({'x':x,'z':z,'heading':p['heading']})
-    outline=rounded(4.8,.35,32,x,z);extrude('Transit advert plinth',outline,.65,5.2,white,.18)
-    curve('Transit advert light crown',[(x-4.8,5.15,z),(x+4.8,5.15,z)],.06,glow)
+    c=math.cos(p['heading']);s=math.sin(p['heading'])
+    outline=[(x+(xx-x)*c+(zz-z)*s,z-(xx-x)*s+(zz-z)*c) for xx,zz in rounded(4.8,.35,32,x,z)]
+    extrude('Transit advert plinth',outline,.65,5.2,white,.18)
+    curve('Transit advert light crown',[(x-4.8*c,5.15,z+4.8*s),(x+4.8*c,5.15,z-4.8*s)],.06,glow)
 
 # Keep source modifiers, curves and packed legal texture maps for editing.
 for image in bpy.data.images:
