@@ -1,0 +1,152 @@
+{
+  "date": "2026-10-14",
+  "visual": {
+    "perf": {
+      "before": {
+        "fps": 239.99840134287138,
+        "p95": 4.299999999999727,
+        "calls": 46,
+        "triangles": 132697,
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      },
+      "after": {
+        "fps": 240.00480009600196,
+        "p95": 4.200000000000728,
+        "calls": 48,
+        "triangles": 387857,
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+      }
+    },
+    "driving": 110,
+    "low": {
+      "loaded": true,
+      "shadow": false,
+      "receiver": false,
+      "memory": {
+        "geometries": 180,
+        "textures": 37
+      }
+    },
+    "errors": [],
+    "poses": {
+      "district": [
+        0,
+        44,
+        -150,
+        0,
+        25,
+        25
+      ],
+      "building": [
+        -33,
+        15,
+        -78,
+        -61,
+        32,
+        -50
+      ],
+      "bridge": [
+        4,
+        9,
+        -36,
+        0,
+        17,
+        25
+      ],
+      "driving": [
+        0,
+        3.2,
+        -66,
+        0,
+        2.5,
+        -5
+      ]
+    }
+  },
+  "race": {
+    "stats": {
+      "jumps": 9,
+      "lands": 9,
+      "rewards": 9,
+      "aiJumps": [
+        6,
+        6,
+        3,
+        5
+      ],
+      "aiRewards": [
+        5,
+        6,
+        2,
+        3
+      ],
+      "peak": 216,
+      "contacts": 0
+    },
+    "length": 4745.338489697352,
+    "checkpoints": [
+      {
+        "id": "player",
+        "passed": 72,
+        "finish": 319.5333333333714
+      },
+      {
+        "id": "ai-1",
+        "passed": 61,
+        "finish": null
+      },
+      {
+        "id": "ai-2",
+        "passed": 70,
+        "finish": null
+      },
+      {
+        "id": "ai-3",
+        "passed": 58,
+        "finish": null
+      },
+      {
+        "id": "ai-4",
+        "passed": 66,
+        "finish": null
+      }
+    ],
+    "finish": 319.5333333333714,
+    "loaded": true,
+    "firstLap": 109.23333333332842,
+    "errors": []
+  },
+  "assets": {
+    "source": "assets/city-sample/source/waterfront-sample.blend",
+    "generator": "scripts/art/build-city-sample.py",
+    "blender": "4.5.9 LTS",
+    "length": 280,
+    "center": {
+      "x": -197.255048524888,
+      "z": -45.631187290179625
+    },
+    "heading": -0.32340572059365374,
+    "adverts": [
+      {
+        "x": -30.756676379480034,
+        "z": -32.99709756243877,
+        "heading": 0.06630464536710468
+      },
+      {
+        "x": 36.8080128313739,
+        "z": 85.27991465393805,
+        "heading": 0.30297602155581826
+      }
+    ],
+    "standard": {
+      "triangles": 255244,
+      "meshes": 7,
+      "bytes": 10999944
+    },
+    "low": {
+      "triangles": 102092,
+      "meshes": 7,
+      "bytes": 3462152
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # 素材与声音来源（Phase 3–5）
 
-船体、跳台、喷射、水花和界面均由本项目代码程序化生成；没有加载外部游戏模型或贴图。
+第三、四阶段的船体、跳台、喷射、水花和界面均由本项目代码程序化生成；当时没有加载外部游戏模型或贴图。
 
 第四阶段的流线艇身、驾驶员、头盔、桥梁、城市楼群、水纹、V 形泡沫均为原创程序化几何/着色器。玻璃幕墙是代码生成的 DataTexture，广告与标牌使用浏览器系统字体在 Canvas 绘制，文案为原创虚构品牌。没有使用第三方模型、图片、人物或商业游戏素材。
 
@@ -17,3 +17,7 @@ Three.js、Vite 与原项目 npm 依赖继续适用各自许可证。本阶段�
 新水道控制点、捷径曲线、六区楼宇模板、码头、隧道、桥梁及广告均为本项目原创代码/文案。发动机、空中风声及 AI 声音继续通过 Web Audio 合成，无下载音频。
 
 环境反射使用 Three.js 的 `RoomEnvironment` 生成静态 PMREM 贴图；GLTFLoader/GLTFExporter、几何工具及 RoomEnvironment 随 Three.js 适用 MIT 许可。许可证副本见 `docs/licenses/three.txt`，版本以 package-lock.json 为准。未引入新的第三方资产许可证或需单独署名的素材。原创资产的整体公开项目许可证由项目所有者决定；本说明没有自行将项目作品授权为 CC0 或其他新许可证。
+
+## Blender 城市样板区
+
+新增建筑、桥梁、水岸为 Blender 4.5.9 原创资产，可编辑源位于 `assets/city-sample/source/waterfront-sample.blend`，导出位于 `public/models/city-sample/`。本次引入 ambientCG Concrete034、Metal032 的免费 **CC0 1.0** 贴图，许可明确允许原文件再分发、无需署名。仍保留来源记录；没有将第三方贴图标为原创。逐项下载核验、候选排除及许可链接见 [城市样板资源清单](city-sample/resources.md)。没有采用任何未经许可的商业游戏资源，也没有购买付费模型。
