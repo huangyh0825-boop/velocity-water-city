@@ -1,0 +1,73 @@
+{
+  "source": "assets/city-sample/source/city-modules.blend",
+  "modules": {
+    "spindle_office": {
+      "rx": 12,
+      "rz": 15,
+      "height": 65
+    },
+    "terrace_residence": {
+      "rx": 13,
+      "rz": 13,
+      "height": 52
+    },
+    "split_office": {
+      "rx": 14,
+      "rz": 15,
+      "height": 80
+    },
+    "research_campus": {
+      "rx": 14,
+      "rz": 15,
+      "height": 20
+    },
+    "data_centre": {
+      "rx": 12,
+      "rz": 15,
+      "height": 16
+    },
+    "retail_hub": {
+      "rx": 16,
+      "rz": 11,
+      "height": 12
+    },
+    "transit_station": {
+      "rx": 13,
+      "rz": 16,
+      "height": 31
+    },
+    "drydock_service": {
+      "rx": 8,
+      "rz": 12,
+      "height": 8
+    }
+  },
+  "triangles": {
+    "spindle_office__near": 4560,
+    "spindle_office__mid": 2046,
+    "spindle_office__far": 116,
+    "terrace_residence__near": 6720,
+    "terrace_residence__mid": 3020,
+    "terrace_residence__far": 116,
+    "split_office__near": 8152,
+    "split_office__mid": 3661,
+    "split_office__far": 136,
+    "research_campus__near": 3288,
+    "research_campus__mid": 1474,
+    "research_campus__far": 116,
+    "data_centre__near": 1260,
+    "data_centre__mid": 560,
+    "data_centre__far": 116,
+    "retail_hub__near": 1528,
+    "retail_hub__mid": 682,
+    "retail_hub__far": 116,
+    "transit_station__near": 1316,
+    "transit_station__mid": 586,
+    "transit_station__far": 116,
+    "drydock_service__near": 840,
+    "drydock_service__mid": 374,
+    "drydock_service__far": 116
+  },
+  "standardBytes": 5791216,
+  "lowBytes": 2295308
+}

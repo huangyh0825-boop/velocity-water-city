@@ -24,3 +24,5 @@ Blender 模块集合：
 样板GLB为纯视觉；保留两种质量缓存，切换不会反复创建新贴图。基础构造合并为材质组，角色/比赛逻辑不依赖建筑节点。素材许可证和实际下载核验见 `docs/city-sample/resources.md`。
 
 最新修订：三栋主建筑各只放置一次，增加入口、屋顶设备、不同立面、街区商业/维修/交通设施；当前标准263,204三角面、低精度105,233，主体13个材质组。`original-glazing-normal.png`、`original-glazing-roughness.png` 为原创512×1024贴图。新增两组512×512喷涂合金/复合铺装BaseColor、Normal、ORM（R AO/G Roughness/B Metallic），由 `scripts/art/surface-materials.py` 生成；AO是接缝解析近似。桥拱改为扫掠工字截面，护栏、吊杆补充锚固与接头，保留编辑源。CityAtmosphere中的屏幕及交通舱是独立纯视觉组件，后者使用InstancedMesh，低画质关闭。截图、精确字节和性能边界见 `docs/city-sample/material-validation.md`。
+
+城市规模修订新增独立模块库：`source/city-modules.blend`，脚本` scripts/art/build-city-modules.py`。八种模块各有near/mid/far几何，由CityDensity实例化为88处布局，材质复用上述资产。编辑时可在Blender集合中分别显示模块；各模块局部原点一致，导出后由排布数据放置。标准`city-modules.glb`约5.79MB，低画质约2.30MB，逐模块预算见`public/models/city-sample/modules-manifest.json`。原水岸GLB不变，详见`docs/city-sample/density-validation.md`。
