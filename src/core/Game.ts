@@ -175,7 +175,8 @@ export class Game {
     this.aiCraft.forEach((craft, i) => craft.sync(displayTime, this.aiMotion[i].sample(this.accumulator / step),this.ai[i].flight.displayHeight(this.accumulator/step),this.ai[i].tricks.rotation));
     this.jet.update(displayTime,this.nitro.active);
     this.aiJets.forEach((jet,i)=>jet.update(displayTime,this.ai[i].nitro.active));
-    this.audio.update({speed:this.craft.model.speed,throttle:input.throttle,boost:this.nitro.active,grounded:!this.flight.airborne&&this.flight.height<.2,running:this.race.phase==='racing'});
+    this.audio.update({speed:this.craft.model.speed,throttle:input.throttle,boost:this.nitro.active,grounded:!this.flight.airborne&&this.flight.height<.2,airborne:this.flight.airborne,running:this.race.phase==='racing'});
+    this.audio.updateAI(this.ai.map(ai=>{const dx=ai.model.x-this.craft.model.x,dz=ai.model.z-this.craft.model.z,distance=Math.hypot(dx,dz,ai.flight.height-this.flight.height);return{id:ai.id,speed:ai.model.speed,throttle:1,boost:ai.nitro.active,airborne:ai.flight.airborne,grounded:!ai.flight.airborne&&ai.flight.height<.2,running:this.race.phase==='racing',distance,pan:(dx*Math.cos(this.craft.model.heading)-dz*Math.sin(this.craft.model.heading))/Math.max(10,distance)};}));
     this.water.update(displayTime); this.camera.update(dt, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active);
     this.trackView.highlight(this.race.nextCheckpoint());
     this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks); this.renderer.render(this.scene, this.camera.camera);
