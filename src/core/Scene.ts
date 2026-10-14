@@ -9,7 +9,7 @@ export function createScene() {
   const dummy = new THREE.Object3D();
   for (let i = 0; i < 100; i++) {
     const angle = i / 100 * Math.PI * 2;
-    const radius = 880 + Math.sin(i * 7.3) * 80;
+    const radius = 2100 + Math.sin(i * 7.3) * 200;
     const height = 25 + (Math.sin(i * 13.7) * 0.5 + 0.5) * 115;
     const width = 14 + (i % 4) * 5;
     dummy.position.set(Math.sin(angle) * radius, height / 2 - 2, Math.cos(angle) * radius);

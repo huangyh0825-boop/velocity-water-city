@@ -8,6 +8,7 @@ export const WORLD_LIMIT = 680;
 /** Metres, seconds and radians. Pure model; independent of rendering and inputs. */
 export class DrivingModel {
   x = 0; z = 0; heading = 0; speed = 0; yawRate = 0; vx = 0; vz = 0;
+  worldLimit:number=WORLD_LIMIT;
   update(dt: number, input: InputState, boost = false) {
     const speedRatio = Math.min(1, this.speed / MAX_SPEED);
     const thrust = SPEED_TUNING.player.launchAcceleration + (SPEED_TUNING.player.topSpeedAcceleration - SPEED_TUNING.player.launchAcceleration) * speedRatio;
@@ -23,8 +24,8 @@ export class DrivingModel {
     this.vz += (Math.cos(this.heading) * this.speed - this.vz) * grip;
     this.x += this.vx * dt; this.z += this.vz * dt;
     const radius = Math.hypot(this.x, this.z);
-    if (radius > WORLD_LIMIT) {
-      this.x *= WORLD_LIMIT / radius; this.z *= WORLD_LIMIT / radius;
+    if (radius > this.worldLimit) {
+      this.x *= this.worldLimit / radius; this.z *= this.worldLimit / radius;
       this.speed *= Math.exp(-dt * 7); this.vx *= Math.exp(-dt * 10); this.vz *= Math.exp(-dt * 10);
     }
   }

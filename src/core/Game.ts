@@ -7,6 +7,7 @@ import { Water } from '../effects/Water';
 import { Wake } from '../effects/Wake';
 import { Hud } from '../ui/Hud';
 import { Track } from '../track/Track';
+import { CityTrack } from '../track/CityTrack';
 import { TrackView } from '../track/TrackView';
 import { RaceController } from '../race/RaceController';
 import { AIController } from '../ai/AIController';
@@ -23,12 +24,13 @@ import { EventLimiter } from '../effects/EventLimiter';
 import { AudioController } from '../audio/AudioController';
 import { RampDebug } from '../debug/RampDebug';
 import { CityEnvironment } from '../environment/CityEnvironment';
+import {CityDistricts} from '../environment/CityDistricts';
 import { CountdownCue } from '../audio/CountdownCue';
 export class Game {
   private renderer: THREE.WebGLRenderer;
   private scene = createScene();
-  private track = new Track();
-  private city=new CityEnvironment(this.scene,this.track);
+  private track = new CityTrack();
+  private city=new CityDistricts(this.scene,this.track);
   private trackView = new TrackView(this.scene, this.track);
   private craft = new Watercraft(this.scene);
   private flight = new FlightController();
@@ -38,10 +40,10 @@ export class Game {
   private ramps = new Ramps(this.track, this.scene);
   private craftMotion = new MotionInterpolation(this.craft.model);
   private ai = [
-    new AIController('ai-1', '霓虹 / NEON', kmhToMps(SPEED_TUNING.normalAI.maxKmh[0]), -7, this.track, -0.18),
-    new AIController('ai-2', '脉冲 / PULSE', kmhToMps(SPEED_TUNING.normalAI.maxKmh[1]), 7, this.track, -0.18),
-    new AIController('ai-3', '极光 / AURORA', kmhToMps(SPEED_TUNING.normalAI.maxKmh[2]), -7, this.track, -0.24),
-    new AIController('ai-4', '回声 / ECHO', kmhToMps(SPEED_TUNING.normalAI.maxKmh[3]), 7, this.track, -0.24),
+    new AIController('ai-1', '霓虹 / NEON', kmhToMps(SPEED_TUNING.normalAI.maxKmh[0]), -7, this.track, -0.02),
+    new AIController('ai-2', '脉冲 / PULSE', kmhToMps(SPEED_TUNING.normalAI.maxKmh[1]), 7, this.track, -0.02),
+    new AIController('ai-3', '极光 / AURORA', kmhToMps(SPEED_TUNING.normalAI.maxKmh[2]), -7, this.track, -0.029),
+    new AIController('ai-4', '回声 / ECHO', kmhToMps(SPEED_TUNING.normalAI.maxKmh[3]), 7, this.track, -0.029),
   ];
   private aiCraft = this.ai.map((ai, i) => new Watercraft(this.scene, ['#ee7953', '#a583ed', '#f6cc61', '#55c8a2'][i], ai.model,true));
   private aiJets = this.aiCraft.map(craft=>new BoosterJet(craft.visual));
@@ -100,7 +102,7 @@ export class Game {
   };
   private recover = () => {
     if (this.race.phase !== 'racing') return;
-    const angle = this.race.player.passed === 0 ? -0.14 : this.track.checkpointAngle(this.race.player.passed % this.track.checkpointCount) + 0.025;
+    const angle = this.race.player.passed === 0 ? -0.014 : this.track.checkpointAngle(this.race.player.passed % this.track.checkpointCount) + 10/this.track.radius;
     this.input.clear(); this.track.spawn(this.craft.model, angle);
     this.flight.reset(); this.bodies[0].height = 0;
     this.tricks.reset(); this.nitro.active=false;

@@ -42,7 +42,7 @@ export class AIController {
     if(!this.plan){
       const ramp=[...this.ramps.data].sort((a,b)=>this.rampDistance(a)-this.rampDistance(b))[0],distance=this.rampDistance(ramp);
       if(distance<145){const visit=this.visits.get(ramp.id)??0;this.visits.set(ramp.id,visit+1);
-        const alignmentTime=Math.abs(Math.hypot(this.model.x,this.model.z)-this.track.radius)/3+.3;
+        const alignmentTime=Math.abs(this.track.offset(this.model))/3+.3;
         const timeToEntry=Math.max(0,distance-ramp.length)/Math.max(15,this.model.speed);
         const forecast=Math.min(this.targetSpeed,this.model.speed+this.acceleration*timeToEntry);
         const landingClear=peers.every(p=>p.id===this.id||Math.hypot(p.model.x-ramp.landing.x,p.model.z-ramp.landing.z)>7);
@@ -71,12 +71,12 @@ export class AIController {
     }
   }
   private requestNitro(dt: number, peers: readonly BoatBody[], competing: boolean) {
-    const m=this.model, radius=Math.hypot(m.x,m.z), laneOffset=radius-this.track.radius;
+    const m=this.model, laneOffset=this.track.offset(m);
     const nearby=peers.filter(p=>p.id!==this.id&&Math.abs((p.height??0)-this.flight.height)<=1.2);
     const crowded=nearby.some(p=>Math.hypot(p.model.x-m.x,p.model.z-m.z)<12);
     const aligned=Math.abs(signedAngle(m.heading-this.track.heading(this.track.angle(m))))<.3;
     const safe=Boolean(this.ramps)&&competing&&!crowded&&aligned&&Math.abs(m.yawRate)<.55&&
-      Math.abs(laneOffset)<this.track.halfWidth-5&&this.flight.state!=='landing'&&
+      Math.abs(laneOffset)<this.track.widthAt(this.track.angle(m))-5&&(!this.track.isSpline||Math.abs(this.track.curvature(this.track.angle(m)))<.004)&&this.flight.state!=='landing'&&
       (!this.flight.airborne||this.flight.remainingTime>.6);
     const overtake=nearby.some(p=>{
       const x=p.model.x-m.x,z=p.model.z-m.z,forward=x*Math.sin(m.heading)+z*Math.cos(m.heading);
@@ -93,11 +93,21 @@ export class AIController {
     this.before={x:this.model.x,z:this.model.z};this.flight.beginStep(dt);this.chooseRamp(peers);
     this.requestNitro(dt,peers,competing);
     const cap=this.targetSpeed*(this.nitro.active?NITRO_TUNING.multiplier:1);
-    this.model.speed=this.model.speed>cap?Math.max(cap,this.model.speed-NITRO_TUNING.releaseDeceleration*dt):
-      Math.min(cap,this.model.speed+(this.acceleration+(this.nitro.active?NITRO_TUNING.acceleration:0))*dt);
+    const angleNow=this.track.angle(this.model),curvature=Math.max(Math.abs(this.track.curvature(angleNow,35)),Math.abs(this.track.curvature(angleNow+45/this.track.radius,35)));
+    const safeCap=this.track.isSpline&&!this.flight.airborne?Math.min(cap,.48/Math.max(.0001,curvature)):cap;
+    this.model.speed=this.model.speed>safeCap?Math.max(safeCap,this.model.speed-(this.track.isSpline?17:NITRO_TUNING.releaseDeceleration)*dt):
+      Math.min(safeCap,this.model.speed+(this.acceleration+(this.nitro.active?NITRO_TUNING.acceleration:0))*dt);
     this.clearanceTime = Math.max(0, this.clearanceTime - dt);
     const angle = this.track.angle(this.model), radius = Math.max(1, Math.hypot(this.model.x, this.model.z));
     const recoveryLane = this.plan?.use?0:this.lane + (this.clearanceTime > 0 ? this.clearanceLane : 0);
+    if(this.track.isSpline){
+      const lane=Math.max(-this.track.widthAt(angleNow)+5,Math.min(this.track.widthAt(angleNow)-5,recoveryLane));
+      const p=this.track.target(this.model,Math.max(18,this.model.speed*.65),lane),desired=Math.atan2(p.x-this.model.x,p.z-this.model.z);
+      const yaw=Math.max(-.67,Math.min(.67,signedAngle(desired-this.model.heading)*2.7));
+      this.model.yawRate+=(yaw-this.model.yawRate)*(1-Math.exp(-dt*3.5));this.model.heading+=this.model.yawRate*dt;
+      const grip=1-Math.exp(-dt*3.8);this.model.vx+=(Math.sin(this.model.heading)*this.model.speed-this.model.vx)*grip;this.model.vz+=(Math.cos(this.model.heading)*this.model.speed-this.model.vz)*grip;
+      this.model.x+=this.model.vx*dt;this.model.z+=this.model.vz*dt;this.ramps?.prepare(this.model,this.flight);return;
+    }
     if(this.flight.airborne){
       const p=this.track.point(angle+.16,recoveryLane),desired=Math.atan2(p.x-this.model.x,p.z-this.model.z);
       const yaw=Math.max(-.67,Math.min(.67,signedAngle(desired-this.model.heading)*2.5));

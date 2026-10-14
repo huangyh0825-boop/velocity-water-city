@@ -4,16 +4,21 @@ export const TAU = Math.PI * 2;
 export const signedAngle = (angle: number) => Math.atan2(Math.sin(angle), Math.cos(angle));
 /** First course: a circular canal, measured in metres. Rendering is separate. */
 export class Track {
-  readonly name = '天际环城水道';
-  readonly radius = 120;
-  readonly halfWidth = 22;
-  readonly checkpointCount = 8;
+  readonly isSpline:boolean=false;
+  readonly name:string = '天际环城水道';
+  readonly radius:number = 120;
+  readonly halfWidth:number = 22;
+  readonly checkpointCount:number = 8;
   readonly length = TAU * this.radius;
   point(angle: number, lane = 0): Point {
     return { x: Math.cos(angle) * (this.radius + lane), z: Math.sin(angle) * (this.radius + lane) };
   }
   angle(point: Point) { return Math.atan2(point.z, point.x); }
   heading(angle: number) { return -angle; }
+  offset(p:Point){return Math.hypot(p.x,p.z)-this.radius;}
+  widthAt(angle:number){return this.halfWidth;}
+  curvature(angle:number,distance=35){return signedAngle(this.heading(angle+distance/this.radius)-this.heading(angle))/distance;}
+  target(p:Point,distance:number,lane=0){return this.point(this.angle(p)+distance/this.radius,lane);}
   checkpointAngle(index: number) { return index * TAU / this.checkpointCount; }
   contains(point: Point, margin = 0) { return Math.abs(Math.hypot(point.x, point.z) - this.radius) <= this.halfWidth - margin; }
   spawn(model: DrivingModel, angle = -0.14, lane = 0) {

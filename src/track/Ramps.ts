@@ -3,7 +3,7 @@ import { Track } from './Track';
 import type { DrivingModel } from '../player/DrivingModel';
 import { FlightController } from '../player/FlightController';
 import { BOAT_HULL } from '../physics/BoatCollisions';
-export interface RampData { id:string;angle:number;width:number;length:number;height:number;minSpeed:number;entry:{x:number;z:number};lip:{x:number;z:number};landing:{x:number;z:number} }
+export interface RampData { id:string;angle:number;heading:number;width:number;length:number;height:number;minSpeed:number;entry:{x:number;z:number};lip:{x:number;z:number};landing:{x:number;z:number} }
 interface Pose { x:number;z:number;heading?:number }
 export interface RampDecision {boatId:string;rampId:string;reason:string;triggered:boolean;position:Pose;path:readonly Pose[];correction:number;speed:number;horizontalVelocity:{x:number;z:number};height:number;verticalSpeed:number;state:string;support:number}
 export const RAMP_ANGLES = [0.38, 2, 4.36] as const;
@@ -15,7 +15,8 @@ export class Ramps {
   onDecision?:(decision:RampDecision)=>void;
   private locks=new WeakMap<FlightController,{generation:number;rampId:string}>();
   constructor(private track: Track, scene?: THREE.Scene) {
-    this.data=RAMP_ANGLES.map((angle,i)=>({id:`ramp-${i+1}`,angle,width:this.width,length:this.length,height:2,minSpeed:2,entry:track.point(angle-this.length/track.radius),lip:track.point(angle),landing:track.point(angle+.8)}));
+    const angles=track.isSpline?[.30,.36,.85].map(t=>t*Math.PI*2):RAMP_ANGLES;
+    this.data=angles.map((angle,i)=>({id:`ramp-${i+1}`,angle,heading:track.heading(angle),width:this.width,length:this.length,height:2,minSpeed:2,entry:track.point(angle-this.length/track.radius),lip:track.point(angle),landing:track.point(angle+96/track.radius)}));
     if (!scene) return;
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.Float32BufferAttribute([
@@ -24,7 +25,7 @@ export class Ramps {
       -5,0,0, -5,2,0, 5,2,0, -5,0,0, 5,2,0, 5,0,0,
     ], 3)); geometry.computeVertexNormals();
     const material = new THREE.MeshStandardMaterial({ color: '#195b7d', metalness: 0.6, roughness: 0.35, side: THREE.DoubleSide });
-    for (const angle of RAMP_ANGLES) {
+    for (const {angle} of this.data) {
       const group = new THREE.Group(), p = track.point(angle); group.position.set(p.x, 0.16, p.z); group.rotation.y = track.heading(angle);
       group.add(new THREE.Mesh(geometry, material));
       const stripMaterial = new THREE.MeshBasicMaterial({ color: '#83fff0' });
@@ -36,9 +37,9 @@ export class Ramps {
       scene.add(group);
     }
   }
-  local(p:Pose,r:RampData){const dx=p.x-r.lip.x,dz=p.z-r.lip.z;return{along:-Math.sin(r.angle)*dx+Math.cos(r.angle)*dz,radial:Math.cos(r.angle)*dx+Math.sin(r.angle)*dz};}
+  local(p:Pose,r:RampData){const dx=p.x-r.lip.x,dz=p.z-r.lip.z;return{along:Math.sin(r.heading)*dx+Math.cos(r.heading)*dz,radial:Math.cos(r.heading)*dx-Math.sin(r.heading)*dz};}
   support(p:Pose,r:RampData,heading:number){
-    const local=this.local(p,r),lateral=Math.sin(heading+r.angle);
+    const local=this.local(p,r),lateral=Math.sin(heading-r.heading);
     const center=local.radial+BOAT_HULL.forwardOffset*lateral;
     const half=BOAT_HULL.radius+BOAT_HULL.halfSegment*Math.abs(lateral);
     return Math.max(0,Math.min(center+half,r.width/2)-Math.max(center-half,-r.width/2))/(half*2);
@@ -56,9 +57,9 @@ export class Ramps {
         const a=this.local(path[i-1],r),b=this.local(path[i],r);if(a.along>=0||b.along<0||b.along-a.along<1e-8)continue;
         const t=-a.along/(b.along-a.along),cross={x:path[i-1].x+(path[i].x-path[i-1].x)*t,z:path[i-1].z+(path[i].z-path[i-1].z)*t};
         const h=(path[i-1].heading??model.heading)+((path[i].heading??model.heading)-(path[i-1].heading??model.heading))*t;support=this.support(cross,r,h);near=true;
-        const velocity=Math.hypot(model.vx,model.vz)>1e-6? -Math.sin(r.angle)*model.vx+Math.cos(r.angle)*model.vz:model.speed*Math.cos(model.heading+r.angle);
+        const velocity=Math.hypot(model.vx,model.vz)>1e-6? Math.sin(r.heading)*model.vx+Math.cos(r.heading)*model.vz:model.speed*Math.cos(model.heading-r.heading);
         if(support<.6)reason='insufficient-hull-support';
-        else if(Math.cos(h+r.angle)<.65)reason='wrong-direction';
+        else if(Math.cos(h-r.heading)<.65)reason='wrong-direction';
         else if(velocity<r.minSpeed||model.speed<r.minSpeed)reason='too-slow';
         else if(lock?.rampId===r.id)reason='ramp-locked';
         else if(!flight.ready)reason='landing-cooldown';

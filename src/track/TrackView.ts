@@ -1,10 +1,14 @@
 import * as THREE from 'three';
 import { Track, TAU } from './Track';
 import { glassFacade } from '../environment/CityEnvironment';
+import {CityTrack} from './CityTrack';
+import {CityTrackView} from './CityTrackView';
 export class TrackView {
   private gates: THREE.MeshBasicMaterial[] = [];
   private highlighted = -1;
+  private splineView?:CityTrackView;
   constructor(scene: THREE.Scene, track: Track) {
+    if(track instanceof CityTrack){this.splineView=new CityTrackView(scene,track);return;}
     const segments = 160;
     const wall = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshStandardMaterial({ color: '#29465b', metalness: 0.5, roughness: 0.5 }), segments * 2);
     const rim = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: '#68dce7' }), segments * 2);
@@ -66,6 +70,7 @@ export class TrackView {
     line.rotation.x = -Math.PI / 2; line.position.set(track.radius, 0.26, 0); scene.add(line);
   }
   highlight(index: number) {
+    if(this.splineView){this.splineView.highlight(index);return;}
     if (this.highlighted === index) return;
     this.gates.forEach((material, i) => material.color.set(i === index ? '#97fff2' : i === 0 ? '#ffe4a0' : '#547d90'));
     this.highlighted = index;
