@@ -1,4 +1,5 @@
 import * as THREE from 'three';import {CityTrack,DISTRICTS} from '../track/CityTrack';import {ModelBatch} from '../player/ModelBatch';import {glassFacade} from './CityEnvironment';import {inCitySample} from './CitySample';
+import {readableSign} from './ReadableSign';
 export class CityDistricts {
  readonly root=new THREE.Group();readonly details=new THREE.Group();private legacySample=new THREE.Group();
  constructor(scene:THREE.Scene,readonly track:CityTrack){
@@ -69,7 +70,7 @@ export class CityDistricts {
   for(let zone=0;zone<6;zone++){
    const a=(zone+.05)/6*Math.PI*2,p=track.point(a,track.widthAt(a)+7),canvas=document.createElement('canvas');canvas.width=512;canvas.height=160;const ctx=canvas.getContext('2d')!;
    ctx.fillStyle='#ecf8ff';ctx.fillRect(0,0,512,160);ctx.fillStyle='#195776';ctx.font='bold 32px sans-serif';ctx.textAlign='center';ctx.fillText(DISTRICTS[zone],256,75);ctx.font='20px sans-serif';ctx.fillText('AURORA CITY  /  RACING DISTRICT',256,125);
-   const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;const sign=new THREE.Mesh(new THREE.PlaneGeometry(10,3.2),new THREE.MeshBasicMaterial({map:texture,side:THREE.DoubleSide}));sign.position.set(p.x,4,p.z);sign.rotation.y=track.heading(a);this.details.add(sign);
+   const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;const sign=readableSign(texture,10,3.2,`district-sign-${zone}`);sign.position.set(p.x,4,p.z);sign.rotation.y=track.heading(a);this.details.add(sign);
   }
  }
  setLow(low:boolean){this.details.visible=!low;}

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { Track, TAU } from '../track/Track';
 import { ModelBatch } from '../player/ModelBatch';
+import {readableSign} from './ReadableSign';
 export const BRIDGE_ANGLES=[.95,3.05,5.55] as const;
 export const BRIDGE_CLEARANCE=18;
 export function cityLayout(track:Track){
@@ -66,7 +67,7 @@ export class CityEnvironment {
       const angle=(i+.25)/8*TAU,p=track.point(angle,track.halfWidth+8),sign=new THREE.Group();
       sign.position.set(p.x,4.8,p.z);sign.rotation.y=track.heading(angle);
       const frame=new THREE.Mesh(new THREE.BoxGeometry(8.4,3.2,.35),white);sign.add(frame);
-      const material=new THREE.MeshBasicMaterial({color:'#ffffff',side:THREE.DoubleSide});
+      const material=new THREE.MeshBasicMaterial({color:'#ffffff'});
       if(typeof document!=='undefined'){
         const canvas=document.createElement('canvas');canvas.width=512;canvas.height=192;
         const ctx=canvas.getContext('2d')!;ctx.fillStyle='#d7f2fb';ctx.fillRect(0,0,512,192);
@@ -74,7 +75,7 @@ export class CityEnvironment {
         ctx.fillStyle='#fff';ctx.font='20px sans-serif';ctx.fillText('→  FUTURE WATERSPORT  →',256,179);
         const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;material.map=texture;
       }
-      const face=new THREE.Mesh(new THREE.PlaneGeometry(8,2.8),material);face.position.z=.19;sign.add(face);
+      const face=readableSign(material.map!,8,2.8,`legacy-advert-${i}`,.4);sign.add(face);material.dispose();
       const post=new THREE.Mesh(new THREE.BoxGeometry(.35,4,.35),metal);post.position.y=-3;sign.add(post);this.details.add(sign);
     }
   }

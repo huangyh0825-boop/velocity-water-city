@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {CityTrack} from '../track/CityTrack';
 import {TAU} from '../track/Track';
+import {readableSign,disposeSign} from './ReadableSign';
 
 export const CITY_SAMPLE={center:.06,length:280} as const;
 export function inCitySample(track:CityTrack,angle:number){return Math.abs(angle/TAU-CITY_SAMPLE.center)*track.length<CITY_SAMPLE.length/2;}
@@ -32,7 +33,7 @@ export class CitySample {
    this.releaseSigns();this.root.clear();this.root.add(group);this.loaded=true;this.error='';this.shadowWater.visible=!low;this.addSigns();if(this.sun)this.sun.shadow.needsUpdate=true;this.ready(true);
   }catch(e){if(request!==this.generation||this.disposed)return;this.error=String(e);this.cache.delete(low);console.error('City sample GLB failed; retaining existing district',e);if(!this.loaded)this.ready(false);}
  }
- private releaseSigns(){for(const child of [...this.root.children])if(child.name==='original-transit-advert'&&child instanceof THREE.Mesh){child.geometry.dispose();const mat=child.material as THREE.MeshStandardMaterial;mat.map?.dispose();mat.dispose();child.removeFromParent();}}
+ private releaseSigns(){for(const child of [...this.root.children])if(child.userData.readableSign)disposeSign(child);}
  private addSigns(){
   const h=this.root.rotation.y,c=this.root.position;
   for(const [i,side] of [[21,-1],[47,1]]){
@@ -40,7 +41,7 @@ export class CitySample {
    const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=512;const ctx=canvas.getContext('2d')!;
    ctx.fillStyle='#06334d';ctx.fillRect(0,0,1024,512);ctx.fillStyle='#41d9eb';ctx.fillRect(32,32,14,448);ctx.fillStyle='#e2f7ff';ctx.font='bold 92px sans-serif';ctx.fillText(side<0?'AURORA':'MARINA',80,180);ctx.font='36px sans-serif';ctx.fillText('WATER CITY  /  RACE FORWARD',84,270);ctx.fillStyle='#68e0ec';ctx.font='bold 80px sans-serif';ctx.fillText('→  →  →',84,400);
    const map=new THREE.CanvasTexture(canvas);map.colorSpace=THREE.SRGBColorSpace;
-   const panel=new THREE.Mesh(new THREE.PlaneGeometry(8.8,3.2),new THREE.MeshStandardMaterial({map,roughness:.5,emissive:'#174756',emissiveMap:map,emissiveIntensity:.2,side:THREE.DoubleSide}));panel.position.set(dx*Math.cos(h)-dz*Math.sin(h),2.9,dx*Math.sin(h)+dz*Math.cos(h)-.37);panel.rotation.y=Math.PI;panel.name='original-transit-advert';this.root.add(panel);
+   const panel=readableSign(map,8.8,3.2,'original-transit-advert',.85,true);panel.position.set(dx*Math.cos(h)-dz*Math.sin(h),2.9,dx*Math.sin(h)+dz*Math.cos(h));panel.rotation.y=this.track.heading(a)-h;this.root.add(panel);
   }
  }
  /** Shadow frustum is local to this 280m district, never follows or moves physics. */
