@@ -1,4 +1,4 @@
-# 素材与声音许可（Phase 3–4）
+# 素材与声音来源（Phase 3–5）
 
 船体、跳台、喷射、水花和界面均由本项目代码程序化生成；没有加载外部游戏模型或贴图。
 
@@ -9,3 +9,11 @@
 新增倒计时提示音同样为原创振荡器合成；没有加入外部音乐。
 
 Three.js、Vite 与原项目 npm 依赖继续适用各自许可证。本阶段未新增音频或物理库依赖。
+
+## 第五阶段
+
+`public/models/{watercraft,rider,watercraft-low,rider-low}.glb` 是本项目原创资产，由 `scripts/build-models.mjs` 中的原创截面、轮廓曲线和关节层级生成，再通过 Three.js GLTFExporter 导出。没有从游戏或素材网站提取模型，没有使用第三方人物、照片或纹理。可运行 `npm run assets:build` 重建，资产名称、体积、三角面和材质组预算记录在 `public/models/manifest.json`。这是代码曲面建模的替代工作流，并非 Blender 人工建模。
+
+新水道控制点、捷径曲线、六区楼宇模板、码头、隧道、桥梁及广告均为本项目原创代码/文案。发动机、空中风声及 AI 声音继续通过 Web Audio 合成，无下载音频。
+
+环境反射使用 Three.js 的 `RoomEnvironment` 生成静态 PMREM 贴图；GLTFLoader/GLTFExporter、几何工具及 RoomEnvironment 随 Three.js 适用 MIT 许可。许可证副本见 `docs/licenses/three.txt`，版本以 package-lock.json 为准。未引入新的第三方资产许可证或需单独署名的素材。原创资产的整体公开项目许可证由项目所有者决定；本说明没有自行将项目作品授权为 CC0 或其他新许可证。
