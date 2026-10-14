@@ -15,7 +15,7 @@ export class AudioController {
   private voices=new Set<AudioScheduledSourceNode>();
   private wasBoost=false;
   private paused=false;
-  private aiChannels=new Map<string,{osc:OscillatorNode;engine:GainNode;water:GainNode;wind:GainNode;boost:GainNode;pan:StereoPannerNode}>();
+  private aiChannels=new Map<string,{osc:OscillatorNode;engine:GainNode;water:GainNode;wind:GainNode;boost:GainNode;pan:StereoPannerNode;wasBoost:boolean}>();
   get activeVoices() {return this.voices.size;}
   get loopCount() {return this.context?3+this.aiChannels.size:0;}
   private target(param:AudioParam,value:number,timeConstant=0.08) { const now=this.context!.currentTime;param.cancelScheduledValues(now);param.setTargetAtTime(value,now,timeConstant); }
@@ -59,28 +59,30 @@ export class AudioController {
     if(running&&state.boost&&!this.wasBoost)this.event('nitro',25);
     this.wasBoost=running&&state.boost;
   }
-  event(kind:'takeoff'|'landing'|'collision'|'nitro',strength:number) {
-    const ctx=this.context;if(!ctx || ctx.state!=='running' || !this.enabled || this.paused || !this.noise || this.voices.size>=6)return false;
+  event(kind:'takeoff'|'landing'|'collision'|'nitro',strength:number,volume=1) {
+    volume=Math.max(0,Math.min(1,volume));
+    const ctx=this.context;if(!ctx || ctx.state!=='running' || !this.enabled || this.paused || !this.noise || this.voices.size>=6||volume<.001)return false;
     const source=ctx.createBufferSource();source.buffer=this.noise;
     const filter=ctx.createBiquadFilter();filter.type=kind==='collision'?'lowpass':'bandpass';filter.frequency.value=kind==='collision'?250:kind==='landing'?650:kind==='nitro'?1700:1000;
     const gain=ctx.createGain(),duration=kind==='landing' ? 0.4 : kind==='collision' ? 0.16 : 0.22,now=ctx.currentTime;
-    gain.gain.setValueAtTime(0,now);gain.gain.linearRampToValueAtTime(Math.min(.24,.055+strength*.003),now+.015);gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
+    gain.gain.setValueAtTime(0,now);gain.gain.linearRampToValueAtTime(Math.min(.24,.055+strength*.003)*volume,now+.015);gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
     source.connect(filter);filter.connect(gain);gain.connect(this.master!);this.voices.add(source);
     source.onended=()=>{this.voices.delete(source);source.disconnect();filter.disconnect();gain.disconnect();};source.start(now);source.stop(now+duration);return true;
   }
   updateAI(states:readonly (AudioState&{id:string;distance:number;pan:number})[]){
-    const ctx=this.context;if(!ctx||ctx.state!=='running'||!this.noiseSource)return;
+    const ctx=this.context;if(!ctx||ctx.state!=='running'||!this.noiseSource||typeof ctx.createStereoPanner!=='function')return;
     for(const s of states){
       let c=this.aiChannels.get(s.id);
       if(!c){if(this.aiChannels.size>=4)continue;
         const osc=ctx.createOscillator(),engine=ctx.createGain(),pan=ctx.createStereoPanner();osc.type='triangle';engine.gain.value=0;osc.connect(engine);engine.connect(pan);pan.connect(this.master!);
         const gains=[600,3000,1100].map((frequency,i)=>{const filter=ctx.createBiquadFilter(),gain=ctx.createGain();filter.type=i===1?'highpass':'bandpass';filter.frequency.value=frequency;gain.gain.value=0;this.noiseSource!.connect(filter);filter.connect(gain);gain.connect(pan);return gain;});
-        osc.start();c={osc,engine,water:gains[0],wind:gains[1],boost:gains[2],pan};this.aiChannels.set(s.id,c);
+        osc.start();c={osc,engine,water:gains[0],wind:gains[1],boost:gains[2],pan,wasBoost:false};this.aiChannels.set(s.id,c);
       }
       const m=audioMix(s),gain=s.running&&this.enabled&&!this.paused?distanceGain(s.distance)*.45:0;
       this.target(c.osc.frequency,m.rpm);this.target(c.engine.gain,m.engine*gain);
       this.target(c.water.gain,(m.water+m.breaking)*gain,s.grounded?.1:.035);
       this.target(c.wind.gain,m.wind*gain);this.target(c.boost.gain,m.boost*gain);this.target(c.pan.pan,Math.max(-1,Math.min(1,s.pan)));
+      if(s.boost&&s.running&&!c.wasBoost)this.event('nitro',25,gain);c.wasBoost=s.boost&&s.running;
     }
   }
   countdown(value:number){
@@ -91,6 +93,6 @@ export class AudioController {
     source.connect(gain);gain.connect(this.master!);this.voices.add(source);
     source.onended=()=>{this.voices.delete(source);source.disconnect();gain.disconnect();};source.start(now);source.stop(now+duration);return true;
   }
-  reset() {this.wasBoost=false;for(const source of this.voices){try{source.stop();}catch{}}this.voices.clear();if(this.engineGain)this.target(this.engineGain.gain,0);this.streams.forEach(s=>this.target(s.gain.gain,0));for(const c of this.aiChannels.values())for(const gain of [c.engine,c.water,c.wind,c.boost])this.target(gain.gain,0);}
+  reset() {this.wasBoost=false;for(const source of this.voices){try{source.stop();}catch{}}this.voices.clear();if(this.engineGain)this.target(this.engineGain.gain,0);this.streams.forEach(s=>this.target(s.gain.gain,0));for(const c of this.aiChannels.values()){c.wasBoost=false;for(const gain of [c.engine,c.water,c.wind,c.boost])this.target(gain.gain,0);}}
   dispose() {this.reset();this.engine.forEach(osc=>osc.stop());for(const c of this.aiChannels.values())c.osc.stop();this.noiseSource?.stop();if(this.context)void this.context.close();}
 }

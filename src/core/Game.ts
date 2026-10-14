@@ -27,6 +27,7 @@ import { CityEnvironment } from '../environment/CityEnvironment';
 import {CityDistricts} from '../environment/CityDistricts';
 import { CountdownCue } from '../audio/CountdownCue';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+import {distanceGain} from '../audio/AudioMix';
 export class Game {
   private renderer: THREE.WebGLRenderer;
   private scene = createScene();
@@ -152,16 +153,18 @@ export class Game {
         if(this.flight.takeoff)this.tricks.beginJump();if(this.input.consumeTrickPress())this.tricks.request(this.flight);this.tricks.update(step);
         this.ai.forEach(ai => { if (this.collisions.hasContact(ai.id)) ai.onContact(); });
         this.ai.forEach(ai=>{
-          if(ai.flight.takeoff)this.spray.burst(ai.model.x,ai.model.z,ai.model.speed*.65,'takeoff');
-          if(ai.flight.landed&&ai.flight.height<.2)this.spray.burst(ai.model.x,ai.model.z,ai.flight.landingSpeed,'landing');
+          const volume=distanceGain(Math.hypot(ai.model.x-this.craft.model.x,ai.model.z-this.craft.model.z,ai.flight.height-this.flight.height))*.55;
+          if(ai.flight.takeoff){this.spray.burst(ai.model.x,ai.model.z,ai.model.speed*.65,'takeoff');this.audio.event('takeoff',ai.model.speed,volume);}
+          if(ai.flight.landed&&ai.flight.height<.2){this.spray.burst(ai.model.x,ai.model.z,ai.flight.landingSpeed,'landing');this.audio.event('landing',ai.flight.landingSpeed,volume);}
+          else if(ai.flight.landed)this.audio.event('collision',ai.flight.landingSpeed,volume);
         });
         this.ai.forEach((ai,i)=>{if(ai.flight.landed)this.aiCraft[i].land();});
-        for(const event of this.collisions.events) if(event.strength>2 && event.height<1.2 && this.impactLimiter.accept(event.key,this.time)) {this.spray.burst(event.x,event.z,event.strength,'collision');this.audio.event('collision',event.strength);}
+        for(const event of this.collisions.events) if(event.strength>2 && this.impactLimiter.accept(event.key,this.time)) {if(event.height<1.2)this.spray.burst(event.x,event.z,event.strength,'collision');this.audio.event('collision',event.strength,distanceGain(Math.hypot(event.x-this.craft.model.x,event.z-this.craft.model.z,event.height-this.flight.height)));}
         if(this.flight.takeoff) {this.spray.burst(this.craft.model.x,this.craft.model.z,this.craft.model.speed,'takeoff');this.audio.event('takeoff',this.craft.model.speed);}
         if(this.flight.landed) {
           this.craft.land();
           if(this.flight.height<.2)this.spray.burst(this.craft.model.x,this.craft.model.z,this.flight.landingSpeed,'landing');
-          this.audio.event('landing',this.flight.landingSpeed);
+          this.audio.event(this.flight.height<.2?'landing':'collision',this.flight.landingSpeed);
           const result=this.tricks.land(!this.wallContact && this.craft.model.speed>8 && !this.collisions.hasContact('player'));
           this.nitro.reward(result.reward);
           if(result.penalty) { this.craft.model.speed*=0.72; this.craft.model.vx*=0.72; this.craft.model.vz*=0.72; }

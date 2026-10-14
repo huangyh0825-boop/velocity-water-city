@@ -41,7 +41,12 @@ export class CityDistricts {
   }
   for(const fraction of [.29,.40,.91]){
    const a=fraction*Math.PI*2,p=track.point(a),heading=track.heading(a),width=track.widthAt(a),group=new THREE.Group(),batch=new ModelBatch();group.position.set(p.x,0,p.z);group.rotation.y=heading;
-   const arch=new THREE.TorusGeometry(width+5,.65,8,48,Math.PI);part(batch,arch,silver,0,19,0);part(batch,new THREE.BoxGeometry(width*2+12,.8,7),silver,0,19,0);
+   if(fraction<.35)part(batch,new THREE.TorusGeometry(width+5,.65,8,48,Math.PI),silver,0,19,0);
+   else if(fraction<.5){
+     for(const side of [-1,1]){part(batch,new THREE.BoxGeometry(.8,32,.8),silver,side*(width+4),23,0);
+       const cable=new THREE.LineCurve3(new THREE.Vector3(side*(width+4),39,0),new THREE.Vector3(-side*width,19,0));part(batch,new THREE.TubeGeometry(cable,1,.08,5,false),silver,0,0,0);}
+   }else{part(batch,new THREE.BoxGeometry(width*2+12,.8,1),silver,0,23,-2.6);part(batch,new THREE.BoxGeometry(width*2+12,.8,1),silver,0,23,2.6);}
+   part(batch,new THREE.BoxGeometry(width*2+12,.8,7),silver,0,19,0);
    for(const side of [-1,1]){part(batch,new THREE.BoxGeometry(2,19,4),stone,side*(width+5),9.5,0);part(batch,new THREE.BoxGeometry(width*2+12,.15,.2),glow,0,20,side*3.2);}
    batch.build(group);this.root.add(group);
   }
@@ -54,6 +59,9 @@ export class CityDistricts {
    part(base,new THREE.BoxGeometry(cut.width*2+2,.8,length+.4),dark,(a.x+b.x)/2,11,(a.z+b.z)/2,heading);
    for(const side of [-1,1])part(detail,new THREE.BoxGeometry(.15,.12,length),glow,(a.x+b.x)/2+Math.cos(heading)*side*(cut.width-.5),10.55,(a.z+b.z)/2-Math.sin(heading)*side*(cut.width-.5),heading);
   }
+  const railA=track.point(.18*Math.PI*2,100),railB=track.point(.28*Math.PI*2,100),railHeading=Math.atan2(railB.x-railA.x,railB.z-railA.z),railLength=Math.hypot(railB.x-railA.x,railB.z-railA.z);
+  part(detail,new THREE.BoxGeometry(4,.65,railLength),silver,(railA.x+railB.x)/2,29,(railA.z+railB.z)/2,railHeading);
+  for(let i=0;i<=6;i++){const f=i/6,x=railA.x+(railB.x-railA.x)*f,z=railA.z+(railB.z-railA.z)*f;if(!track.contains({x,z},-4))part(detail,new THREE.BoxGeometry(.9,29,.9),stone,x,14.5,z);}
   base.build(this.root);detail.build(this.details);
   for(let zone=0;zone<6;zone++){
    const a=(zone+.05)/6*Math.PI*2,p=track.point(a,track.widthAt(a)+7),canvas=document.createElement('canvas');canvas.width=512;canvas.height=160;const ctx=canvas.getContext('2d')!;

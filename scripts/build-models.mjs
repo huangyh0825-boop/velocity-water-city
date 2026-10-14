@@ -42,13 +42,13 @@ function rider(detail){const root=new T.Group();root.name='Racer';const torso=ne
  const body=mesh(torso,'TailoredSuit',loft([[0,.16,.13],[.12,.20,.15],[.40,.25,.19],[.65,.29,.18],[.78,.19,.13]],detail?36:18,detail?24:12),materials.suit,0,.02,.035);body.rotation.x=-Math.PI/2;
  const chest=mesh(torso,'ChestArmor',loft([[0,.17,.045],[.20,.22,.065],[.38,.21,.05]],24,16),materials.armor,0,.33,.20);chest.rotation.x=-Math.PI/2;
  const neck=mesh(torso,'NeckSeal',new T.CylinderGeometry(.105,.12,.12,16),materials.rubber,0,.83,.04);
- const helmet=mesh(torso,'FullFaceHelmet',new T.SphereGeometry(.29,detail?32:16,detail?20:12),materials.silver,0,1.01,.04);helmet.scale.set(.94,1.04,1.09);
- const visor=mesh(torso,'Visor',new T.SphereGeometry(.298,detail?32:16,12,0,Math.PI,Math.PI*.33,Math.PI*.34),materials.glass,0,1.01,.055);visor.scale.set(.94,1.04,1.09);
+ const helmet=mesh(torso,'FullFaceHelmet',new T.SphereGeometry(.21,detail?32:16,detail?20:12),materials.silver,0,1.01,.04);helmet.scale.set(.94,1.04,1.09);
+ const visor=mesh(torso,'Visor',new T.SphereGeometry(.218,detail?32:16,12,0,Math.PI,Math.PI*.33,Math.PI*.34),materials.glass,0,1.01,.055);visor.scale.set(.94,1.04,1.09);
  for(const side of [-1,1]){
-  const ear=mesh(torso,`HelmetSeal_${side}`,new T.CylinderGeometry(.065,.065,.025,16),materials.armor,side*.274,1.005,.025);ear.rotation.z=Math.PI/2;
+  const ear=mesh(torso,`HelmetSeal_${side}`,new T.CylinderGeometry(.045,.045,.025,16),materials.armor,side*.198,1.005,.025);ear.rotation.z=Math.PI/2;
   limb(root,`Thigh_${side}`,new T.Vector3(side*.16,.02,.04),new T.Vector3(side*.59,-.12,.42),.13,materials.suit,detail);
   limb(root,`Shin_${side}`,new T.Vector3(side*.59,-.12,.42),new T.Vector3(side*.68,-.53,.56),.105,materials.armor,detail);
-  const boot=mesh(root,`Boot_${side}`,loft([[-.18,.07,.06],[-.04,.10,.08],[.15,.09,.055],[.23,.04,.045]],18,16),materials.rubber,side*.68,-.55,.59);
+  const boot=mesh(root,`Boot_${side}`,loft([[-.18,.07,.06],[-.04,.10,.08],[.15,.09,.055],[.23,.04,.045]],18,16),materials.rubber,side*.68,-.50,.59);
   limb(root,`UpperArm_${side}`,new T.Vector3(),new T.Vector3(0,1,0),.087,materials.armor,detail);
   limb(root,`Forearm_${side}`,new T.Vector3(),new T.Vector3(0,1,0),.073,materials.suit,detail);
   const glove=mesh(root,`Glove_${side}`,loft([[-.08,.05,.05],[0,.075,.07],[.10,.045,.04]],12,12),materials.rubber,side*.4,.14,.93);glove.rotation.x=-.25;
