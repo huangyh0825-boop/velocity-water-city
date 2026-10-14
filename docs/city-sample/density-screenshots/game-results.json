@@ -1,0 +1,72 @@
+{
+  "shots": [
+    {
+      "name": "normal-driving",
+      "speed": 115.50169726061563,
+      "angle": 0.25251724933969677,
+      "rank": "1 / 5",
+      "lap": "1 / 3",
+      "lod": {
+        "sites": 88,
+        "waterfront": 8,
+        "blocks": 28,
+        "skyline": 52,
+        "lods": [
+          7,
+          27,
+          54
+        ],
+        "activeMeshes": 91
+      }
+    },
+    {
+      "name": "highspeed-driving",
+      "speed": 174.34144852257515,
+      "angle": 0.3407893980333003,
+      "rank": "1 / 5",
+      "lap": "1 / 3",
+      "lod": {
+        "sites": 88,
+        "waterfront": 8,
+        "blocks": 28,
+        "skyline": 52,
+        "lods": [
+          13,
+          22,
+          53
+        ],
+        "activeMeshes": 105
+      }
+    },
+    {
+      "name": "fullspeed-driving",
+      "speed": 180,
+      "angle": 0.35938331537966356,
+      "rank": "1 / 5",
+      "lap": "1 / 3",
+      "lod": {
+        "sites": 88,
+        "waterfront": 8,
+        "blocks": 28,
+        "skyline": 52,
+        "lods": [
+          13,
+          23,
+          52
+        ],
+        "activeMeshes": 103
+      }
+    }
+  ],
+  "memory": {
+    "base": {
+      "geometries": 354,
+      "textures": 63
+    },
+    "after": {
+      "geometries": 354,
+      "textures": 63
+    }
+  },
+  "errors": []
+}

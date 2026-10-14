@@ -1,0 +1,28 @@
+{
+  "perf": {
+    "fps": 240.007993605116,
+    "p95": 4.299999999999272,
+    "over50": 0,
+    "calls": 210,
+    "triangles": 483043,
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "simulationPaused": false
+  },
+  "memory": {
+    "base": {
+      "geometries": 354,
+      "textures": 63
+    },
+    "after": {
+      "geometries": 354,
+      "textures": 63
+    }
+  },
+  "low": {
+    "loaded": true,
+    "shadow": false,
+    "trafficVisible": false,
+    "reflectionPresent": true
+  },
+  "errors": []
+}
