@@ -76,13 +76,13 @@ HUD 显示 POS / LAP / TIME、速度、下一检查点或逆行提醒。玩家�
 | `src/ui` | HUD、结果页、响应式布局与计时格式 |
 | `tests` | 驾驶回归与比赛核心循环测试 |
 
-Three.js 单独打包，业务逻辑保持小体积；水道边界、城市和箭头使用实例化，艇身静态零件按材质合并。无动态阴影、后处理或复杂流体模拟。显示位置在固定物理步进之间插值，摄像机使用同一显示姿态，减少高刷新率下的位置跳动；不叠加历史帧或运动模糊。尾浪约 1.45 秒消散，锚定水面位置，不累积船体画面。后续改进 AI 可在独立模块进行，无需改键盘、触控或摄像机。
+Three.js 单独打包，业务逻辑保持小体积；水道边界、城市和箭头使用实例化，艇身静态零件按材质合并。标准画质为城市样板使用局部静态2048阴影；无后处理或复杂流体模拟。显示位置在固定物理步进之间插值，摄像机使用同一显示姿态，减少高刷新率下的位置跳动；不叠加历史帧或运动模糊。尾浪约 1.45 秒消散，锚定水面位置，不累积船体画面。后续改进 AI 可在独立模块进行，无需改键盘、触控或摄像机。
 
 正常速度调节入口为 `src/config/speed.ts`，面向调参使用 km/h，运行时转换为 m/s。玩家加速推力从 14 m/s² 随速度增加逐渐降至 10 m/s²（还会扣除原有水面阻力）；普通 AI 加速度为 12 m/s²。转向仍沿用原响应曲线、平滑时间与侧滑惯性，并在超过原 38 m/s 极速后保持原高速转向上限。氮气调节入口为 `src/config/phase3.ts`，默认不启用氮气时的原驾驶积分保持不变。
 
 ## 验证与限制
 
-`npm test` 当前 77 项，保留原有驾驶与比赛回归，包含样板GLB材质、LOD、水道净空及路牌方向/UV测试。最新结果见 [竞速氛围验收](docs/city-sample/atmosphere-validation.md)。[第五阶段验收](docs/phase-5-validation.md)、[第四阶段验收](docs/phase-4-validation.md)、[跳台修复与 AI 验收](docs/ramp-ai-validation.md)与[第三阶段验收](docs/phase-3-validation.md)保留为历史记录，素材说明见 [素材与音效来源](docs/assets-license.md)。
+`npm test` 当前 80 项，保留原有驾驶与比赛回归，包含样板GLB材质、LOD、水道净空及路牌方向/UV测试。最新同视角截图、PBR通道、结构细节与性能记录见 [质感强化验收](docs/city-sample/material-validation.md)。[竞速氛围验收](docs/city-sample/atmosphere-validation.md)、[第五阶段验收](docs/phase-5-validation.md)、[第四阶段验收](docs/phase-4-validation.md)、[跳台修复与 AI 验收](docs/ramp-ai-validation.md)与[第三阶段验收](docs/phase-3-validation.md)保留为历史记录，素材说明见 [素材与音效来源](docs/assets-license.md)。
 
 按 F8 开关跳台诊断，也可使用 `?debugRamps=1`。面板显示艇 ID、跳台 ID、运动状态、前后物理步位置、水平/垂直速度、高度、碰撞修正距离、艇体支撑比例及起跳/拒绝原因。控制台 `[ramp]` 在重要状态改变时记录完整碰撞子步轨迹；默认关闭，历史最多保留 240 条。
 

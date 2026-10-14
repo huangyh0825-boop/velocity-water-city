@@ -1,0 +1,658 @@
+[
+  {
+    "name": "district-sign-0",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "district-sign-1",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "district-sign-2",
+    "normalAgainstTravel": -0.9999999999999999,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "district-sign-3",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "district-sign-4",
+    "normalAgainstTravel": -0.9996709358957845,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "district-sign-5",
+    "normalAgainstTravel": -0.9999888628726205,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "original-transit-advert",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "original-transit-advert",
+    "normalAgainstTravel": -0.9991006747252607,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "atmosphere-race-33",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "atmosphere-holo-18",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "atmosphere-holo-39",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "atmosphere-shop-8",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "atmosphere-shop-18",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "atmosphere-shop-45",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "atmosphere-brand-7",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "atmosphere-brand-35",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "atmosphere-brand-39",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-0",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-1",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-2",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-3",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-4",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-5",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-6",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-7",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-8",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-9",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-10",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-11",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-12",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-13",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-14",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-15",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-16",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-17",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-18",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-19",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-20",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-21",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-22",
+    "normalAgainstTravel": -1,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  },
+  {
+    "name": "checkpoint-sign-23",
+    "normalAgainstTravel": -1.0000000000000002,
+    "sides": [
+      {
+        "name": "approach-face",
+        "single": true,
+        "uvReadable": true
+      },
+      {
+        "name": "return-face",
+        "single": true,
+        "uvReadable": true
+      }
+    ]
+  }
+]
