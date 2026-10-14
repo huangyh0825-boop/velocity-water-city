@@ -9,8 +9,12 @@ export class CityTrackView {
   for(const points of routes)for(let i=1;i<points.length;i++){
     const a=points[i-1],b=points[i],heading=Math.atan2(b.x-a.x,b.z-a.z),length=Math.hypot(b.x-a.x,b.z-a.z);
     // Leave the merge mouths clear on shortcut branches; physical containment is union of corridors.
-    const mouth=a.branch&&(i<6||i>points.length-6);
-    for(const side of [-1,1]){dummy.position.set((a.x+b.x)/2+Math.cos(heading)*(a.width+1)*side,.75,(a.z+b.z)/2-Math.sin(heading)*(a.width+1)*side);dummy.rotation.y=heading;dummy.scale.set(1.2,mouth?0:1.8,length+.4);dummy.updateMatrix();banks.setMatrixAt(cursor,dummy.matrix);dummy.position.y=1.69;dummy.scale.y=mouth?0:.07;dummy.updateMatrix();rims.setMatrixAt(cursor++,dummy.matrix);}
+    for(const side of [-1,1]){
+      const x=(a.x+b.x)/2+Math.cos(heading)*(a.width+1)*side,z=(a.z+b.z)/2-Math.sin(heading)*(a.width+1)*side;
+      const otherRoutes=a.branch?[track.samples]:track.shortcuts.map(s=>s.samples);
+      const mouth=otherRoutes.some(route=>route.some(s=>Math.hypot(s.x-x,s.z-z)<s.width+1));
+      dummy.position.set(x,.75,z);dummy.rotation.y=heading;dummy.scale.set(1.2,mouth?0:1.8,length+.4);dummy.updateMatrix();banks.setMatrixAt(cursor,dummy.matrix);dummy.position.y=1.69;dummy.scale.y=mouth?0:.07;dummy.updateMatrix();rims.setMatrixAt(cursor++,dummy.matrix);
+    }
   }scene.add(banks,rims);
   for(let i=0;i<track.checkpointCount;i++){
    const angle=track.checkpointAngle(i),point=track.point(angle),group=new THREE.Group(),glow=new THREE.MeshBasicMaterial({color:i===0?'#ffe4a0':'#527c91'});this.gates.push(glow);group.position.set(point.x,0,point.z);group.rotation.y=track.heading(angle);const width=track.widthAt(angle);

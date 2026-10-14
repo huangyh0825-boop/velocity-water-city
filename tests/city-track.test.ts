@@ -7,6 +7,12 @@ test('shortcut gates credit the same ordered checkpoint IDs, reverse/skip/telepo
  const t=new CityTrack(),shortcut=t.shortcuts[0],index=Math.ceil(shortcut.from/TAU*t.checkpointCount),angle=t.checkpointAngle(index),f=(angle-shortcut.from)/(shortcut.to-shortcut.from),i=Math.round(f*128),before=shortcut.samples[i-2],after=shortcut.samples[i+2];
  assert.ok(t.crossesGate(before,after,index));assert.ok(!t.crossesGate(after,before,index));const race=new RaceController(t,[{id:'player',name:'p',position:before}]);race.phase='racing';race.record('player',after,1/60);assert.equal(race.player.passed,0);
 });
+test('both continuous shortcut paths preserve every logical gate and cannot double count',()=>{
+ const t=new CityTrack();for(const cut of t.shortcuts){const race=new RaceController(t,[{id:'player',name:'p',position:cut.samples[0]}]);race.phase='racing';race.player.passed=Math.floor(cut.from/TAU*t.checkpointCount);
+  for(let i=1;i<cut.samples.length;i++){const a=cut.samples[i-1],b=cut.samples[i],dt=Math.hypot(b.x-a.x,b.z-a.z)/40;race.tick(dt);race.record('player',b,dt);}
+  assert.equal(race.player.passed,Math.floor(cut.to/TAU*t.checkpointCount));const passed=race.player.passed;race.record('player',cut.samples.at(-1)!,1/60);assert.equal(race.player.passed,passed);
+ }
+});
 test('real driving and shared ramp AI finish 72 ordered checkpoints on the new course',()=>{
  const t=new CityTrack(),p=new DrivingModel(),ai=new AIController('ai-2','AI',170/3.6,5,t,-.02),ramps=new Ramps(t);t.spawn(p);ai.setRamps(ramps);
  const race=new RaceController(t,[{id:'player',name:'p',position:p},{id:ai.id,name:'ai',position:ai.model}]);race.phase='racing';let firstLap=0,jumps=0,rewards=0;

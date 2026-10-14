@@ -15,7 +15,7 @@ export class Ramps {
   onDecision?:(decision:RampDecision)=>void;
   private locks=new WeakMap<FlightController,{generation:number;rampId:string}>();
   constructor(private track: Track, scene?: THREE.Scene) {
-    const angles=track.isSpline?[.30,.36,.85].map(t=>t*Math.PI*2):RAMP_ANGLES;
+    const angles=track.isSpline?[.28,.38,.876].map(t=>t*Math.PI*2):RAMP_ANGLES;
     this.data=angles.map((angle,i)=>({id:`ramp-${i+1}`,angle,heading:track.heading(angle),width:this.width,length:this.length,height:2,minSpeed:2,entry:track.point(angle-this.length/track.radius),lip:track.point(angle),landing:track.point(angle+96/track.radius)}));
     if (!scene) return;
     const geometry = new THREE.BufferGeometry();

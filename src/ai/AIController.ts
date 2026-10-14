@@ -41,7 +41,7 @@ export class AIController {
     const crowded=(r:RampData)=>peers.filter(p=>p.id!==this.id&&(p.height??0)<1.2).filter(p=>{const loc=this.ramps!.local(p.model,r);return loc.along>-40&&loc.along<50&&Math.abs(loc.radial)<3;}).length>=2;
     if(!this.plan){
       const ramp=[...this.ramps.data].sort((a,b)=>this.rampDistance(a)-this.rampDistance(b))[0],distance=this.rampDistance(ramp);
-      if(distance<145){const visit=this.visits.get(ramp.id)??0;this.visits.set(ramp.id,visit+1);
+      if(distance<(this.track.isSpline?220:145)){const visit=this.visits.get(ramp.id)??0;this.visits.set(ramp.id,visit+1);
         const alignmentTime=Math.abs(this.track.offset(this.model))/3+.3;
         const timeToEntry=Math.max(0,distance-ramp.length)/Math.max(15,this.model.speed);
         const forecast=Math.min(this.targetSpeed,this.model.speed+this.acceleration*timeToEntry);
