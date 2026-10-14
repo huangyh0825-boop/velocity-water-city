@@ -21,13 +21,13 @@
     }
   ],
   "standard": {
-    "triangles": 222596,
+    "triangles": 263204,
     "meshes": 13,
-    "bytes": 10167000
+    "bytes": 15709780
   },
   "low": {
-    "triangles": 89028,
+    "triangles": 105233,
     "meshes": 13,
-    "bytes": 3226576
+    "bytes": 6496840
   }
 }

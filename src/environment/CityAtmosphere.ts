@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {CityTrack} from '../track/CityTrack';
 import {readableSign,disposeSign} from './ReadableSign';
+import {ScreenHousing} from './ScreenHousing';
 interface Screen {index:number;side:number;offset:number;y:number;w:number;h:number;title:string;sub:string;theme:string;local?:{x:number;z:number};color?:string}
 
 /** Scenic screens and instanced maglev traffic only; no racer, collision or route writes. */
@@ -8,6 +9,7 @@ export class CityAtmosphere {
  readonly root=new THREE.Group();private pods:THREE.InstancedMesh;private lights:THREE.InstancedMesh;
  private pose=new THREE.Object3D();private h:number;private center:THREE.Vector3;
  private optional:THREE.Group[]=[];
+ private housings=new ScreenHousing();
  constructor(private track:CityTrack){
   const a=.06*Math.PI*2,p=track.point(a);this.h=track.heading(a);this.center=new THREE.Vector3(p.x,0,p.z);this.root.name='race-city-atmosphere';
   // Local coordinates match the Blender GLB placement, not camera-facing billboard rotation.
@@ -35,8 +37,10 @@ export class CityAtmosphere {
    }
    const map=new THREE.CanvasTexture(canvas);map.colorSpace=THREE.SRGBColorSpace;const sign=readableSign(map,row.w,row.h,`atmosphere-${row.theme}-${row.index}`,row.theme==='shop'?12:.12,true);sign.position.set(local.x,row.y,local.z);sign.rotation.y=track.heading(angle)-this.h;
    if(row.theme==='holo'){for(const face of sign.children){const mat=(face as THREE.Mesh).material as THREE.MeshStandardMaterial;mat.transparent=true;mat.opacity=.9;mat.depthWrite=false;}this.optional.push(sign);}
+   if(row.theme==='brand'||row.theme==='race')this.housings.add(row.w,row.h,sign.position,sign.rotation.y);
    this.root.add(sign);
   }
+  this.root.add(this.housings.root);
   // Three small scenic pods share geometry/material instead of separate actors.
   const geometry=new THREE.CapsuleGeometry(.85,3.8,4,8);geometry.rotateX(Math.PI/2);
   this.pods=new THREE.InstancedMesh(geometry,new THREE.MeshStandardMaterial({color:'#748f9e',metalness:.75,roughness:.25}),3);this.pods.instanceMatrix.setUsage(THREE.DynamicDrawUsage);this.pods.frustumCulled=false;
@@ -51,6 +55,6 @@ export class CityAtmosphere {
    this.pose.translateZ(2.5);this.pose.updateMatrix();this.lights.setMatrixAt(i,this.pose.matrix);
   }this.pods.instanceMatrix.needsUpdate=true;this.lights.instanceMatrix.needsUpdate=true;
  }
- setLow(low:boolean){this.pods.visible=this.lights.visible=!low;this.optional.forEach(o=>o.visible=!low);}
- dispose(){for(const child of [...this.root.children])if(child.userData.readableSign)disposeSign(child);for(const mesh of [this.pods,this.lights]){mesh.geometry.dispose();(mesh.material as THREE.Material).dispose();}this.root.removeFromParent();}
+ setLow(low:boolean){this.pods.visible=this.lights.visible=!low;this.housings.root.visible=!low;this.optional.forEach(o=>o.visible=!low);}
+ dispose(){for(const child of [...this.root.children])if(child.userData.readableSign)disposeSign(child);this.housings.dispose();for(const mesh of [this.pods,this.lights]){mesh.geometry.dispose();(mesh.material as THREE.Material).dispose();}this.root.removeFromParent();}
 }

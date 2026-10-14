@@ -21,3 +21,5 @@ Three.js、Vite 与原项目 npm 依赖继续适用各自许可证。本阶段�
 ## Blender 城市样板区
 
 新增建筑、桥梁、水岸为 Blender 4.5.9 原创资产，可编辑源位于 `assets/city-sample/source/waterfront-sample.blend`，导出位于 `public/models/city-sample/`。本次引入 ambientCG Concrete034、Metal032 的免费 **CC0 1.0** 贴图，许可明确允许原文件再分发、无需署名。仍保留来源记录；没有将第三方贴图标为原创。逐项下载核验、候选排除及许可链接见 [城市样板资源清单](city-sample/resources.md)。没有采用任何未经许可的商业游戏资源，也没有购买付费模型。
+
+质感强化新增 `coated-alloy-{basecolor,normal,orm}.png`、`composite-paving-{basecolor,normal,orm}.png`（512×512）均为本项目原创程序化贴图，源码 `scripts/art/surface-materials.py`；未使用外部纹理或商业游戏图像。玻璃图集、接触遮蔽和广告屏仍为原创。原创资产继续由项目所有者决定整体公开许可证，本说明不额外将其授权为CC0。

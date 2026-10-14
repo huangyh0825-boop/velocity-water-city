@@ -2,11 +2,14 @@
 Run blender --background --factory-startup --python scripts/art/build-city-sample.py
 Editable curves/loft meshes, bevels and UV/PBR survive in .blend; atrium boolean is baked.
 """
-import bpy, math, json, random
+import bpy, math, json, random,sys
 from pathlib import Path
 from mathutils import Vector,Matrix
 
 ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+from importlib.machinery import SourceFileLoader
+surfaces=SourceFileLoader('city_surfaces',str(Path(__file__).with_name('surface-materials.py'))).load_module()
 SRC=ROOT/'assets/city-sample/source'; TEX=ROOT/'assets/city-sample/textures'
 OUT=ROOT/'public/models/city-sample'; OUT.mkdir(parents=True,exist_ok=True)
 route=json.loads((SRC/'route.json').read_text(encoding='utf-8-sig'))
@@ -38,6 +41,8 @@ def pbr(name,prefix,metal=False):
     return m
 concrete=pbr('CC0_Concrete034', 'Concrete034');steel=pbr('CC0_Metal032','Metal032',True)
 white=material('Pearl ceramic',(.48,.58,.64),.25,.32)
+white.name='Coated architectural alloy'
+surfaces.bind_surface(white,surfaces.make_surface(TEX,'coated-alloy'),.32)
 dark=material('Graphite joint seals',(.032,.066,.087),.35,.52)
 glass=material('Blue laminated glazing',(.065,.23,.33),.48,.16)
 glass2=material('Silver blue glazing',(.14,.34,.43),.4,.22)
@@ -47,6 +52,7 @@ warm=material('Occupied window interiors',(.45,.39,.23),0,.5)
 w=warm.node_tree.nodes.get('Principled BSDF');w.inputs['Emission Color'].default_value=(.3,.21,.09,1);w.inputs['Emission Strength'].default_value=.35
 bronze=material('Amber anodized alloy',(.44,.22,.065),.68,.32)
 paving=material('Graphite plaza paving',(.11,.16,.19),.08,.85)
+surfaces.bind_surface(paving,surfaces.make_surface(TEX,'composite-paving','paving'),.45)
 interior=material('Recessed lobby glass',(.08,.24,.28),.1,.16)
 interior.node_tree.nodes.get('Principled BSDF').inputs['Alpha'].default_value=.72
 interior.surface_render_method='DITHERED'
@@ -63,46 +69,58 @@ for y in range(H):
         elif recess:c=(.024,.067,.093)
         else:
             tint=.82+(window*17%11)*.035
-            c=tuple(a*tint*(.74 if shade else 1) for a in (.055,.2,.29))
+            c=tuple(a*tint*(.74 if shade else 1) for a in (.14,.30,.39))
             if window%13==0 and 15<xx<47 and 15<yy<45:c=(.23,.25,.22)
         pixels.extend((*c,1))
 image.pixels=pixels;image.filepath_raw=str(TEX/'original-curtain-wall.png');image.file_format='PNG';image.save()
 tex=glass.node_tree.nodes.new('ShaderNodeTexImage');tex.image=image;glass.node_tree.links.new(tex.outputs['Color'],glass.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
 # Original micro-normal and roughness atlas, independent from glass color.
 for kind in ['normal','roughness']:
-    atlas=bpy.data.images.new('Original glazing '+kind,width=W,height=H);data=[]
+    atlas=bpy.data.images.new('Original glazing '+kind,width=W,height=H);atlas.colorspace_settings.name='Non-Color';data=[]
     for y in range(H):
         for x in range(W):
             xx=x%64;yy=y%64
             if kind=='normal':c=(.38 if xx==5 else .62 if xx==62 else .5,.38 if yy==5 else .62 if yy==62 else .5,1)
-            else:c=(.55,.55,.55) if xx<5 or yy<5 else tuple([.14+(x//64+y//64)%5*.025]*3)
+            else:c=(.55,.55,.55) if xx<5 or yy<5 else tuple([.16+(x//64+y//64)%5*.025]*3)
             data.extend((*c,1))
-    atlas.pixels=data;atlas.colorspace_settings.name='Non-Color';atlas.filepath_raw=str(TEX/f'original-glazing-{kind}.png');atlas.file_format='PNG';atlas.save()
+    # Setting color space after pixels clears generated image buffers in Blender.
+    atlas.pixels.foreach_set(data);atlas.filepath_raw=str(TEX/f'original-glazing-{kind}.png');atlas.file_format='PNG';atlas.save()
     for mat in [glass,glass2]:
         n=mat.node_tree.nodes.new('ShaderNodeTexImage');n.image=atlas;b=mat.node_tree.nodes.get('Principled BSDF')
         if kind=='normal':
-            normal=mat.node_tree.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.3;mat.node_tree.links.new(n.outputs['Color'],normal.inputs['Color']);mat.node_tree.links.new(normal.outputs['Normal'],b.inputs['Normal'])
+            normal=mat.node_tree.nodes.new('ShaderNodeNormalMap');normal.inputs['Strength'].default_value=.025;mat.node_tree.links.new(n.outputs['Color'],normal.inputs['Color']);mat.node_tree.links.new(normal.outputs['Normal'],b.inputs['Normal'])
         else:mat.node_tree.links.new(n.outputs['Color'],b.inputs['Roughness'])
 
-def mesh(name,verts,faces,mat,uv=None):
+for mat in [glass,glass2]:
+    b=mat.node_tree.nodes.get('Principled BSDF');b.inputs['Metallic'].default_value=0;b.inputs['IOR'].default_value=1.5;b.inputs['Coat Weight'].default_value=.12;b.inputs['Coat Roughness'].default_value=.1
+
+def mesh(name,verts,faces,mat,uv=None,uv_period=None):
     data=bpy.data.meshes.new(name);data.from_pydata(verts,[],faces);data.update()
     o=bpy.data.objects.new(name,data);active.objects.link(o);data.materials.append(mat)
     for p in data.polygons:p.use_smooth=True
     layer=data.uv_layers.new(name='UVMap')
     for poly in data.polygons:
+        coords=[uv(data.loops[index].vertex_index) for index in poly.loop_indices] if uv else []
+        wrap=uv_period is not None and max(c[0] for c in coords)-min(c[0] for c in coords)>uv_period/2
         for index in poly.loop_indices:
             pos=data.vertices[data.loops[index].vertex_index].co
-            layer.data[index].uv=uv(data.loops[index].vertex_index) if uv else (pos.x/4,pos.y/4 if abs(poly.normal.z)>.5 else pos.z/4)
+            if uv:
+                u,w=uv(data.loops[index].vertex_index);layer.data[index].uv=(u+uv_period if wrap and u<uv_period/2 else u,w)
+            elif abs(poly.normal.z)>.5:layer.data[index].uv=(pos.x/4,pos.y/4)
+            elif abs(poly.normal.x)>abs(poly.normal.y):layer.data[index].uv=(pos.y/4,pos.z/4)
+            else:layer.data[index].uv=(pos.x/4,pos.z/4)
     return o
 def bevel(o,width=.12,segments=3):
-    mod=o.modifiers.new('Architectural edge bevel','BEVEL');mod.width=width;mod.segments=segments
+    mod=o.modifiers.new('Architectural edge bevel','BEVEL');mod.width=width;mod.segments=segments;mod.harden_normals=True
     mod=o.modifiers.new('Weighted facade normals','WEIGHTED_NORMAL');mod.keep_sharp=True
     return o
 def extrude(name,outline,low,high,mat,edge=.1):
     n=len(outline);verts=[v(x,h,z) for h in [low,high] for x,z in outline]
     # Outlines are CCW in local X/Z; Blender Y reverses direction.
     faces=[tuple(range(n)),tuple(reversed(range(n,2*n)))]+[(i,(i+1)%n,(i+1)%n+n,i+n) for i in range(n)]
-    return bevel(mesh(name,verts,faces,mat),edge)
+    o=mesh(name,verts,faces,mat)
+    for poly in o.data.polygons[:2]:poly.use_smooth=False
+    return bevel(o,edge)
 def ellipse(rx,rz,n=48,cx=0,cz=0):return [(cx+math.cos(i*math.tau/n)*rx,cz+math.sin(i*math.tau/n)*rz) for i in range(n)]
 def rounded(rx,rz,n=48,cx=0,cz=0):
     return [(cx+math.copysign(abs(math.cos(i*math.tau/n))**.45,math.cos(i*math.tau/n))*rx,cz+math.copysign(abs(math.sin(i*math.tau/n))**.45,math.sin(i*math.tau/n))*rz) for i in range(n)]
@@ -115,15 +133,25 @@ def ring(name,outline,height,radius=.09,mat=steel):return curve(name,[(x,height,
 def loft(name,rings,mat):
     n=len(rings[0][1]);verts=[v(x,h,z) for h,p in rings for x,z in p]
     faces=[(j*n+(i+1)%n,j*n+i,(j+1)*n+i,(j+1)*n+(i+1)%n) for j in range(len(rings)-1) for i in range(n)]
-    return mesh(name,verts,faces,mat,lambda i:((i%n)/n*2, i//n/16))
+    return mesh(name,verts,faces,mat,lambda i:((i%n)/n*2, i//n/16),2)
 def framed(name,rings,mat=glass,spacing=4):
     loft(name+' glazing',rings,mat)
     for i,(h,outline) in enumerate(rings):ring(name+' slab '+str(i),outline,h,.075)
     for j in range(0,len(rings[0][1]),spacing):curve(name+' vertical mullion',[(p[j][0],h,p[j][1]) for h,p in rings],.09,white)
     extrude(name+' roof',rings[-1][1],rings[-1][0],rings[-1][0]+.45,steel,.12)
 
+def engineered_arch(name,points,mat):
+    # Swept I-section with actual flange/web recesses, not a smooth tube.
+    profile=[(-.58,-.48),(-.44,-.48),(-.44,-.12),(.44,-.12),(.44,-.48),(.58,-.48),(.58,.48),(.44,.48),(.44,.12),(-.44,.12),(-.44,.48),(-.58,.48)]
+    n=len(profile);verts=[]
+    for j,(x,h,z) in enumerate(points):
+        left=points[max(0,j-1)];right=points[min(len(points)-1,j+1)];dx=right[0]-left[0];dh=right[1]-left[1];length=math.hypot(dx,dh);nx=-dh/length;nh=dx/length
+        for a,b in profile:verts.append(v(x+nx*a,h+nh*a,z+b))
+    faces=[tuple(reversed(range(n))),tuple(range((len(points)-1)*n,len(points)*n))]+[(j*n+i,j*n+(i+1)%n,(j+1)*n+(i+1)%n,(j+1)*n+i) for j in range(len(points)-1) for i in range(n)]
+    o=mesh(name,verts,faces,mat);o.data.polygons[0].use_smooth=False;o.data.polygons[1].use_smooth=False;return bevel(o,.025,2)
+
 # A continuous asymmetrically tapered tower, structural crown and deep facade ribs.
-extrude('Aster elliptical podium',ellipse(20,17),.35,4,concrete,.35)
+extrude('Aster elliptical podium',ellipse(20,17),.25,4,concrete,.14)
 ring('Aster podium light',ellipse(20.1,17.1),3.6,.09,glow)
 rings=[]
 for floor in range(23):
@@ -132,6 +160,9 @@ for floor in range(23):
 framed('Aster',rings,glass,4)
 for i in [-1,1]:curve('Aster swept crown',[(i*9*(1-t*.4)+7*t*t,6+t*88,-12*(1-t*.35)) for t in [j/24 for j in range(25)]],.35,white)
 for i in range(5):extrude('Aster roof heat exchangers',rounded(1.3,2.2,16,i*2-2,0),85,86.5,dark,.16)
+for i in range(5):
+    ring('Aster exchanger sealed panel joint',rounded(1.32,2.22,16,i*2-2,0),85.3,.035,dark)
+    for j in range(5):curve('Aster exchanger top louvers',[(i*2-3,86.53,-1.6+j*.7),(i*2-1,86.53,-1.6+j*.7)],.065,steel)
 # One landmark, with a recessed arrival lobby and articulated metallic service crown.
 extrude('Aster arrival portico',rounded(8,6,32,0,-16),4.5,5.2,steel,.16)
 extrude('Aster glazed arrival lobby',rounded(6.5,3.5,32,0,-15),.45,4.5,interior,.08)
@@ -142,7 +173,7 @@ ring('Aster crown antenna',ellipse(4,3,48,7,-2),87,.13,glow)
 
 # Split oval volumes twisted along their height, joined by elevated glazed skywalks.
 active=collection('02_Helix_Split_Tower')
-extrude('Helix crescent plaza',rounded(27,19),.35,3.5,concrete,.5)
+extrude('Helix crescent plaza',rounded(27,19),.25,3.5,concrete,.16)
 for side in [-1,1]:
     rings=[]
     for floor in range(26):
@@ -165,7 +196,7 @@ for side in [-1,1]:
 # Broad, stepped marina pavilion with a distinct teal facade and true open roof atrium.
 active=collection('03_Marina_Atrium')
 glass3=glass.copy();glass3.name='Marina teal glazing'
-extrude('Marina curved podium',rounded(31,22),.35,2.5,concrete,.45)
+extrude('Marina curved podium',rounded(31,22),.25,2.5,concrete,.15)
 for level in range(3):
     rx=26-level*4;rz=17-level*3;z=-level*3;h=2.5+level*8.5
     outline=rounded(rx,rz,48,0,z)
@@ -188,20 +219,29 @@ for i in range(5):extrude('Marina rooftop ventilator',rounded(1.1,2,16,10+i*1.7,
 
 # Bridge: bevelled deck, ribbed elliptical arch, hangers, piers, bearing joints and rail.
 active=collection('04_Lumen_Bridge');bridge_z=20
-extrude('Lumen tapered bridge deck',[(-32,bridge_z-5),(-24,bridge_z-4),(24,bridge_z-4),(32,bridge_z-5),(32,bridge_z+5),(24,bridge_z+4),(-24,bridge_z+4),(-32,bridge_z+5)],18.6,19.6,white,.28)
+extrude('Lumen tapered bridge deck',[(-32,bridge_z-5),(-24,bridge_z-4),(24,bridge_z-4),(32,bridge_z-5),(32,bridge_z+5),(24,bridge_z+4),(-24,bridge_z+4),(-32,bridge_z+5)],18.6,19.6,white,.085)
 for side in [-1,1]:
     z=bridge_z+side*4.1
     arch=[(-31+62*i/64,19.5+15*math.sin(math.pi*i/64)**.78,z) for i in range(65)]
-    curve('Lumen parabolic compression rib',arch,.58,white)
+    engineered_arch('Lumen coated I-section arch',arch,white)
     curve('Lumen arch metal seam',[(x,h+.55,z) for x,h,z in arch],.065,steel)
     for i in range(2,15):
         x=-31+62*i/16;h=19.5+15*math.sin(math.pi*i/16)**.78
         curve('Lumen tension hanger',[(x,19.7,z),(x,h,z)],.062,steel)
+        for height in [19.85,h-.2]:
+            eye=curve('Hanger pin eye',[(x+.18*math.cos(j*math.tau/12),height+.18*math.sin(j*math.tau/12),z) for j in range(12)],.04,steel,True);eye.data.bevel_resolution=0
+            curve('Hanger swaged coupling',[(x,height-.24,z),(x,height+.24,z)],.11,steel)
+    for index in range(8,57,8):
+        x,h,z=arch[index];l=arch[index-1];r=arch[index+1];dx=r[0]-l[0];dh=r[1]-l[1];length=math.hypot(dx,dh);nx=-dh/length;nh=dx/length
+        curve('Arch welded flange splice',[(x+nx*a,h+nh*a,z+b) for a,b in [(-.6,-.52),(.6,-.52),(.6,.52),(-.6,.52)]],.055,steel,True)
+        for side_z in [-.53,.53]:curve('Arch splice pin head',[(x-.09,h,z+side_z),(x+.09,h,z+side_z)],.075,steel)
     for h in [20.15,20.9]:curve('Lumen pedestrian guardrail',[(-32,h,z),(32,h,z)],.065,steel)
     for i in range(33):curve('Lumen rail stanchion',[(-32+i*2,19.5,z),(-32+i*2,21,z)],.04,steel)
     curve('Bridge navigation light',[(-31,18.5,z),(31,18.5,z)],.065,glow)
 for x in [-30.5,30.5]:
-    extrude('Lumen sculpted pier',ellipse(2.4,5,32,x,bridge_z),.3,18.9,concrete,.25)
+    extrude('Lumen sculpted pier',ellipse(2.4,5,32,x,bridge_z),.25,18.45,concrete,.08)
+    extrude('Pier elastomer bearing',ellipse(2.45,5.05,32,x,bridge_z),18.45,18.58,dark,.025)
+    extrude('Pier steel capital',ellipse(2.6,5.2,32,x,bridge_z),18.58,18.9,steel,.045)
     ring('Pier collar',ellipse(2.65,5.2,32,x,bridge_z),16.8,.18,steel)
     extrude('Lumen pier foundation',rounded(4,6,32,x,bridge_z),.2,1.7,concrete,.18)
     extrude('Lumen bridge service hatch',rounded(1,1.6,24,x,bridge_z-5.5),.4,3.3,dark,.12)
@@ -229,6 +269,9 @@ for side in [-1,1]:
     curve('Cyan quay navigation ribbon',[(x,.9,z) for x,z in [edge(p,2.1) for p in points]],.035,glow)
     for i in range(0,len(points),2):
         p=points[i];x,z=edge(p,3);curve('Quay rail post',[(x,.68,z),(x,2,z)],.065,steel)
+        extrude('Quay rail hex anchor',ellipse(.24,.24,6,x,z),.68,.79,steel,.025)
+        for h in [1.38,1.95]:extrude('Quay rail connector sleeve',ellipse(.115,.115,8,x,z),h-.055,h+.055,steel,0)
+        for ox in [-.14,.14]:extrude('Quay anchor fastening',ellipse(.055,.055,6,x+ox,z),.79,.83,steel,0)
         x,z=edge(p,1.95);curve('Rubber waterfront fender',[(x,-.05,z),(x,.55,z)],.22,dark)
         if i%4==0:
             x,z=edge(p,7);extrude('Bollard foot',ellipse(.32,.32,16,x,z),.68,.78,steel,.025);curve('Mooring bollard',[(x,.78,z),(x,1.28,z)],.13,steel)
@@ -382,6 +425,8 @@ bpy.ops.object.select_all(action='DESELECT')
 for o in copies:o.select_set(True)
 bpy.context.view_layer.objects.active=copies[0]
 bpy.ops.object.convert(target='MESH')
+for o in export_collection.objects:
+    if o.type=='MESH':o.data.validate()
 # Joining per material keeps draw calls bounded, unlike leaving every window as an object.
 groups={}
 for o in list(export_collection.objects):
@@ -398,6 +443,7 @@ tris=sum(sum(len(p.vertices)-2 for p in o.data.polygons) for o in runtime)
 for o in runtime:
     bpy.context.view_layer.objects.active=o
     d=o.modifiers.new('Low LOD controlled decimation','DECIMATE');d.ratio=.4;d.use_collapse_triangulate=True;bpy.ops.object.modifier_apply(modifier=d.name)
+    o.data.validate()
 # Low tier textures resample to 512 or less and remove normal maps in runtime.
 for image in bpy.data.images:
     if image.size[0]>512 or image.size[1]>512:image.scale(512,512)
