@@ -13,7 +13,7 @@ export class Hud {
   private nitroBar: HTMLElement; private nitroLabel: HTMLElement;
   constructor(root: HTMLElement, input: InputController, restart: () => void, recover: () => void, quality: (low: boolean) => void, audio?:AudioController) {
     root.insertAdjacentHTML('beforeend', `
-      <header class="topbar"><div class="brand"><span class="brand-icon">≋</span><div><strong>极速水城<span>未来竞速</span></strong><small>VELOCITY / WATER CITY</small></div></div><div class="phase"><i></i> PHASE 04 <span>晴日水城</span></div></header>
+      <header class="topbar"><div class="brand"><span class="brand-icon">≋</span><div><strong>极速水城<span>未来竞速</span></strong><small>VELOCITY / WATER CITY</small></div></div><div class="phase"><i></i> PHASE 05 <span>曙光都市</span></div></header>
       <div class="race-hud" aria-label="比赛信息"><div><small>POS</small><strong id="rank">1 / 5</strong></div><div><small>LAP</small><strong id="lap">1 / 3</strong></div><div><small>TIME</small><strong id="race-time">00:00.00</strong></div></div>
       <div class="tools"><button id="quality" type="button">画质 · 标准</button><button id="recover" type="button">返回赛道 ↺</button><button id="reset" type="button">重新比赛</button></div>
       <div class="audio-controls"><button id="sound" type="button" aria-pressed="true">声音 · 开</button><label>音量 <input id="volume" type="range" min="0" max="100" value="35" aria-label="总音量"></label></div>
@@ -25,7 +25,7 @@ export class Hud {
       <div class="touch pedals"><button data-action="brake" aria-label="减速" class="brake">减速</button><button data-action="throttle" aria-label="加速" class="throttle">⌃<span>加速</span></button></div>
       <div class="touch abilities"><button data-action="trick" aria-label="空中特技">特技</button><button data-action="nitro" aria-label="氮气加速">氮气</button></div>
       <div class="rotate-hint">↻ 横屏驾驶，视野更开阔</div>
-      <footer>天际环城水道 · 顺向通过全部检查点 <span>01 / SKYLINE CIRCUIT</span></footer>
+      <footer>曙光都市 · 顺向通过全部检查点 <span>4.75 KM / SIX DISTRICTS</span></footer>
       <section id="result" class="result" hidden role="dialog" aria-modal="true" aria-labelledby="result-title"><div class="result-card"><small>RACE COMPLETE</small><h1 id="result-title">比赛完成</h1><p id="result-summary"></p><div id="result-table"></div><p class="result-note">玩家完赛时结算 · 未完赛选手按赛程进度排序</p><button id="race-again" type="button">再赛一场 →</button></div></section>`);
     root.querySelectorAll<HTMLButtonElement>('[data-action]').forEach(button => input.bindButton(button, button.dataset.action!));
     root.querySelector('#reset')!.addEventListener('click', restart);
@@ -52,8 +52,8 @@ export class Hud {
     this.lap.textContent = `${race.lap()} / ${race.laps}`;
     this.time.textContent = formatTime(race.player.finishTime ?? race.elapsed);
     const gate = race.nextCheckpoint(), angle = race.track.angle(model);
-    const forwardSpeed = -Math.sin(angle) * model.vx + Math.cos(angle) * model.vz;
-    this.status.textContent = race.phase === 'countdown' ? '准备起航 · 沿水道箭头行驶' : race.phase === 'finished' ? '三圈完成' : wallContact ? '触碰边界 · 转向返回水道' : forwardSpeed < -1 ? '逆向行驶 · 请调转方向' : gate === 0 ? '下一检查点 · 起终点' : `下一检查点 · CP 0${gate} / 07`;
+    const heading=race.track.heading(angle),forwardSpeed = Math.sin(heading) * model.vx + Math.cos(heading) * model.vz;
+    this.status.textContent = race.phase === 'countdown' ? '准备起航 · 沿水道箭头行驶' : race.phase === 'finished' ? '三圈完成' : wallContact ? '触碰边界 · 转向返回水道' : forwardSpeed < -1 ? '逆向行驶 · 请调转方向' : gate === 0 ? '下一检查点 · 起终点' : `下一检查点 · CP ${String(gate).padStart(2,'0')} / ${race.track.checkpointCount-1}`;
     if(race.phase==='racing' && flight?.airborne) this.status.textContent=`${tricks?.message ?? '腾空'} · ${flight.remainingTime.toFixed(1)}s`;
     const text = race.phase === 'countdown' ? String(Math.ceil(race.countdown)) : race.phase === 'racing' && race.elapsed < 0.8 ? 'GO' : '';
     if (this.countdown.dataset.value !== text) {
