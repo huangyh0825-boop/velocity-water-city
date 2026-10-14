@@ -25,6 +25,7 @@ import { AudioController } from '../audio/AudioController';
 import { RampDebug } from '../debug/RampDebug';
 import { CityEnvironment } from '../environment/CityEnvironment';
 import {CityDistricts} from '../environment/CityDistricts';
+import {CitySample} from '../environment/CitySample';
 import { CountdownCue } from '../audio/CountdownCue';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {distanceGain} from '../audio/AudioMix';
@@ -33,6 +34,7 @@ export class Game {
   private scene = createScene();
   private track = new CityTrack();
   private city=new CityDistricts(this.scene,this.track);
+  private citySample=new CitySample(this.scene,this.track,loaded=>this.city.setSampleLoaded(loaded));
   private trackView = new TrackView(this.scene, this.track);
   private craft = new Watercraft(this.scene);
   private flight = new FlightController();
@@ -72,6 +74,7 @@ export class Game {
     this.renderer = new THREE.WebGLRenderer({ antialias: !matchMedia('(pointer: coarse)').matches, powerPreference: 'high-performance', preserveDrawingBuffer: false });
     this.renderer.autoClear = true; // Clear every frame; no history accumulation or motion blur.
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;this.citySample.configureSun(this.scene);
     this.renderer.toneMapping=THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure=1;
     const generator=new THREE.PMREMGenerator(this.renderer),room=new RoomEnvironment();this.reflection=generator.fromScene(room,.04);this.scene.environment=this.reflection.texture;room.dispose();generator.dispose();
@@ -80,7 +83,7 @@ export class Game {
     root.append(this.renderer.domElement);
     this.ai.forEach(ai=>ai.setRamps(this.ramps));
     this.restart();
-    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low);void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(true)); this.resize(); },this.audio);
+    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low);void this.citySample.setLow(low);this.renderer.shadowMap.enabled=!low;void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(true)); this.resize(); },this.audio);
     this.debug=new RampDebug(root);this.ramps.onDecision=value=>this.debug.record(value);
     window.addEventListener('pointerdown',this.activateAudio);
     window.addEventListener('keydown',this.activateAudio);
@@ -192,6 +195,7 @@ export class Game {
     this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks); this.renderer.render(this.scene, this.camera.camera);
   };
   dispose() {
+    this.citySample.dispose();
     this.craft.dispose();this.aiCraft.forEach(c=>c.dispose());this.reflection?.dispose();
     cancelAnimationFrame(this.frameId); this.input.dispose();
     this.debug.dispose();

@@ -1,0 +1,33 @@
+{
+  "source": "assets/city-sample/source/waterfront-sample.blend",
+  "generator": "scripts/art/build-city-sample.py",
+  "blender": "4.5.9 LTS",
+  "length": 280,
+  "center": {
+    "x": -197.255048524888,
+    "z": -45.631187290179625
+  },
+  "heading": -0.32340572059365374,
+  "adverts": [
+    {
+      "x": -30.756676379480034,
+      "z": -32.99709756243877,
+      "heading": 0.06630464536710468
+    },
+    {
+      "x": 36.8080128313739,
+      "z": 85.27991465393805,
+      "heading": 0.30297602155581826
+    }
+  ],
+  "standard": {
+    "triangles": 255244,
+    "meshes": 7,
+    "bytes": 10999944
+  },
+  "low": {
+    "triangles": 102092,
+    "meshes": 7,
+    "bytes": 3462152
+  }
+}

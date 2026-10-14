@@ -1,8 +1,8 @@
-import * as THREE from 'three';import {CityTrack,DISTRICTS} from '../track/CityTrack';import {ModelBatch} from '../player/ModelBatch';import {glassFacade} from './CityEnvironment';
+import * as THREE from 'three';import {CityTrack,DISTRICTS} from '../track/CityTrack';import {ModelBatch} from '../player/ModelBatch';import {glassFacade} from './CityEnvironment';import {inCitySample} from './CitySample';
 export class CityDistricts {
- readonly root=new THREE.Group();readonly details=new THREE.Group();
+ readonly root=new THREE.Group();readonly details=new THREE.Group();private legacySample=new THREE.Group();
  constructor(scene:THREE.Scene,readonly track:CityTrack){
-  this.root.add(this.details);scene.add(this.root);
+  this.root.add(this.details,this.legacySample);scene.add(this.root);
   const glass=new THREE.MeshStandardMaterial({color:'#b5dbe8',map:glassFacade(),metalness:.35,roughness:.23}),silver=new THREE.MeshStandardMaterial({color:'#c7d9e2',metalness:.45,roughness:.38}),stone=new THREE.MeshStandardMaterial({color:'#91adbd',roughness:.9}),dark=new THREE.MeshStandardMaterial({color:'#18364b',metalness:.4,roughness:.5}),glow=new THREE.MeshBasicMaterial({color:'#96faff'});
   const base=new ModelBatch(),detail=new ModelBatch();
   const terrainVertices:number[]=[];
@@ -17,10 +17,12 @@ export class CityDistricts {
   const terrainGeometry=new THREE.BufferGeometry();terrainGeometry.setAttribute('position',new THREE.Float32BufferAttribute(terrainVertices,3));terrainGeometry.computeVertexNormals();
   const shore=new THREE.Mesh(terrainGeometry,new THREE.MeshStandardMaterial({color:'#b7cbd4',roughness:.95,side:THREE.DoubleSide}));this.root.add(shore);
   const part=(batch:ModelBatch,g:THREE.BufferGeometry,m:THREE.Material,x:number,y:number,z:number,rotation=0)=>batch.add(g,m,new THREE.Vector3(x,y,z),undefined,new THREE.Euler(0,rotation,0));
+  const mainBase=base,mainDetail=detail;
   for(let zone=0;zone<6;zone++)for(let j=0;j<10;j++){
    const angle=(zone+(j+.25)/10)/6*Math.PI*2,side=j%2?1:-1,lane=side*(track.widthAt(angle)+25+(j%3)*20),p=track.point(angle,lane),heading=track.heading(angle),height=35+(j*13%65);
    // Building podiums are deliberately outside all legal water corridors, including cuts.
    if(track.contains(p, -15))continue;
+   const sample=inCitySample(track,angle),base=sample?new ModelBatch():mainBase,detail=sample?new ModelBatch():mainDetail;
    part(base,new THREE.CylinderGeometry(17,19,1.8,8),stone,p.x,.7,p.z,heading);
    if(zone===0){
     for(let tier=0;tier<3;tier++)part(base,new THREE.BoxGeometry(24-tier*5,height/3,24-tier*5),tier===0?stone:glass,p.x,(tier+.5)*height/3,p.z,heading);
@@ -38,6 +40,7 @@ export class CityDistricts {
     part(detail,new THREE.BoxGeometry(1,33,1),silver,p.x+12,16,p.z);part(detail,new THREE.BoxGeometry(25,.7,.7),silver,p.x+3,32,p.z);
    }
    for(let rib=0;rib<3;rib++){const off=(rib-1)*5;part(detail,new THREE.BoxGeometry(.22,height,1),silver,p.x+Math.cos(heading)*off,height/2,p.z-Math.sin(heading)*off,heading);}
+   if(sample){base.build(this.legacySample);detail.build(this.legacySample);}
   }
   for(const fraction of [.29,.40,.91]){
    const a=fraction*Math.PI*2,p=track.point(a),heading=track.heading(a),width=track.widthAt(a),group=new THREE.Group(),batch=new ModelBatch();group.position.set(p.x,0,p.z);group.rotation.y=heading;
@@ -70,4 +73,5 @@ export class CityDistricts {
   }
  }
  setLow(low:boolean){this.details.visible=!low;}
+ setSampleLoaded(loaded:boolean){this.legacySample.visible=!loaded;}
 }
