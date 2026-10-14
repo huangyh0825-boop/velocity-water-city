@@ -21,4 +21,6 @@ Blender 模块集合：
 
 也可以把路径替换成安装版 `blender.exe`。结果写入 `public/models/city-sample/`。`route.json` 是固定现有赛道的参考采样，不改变路线；自动化测试会检查它与游戏数据仍匹配。
 
-样板GLB为纯视觉，标准/低精度均按7个材质组合并；保留两种质量缓存，切换不会反复创建新贴图。基础细节未制作为单独动态对象，角色/比赛逻辑不依赖建筑节点。素材许可证和实际下载核验见 `docs/city-sample/resources.md`。
+样板GLB为纯视觉；保留两种质量缓存，切换不会反复创建新贴图。基础构造合并为材质组，角色/比赛逻辑不依赖建筑节点。素材许可证和实际下载核验见 `docs/city-sample/resources.md`。
+
+最新修订：三栋主建筑各只放置一次，增加入口、屋顶设备、不同立面、街区商业/维修/交通设施；当前标准222,596三角面、低精度89,028，主体13个材质组。新增 `original-glazing-normal.png`、`original-glazing-roughness.png` 为原创512×1024贴图。CityAtmosphere中的屏幕及交通舱是独立纯视觉组件，后者使用InstancedMesh，低画质关闭。

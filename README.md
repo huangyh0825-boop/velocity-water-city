@@ -4,6 +4,8 @@ TypeScript + Three.js + Vite 原创网页水上竞速原型。第五阶段试玩
 
 最新新增 **280米 Blender 城市样板区**，位于中央水道（发车后不远）。采用三种原创建筑、完整拱桥、连续水岸和免费 CC0 PBR 贴图；仅替换该段视觉，没有扩展至全地图，摩托和驾驶员保持不变。对比截图、预算与实测见 [样板区验收](docs/city-sample/validation.md)，资源逐项核验见 [来源清单](docs/city-sample/resources.md)。美术尚未达到《激流快艇2》成品水平，等待用户验收。
 
+最新视觉修订增加城市商业/维修/交通层次与三栋独立标志建筑，修复现用41块路牌的镜像/背面问题。标准街区22.26万面、低精度8.90万面；完整同镜头截图与运行证据见 [竞速氛围验收](docs/city-sample/atmosphere-validation.md)。此前样板验收保留为历史。
+
 样板区标准画质新增局部2048²静态日光阴影，加载/质量切换时更新；低画质关闭阴影、使用10.2万面/512²贴图资源。其余阶段的性能与画面说明保留为开发记录，以最新样板验收为准。
 
 ## 运行
@@ -80,7 +82,7 @@ Three.js 单独打包，业务逻辑保持小体积；水道边界、城市和�
 
 ## 验证与限制
 
-`npm test` 当前 76 项，保留原有驾驶与比赛回归，新增样板GLB材质、LOD及水道净空测试。最新结果见 [样板区验收](docs/city-sample/validation.md)。[第五阶段验收](docs/phase-5-validation.md)、[第四阶段验收](docs/phase-4-validation.md)、[跳台修复与 AI 验收](docs/ramp-ai-validation.md)与[第三阶段验收](docs/phase-3-validation.md)保留为历史记录，素材说明见 [素材与音效来源](docs/assets-license.md)。
+`npm test` 当前 77 项，保留原有驾驶与比赛回归，包含样板GLB材质、LOD、水道净空及路牌方向/UV测试。最新结果见 [竞速氛围验收](docs/city-sample/atmosphere-validation.md)。[第五阶段验收](docs/phase-5-validation.md)、[第四阶段验收](docs/phase-4-validation.md)、[跳台修复与 AI 验收](docs/ramp-ai-validation.md)与[第三阶段验收](docs/phase-3-validation.md)保留为历史记录，素材说明见 [素材与音效来源](docs/assets-license.md)。
 
 按 F8 开关跳台诊断，也可使用 `?debugRamps=1`。面板显示艇 ID、跳台 ID、运动状态、前后物理步位置、水平/垂直速度、高度、碰撞修正距离、艇体支撑比例及起跳/拒绝原因。控制台 `[ramp]` 在重要状态改变时记录完整碰撞子步轨迹；默认关闭，历史最多保留 240 条。
 

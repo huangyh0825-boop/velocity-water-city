@@ -1,0 +1,851 @@
+{
+  "date": "2026-10-14",
+  "baseline": "city-atmosphere-baseline",
+  "poses": {
+    "district": [
+      0,
+      44,
+      -150,
+      0,
+      25,
+      25
+    ],
+    "building": [
+      -33,
+      15,
+      -78,
+      -61,
+      32,
+      -50
+    ],
+    "bridge": [
+      4,
+      9,
+      -36,
+      0,
+      17,
+      25
+    ],
+    "driving": [
+      0,
+      3.2,
+      -66,
+      0,
+      2.5,
+      -5
+    ]
+  },
+  "signs": [
+    {
+      "name": "district-sign-0",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "district-sign-1",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "district-sign-2",
+      "normalAgainstTravel": -0.9999999999999999,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "district-sign-3",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "district-sign-4",
+      "normalAgainstTravel": -0.9996709358957845,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "district-sign-5",
+      "normalAgainstTravel": -0.9999888628726205,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "original-transit-advert",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "original-transit-advert",
+      "normalAgainstTravel": -0.9991006747252607,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "atmosphere-race-33",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "atmosphere-holo-18",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "atmosphere-holo-39",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "atmosphere-shop-8",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "atmosphere-shop-18",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "atmosphere-shop-45",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "atmosphere-brand-7",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "atmosphere-brand-35",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "atmosphere-brand-39",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-0",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-1",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-2",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-3",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-4",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-5",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-6",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-7",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-8",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-9",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-10",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-11",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-12",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-13",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-14",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-15",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-16",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-17",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-18",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-19",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-20",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-21",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-22",
+      "normalAgainstTravel": -1,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    },
+    {
+      "name": "checkpoint-sign-23",
+      "normalAgainstTravel": -1.0000000000000002,
+      "sides": [
+        {
+          "name": "approach-face",
+          "single": true,
+          "uvReadable": true
+        },
+        {
+          "name": "return-face",
+          "single": true,
+          "uvReadable": true
+        }
+      ]
+    }
+  ],
+  "art": {
+    "perf": {
+      "fps": 240.0096003840154,
+      "p95": 4.299999999999272,
+      "over50": 0,
+      "calls": 120,
+      "triangles": 387817,
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "simulationPaused": false
+    },
+    "memory": {
+      "base": {
+        "geometries": 215,
+        "textures": 43
+      },
+      "after": {
+        "geometries": 215,
+        "textures": 43
+      }
+    },
+    "low": {
+      "loaded": true,
+      "shadow": false,
+      "trafficVisible": false,
+      "reflectionPresent": true
+    },
+    "errors": []
+  },
+  "race": {
+    "stats": {
+      "jumps": 9,
+      "lands": 9,
+      "rewards": 9,
+      "aiJumps": [
+        6,
+        6,
+        3,
+        5
+      ],
+      "aiRewards": [
+        5,
+        6,
+        2,
+        3
+      ],
+      "peak": 216,
+      "contacts": 0
+    },
+    "length": 4745.338489697352,
+    "checkpoints": [
+      {
+        "id": "player",
+        "passed": 72,
+        "finish": 320.0500000000376
+      },
+      {
+        "id": "ai-1",
+        "passed": 61,
+        "finish": null
+      },
+      {
+        "id": "ai-2",
+        "passed": 70,
+        "finish": null
+      },
+      {
+        "id": "ai-3",
+        "passed": 58,
+        "finish": null
+      },
+      {
+        "id": "ai-4",
+        "passed": 66,
+        "finish": null
+      }
+    ],
+    "finish": 320.0500000000376,
+    "loaded": true,
+    "firstLap": 109.39999999999507,
+    "errors": []
+  },
+  "production": {
+    "speed": 48,
+    "brake": 0,
+    "assets": [
+      {
+        "url": "http://127.0.0.1:5174/models/city-sample/waterfront.glb",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/rider.glb",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/rider-low.glb",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/watercraft-low.glb",
+        "status": 200
+      },
+      {
+        "url": "http://127.0.0.1:5174/models/watercraft.glb",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "reset": true,
+    "testHookAbsent": true
+  },
+  "mobileEntry": {
+    "assets": [
+      {
+        "url": "http://127.0.0.1:5174/models/city-sample/waterfront-low.glb",
+        "status": 200
+      }
+    ],
+    "errors": [],
+    "touchVisible": true,
+    "lowInitial": true,
+    "realDevice": false
+  },
+  "assets": {
+    "source": "assets/city-sample/source/waterfront-sample.blend",
+    "generator": "scripts/art/build-city-sample.py",
+    "blender": "4.5.9 LTS",
+    "length": 280,
+    "center": {
+      "x": -197.255048524888,
+      "z": -45.631187290179625
+    },
+    "heading": -0.32340572059365374,
+    "adverts": [
+      {
+        "x": -30.756676379480034,
+        "z": -32.99709756243877,
+        "heading": 0.06630464536710468
+      },
+      {
+        "x": 36.8080128313739,
+        "z": 85.27991465393805,
+        "heading": 0.30297602155581826
+      }
+    ],
+    "standard": {
+      "triangles": 222596,
+      "meshes": 13,
+      "bytes": 10167000
+    },
+    "low": {
+      "triangles": 89028,
+      "meshes": 13,
+      "bytes": 3226576
+    }
+  }
+}

@@ -26,3 +26,5 @@ ambientCG 的[官方许可说明](https://docs.ambientcg.com/license/)明确包�
 - 外部贴图：`Concrete034_1K-JPG_{Color,NormalGL,Roughness}.jpg`、`Metal032_1K-JPG_{Color,NormalGL,Roughness,Metalness}.jpg`，1024×1024，CC0。GLB 内嵌贴图，运行无需访问外网。低精度导出缩至512²，运行关闭法线贴图和阴影。
 
 Blender源文件打包了所用图片；外部CC0原图也独立保留便于编辑和记录。原创模型/原创幕墙图的项目发布许可由项目所有者决定，本任务没有擅自给整个项目改许可证。没有使用《激流快艇2》的任何模型、地图、音频或贴图。
+
+后续竞速氛围修订新增原创 `original-glazing-normal.png` 和 `original-glazing-roughness.png`（512×1024），以及CityAtmosphere代码绘制的品牌、赛事、商业及全息屏幕；没有新增下载模型/贴图。三栋主建筑、低精度天际线、商业入口、维修设施、遮棚与轨道继续由同一Blender源制作。最新预算/截图以 atmosphere-validation.md 为准。
