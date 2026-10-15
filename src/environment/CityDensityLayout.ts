@@ -6,6 +6,11 @@ export const CITY_MODULES={
  split_office:{rx:14,rz:15,height:80},research_campus:{rx:14,rz:15,height:20},
  data_centre:{rx:12,rz:15,height:16},retail_hub:{rx:16,rz:11,height:12},
  transit_station:{rx:13,rz:16,height:31},drydock_service:{rx:8,rz:12,height:8},
+ harbor_control:{rx:5.5,rz:8,height:10},service_arcade:{rx:11.5,rz:8,height:11},
+ energy_node:{rx:7,rz:9,height:14},view_pavilion:{rx:7.5,rz:9,height:8},
+ expo_hall:{rx:19,rz:15,height:24},control_centre:{rx:12.5,rz:11,height:35},
+ terraced_hotel:{rx:14,rz:15,height:72},ring_spire:{rx:12,rz:13,height:105},
+ blade_tower:{rx:13,rz:13,height:92},sky_gallery:{rx:14,rz:11,height:28},
 } as const;
 export type CityModule=keyof typeof CITY_MODULES;
 export type CityLayer='waterfront'|'blocks'|'skyline';
@@ -38,16 +43,19 @@ export function citySites(track:CityTrack):CitySite[]{
   if(reservations.some(r=>footprintsOverlap(footprint,r)))return;
   sites.push({id:`${layer}-${side}-${seed}`,kind,layer,...footprint,scaleXZ,scaleY,radius,angle:a,side,tint:seed%4});reservations.push(footprint);
  };
- const near:CityModule[]=['drydock_service','retail_hub','data_centre','drydock_service','drydock_service','data_centre','retail_hub','drydock_service'];
+ for(const side of [-1,1])add('drydock_service','waterfront',side>0?-104:105,32,side,390+(side>0?1:0));
+ const frontage:CityModule[]=['harbor_control','view_pavilion','energy_node','harbor_control','service_arcade','view_pavilion'];
+ for(const side of [-1,1])for(let i=0;i<15;i++){const kind=frontage[(i+(side>0?2:0))%6];add(kind,'waterfront',-126+i*18,kind==='service_arcade'?26:22,side,400+i+(side>0?20:0));}
+ const near:CityModule[]=['drydock_service','service_arcade','data_centre','harbor_control','drydock_service','energy_node','retail_hub','view_pavilion'];
  for(const side of [-1,1])for(let i=0;i<8;i++){const kind=near[(i+(side>0?2:0))%8];add(kind,'waterfront',-125+i*35,kind==='drydock_service'?28:44,side,i+20+(side>0?8:0));}
- const streets:CityModule[]=['research_campus','transit_station','spindle_office','retail_hub','data_centre','terrace_residence','split_office'];
- for(const side of [-1,1])for(let row=0;row<2;row++)for(let i=0;i<7;i++)add(streets[(i+row*3+(side>0?2:0))%7],'blocks',-116+i*37+row*6,69+row*44,side,40+row*10+i+(side>0?20:0));
- const campus:CityModule[]=['research_campus','retail_hub','data_centre'];
- for(const side of [-1,1])for(let i=0;i<7;i++)add(campus[(i+(side>0?1:0))%3],'blocks',-122+i*40,143,side,160+i+(side>0?10:0));
- const skyline:CityModule[]=['spindle_office','split_office','terrace_residence'];
- for(const side of [-1,1])for(let row=0;row<3;row++)for(let i=0;i<8;i++)add(skyline[(i+row+(side>0?1:0))%3],'skyline',-119+i*33+row*4,167+row*43,side,100+row*10+i+(side>0?40:0));
+ const streets:CityModule[]=['expo_hall','transit_station','ring_spire','control_centre','data_centre','terraced_hotel','blade_tower','sky_gallery','research_campus','split_office','retail_hub','terrace_residence'];
+ for(const side of [-1,1])for(let row=0;row<3;row++)for(let i=0;i<10;i++)add(streets[(i+row*3+(side>0?4:0))%streets.length],'blocks',-120+i*26+row*3,57+row*33,side,500+row*20+i+(side>0?80:0));
+ const campus:CityModule[]=['research_campus','service_arcade','data_centre','expo_hall','control_centre'];
+ for(const side of [-1,1])for(let i=0;i<9;i++)add(campus[(i+(side>0?2:0))%5],'blocks',-122+i*30,148,side,700+i+(side>0?20:0));
+ const skyline:CityModule[]=['spindle_office','blade_tower','terraced_hotel','ring_spire','split_office','terrace_residence'];
+ for(const side of [-1,1])for(let row=0;row<4;row++)for(let i=0;i<10;i++)add(skyline[(i+row+(side>0?2:0))%6],'skyline',-120+i*26+row*2,178+row*31,side,800+row*20+i+(side>0?100:0));
  // Distant context frames both ends of the sample; it adds no new waterfront route/detail area.
- for(const side of [-1,1])for(let end=0;end<2;end++)for(let row=0;row<2;row++)for(let i=0;i<4;i++)add(skyline[(i+end+row+(side>0?1:0))%3],'skyline',(end?1:-1)*(172+i*46+row*5),80+row*80+(i%2)*34,side,220+end*10+row*50+i+(side>0?30:0));
+ for(const side of [-1,1])for(let end=0;end<2;end++)for(let row=0;row<2;row++)for(let i=0;i<5;i++)add(skyline[(i+end+row+(side>0?2:0))%6],'skyline',(end?1:-1)*(168+i*33+row*5),76+row*72+(i%2)*30,side,1100+end*50+row*20+i+(side>0?100:0));
  return sites;
 }
 /** Distance hysteresis keeps transitions stable; far skyline always uses cheap silhouettes. */

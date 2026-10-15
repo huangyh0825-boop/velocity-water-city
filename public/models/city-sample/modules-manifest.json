@@ -40,34 +40,114 @@
       "rx": 8,
       "rz": 12,
       "height": 8
+    },
+    "harbor_control": {
+      "rx": 5.5,
+      "rz": 8,
+      "height": 10
+    },
+    "service_arcade": {
+      "rx": 11.5,
+      "rz": 8,
+      "height": 11
+    },
+    "energy_node": {
+      "rx": 7,
+      "rz": 9,
+      "height": 14
+    },
+    "view_pavilion": {
+      "rx": 7.5,
+      "rz": 9,
+      "height": 8
+    },
+    "expo_hall": {
+      "rx": 19,
+      "rz": 15,
+      "height": 24
+    },
+    "control_centre": {
+      "rx": 12.5,
+      "rz": 11,
+      "height": 35
+    },
+    "terraced_hotel": {
+      "rx": 14,
+      "rz": 15,
+      "height": 72
+    },
+    "ring_spire": {
+      "rx": 12,
+      "rz": 13,
+      "height": 105
+    },
+    "blade_tower": {
+      "rx": 13,
+      "rz": 13,
+      "height": 92
+    },
+    "sky_gallery": {
+      "rx": 14,
+      "rz": 11,
+      "height": 28
     }
   },
   "triangles": {
-    "spindle_office__near": 4560,
-    "spindle_office__mid": 2046,
+    "spindle_office__near": 4804,
+    "spindle_office__mid": 2152,
     "spindle_office__far": 116,
-    "terrace_residence__near": 6720,
-    "terrace_residence__mid": 3020,
+    "terrace_residence__near": 6964,
+    "terrace_residence__mid": 3128,
     "terrace_residence__far": 116,
-    "split_office__near": 8152,
-    "split_office__mid": 3661,
+    "split_office__near": 8404,
+    "split_office__mid": 3771,
     "split_office__far": 136,
-    "research_campus__near": 3288,
-    "research_campus__mid": 1474,
+    "research_campus__near": 4812,
+    "research_campus__mid": 2157,
     "research_campus__far": 116,
-    "data_centre__near": 1260,
-    "data_centre__mid": 560,
+    "data_centre__near": 1936,
+    "data_centre__mid": 865,
     "data_centre__far": 116,
-    "retail_hub__near": 1528,
-    "retail_hub__mid": 682,
+    "retail_hub__near": 2252,
+    "retail_hub__mid": 1006,
     "retail_hub__far": 116,
-    "transit_station__near": 1316,
-    "transit_station__mid": 586,
+    "transit_station__near": 1560,
+    "transit_station__mid": 695,
     "transit_station__far": 116,
-    "drydock_service__near": 840,
-    "drydock_service__mid": 374,
-    "drydock_service__far": 116
+    "drydock_service__near": 1160,
+    "drydock_service__mid": 518,
+    "drydock_service__far": 116,
+    "harbor_control__near": 1218,
+    "harbor_control__mid": 540,
+    "harbor_control__far": 116,
+    "service_arcade__near": 2140,
+    "service_arcade__mid": 955,
+    "service_arcade__far": 116,
+    "energy_node__near": 1716,
+    "energy_node__mid": 766,
+    "energy_node__far": 116,
+    "view_pavilion__near": 1908,
+    "view_pavilion__mid": 852,
+    "view_pavilion__far": 116,
+    "expo_hall__near": 2674,
+    "expo_hall__mid": 1196,
+    "expo_hall__far": 116,
+    "control_centre__near": 2324,
+    "control_centre__mid": 1037,
+    "control_centre__far": 116,
+    "terraced_hotel__near": 10012,
+    "terraced_hotel__mid": 5126,
+    "terraced_hotel__far": 452,
+    "ring_spire__near": 5172,
+    "ring_spire__mid": 2320,
+    "ring_spire__far": 228,
+    "blade_tower__near": 2528,
+    "blade_tower__mid": 1208,
+    "blade_tower__far": 60,
+    "sky_gallery__near": 1984,
+    "sky_gallery__mid": 897,
+    "sky_gallery__far": 116
   },
-  "standardBytes": 5791216,
-  "lowBytes": 2295308
+  "standardBytes": 8205264,
+  "lowBytes": 3869524
 }

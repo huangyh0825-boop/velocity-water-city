@@ -2,7 +2,7 @@
 Run Blender --background --factory-startup --python scripts/art/build-city-modules.py.
 Curved/editable meshes, extruded annuli, bevels and shared licensed PBR materials.
 """
-import bpy, math, json
+import bpy, math, json, runpy
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2];SOURCE=ROOT/'assets/city-sample/source';OUT=ROOT/'public/models/city-sample'
@@ -10,6 +10,7 @@ bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=Fals
 with bpy.data.libraries.load(str(SOURCE/'waterfront-sample.blend'),link=False) as (available,target):
     target.materials=[n for n in available.materials if n in ['Coated architectural alloy','CC0_Metal032','CC0_Concrete034','Blue laminated glazing','Silver blue glazing','Graphite joint seals','Amber anodized alloy','Cyan guide lights','Occupied window interiors']]
 coat=bpy.data.materials['Coated architectural alloy'];metal=bpy.data.materials['CC0_Metal032'];glass=bpy.data.materials['Blue laminated glazing'];silver=bpy.data.materials['Silver blue glazing'];stone=bpy.data.materials['CC0_Concrete034'];dark=bpy.data.materials['Graphite joint seals'];amber=bpy.data.materials['Amber anodized alloy'];light=bpy.data.materials['Cyan guide lights']
+warm=bpy.data.materials['Occupied window interiors']
 active=None;groups=[];metadata={}
 
 def xyz(x,h,z):return (x,-z,h)
@@ -55,7 +56,12 @@ def roofkit(rx,rz,h):
         for z in [-1.2,0,1.2]:tube('Roof fins',[(x-1.1,h+1.4,z),(x+1.1,h+1.4,z)],.07,metal)
     tube('Roof communication mast',[(0,h,rz*.5),(0,h+4,rz*.5)],.10,metal)
 def entrance(rx,rz,h=3):
+    slab('Layered entry granite sill',soft(rx*.66,2,16,0,-rz-.35),.25,.48,stone)
     slab('Recessed vestibule',soft(rx*.55,1.1,12,0,-rz-.45),.3,h,dark)
+    shell('Set-back lobby glazing',[(.55,soft(rx*.48,.9,16,0,-rz-.6)),(h-.25,soft(rx*.48,.9,16,0,-rz-.6))],silver)
+    for x in [-rx*.48,-rx*.17,rx*.17,rx*.48]:tube('Entry door frame',[(x,.48,-rz-1.53),(x,h-.22,-rz-1.53)],.045,metal)
+    tube('Lobby warm soffit',[(-rx*.44,h-.3,-rz-1.55),(rx*.44,h-.3,-rz-1.55)],.035,warm)
+    for x in [-rx*.55,rx*.55]:tube('Entry handrail',[(x,.5,-rz-2.2),(x,1.05,-rz-2.2),(x,1.05,-rz-.8)],.035,metal)
     slab('Entry cantilever',soft(rx*.65,2,16,0,-rz-.45),h,h+.22,coat)
     tube('Entry light',[(rx*-.55,h-.15,-rz-1.3),(rx*.55,h-.15,-rz-1.3)],.055,light)
 
@@ -122,16 +128,18 @@ def dock():
     for z in [-8,-5,-2]:tube('Dock embedded guide', [(-5,.82,z),(5,.82,z)],.045,light)
     for x in [-5.5,5.5]:band('Dock bollard flange',oval(.35,.35,8,x,-9),.85,.07,metal);tube('Dock mooring pin',[(x,.8,-9),(x,1.5,-9)],.13,metal)
 
-builders=[('spindle_office',spindle,12,15,65),('terrace_residence',residence,13,13,52),('split_office',split,14,15,80),('research_campus',research,14,15,20),('data_centre',data,12,15,16),('retail_hub',retail,16,11,12),('transit_station',transit,13,16,31),('drydock_service',dock,8,12,8)]
+extension=runpy.run_path(str(Path(__file__).with_name('city-module-details.py')));extension['configure'](globals())
+builders=[('spindle_office',spindle,12,15,65),('terrace_residence',residence,13,13,52),('split_office',split,14,15,80),('research_campus',research,14,15,20),('data_centre',data,12,15,16),('retail_hub',retail,16,11,12),('transit_station',transit,13,16,31),('drydock_service',dock,8,12,8)]+extension['BUILDERS']
 for name,build,rx,rz,height in builders:
-    active=bpy.data.collections.new(name);bpy.context.scene.collection.children.link(active);build();metadata[name]={'rx':rx,'rz':rz,'height':height}
+    active=bpy.data.collections.new(name);bpy.context.scene.collection.children.link(active);build();extension['refine'](name);metadata[name]={'rx':rx,'rz':rz,'height':height}
     root=bpy.data.objects.new(name+'__near',None);active.objects.link(root)
     for o in list(active.objects):
         if o!=root:o.parent=root
     groups.append(root)
     # Source far silhouettes retain the distinctive edited outline and crown.
     near=active;active=bpy.data.collections.new(name+'_silhouette');bpy.context.scene.collection.children.link(active);far=bpy.data.objects.new(name+'__far',None);active.objects.link(far)
-    if name=='split_office':
+    if extension['far_shape'](name,rx,rz,height):pass
+    elif name=='split_office':
         for side,h in [(-1,height),(1,height*.78)]:shell('Twin skyline silhouette',[(.25,oval(rx*.42,rz*.78,12,side*rx*.46)),(h,oval(rx*.3,rz*.6,12,side*rx*.54))],glass);slab('Silhouette crown',oval(rx*.3,rz*.6,12,side*rx*.54),h,h+.4,coat,0)
     else:
         rings=[]
@@ -145,6 +153,17 @@ for name,build,rx,rz,height in builders:
 for image in bpy.data.images:
     if image.source=='FILE' and not image.packed_file:image.pack()
 bpy.ops.wm.save_as_mainfile(filepath=str(SOURCE/'city-modules.blend'))
+
+def bounded_decimate(obj,ratio,label):
+    # Blender collapse may extrapolate boundary vertices. Keep simplified geometry
+    # inside its authored footprint instead of silently expanding into neighbours.
+    bounds=[(min(v.co[k] for v in obj.data.vertices),max(v.co[k] for v in obj.data.vertices)) for k in range(3)]
+    bpy.context.view_layer.objects.active=obj
+    mod=obj.modifiers.new(label,'DECIMATE');mod.ratio=ratio;mod.use_collapse_triangulate=True
+    bpy.ops.object.modifier_apply(modifier=mod.name)
+    for v in obj.data.vertices:
+        for k,(lo,hi) in enumerate(bounds):v.co[k]=max(lo,min(hi,v.co[k]))
+    obj.data.validate()
 
 # Realize runtime copies and merge each prototype by material. Sources stay editable.
 runtime=bpy.data.collections.new('EXPORT_LIBRARY');bpy.context.scene.collection.children.link(runtime);runtime_roots=[];counts={}
@@ -169,7 +188,7 @@ for original in groups:
         mid=bpy.data.objects.new(name+'__mid',None);runtime.objects.link(mid);runtime_roots.append(mid)
         for o in root.children:
             q=o.copy();q.data=o.data.copy();q.parent=mid;runtime.objects.link(q);bpy.context.view_layer.objects.active=q
-            mod=q.modifiers.new('Middle LOD','DECIMATE');mod.ratio=.45;mod.use_collapse_triangulate=True;bpy.ops.object.modifier_apply(modifier=mod.name);q.data.validate()
+            bounded_decimate(q,.45,'Middle LOD')
         counts[mid.name]=sum(len(p.vertices)-2 for o in mid.children for p in o.data.polygons)
 def export(path):
     bpy.ops.object.select_all(action='DESELECT')
@@ -182,7 +201,7 @@ export(OUT/'city-modules.glb')
 for root in runtime_roots:
     if root.name.endswith('__near'):
         for o in root.children:
-            bpy.context.view_layer.objects.active=o;mod=o.modifiers.new('Low near LOD','DECIMATE');mod.ratio=.35;mod.use_collapse_triangulate=True;bpy.ops.object.modifier_apply(modifier=mod.name);o.data.validate()
+            bounded_decimate(o,.35,'Low near LOD')
 for image in bpy.data.images:
     if image.size[0]>512 or image.size[1]>512:image.scale(512,512)
 export(OUT/'city-modules-low.glb')

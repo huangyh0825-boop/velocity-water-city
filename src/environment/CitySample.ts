@@ -44,6 +44,7 @@ export class CitySample {
  update(time:number,camera?:THREE.Camera){this.atmosphere?.update(time);if(camera)this.density.update(camera.position,time);}
  bakeReflections(renderer:THREE.WebGLRenderer,scene:THREE.Scene){
   if(!this.loaded||!renderer.shadowMap.enabled)return;
+  this.density.enableBatches(renderer);
   if(!this.reflection){
    const cube=new THREE.WebGLCubeRenderTarget(256,{type:THREE.HalfFloatType}),camera=new THREE.CubeCamera(1,1200,cube);camera.position.set(this.root.position.x,22,this.root.position.z);camera.update(renderer,scene);
    const generator=new THREE.PMREMGenerator(renderer);this.reflection=generator.fromCubemap(cube.texture);generator.dispose();cube.dispose();

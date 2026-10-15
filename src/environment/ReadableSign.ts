@@ -1,5 +1,10 @@
 import * as THREE from 'three';
 
+/** Canvas cells are counted from the top; texture V is counted from the bottom. */
+export function atlasCellUV(index:number,columns:number,rows:number,u:number,v:number):[number,number]{
+ return [((index%columns)+u)/columns,(rows-1-Math.floor(index/columns)+v)/rows];
+}
+
 /** Local +Z is travel. Approach face points -Z; each side owns readable UVs. */
 export function readableSign(map:THREE.Texture,width:number,height:number,name:string,depth=.08,emissive=false){
  const group=new THREE.Group();group.name=name;group.userData.readableSign=true;

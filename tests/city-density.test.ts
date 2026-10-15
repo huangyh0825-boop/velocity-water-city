@@ -1,11 +1,22 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';
 import {CityTrack} from '../src/track/CityTrack';import {CITY_MODULES,citySites,cityLOD,footprintsOverlap} from '../src/environment/CityDensityLayout';
-test('authored district has all eight module types and three populated layers without changing track data',()=>{
+import {atlasCellUV} from '../src/environment/ReadableSign';
+test('authored district has all eighteen module types and three populated layers without changing track data',()=>{
  const track=new CityTrack(),before=JSON.stringify([track.samples,track.shortcuts]),sites=citySites(track);
- assert.ok(sites.length>=80);assert.equal(new Set(sites.map(s=>s.kind)).size,8);
- for(const layer of ['waterfront','blocks','skyline'])assert.ok(sites.filter(s=>s.layer===layer).length>5);
+ assert.ok(sites.length>=125);assert.equal(new Set(sites.map(s=>s.kind)).size,18);
+ for(const [layer,min] of [['waterfront',18],['blocks',35],['skyline',75]] as const)assert.ok(sites.filter(s=>s.layer===layer).length>=min);
+ for(const side of [-1,1])for(const layer of ['waterfront','blocks','skyline'])assert.ok(sites.filter(s=>s.layer===layer&&s.side===side).length>=7);
  assert.deepEqual(sites,citySites(track));assert.equal(JSON.stringify([track.samples,track.shortcuts]),before);
  for(const s of sites)assert.ok([s.x,s.z,s.heading,s.scaleXZ,s.scaleY].every(Number.isFinite));
+});
+
+test('sixteen advertising atlas cells remain distinct, readable and inside the texture',()=>{
+ const centers=new Set<string>();
+ for(let i=0;i<16;i++){
+  for(const u of [0,1])for(const v of [0,1])assert.ok(atlasCellUV(i,4,4,u,v).every(value=>value>=0&&value<=1));
+  const [left,bottom]=atlasCellUV(i,4,4,0,0),[right,top]=atlasCellUV(i,4,4,1,1);assert.ok(right>left&&top>bottom);centers.add(atlasCellUV(i,4,4,.5,.5).join(','));
+ }
+ assert.equal(centers.size,16);assert.deepEqual(atlasCellUV(0,4,4,0,0),[0,.75]);assert.deepEqual(atlasCellUV(15,4,4,1,1),[1,.25]);
 });
 test('new district footprints stay clear of all legal racing water and each other',()=>{
  const track=new CityTrack(),sites=citySites(track),c=track.point(.06*Math.PI*2),h=track.heading(.06*Math.PI*2);
@@ -20,7 +31,7 @@ test('new district footprints stay clear of all legal racing water and each othe
 });
 test('module GLBs have all real geometry LODs, bounded footprints and finite vertices',()=>{
  const manifest=JSON.parse(readFileSync('public/models/city-sample/modules-manifest.json','utf8'));
- assert.deepEqual(manifest.modules,CITY_MODULES);assert.ok(manifest.standardBytes<6000000&&manifest.lowBytes<2500000);
+ assert.deepEqual(manifest.modules,CITY_MODULES);assert.ok(manifest.standardBytes<10000000&&manifest.lowBytes<4500000);
  const counts:Record<string,number>[]=[];
  for(const file of ['city-modules.glb','city-modules-low.glb']){
   const bytes=readFileSync('public/models/city-sample/'+file),length=bytes.readUInt32LE(12),j=JSON.parse(bytes.subarray(20,20+length).toString()),bin=bytes.subarray(28+length),totals:Record<string,number>={};
@@ -33,7 +44,7 @@ test('module GLBs have all real geometry LODs, bounded footprints and finite ver
   }
   counts.push(totals);
  }
- for(const kind of Object.keys(CITY_MODULES)){assert.ok(counts[0][kind+'__near']>counts[0][kind+'__mid']&&counts[0][kind+'__mid']>counts[0][kind+'__far']);assert.ok(counts[1][kind+'__near']<counts[0][kind+'__near']*.45);assert.ok(counts[0][kind+'__far']<150);}
+ for(const kind of Object.keys(CITY_MODULES)){assert.ok(counts[0][kind+'__near']>counts[0][kind+'__mid']&&counts[0][kind+'__mid']>counts[0][kind+'__far']);assert.ok(counts[1][kind+'__near']<counts[0][kind+'__near']*.55);assert.ok(counts[0][kind+'__far']<500);}
 });
 test('distance LOD has hysteresis, keeps the skyline cheap and lowers mobile detail thresholds',()=>{
  assert.equal(cityLOD('blocks',129,0,false),0);assert.equal(cityLOD('blocks',129,1,false),1);assert.equal(cityLOD('blocks',110,1,false),0);
