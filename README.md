@@ -82,7 +82,7 @@ Three.js 单独打包，业务逻辑保持小体积；水道边界、城市和�
 
 ## 验证与限制
 
-`npm test` 当前 86 项，保留原有驾驶与比赛回归，包含样板GLB材质、LOD、水道净空及路牌方向/UV测试。最新18种模块、137处城市布局、近景细节、驾驶/起点/桥梁截图及合批成本见 [城市丰富度验收](docs/city-sample/richness-validation.md)。[上一轮城市规模验收](docs/city-sample/density-validation.md)保留88处布局时的历史对比。[质感强化验收](docs/city-sample/material-validation.md)、[竞速氛围验收](docs/city-sample/atmosphere-validation.md)、[第五阶段验收](docs/phase-5-validation.md)、[第四阶段验收](docs/phase-4-validation.md)、[跳台修复与 AI 验收](docs/ramp-ai-validation.md)与[第三阶段验收](docs/phase-3-validation.md)保留为历史记录，素材说明见 [素材与音效来源](docs/assets-license.md)。
+`npm test` 当前 87 项，保留原有驾驶与比赛回归，包含样板GLB材质、LOD、水道净空及路牌方向/UV测试。最新26种模块、189处城市布局、近中景单体细节及六类实拍见 [密度与单体精度验收](docs/city-sample/detail-validation.md)。[上一轮城市丰富度验收](docs/city-sample/richness-validation.md)保留137处布局时的历史记录。[上一轮城市规模验收](docs/city-sample/density-validation.md)保留88处布局时的历史对比。[质感强化验收](docs/city-sample/material-validation.md)、[竞速氛围验收](docs/city-sample/atmosphere-validation.md)、[第五阶段验收](docs/phase-5-validation.md)、[第四阶段验收](docs/phase-4-validation.md)、[跳台修复与 AI 验收](docs/ramp-ai-validation.md)与[第三阶段验收](docs/phase-3-validation.md)保留为历史记录，素材说明见 [素材与音效来源](docs/assets-license.md)。
 
 按 F8 开关跳台诊断，也可使用 `?debugRamps=1`。面板显示艇 ID、跳台 ID、运动状态、前后物理步位置、水平/垂直速度、高度、碰撞修正距离、艇体支撑比例及起跳/拒绝原因。控制台 `[ramp]` 在重要状态改变时记录完整碰撞子步轨迹；默认关闭，历史最多保留 240 条。
 

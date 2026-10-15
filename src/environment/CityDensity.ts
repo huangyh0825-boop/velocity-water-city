@@ -111,7 +111,8 @@ export class CityDensity {
   const atlas=new THREE.CanvasTexture(canvas);atlas.colorSpace=THREE.SRGBColorSpace;
   selected.forEach((s,i)=>{
    const m=(s.kind as CityModule),z=-CITY_MODULES[m].rz*s.scaleXZ-1,dx=Math.sin(s.heading)*z,dz=Math.cos(s.heading)*z;
-   const sign=readableSign(atlas,9,3.2,`density-sign-${i}`,.08,true);sign.position.set(s.x+dx,s.layer==='waterfront'?5:8,s.z+dz);sign.rotation.y=s.heading;
+   const width=s.layer==='waterfront'?5.8:8;
+   const sign=readableSign(atlas,width,width/3,`density-sign-${i}`,.08,true);sign.position.set(s.x+dx,s.layer==='waterfront'?5:8,s.z+dz);sign.rotation.y=s.heading;
    const geometry=(sign.children[0] as THREE.Mesh).geometry,uv=geometry.attributes.uv;for(let j=0;j<uv.count;j++)uv.setXY(j,...atlasCellUV(i,4,4,uv.getX(j),uv.getY(j)));uv.needsUpdate=true;this.signs.add(sign);
   });
   return atlas;

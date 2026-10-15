@@ -1,0 +1,235 @@
+{
+  "sites": [
+    {
+      "site": {
+        "id": "waterfront--1-2913",
+        "kind": "service_depot",
+        "layer": "waterfront",
+        "x": -61.4188005515703,
+        "z": -73.40547515842128,
+        "rx": 4.68,
+        "rz": 5.46,
+        "heading": 0.20336517260210024,
+        "scaleXZ": 0.78,
+        "scaleY": 1,
+        "radius": 7.191244676688452,
+        "angle": 0.2644447211042639,
+        "side": -1,
+        "tint": 1
+      },
+      "pose": [
+        0,
+        7.1076,
+        -15.287999999999998,
+        0,
+        4.05,
+        0
+      ],
+      "occlusionScore": 0
+    },
+    {
+      "site": {
+        "id": "waterfront--1-2380",
+        "kind": "ferry_terminal",
+        "layer": "waterfront",
+        "x": -74.7666425815595,
+        "z": -107.42683854383517,
+        "rx": 7.800000000000001,
+        "rz": 9.36,
+        "heading": 0.1701493801227373,
+        "scaleXZ": 0.78,
+        "scaleY": 1,
+        "radius": 12.183989494414384,
+        "angle": 0.21942616217365943,
+        "side": -1,
+        "tint": 0
+      },
+      "pose": [
+        0,
+        11.9916,
+        -26.208,
+        0,
+        6.75,
+        0
+      ],
+      "occlusionScore": 0
+    },
+    {
+      "site": {
+        "id": "blocks-1-12933",
+        "kind": "market_galleria",
+        "layer": "blocks",
+        "x": 102.24528759797124,
+        "z": -69.48275253397273,
+        "rx": 9.600000000000001,
+        "rz": 9.600000000000001,
+        "heading": 0.13813658891678918,
+        "scaleXZ": 0.8,
+        "scaleY": 1.1400000000000001,
+        "radius": 13.576450198781714,
+        "angle": 0.304166978984209,
+        "side": 1,
+        "tint": 1
+      },
+      "pose": [
+        0,
+        17.688000000000002,
+        -26.880000000000003,
+        0,
+        12.312000000000001,
+        0
+      ],
+      "occlusionScore": 0
+    },
+    {
+      "site": {
+        "id": "blocks--1-2820",
+        "kind": "bio_lab",
+        "layer": "blocks",
+        "x": -98.92806746713327,
+        "z": -106.31965704926407,
+        "rx": 7.2,
+        "rz": 8.8,
+        "heading": 0.1701493801227373,
+        "scaleXZ": 0.8,
+        "scaleY": 0.72,
+        "radius": 11.370136322841518,
+        "angle": 0.21545393638566493,
+        "side": -1,
+        "tint": 0
+      },
+      "pose": [
+        0,
+        14.648,
+        -24.64,
+        0,
+        9.719999999999999,
+        0
+      ],
+      "occlusionScore": 0
+    },
+    {
+      "site": {
+        "id": "blocks--1-3652",
+        "kind": "commuter_hub",
+        "layer": "blocks",
+        "x": -128.9370197243615,
+        "z": 173.22586450817926,
+        "rx": 8.75,
+        "rz": 9.625,
+        "heading": 0.44063577250142616,
+        "scaleXZ": 0.875,
+        "scaleY": 1,
+        "radius": 13.00781015390369,
+        "angle": 0.5199912467985776,
+        "side": -1,
+        "tint": 0
+      },
+      "pose": [
+        0,
+        16.64,
+        -26.95,
+        0,
+        11.25,
+        0
+      ],
+      "occlusionScore": 0
+    },
+    {
+      "site": {
+        "id": "waterfront--1-400",
+        "kind": "harbor_control",
+        "layer": "waterfront",
+        "x": -60.18385342839068,
+        "z": -117.04410290367481,
+        "rx": 4.29,
+        "rz": 6.24,
+        "heading": 0.1699500306420257,
+        "scaleXZ": 0.78,
+        "scaleY": 1,
+        "radius": 7.572430257189564,
+        "angle": 0.21015763533500556,
+        "side": -1,
+        "tint": 0
+      },
+      "pose": [
+        0,
+        7.9944,
+        -17.471999999999998,
+        0,
+        4.5,
+        0
+      ],
+      "occlusionScore": 0
+    },
+    {
+      "site": {
+        "id": "blocks-1-724",
+        "kind": "service_arcade",
+        "layer": "blocks",
+        "x": 171.00000000000003,
+        "z": -2.000011032999822,
+        "rx": 10.0625,
+        "rz": 7,
+        "heading": 0,
+        "scaleXZ": 0.875,
+        "scaleY": 1.28,
+        "radius": 12.257810010356662,
+        "angle": 0.37434296790544547,
+        "side": 1,
+        "tint": 0
+      },
+      "pose": [
+        0,
+        11.971,
+        -28.174999999999997,
+        0,
+        6.336,
+        0
+      ],
+      "occlusionScore": 0
+    }
+  ],
+  "batches": {
+    "multi": {
+      "sites": 189,
+      "waterfront": 30,
+      "blocks": 60,
+      "skyline": 99,
+      "lods": [
+        25,
+        40,
+        124
+      ],
+      "mode": "material-batch",
+      "activeMeshes": 9
+    },
+    "fallback": {
+      "sites": 189,
+      "waterfront": 30,
+      "blocks": 60,
+      "skyline": 99,
+      "lods": [
+        25,
+        40,
+        124
+      ],
+      "mode": "instanced",
+      "activeMeshes": 333
+    },
+    "restored": {
+      "sites": 189,
+      "waterfront": 30,
+      "blocks": 60,
+      "skyline": 99,
+      "lods": [
+        25,
+        40,
+        124
+      ],
+      "mode": "material-batch",
+      "activeMeshes": 9
+    }
+  },
+  "errors": []
+}

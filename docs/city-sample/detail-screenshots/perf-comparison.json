@@ -1,0 +1,28 @@
+{
+  "before": {
+    "fps": 240.00000000000003,
+    "p95": 4.299999999999272,
+    "over50": 0,
+    "calls": 197,
+    "triangles": 467574,
+    "memory": {
+      "geometries": 268,
+      "textures": 101
+    },
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "paused": true
+  },
+  "after": {
+    "fps": 239.99999999999997,
+    "p95": 4.300000000000182,
+    "over50": 0,
+    "calls": 197,
+    "triangles": 483474,
+    "memory": {
+      "geometries": 268,
+      "textures": 101
+    },
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "paused": true
+  }
+}
