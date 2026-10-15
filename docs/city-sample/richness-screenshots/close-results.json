@@ -1,0 +1,126 @@
+{
+  "sites": [
+    {
+      "id": "waterfront--1-400",
+      "kind": "harbor_control",
+      "layer": "waterfront",
+      "x": -60.18385342839068,
+      "z": -117.04410290367481,
+      "rx": 4.29,
+      "rz": 6.24,
+      "heading": 0.1699500306420257,
+      "scaleXZ": 0.78,
+      "scaleY": 1,
+      "radius": 7.572430257189564,
+      "angle": 0.21015763533500556,
+      "side": -1,
+      "tint": 0
+    },
+    {
+      "id": "waterfront-1-428",
+      "kind": "service_arcade",
+      "layer": "waterfront",
+      "x": 48.976092473961835,
+      "z": 17.949008357512028,
+      "rx": 8.97,
+      "rz": 6.24,
+      "heading": 0.00104157626323792,
+      "scaleXZ": 0.78,
+      "scaleY": 1,
+      "radius": 10.926962066375083,
+      "angle": 0.4008244731587422,
+      "side": 1,
+      "tint": 0
+    },
+    {
+      "id": "blocks--1-529",
+      "kind": "expo_hall",
+      "layer": "blocks",
+      "x": -79.00641447002133,
+      "z": 173.03868271799885,
+      "rx": 16.625,
+      "rz": 13.125,
+      "heading": 0.5483916040515848,
+      "scaleXZ": 0.875,
+      "scaleY": 1.28,
+      "radius": 21.18150726459286,
+      "angle": 0.5319079241625612,
+      "side": -1,
+      "tint": 1
+    },
+    {
+      "id": "blocks--1-520",
+      "kind": "control_centre",
+      "layer": "blocks",
+      "x": -125.65761289824559,
+      "z": -96.54271803856868,
+      "rx": 10.9375,
+      "rz": 9.625,
+      "heading": 0.17111906300630722,
+      "scaleXZ": 0.875,
+      "scaleY": 0.72,
+      "radius": 14.56947257967837,
+      "angle": 0.2220743126989891,
+      "side": -1,
+      "tint": 0
+    },
+    {
+      "id": "blocks--1-505",
+      "kind": "terraced_hotel",
+      "layer": "blocks",
+      "x": -80.01471555837014,
+      "z": 9.81603258695258,
+      "rx": 12.25,
+      "rz": 13.125,
+      "heading": -0.0022995158461587284,
+      "scaleXZ": 0.875,
+      "scaleY": 0.72,
+      "radius": 17.953498962597795,
+      "angle": 0.3902318710574235,
+      "side": -1,
+      "tint": 1
+    }
+  ],
+  "batches": {
+    "multi": {
+      "sites": 137,
+      "waterfront": 19,
+      "blocks": 38,
+      "skyline": 80,
+      "lods": [
+        23,
+        34,
+        80
+      ],
+      "mode": "material-batch",
+      "activeMeshes": 9
+    },
+    "fallback": {
+      "sites": 137,
+      "waterfront": 19,
+      "blocks": 38,
+      "skyline": 80,
+      "lods": [
+        21,
+        36,
+        80
+      ],
+      "mode": "instanced",
+      "activeMeshes": 248
+    },
+    "restored": {
+      "sites": 137,
+      "waterfront": 19,
+      "blocks": 38,
+      "skyline": 80,
+      "lods": [
+        21,
+        36,
+        80
+      ],
+      "mode": "material-batch",
+      "activeMeshes": 9
+    }
+  },
+  "errors": []
+}

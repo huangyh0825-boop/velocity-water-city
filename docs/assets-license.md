@@ -25,3 +25,5 @@ Three.js、Vite 与原项目 npm 依赖继续适用各自许可证。本阶段�
 质感强化新增 `coated-alloy-{basecolor,normal,orm}.png`、`composite-paving-{basecolor,normal,orm}.png`（512×512）均为本项目原创程序化贴图，源码 `scripts/art/surface-materials.py`；未使用外部纹理或商业游戏图像。玻璃图集、接触遮蔽和广告屏仍为原创。原创资产继续由项目所有者决定整体公开许可证，本说明不额外将其授权为CC0。
 
 城市模块库`city-modules.blend`与`city-modules{,-low}.glb`为本项目原创Blender曲面/挤出几何，脚本`build-city-modules.py`；只复用以上原创材质与ambientCG CC0贴图，无新增外部模型、付费资产或商业游戏素材。城市导向屏为原创Canvas图集，使用系统字体。原第三方CC0来源记录继续适用，原创模型未自行改授权为CC0。
+
+本轮模块库增加10种原创建筑（共18种），扩展脚本 `scripts/art/city-module-details.py`。沿用原PBR与CC0贴图，没有新增外部素材。功能广告图集为本项目Canvas原创，2048×1024；不需要新的第三方署名。

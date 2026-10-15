@@ -1,0 +1,35 @@
+{
+  "total": 137,
+  "byType": {
+    "drydock_service": 1,
+    "harbor_control": 6,
+    "view_pavilion": 5,
+    "energy_node": 4,
+    "service_arcade": 4,
+    "data_centre": 6,
+    "transit_station": 3,
+    "terraced_hotel": 19,
+    "research_campus": 4,
+    "control_centre": 3,
+    "blade_tower": 16,
+    "split_office": 15,
+    "terrace_residence": 14,
+    "expo_hall": 4,
+    "sky_gallery": 3,
+    "ring_spire": 18,
+    "retail_hub": 2,
+    "spindle_office": 10
+  },
+  "bySide": {
+    "1": {
+      "waterfront": 8,
+      "blocks": 15,
+      "skyline": 35
+    },
+    "-1": {
+      "waterfront": 11,
+      "blocks": 23,
+      "skyline": 45
+    }
+  }
+}
