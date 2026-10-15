@@ -15,7 +15,7 @@ export class CitySample {
  private generation=0;private disposed=false;private shadowWater:THREE.Mesh;private sun?:THREE.DirectionalLight;
  private cache=new Map<boolean,Promise<THREE.Group>>();
  private atmosphere?:CityAtmosphere;private reflection?:THREE.WebGLRenderTarget;
- private contacts:SurfaceContacts;
+ private contacts:SurfaceContacts;private interiorRevision=-1;
  readonly density:CityDensity;
  constructor(scene:THREE.Scene,private track:CityTrack,private ready:(loaded:boolean)=>void){
   this.root.name='blender-waterfront-sample';const a=CITY_SAMPLE.center*TAU,p=track.point(a);this.root.position.set(p.x,0,p.z);this.root.rotation.y=track.heading(a);scene.add(this.root);
@@ -41,7 +41,11 @@ export class CitySample {
    this.releaseSigns();this.atmosphere?.dispose();this.root.clear();this.root.add(group,this.contacts.mesh,this.density.root);this.contacts.mesh.visible=!low;this.loaded=true;this.error='';this.shadowWater.visible=!low;this.addSigns();this.atmosphere=new CityAtmosphere(this.track);this.atmosphere.setLow(low);this.root.add(this.atmosphere.root);if(this.sun)this.sun.shadow.needsUpdate=true;this.ready(true);
   }catch(e){if(request!==this.generation||this.disposed)return;this.error=String(e);this.cache.delete(low);console.error('City sample GLB failed; retaining existing district',e);if(!this.loaded)this.ready(false);}
  }
- update(time:number,camera?:THREE.Camera){this.atmosphere?.update(time);if(camera)this.density.update(camera.position,time);}
+ update(time:number,camera?:THREE.Camera){
+  this.atmosphere?.update(time);if(camera)this.density.update(camera.position,time);
+  const revision=this.density.interiors.revision;
+  if(revision!==this.interiorRevision){this.interiorRevision=revision;if(this.sun)this.sun.shadow.needsUpdate=true;}
+ }
  bakeReflections(renderer:THREE.WebGLRenderer,scene:THREE.Scene){
   if(!this.loaded||!renderer.shadowMap.enabled)return;
   this.density.enableBatches(renderer);
@@ -71,7 +75,7 @@ export class CitySample {
   scene.environmentIntensity=.35;
   this.sun=sun;sun.intensity=3.7;sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-160,right:160,top:175,bottom:-175,near:1,far:450});sun.shadow.bias=-.00008;sun.shadow.normalBias=.025;sun.shadow.camera.updateProjectionMatrix();
   for(const light of scene.children)if(light instanceof THREE.HemisphereLight){light.intensity=.58;light.color.set('#d7e9f1');light.groundColor.set('#263748');}
-  // District geometry and sun are static: refresh on asset/quality changes only.
+  // Refresh static shadows on asset/quality or occupied-bay visibility changes.
   sun.shadow.autoUpdate=false;sun.shadow.needsUpdate=true;
  }
  dispose(){

@@ -16,6 +16,7 @@ interface Pool {mesh:THREE.InstancedMesh;pieces:Piece[]}
 
 export class CityInteriors {
  readonly root=new THREE.Group();readonly selected:CitySite[];
+ revision=0;private visibleSignature='';
  private pools:Pool[]=[];private materials:THREE.Material[]=[];private texture:THREE.CanvasTexture;private wallTexture:THREE.CanvasTexture;
  private lastCamera=new THREE.Vector3(Infinity,Infinity,Infinity);private low=false;
  constructor(private track:CityTrack,sites:CitySite[]){
@@ -58,7 +59,9 @@ export class CityInteriors {
  setLow(low:boolean){this.low=low;this.lastCamera.set(Infinity,Infinity,Infinity);this.root.visible=!low;}
  update(camera:THREE.Vector3){
   if(this.low||this.lastCamera.distanceToSquared(camera)<16)return;this.lastCamera.copy(camera);const p=sampleLocal(this.track,camera);
-  for(const pool of this.pools){let count=0;for(const piece of pool.pieces)if(Math.hypot(piece.site.x-p.x,piece.site.z-p.z)<115)pool.mesh.setMatrixAt(count++,piece.matrix);pool.mesh.count=count;pool.mesh.instanceMatrix.needsUpdate=true;pool.mesh.computeBoundingSphere();}
+  const visible=new Set(this.selected.filter(s=>Math.hypot(s.x-p.x,s.z-p.z)<115).map(s=>s.id)),signature=[...visible].join('|');
+  if(signature!==this.visibleSignature){this.visibleSignature=signature;this.revision++;}
+  for(const pool of this.pools){let count=0;for(const piece of pool.pieces)if(visible.has(piece.site.id))pool.mesh.setMatrixAt(count++,piece.matrix);pool.mesh.count=count;pool.mesh.instanceMatrix.needsUpdate=true;pool.mesh.computeBoundingSphere();}
  }
  dispose(){this.root.removeFromParent();for(const p of this.pools)p.mesh.dispose();this.pools[0]?.mesh.geometry.dispose();this.materials.forEach(m=>m.dispose());this.texture.dispose();this.wallTexture.dispose();}
 }
