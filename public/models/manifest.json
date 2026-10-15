@@ -9,36 +9,36 @@
       "file": "public/models/watercraft.glb",
       "triangles": 51473,
       "draws": 10,
-      "bytes": 1935900
+      "bytes": 1935236
     },
     {
       "file": "public/models/watercraft-low.glb",
-      "triangles": 21610,
+      "triangles": 21611,
       "draws": 10,
-      "bytes": 785972
+      "bytes": 787168
     },
     {
       "file": "public/models/rider.glb",
       "triangles": 21586,
       "draws": 6,
-      "bytes": 894172
+      "bytes": 894164
     },
     {
       "file": "public/models/rider-low.glb",
       "triangles": 9929,
       "draws": 6,
-      "bytes": 470292
+      "bytes": 470132
     }
   ],
   "grips": [
     [
       -0.4118197560310364,
-      0.1195298433303833,
+      0.11953002214431763,
       0.5743599534034729
     ],
     [
       0.41181978583335876,
-      0.11953043937683105,
+      0.1195300817489624,
       0.5743600726127625
     ]
   ]

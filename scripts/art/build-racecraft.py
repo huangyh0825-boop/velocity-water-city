@@ -35,7 +35,7 @@ manifest=[]
 bpy.ops.wm.read_factory_settings(use_empty=True);bpy.ops.import_scene.gltf(filepath=str(S/'pwc-cc0.glb'))
 meshes=[o for o in bpy.context.scene.objects if o.type=='MESH'];rotation=Matrix.Rotation(-math.pi/2,4,'Z');scale=Matrix.Diagonal((1.18,1.18,1.18,1))
 for o in meshes:
- o.data.transform(scale@rotation@o.matrix_world);o.parent=None;o.matrix_world=Matrix.Identity(4)
+ o.data.transform(Matrix.Translation((0,0,-.22))@scale@rotation@o.matrix_world);o.parent=None;o.matrix_world=Matrix.Identity(4)
 for o in list(bpy.context.scene.objects):
  if o.type!='MESH':bpy.data.objects.remove(o,do_unlink=True)
 for m in bpy.data.materials:
@@ -69,15 +69,15 @@ for o in meshes:
   for loop in o.data.loops:
    p=points[loop.vertex_index];uv.data[loop.index].uv=((p.x-xmin)/max(.001,xmax-xmin),(p.z-zmin)/max(.001,zmax-zmin))
 for side in [-1,1]:
- meshes.append(tube('Inset navigation ribbon',[(side*.63,.556,-.80),(side*.64,.556,-.30),(side*.57,.556,.35)],.007,glow))
+ meshes.append(tube('Inset navigation ribbon',[(side*.63,.336,-.80),(side*.64,.336,-.30),(side*.57,.336,.35)],.007,glow))
 # Model-space mount metadata; sizes stay inside the original capsule's visual envelope.
 grips=[]
 for o in meshes:
  if 'handgrip' in o.name:
   vs=[G(o.matrix_world@v.co) for v in o.data.vertices];grips.append(sum(vs,Vector())/len(vs))
 grips.sort(key=lambda p:p.x)
-sockets=[empty('RiderSeat',(0,1.10,-.10)),empty('Grip_L',grips[0]),empty('Grip_R',grips[1]),empty('Foot_L',(-.50,.541,-.06)),empty('Foot_R',(.50,.541,-.06))]
-sockets.append(empty('JetOutlet',(0,.28,-2.12)))
+sockets=[empty('RiderSeat',(0,.88,-.10)),empty('Grip_L',grips[0]),empty('Grip_R',grips[1]),empty('Foot_L',(-.50,.321,-.06)),empty('Foot_R',(.50,.321,-.06))]
+sockets.append(empty('JetOutlet',(0,.06,-2.12)))
 # Merge by shared material, retaining editable original named parts in the .blend below.
 bpy.ops.wm.save_as_mainfile(filepath=str(S/'racecraft.blend'),compress=True)
 batches=[];material_groups={m:[o for o in meshes if m in o.data.materials[:]] for m in {m for o in meshes for m in o.data.materials}}
@@ -93,7 +93,7 @@ for o in batches:
 for image in bpy.data.images:
  if max(image.size)>256:image.scale(256,256);image.pack()
 export(O/'watercraft-low.glb',batches+sockets);manifest.append({'file':'public/models/watercraft-low.glb',**stats(batches)})
-grip_local=[list(p-Vector((0,1.10,-.10))) for p in grips]
+grip_local=[list(p-Vector((0,.88,-.10))) for p in grips]
 
 # Human: pose and skin the actual anatomical CC0 base, rather than a new capsule figure.
 bpy.ops.wm.open_mainfile(filepath=str(S/'human-base-cc0.blend'));body=bpy.data.objects['GEO-body_male_realistic'];body.name='Tailored_neoprene_suit'

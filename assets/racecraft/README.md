@@ -22,7 +22,7 @@ The full 50 MB human bundle is not shipped. The selected base and its source rec
 
 ## Adaptation and editing
 
-- `source/racecraft.blend`: editable PWC parts before batching/LOD. Rotate forward to game +Z, scale 1.18×; blue/pearl finish, neutralized paint texture for AI palette tint, revised metal/rubber/glass, original inset lights/digital instrument, seat/grip/foot/pump sockets. Retains the supplied closed hull, curved saddle, foot wells, grab rail, steering and pump.
+- `source/racecraft.blend`: editable PWC parts before batching/LOD. Rotate forward to game +Z, scale 1.18× and shift the visual waterline down 0.22 m without moving physics; blue/pearl finish, neutralized paint texture for AI palette tint, revised metal/rubber/glass, original inset lights/digital instrument, seat/grip/foot/pump sockets. Retains the supplied closed hull, curved saddle, foot wells, grab rail, steering and pump.
 - `source/racer.blend`: anatomical body, original 15-bone seated rig and bone-heat skinning, racing suit, original weave normal/roughness, original full-face helmet/visor/seals, gloves/boots, seam tape and protection. Unneeded head/feet beneath equipment removed. No third-party rig or animation used.
 - `scripts/art/build-racecraft.py`: Blender adaptation and export. Inputs are the original GLB and selected human `.blend`; derived scenes above remain editable. Manual changes to derived scenes require direct export or corresponding changes to the generator before rebuilding.
 - `public/models/{watercraft,rider}{,-low}.glb`: runtime models with embedded textures and skin, no local absolute asset paths.
