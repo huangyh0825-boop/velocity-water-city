@@ -61,11 +61,16 @@ export class Watercraft {
       boat.traverse(o=>{if(o instanceof THREE.Mesh){const mat=o.material as THREE.MeshStandardMaterial;if(mat.name==='Paint'){o.material=mat.clone();o.material.userData.paletteClone=true;(o.material as THREE.MeshStandardMaterial).color.set(this.color);}o.castShadow=true;o.receiveShadow=true;}});
       if(this.asset){this.asset.traverse(o=>{if(o instanceof THREE.Mesh&&(o.material as THREE.Material).userData.paletteClone)(o.material as THREE.Material).dispose();});this.visual.remove(this.asset);}
       this.fallback.forEach(o=>{this.visual.remove(o);if(o instanceof THREE.Mesh){o.geometry.dispose();(o.material as THREE.Material).dispose();}});this.fallback=[];
-      this.visual.add(boat);this.asset=boat;this.rider.bindAsset(racer);this.assetLoaded=true;this.assetError='';
+      this.visual.add(boat);this.asset=boat;
+      // Model-local authoring sockets affect visuals only; physical hull is unchanged.
+      const seat=boat.getObjectByName('RiderSeat');
+      if(seat){boat.updateWorldMatrix(true,true);this.rider.root.position.copy(boat.worldToLocal(seat.getWorldPosition(new THREE.Vector3())));
+        for(const [i,name] of ['Grip_L','Grip_R'].entries()){const grip=boat.getObjectByName(name);if(grip)this.rider.grips[i].copy(boat.worldToLocal(grip.getWorldPosition(new THREE.Vector3()))).sub(this.rider.root.position);}}
+      this.rider.bindAsset(racer);this.assetLoaded=true;this.assetError='';
     }catch(error){this.assetError=String(error);console.warn('GLB unavailable: fallback model retained',error);}
   }
   land(){this.landingCompression=.10;}
-  dispose(){this.visualRequest++;}
+  dispose(){this.visualRequest++;this.rider.dispose();}
   sync(time: number, m: DrivingModel = this.model, height = 0, trick = {pitch:0,yaw:0}) {
     this.shadow.position.set(m.x,.14,m.z);this.shadow.rotation.z=-m.heading;this.shadow.material.uniforms.alpha.value=.20*Math.exp(-height*.3);
     this.object.position.set(m.x, height + 0.16 + Math.sin(time * 3.2) * 0.07, m.z);

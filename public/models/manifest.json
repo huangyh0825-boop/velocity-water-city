@@ -1,30 +1,45 @@
 {
-  "author": "Original project artwork",
-  "method": "Curve-authored manifold lofts and layered articulated racer",
+  "method": "Blender CC0 PWC deep adaptation and anatomical human skinning",
+  "sources": [
+    "assets/racecraft/source/pwc-cc0.glb",
+    "assets/racecraft/source/human-base-cc0.blend"
+  ],
   "assets": [
     {
       "file": "public/models/watercraft.glb",
-      "bytes": 1658964,
-      "triangles": 17224,
-      "draws": 5
-    },
-    {
-      "file": "public/models/rider.glb",
-      "bytes": 305904,
-      "triangles": 11968,
-      "draws": 19
+      "triangles": 51473,
+      "draws": 10,
+      "bytes": 1935900
     },
     {
       "file": "public/models/watercraft-low.glb",
-      "bytes": 926268,
-      "triangles": 9592,
-      "draws": 5
+      "triangles": 21610,
+      "draws": 10,
+      "bytes": 785972
+    },
+    {
+      "file": "public/models/rider.glb",
+      "triangles": 21586,
+      "draws": 6,
+      "bytes": 894172
     },
     {
       "file": "public/models/rider-low.glb",
-      "bytes": 164876,
-      "triangles": 5784,
-      "draws": 19
+      "triangles": 9929,
+      "draws": 6,
+      "bytes": 470292
     }
+  ],
+  "grips": [
+    [
+      -0.4118197560310364,
+      0.1195298433303833,
+      0.5743599534034729
+    ],
+    [
+      0.41181978583335876,
+      0.11953043937683105,
+      0.5743600726127625
+    ]
   ]
 }

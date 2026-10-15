@@ -18,8 +18,10 @@ export class Wake {
         gl_Position=projectionMatrix*modelViewMatrix*instanceMatrix*vec4(position,1.); }`,
       fragmentShader: `varying float vOpacity; varying vec2 vUv; void main() {
         float arm=abs(abs(vUv.x-.5)-(.035+vUv.y*.42));
-        float foam=(1.-smoothstep(.012,.055,arm))*.72;
+        float wisps=.72+.28*sin(vUv.y*94.+sin(vUv.x*75.)*2.);
+        float foam=(1.-smoothstep(.012,.055,arm))*.82*wisps;
         foam+=exp(-abs(vUv.x-.5)*32.)*(1.-vUv.y)*.28;
+        foam+=exp(-abs(vUv.x-.5)*12.)*(1.-vUv.y)*(.5+.5*sin(vUv.y*62.+vUv.x*43.))*.18;
         float fade=smoothstep(0.,.1,vUv.y)*(1.-smoothstep(.72,1.,vUv.y));
         float a=foam*fade*vOpacity;if(a<.005)discard;
         gl_FragColor=vec4(.77,.96,1.,a); }`,
@@ -43,7 +45,7 @@ export class Wake {
     }
     this.pool.stamps.forEach((p, i) => {
       const life = Math.max(0, 1 - p.age / LIFETIME),strength=Math.min(1,p.speed/50);
-      this.opacity.setX(i, Math.min(1,p.age/.08)*life*life*(.08+strength*.28));
+      this.opacity.setX(i, Math.min(1,p.age/.08)*life*life*(.08+strength*.36));
       this.dummy.position.set(p.x, 0.20, p.z);
       this.dummy.rotation.set(-Math.PI / 2, 0, -p.heading);
       this.dummy.scale.set(life>0?2.3+strength*2.5+p.age*3.2:0,life>0?3.5+strength*3+p.age*2:0,1);

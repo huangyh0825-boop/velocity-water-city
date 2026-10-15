@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { ModelBatch } from './ModelBatch';
+import { AnatomicalRider } from './AnatomicalRider';
 
 /** Procedural seated racer. Fixed grips and articulated arms, no skeleton dependency. */
 export class Rider {
@@ -13,6 +14,7 @@ export class Rider {
   private bank=0;
   private elapsed=false;
   private assetBound=false;
+  private anatomical?:AnatomicalRider;
   constructor(color='#126bba',simple=false){
     this.root.name=simple?'ai-rider':'player-rider';this.root.position.set(0,1.02,-.45);
     const suit=new THREE.MeshStandardMaterial({color:'#11263a',roughness:.75});
@@ -49,8 +51,10 @@ export class Rider {
   }
   bindAsset(asset:THREE.Object3D){
     if(!this.assetBound)this.root.traverse(o=>{if(o instanceof THREE.Mesh){o.geometry.dispose();(o.material as THREE.Material).dispose();}});
-    this.assetBound=true;
+    this.releaseSkin();this.assetBound=true;
     this.root.clear();this.root.add(asset);this.torso=asset.getObjectByName('RiderTorso')!;
+    if(asset.getObjectByName('RaceRig')){this.anatomical=new AnatomicalRider(this.root,this.torso,this.grips);this.arms=[];return;}
+    this.anatomical=undefined;
     this.arms=[-1,1].map(side=>({side,upper:asset.getObjectByName(`UpperArm_${side}`) as THREE.Mesh,lower:asset.getObjectByName(`Forearm_${side}`) as THREE.Mesh}));
   }
   update(time:number,speed:number,yawRate:number,landing=0){
@@ -59,7 +63,8 @@ export class Rider {
     const target=.15+Math.min(1.2,speed/50)*.14+Math.max(-.03,Math.min(.045,acceleration*.003))+landing;
     const smooth=this.elapsed?1-Math.exp(-dt*7):1;
     this.lean+=(target-this.lean)*smooth;this.bank+=(-yawRate*.16-this.bank)*smooth;
-    this.torso.rotation.set(this.lean,0,this.bank);
+    if(this.anatomical)this.anatomical.update(this.lean,this.bank);
+    else this.torso.rotation.set(this.lean,0,this.bank);
     for(const {upper,lower,side} of this.arms){
       const shoulder=new THREE.Vector3(side*.28,.63,.035).applyEuler(this.torso.rotation).add(this.torso.position);
       const grip=this.grips[side===-1?0:1];
@@ -72,4 +77,6 @@ export class Rider {
     mesh.position.copy(a).add(b).multiplyScalar(.5);mesh.scale.y=a.distanceTo(b);
     mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),b.clone().sub(a).normalize());
   }
+  private releaseSkin(){const skeletons=new Set<THREE.Skeleton>();this.root.traverse(o=>{if(o instanceof THREE.SkinnedMesh)skeletons.add(o.skeleton);});skeletons.forEach(s=>s.dispose());}
+  dispose(){this.releaseSkin();}
 }
