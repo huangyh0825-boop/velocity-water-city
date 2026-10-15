@@ -1,0 +1,16 @@
+{
+  "assets": [
+    {
+      "url": "http://127.0.0.1:5174/models/city-sample/waterfront-low.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/city-sample/city-modules-low.glb",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "touchVisible": true,
+  "lowInitial": true,
+  "realDevice": false
+}

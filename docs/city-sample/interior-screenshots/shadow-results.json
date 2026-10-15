@@ -1,0 +1,33 @@
+{
+  "initial": {
+    "revision": 3,
+    "needsUpdate": false,
+    "count": 15
+  },
+  "unchanged": {
+    "revision": 3,
+    "needsUpdate": false,
+    "count": 15
+  },
+  "departed": {
+    "revision": 4,
+    "needsUpdate": true,
+    "count": 0
+  },
+  "baked": {
+    "revision": 4,
+    "needsUpdate": false,
+    "count": 0
+  },
+  "stable": {
+    "revision": 4,
+    "needsUpdate": false,
+    "count": 0
+  },
+  "returned": {
+    "revision": 5,
+    "needsUpdate": true,
+    "count": 15
+  },
+  "autoUpdate": false
+}

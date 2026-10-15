@@ -29,3 +29,5 @@ Three.js、Vite 与原项目 npm 依赖继续适用各自许可证。本阶段�
 本轮模块库增加10种原创建筑（共18种），扩展脚本 `scripts/art/city-module-details.py`。沿用原PBR与CC0贴图，没有新增外部素材。功能广告图集为本项目Canvas原创，2048×1024；不需要新的第三方署名。
 
 本轮另增8种原创Blender模块（总计26种），脚本为 `scripts/art/city-module-infill.py`。继续复用既有PBR与CC0纹理，无新增外部模型、贴图或署名义务；未更改原创资产的整体授权。
+
+建筑光照与内部空间修订新增三张运行时Canvas原创贴图：1024×512八款房间图集（`src/environment/CityGlass.ts`）、512×256服务屏和256×256室内墙面（`src/environment/CityInteriors.ts`）。内容为代码绘制的虚构办公室、设备、柜台、墙板和原创文字，不含照片、下载室内素材或商业游戏图像。截图导出副本在 `docs/city-sample/interior-screenshots/atlas-*.png`，运行时不请求这些文档副本。浅层服务空间几何和静态基座遮蔽为原创代码生成，原GLB与Blender源文件未改动。没有新的第三方署名义务；原创作品仍由项目所有者决定整体授权。

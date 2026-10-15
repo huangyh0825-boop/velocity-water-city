@@ -1,0 +1,38 @@
+{
+  "before": {
+    "fps": 236.79526409471808,
+    "p95": 4.399999999999636,
+    "over50": 1,
+    "calls": 96,
+    "triangles": 464553,
+    "memory": {
+      "geometries": 268,
+      "textures": 101
+    },
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "simulationPaused": true,
+    "renderEveryCallback": true,
+    "renderedFrames": 1603,
+    "sampledFrames": 1184,
+    "warmupMs": 2000,
+    "sampleMs": 5000
+  },
+  "after": {
+    "fps": 228.60457209144184,
+    "p95": 4.399999999999636,
+    "over50": 1,
+    "calls": 104,
+    "triangles": 467001,
+    "memory": {
+      "geometries": 270,
+      "textures": 104
+    },
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "simulationPaused": true,
+    "renderEveryCallback": true,
+    "renderedFrames": 1532,
+    "sampledFrames": 1143,
+    "warmupMs": 2000,
+    "sampleMs": 5000
+  }
+}

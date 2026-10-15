@@ -1,0 +1,7 @@
+{
+  "coordinates": "Sample-local eye xyz then target xyz; same transform as poses.json; time=0; viewport=1440x900",
+  "glass": [44,24,-93,57,24,-89],
+  "glassAngle": [49,24,-111,58,24,-94],
+  "lobby": [62,3.2,-114,62,2.8,-99],
+  "waterfront": [20,5,-88,50,3,-67]
+}

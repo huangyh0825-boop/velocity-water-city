@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-15",
+  "implementationCommits": ["1bbb3d9", "f11f2f8"],
+  "baselineTag": "city-interior-baseline",
+  "commands": [
+    {"command": "pnpm.cmd dlx npm@10 test", "passed": 90, "failed": 0, "skipped": 0},
+    {"command": "pnpm.cmd dlx npm@10 run build", "exitCode": 0},
+    {"command": "node node_modules/typescript/bin/tsc --noEmit", "exitCode": 0},
+    {"command": "node node_modules/vite/bin/vite.js build", "exitCode": 0}
+  ],
+  "buildWarnings": ["Three.js chunk exceeds 500 kB before compression; 591.02 kB, gzip 150.49 kB"],
+  "browser": "Microsoft Edge, Playwright headless",
+  "viewport": [1440, 900],
+  "production": "http://127.0.0.1:5174/",
+  "scope": "Environment visuals only; no protected gameplay or model source changes",
+  "notPerformed": ["Human full three-lap browser playthrough", "Real Android/iOS device testing", "GitHub Pages deployment"]
+}
