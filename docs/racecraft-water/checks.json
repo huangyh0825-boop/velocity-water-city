@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-15",
+  "baseline": "craft-water-baseline",
+  "baselineCommit": "9106756",
+  "mainImplementation": "b4f3ee5",
+  "tests": {"command": "node node_modules/tsx/dist/cli.mjs --test tests/*.test.ts", "passed": 94, "failed": 0, "skipped": 0},
+  "typescript": {"command": "node node_modules/typescript/bin/tsc --noEmit", "exitCode": 0},
+  "build": {"command": "node node_modules/vite/bin/vite.js build", "exitCode": 0, "warning": "Three.js chunk exceeds 500 kB before compression"},
+  "modelBuild": {"command": "node scripts/build-models.mjs", "blender": "4.5.9 LTS", "exitCode": 0},
+  "browser": "Microsoft Edge via Playwright, headless, 1440x900",
+  "performance": "Five animated riders and water actually rendered every rAF; physics paused only for fixed-view comparison",
+  "protectedCodeDiff": "No changes to config, AI, physics, race, track, camera, core, input, environment, driving/flight/trick/nitro models",
+  "notPerformed": ["Human full three-lap browser race", "Real mobile devices", "Integrated GPU testing", "Long thermal-load benchmark", "GitHub Pages deployment"]
+}

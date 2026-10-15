@@ -31,3 +31,9 @@ Three.js、Vite 与原项目 npm 依赖继续适用各自许可证。本阶段�
 本轮另增8种原创Blender模块（总计26种），脚本为 `scripts/art/city-module-infill.py`。继续复用既有PBR与CC0纹理，无新增外部模型、贴图或署名义务；未更改原创资产的整体授权。
 
 建筑光照与内部空间修订新增三张运行时Canvas原创贴图：1024×512八款房间图集（`src/environment/CityGlass.ts`）、512×256服务屏和256×256室内墙面（`src/environment/CityInteriors.ts`）。内容为代码绘制的虚构办公室、设备、柜台、墙板和原创文字，不含照片、下载室内素材或商业游戏图像。截图导出副本在 `docs/city-sample/interior-screenshots/atlas-*.png`，运行时不请求这些文档副本。浅层服务空间几何和静态基座遮蔽为原创代码生成，原GLB与Blender源文件未改动。没有新的第三方署名义务；原创作品仍由项目所有者决定整体授权。
+
+## 车手、快艇与水面修订 · 2026-10-15
+
+本轮替换此前纯原创占位快艇/车手GLB，采用Innerscene免费CC0个人水上摩托与Blender官方Human Base Meshes包内CC0真实男性基础网格，在Blender 4.5.9中改模、蒙皮、制作装备和两档LOD。素材允许修改及原文件/衍生文件公开再分发；没有使用品牌标识、付费模型或商业游戏提取资产。原始文件、实际下载SHA256、作者、许可页面、包内README和Rain Rig许可文本的区分，见 [车手快艇来源记录](../assets/racecraft/README.md)。保留Blender Foundation署名。历史阶段中“未使用第三方模型”的说明仅适用于当时版本。
+
+新仪表、头盔/护具、竞速服256²Normal/Roughness纹理、256²水面法线谱、反射/Fresnel和尾浪着色为本项目原创代码/图像。艇身512²/低画质256²BaseColor纹理源于上述CC0模型，部分经中和色彩和缩放；原始纹理名称保留。GLB内嵌图片，不依赖远程素材。没有新音频素材或新的第三方运行库。

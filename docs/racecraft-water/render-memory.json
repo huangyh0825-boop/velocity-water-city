@@ -1,0 +1,38 @@
+{
+  "base": {
+    "geometries": 464,
+    "textures": 139
+  },
+  "after": {
+    "geometries": 464,
+    "textures": 139
+  },
+  "samples": [
+    {
+      "geometries": 448,
+      "textures": 111
+    },
+    {
+      "geometries": 464,
+      "textures": 139
+    },
+    {
+      "geometries": 448,
+      "textures": 111
+    },
+    {
+      "geometries": 464,
+      "textures": 139
+    },
+    {
+      "geometries": 448,
+      "textures": 111
+    },
+    {
+      "geometries": 464,
+      "textures": 139
+    }
+  ],
+  "renderedAfterEveryToggle": true,
+  "errors": []
+}

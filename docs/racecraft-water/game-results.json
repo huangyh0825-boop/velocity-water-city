@@ -1,0 +1,54 @@
+{
+  "driving": {
+    "speed": 215.52,
+    "energy": 24.233333333333313,
+    "rank": "1 / 5",
+    "lap": "1 / 3",
+    "reflection": true
+  },
+  "jump": {
+    "legal": true,
+    "airborne": false,
+    "completed": true,
+    "message": "特技成功 · 氮气 +35%",
+    "energy": 59.23333333333331
+  },
+  "models": [
+    {
+      "loaded": true,
+      "error": "",
+      "triangles": 73091,
+      "draws": 18,
+      "skeletons": 1
+    },
+    {
+      "loaded": true,
+      "error": "",
+      "triangles": 31571,
+      "draws": 18,
+      "skeletons": 1
+    },
+    {
+      "loaded": true,
+      "error": "",
+      "triangles": 31571,
+      "draws": 18,
+      "skeletons": 1
+    },
+    {
+      "loaded": true,
+      "error": "",
+      "triangles": 31571,
+      "draws": 18,
+      "skeletons": 1
+    },
+    {
+      "loaded": true,
+      "error": "",
+      "triangles": 31571,
+      "draws": 18,
+      "skeletons": 1
+    }
+  ],
+  "errors": []
+}

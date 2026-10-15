@@ -1,0 +1,74 @@
+{
+  "standard": {
+    "before": {
+      "fps": 239.6706611776863,
+      "p95": 4.299999999999272,
+      "over50": 0,
+      "calls": 248,
+      "triangles": 566003,
+      "memory": {
+        "geometries": 270,
+        "textures": 104
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "renderEveryCallback": true,
+      "renderedFrames": 1975,
+      "sampleMs": 6000,
+      "actors": 5,
+      "reflection": false
+    },
+    "after": {
+      "fps": 238.17063617726959,
+      "p95": 4.299999999999272,
+      "over50": 0,
+      "calls": 208,
+      "triangles": 674522,
+      "memory": {
+        "geometries": 254,
+        "textures": 133
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "renderEveryCallback": true,
+      "renderedFrames": 2025,
+      "sampleMs": 6000,
+      "actors": 5,
+      "reflection": true
+    }
+  },
+  "low": {
+    "before": {
+      "fps": 239.3413113770459,
+      "p95": 4.300000000000182,
+      "over50": 0,
+      "calls": 386,
+      "triangles": 363713,
+      "memory": {
+        "geometries": 673,
+        "textures": 92
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "renderEveryCallback": true,
+      "renderedFrames": 1949,
+      "sampleMs": 6000,
+      "actors": 5,
+      "reflection": false
+    },
+    "after": {
+      "fps": 240.00400006666777,
+      "p95": 4.299999999999272,
+      "over50": 0,
+      "calls": 346,
+      "triangles": 444528,
+      "memory": {
+        "geometries": 657,
+        "textures": 121
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "renderEveryCallback": true,
+      "renderedFrames": 2023,
+      "sampleMs": 6000,
+      "actors": 5,
+      "reflection": true
+    }
+  }
+}
