@@ -62,7 +62,12 @@ ring=(radius>89)&(radius<98)&(angle<2.4);rgba[ring,:3]=(.10,.72,.83)
 for i in range(5):rgba[107+i*10:112+i*10,75:178-i*10,:3]=(.19,.57,.68)
 image=bpy.data.images.new('Original digital instrument',width=N,height=N);image.pixels.foreach_set(rgba.ravel());image.pack();n=display.node_tree.nodes.new('ShaderNodeTexImage');n.image=image;display.node_tree.links.new(n.outputs['Color'],display.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
 for o in meshes:
- if 'recessed instrument face' in o.name or 'finite instrument lens' in o.name:o.data.materials.clear();o.data.materials.append(display)
+ if 'recessed instrument face' in o.name or 'finite instrument lens' in o.name:
+  o.data.materials.clear();o.data.materials.append(display)
+  points=[G(v.co) for v in o.data.vertices];xmin=min(p.x for p in points);xmax=max(p.x for p in points);zmin=min(p.z for p in points);zmax=max(p.z for p in points)
+  uv=o.data.uv_layers.active or o.data.uv_layers.new(name='Instrument face UV')
+  for loop in o.data.loops:
+   p=points[loop.vertex_index];uv.data[loop.index].uv=((p.x-xmin)/max(.001,xmax-xmin),(p.z-zmin)/max(.001,zmax-zmin))
 for side in [-1,1]:
  meshes.append(tube('Inset navigation ribbon',[(side*.63,.556,-.80),(side*.64,.556,-.30),(side*.57,.556,.35)],.007,glow))
 # Model-space mount metadata; sizes stay inside the original capsule's visual envelope.

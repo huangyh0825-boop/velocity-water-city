@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { ModelBatch } from './ModelBatch';
 import { AnatomicalRider } from './AnatomicalRider';
 
-/** Procedural seated racer. Fixed grips and articulated arms, no skeleton dependency. */
+/** Authored skinned racer with a lightweight fallback. Visual IK keeps grips fixed. */
 export class Rider {
   readonly root=new THREE.Group();
   torso:THREE.Object3D=new THREE.Group();
