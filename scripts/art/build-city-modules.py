@@ -129,16 +129,17 @@ def dock():
     for x in [-5.5,5.5]:band('Dock bollard flange',oval(.35,.35,8,x,-9),.85,.07,metal);tube('Dock mooring pin',[(x,.8,-9),(x,1.5,-9)],.13,metal)
 
 extension=runpy.run_path(str(Path(__file__).with_name('city-module-details.py')));extension['configure'](globals())
-builders=[('spindle_office',spindle,12,15,65),('terrace_residence',residence,13,13,52),('split_office',split,14,15,80),('research_campus',research,14,15,20),('data_centre',data,12,15,16),('retail_hub',retail,16,11,12),('transit_station',transit,13,16,31),('drydock_service',dock,8,12,8)]+extension['BUILDERS']
+infill=runpy.run_path(str(Path(__file__).with_name('city-module-infill.py')));infill['configure']({**globals(),**extension})
+builders=[('spindle_office',spindle,12,15,65),('terrace_residence',residence,13,13,52),('split_office',split,14,15,80),('research_campus',research,14,15,20),('data_centre',data,12,15,16),('retail_hub',retail,16,11,12),('transit_station',transit,13,16,31),('drydock_service',dock,8,12,8)]+extension['BUILDERS']+infill['BUILDERS']
 for name,build,rx,rz,height in builders:
-    active=bpy.data.collections.new(name);bpy.context.scene.collection.children.link(active);build();extension['refine'](name);metadata[name]={'rx':rx,'rz':rz,'height':height}
+    active=bpy.data.collections.new(name);bpy.context.scene.collection.children.link(active);build();extension['refine'](name);infill['refine'](name);metadata[name]={'rx':rx,'rz':rz,'height':height}
     root=bpy.data.objects.new(name+'__near',None);active.objects.link(root)
     for o in list(active.objects):
         if o!=root:o.parent=root
     groups.append(root)
     # Source far silhouettes retain the distinctive edited outline and crown.
     near=active;active=bpy.data.collections.new(name+'_silhouette');bpy.context.scene.collection.children.link(active);far=bpy.data.objects.new(name+'__far',None);active.objects.link(far)
-    if extension['far_shape'](name,rx,rz,height):pass
+    if infill['far_shape'](name,rx,rz,height) or extension['far_shape'](name,rx,rz,height):pass
     elif name=='split_office':
         for side,h in [(-1,height),(1,height*.78)]:shell('Twin skyline silhouette',[(.25,oval(rx*.42,rz*.78,12,side*rx*.46)),(h,oval(rx*.3,rz*.6,12,side*rx*.54))],glass);slab('Silhouette crown',oval(rx*.3,rz*.6,12,side*rx*.54),h,h+.4,coat,0)
     else:
@@ -195,7 +196,12 @@ def export(path):
     for root in runtime_roots:
         root.select_set(True)
         for o in root.children:o.select_set(True)
-    bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_selection=True,export_yup=True,export_normals=True)
+    # A running preview must never read a partially written binary or image.
+    # Stage on the same volume, then replace the public asset after export closes.
+    staging=ROOT/'.qa'/'art-export';staging.mkdir(parents=True,exist_ok=True)
+    staged=staging/path.name
+    bpy.ops.export_scene.gltf(filepath=str(staged),export_format='GLB',use_selection=True,export_yup=True,export_normals=True)
+    staged.replace(path)
 export(OUT/'city-modules.glb')
 # The low download keeps mid as near and actual silhouette geometry at distance.
 for root in runtime_roots:

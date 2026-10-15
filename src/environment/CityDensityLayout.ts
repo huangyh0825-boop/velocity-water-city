@@ -11,6 +11,10 @@ export const CITY_MODULES={
  expo_hall:{rx:19,rz:15,height:24},control_centre:{rx:12.5,rz:11,height:35},
  terraced_hotel:{rx:14,rz:15,height:72},ring_spire:{rx:12,rz:13,height:105},
  blade_tower:{rx:13,rz:13,height:92},sky_gallery:{rx:14,rz:11,height:28},
+ service_depot:{rx:6,rz:7,height:9},ferry_terminal:{rx:10,rz:12,height:15},
+ market_galleria:{rx:12,rz:12,height:24},bio_lab:{rx:9,rz:11,height:30},
+ cooling_exchange:{rx:6,rz:8,height:17},sail_office:{rx:13,rz:15,height:95},
+ lattice_tower:{rx:12,rz:14,height:110},commuter_hub:{rx:10,rz:11,height:25},
 } as const;
 export type CityModule=keyof typeof CITY_MODULES;
 export type CityLayer='waterfront'|'blocks'|'skyline';
@@ -56,6 +60,25 @@ export function citySites(track:CityTrack):CitySite[]{
  for(const side of [-1,1])for(let row=0;row<4;row++)for(let i=0;i<10;i++)add(skyline[(i+row+(side>0?2:0))%6],'skyline',-120+i*26+row*2,178+row*31,side,800+row*20+i+(side>0?100:0));
  // Distant context frames both ends of the sample; it adds no new waterfront route/detail area.
  for(const side of [-1,1])for(let end=0;end<2;end++)for(let row=0;row<2;row++)for(let i=0;i<5;i++)add(skyline[(i+end+row+(side>0?2:0))%6],'skyline',(end?1:-1)*(168+i*33+row*5),76+row*72+(i%2)*30,side,1100+end*50+row*20+i+(side>0?100:0));
+ // Fill gaps in the existing district rather than moving its approved buildings.
+ const fill=(kind:CityModule,layer:CityLayer,offsets:number[],spacing:number,seed:number,target:number)=>{
+  for(const side of [-1,1]){let count=0;for(const offset of offsets){for(let i=0;i<Math.floor(250/spacing);i++){
+   const old=sites.length;add(kind,layer,-124+i*spacing+(seed%7),offset,side,seed+i+Math.round(offset)*10+(side>0?10000:0));
+   if(sites.length>old&&++count>=target)break;
+  }if(count>=target)break;}}
+ };
+ fill('ferry_terminal','waterfront',[38,48,24],21,2000,2);
+ fill('market_galleria','blocks',[62,83,108,134,153],23,2100,2);
+ fill('bio_lab','blocks',[62,83,108,134,153],19,2200,3);
+ fill('commuter_hub','blocks',[62,83,108,134,153],19,2300,2);
+ fill('lattice_tower','skyline',[164,196,228,260,288],21,2500,3);
+ fill('sail_office','skyline',[166,195,223,253,289],19,2400,4);
+ fill('lattice_tower','skyline',[166,173,180,187,202,209,216,230,237,244,258,265,272,279,290],11,3000,4);
+ fill('sail_office','skyline',[169,176,183,190,205,212,219,233,240,247,261,268,275,282,292],11,3100,4);
+ fill('service_depot','waterfront',[17,31,44],12,2600,5);
+ fill('cooling_exchange','waterfront',[18,33,48],13,2700,4);
+ fill('service_depot','blocks',[52,72,93,113,136,153],15,2800,4);
+ fill('harbor_control','waterfront',[16,23,30,37,44,51],11,3200,3);
  return sites;
 }
 /** Distance hysteresis keeps transitions stable; far skyline always uses cheap silhouettes. */

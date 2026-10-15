@@ -90,6 +90,46 @@
       "rx": 14,
       "rz": 11,
       "height": 28
+    },
+    "service_depot": {
+      "rx": 6,
+      "rz": 7,
+      "height": 9
+    },
+    "ferry_terminal": {
+      "rx": 10,
+      "rz": 12,
+      "height": 15
+    },
+    "market_galleria": {
+      "rx": 12,
+      "rz": 12,
+      "height": 24
+    },
+    "bio_lab": {
+      "rx": 9,
+      "rz": 11,
+      "height": 30
+    },
+    "cooling_exchange": {
+      "rx": 6,
+      "rz": 8,
+      "height": 17
+    },
+    "sail_office": {
+      "rx": 13,
+      "rz": 15,
+      "height": 95
+    },
+    "lattice_tower": {
+      "rx": 12,
+      "rz": 14,
+      "height": 110
+    },
+    "commuter_hub": {
+      "rx": 10,
+      "rz": 11,
+      "height": 25
     }
   },
   "triangles": {
@@ -111,29 +151,29 @@
     "retail_hub__near": 2252,
     "retail_hub__mid": 1006,
     "retail_hub__far": 116,
-    "transit_station__near": 1560,
-    "transit_station__mid": 695,
+    "transit_station__near": 1656,
+    "transit_station__mid": 738,
     "transit_station__far": 116,
     "drydock_service__near": 1160,
     "drydock_service__mid": 518,
     "drydock_service__far": 116,
-    "harbor_control__near": 1218,
-    "harbor_control__mid": 540,
+    "harbor_control__near": 1790,
+    "harbor_control__mid": 796,
     "harbor_control__far": 116,
-    "service_arcade__near": 2140,
-    "service_arcade__mid": 955,
+    "service_arcade__near": 2712,
+    "service_arcade__mid": 1215,
     "service_arcade__far": 116,
-    "energy_node__near": 1716,
-    "energy_node__mid": 766,
+    "energy_node__near": 1748,
+    "energy_node__mid": 780,
     "energy_node__far": 116,
-    "view_pavilion__near": 1908,
-    "view_pavilion__mid": 852,
+    "view_pavilion__near": 2336,
+    "view_pavilion__mid": 1044,
     "view_pavilion__far": 116,
     "expo_hall__near": 2674,
     "expo_hall__mid": 1196,
     "expo_hall__far": 116,
-    "control_centre__near": 2324,
-    "control_centre__mid": 1037,
+    "control_centre__near": 2500,
+    "control_centre__mid": 1117,
     "control_centre__far": 116,
     "terraced_hotel__near": 10012,
     "terraced_hotel__mid": 5126,
@@ -146,8 +186,32 @@
     "blade_tower__far": 60,
     "sky_gallery__near": 1984,
     "sky_gallery__mid": 897,
-    "sky_gallery__far": 116
+    "sky_gallery__far": 116,
+    "service_depot__near": 716,
+    "service_depot__mid": 318,
+    "service_depot__far": 116,
+    "ferry_terminal__near": 4436,
+    "ferry_terminal__mid": 1989,
+    "ferry_terminal__far": 116,
+    "market_galleria__near": 8616,
+    "market_galleria__mid": 3868,
+    "market_galleria__far": 116,
+    "bio_lab__near": 3940,
+    "bio_lab__mid": 1826,
+    "bio_lab__far": 116,
+    "cooling_exchange__near": 2332,
+    "cooling_exchange__mid": 1042,
+    "cooling_exchange__far": 116,
+    "sail_office__near": 7708,
+    "sail_office__mid": 3460,
+    "sail_office__far": 116,
+    "lattice_tower__near": 5476,
+    "lattice_tower__mid": 2454,
+    "lattice_tower__far": 276,
+    "commuter_hub__near": 3236,
+    "commuter_hub__mid": 1448,
+    "commuter_hub__far": 116
   },
-  "standardBytes": 8205264,
-  "lowBytes": 3869524
+  "standardBytes": 10528652,
+  "lowBytes": 5325996
 }
