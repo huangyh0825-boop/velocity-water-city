@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {CityTrack} from '../track/CityTrack';
 import {CITY_MODULES,citySites,cityLOD,sampleLocal,type CitySite,type CityModule} from './CityDensityLayout';
+import {CityContactShadows} from './CityContactShadows';
+import {CityGlass} from './CityGlass';
+import {CityInteriors} from './CityInteriors';
 import {CityMaterialBatch} from './CityMaterialBatch';
 import {readableSign,atlasCellUV} from './ReadableSign';
 
@@ -11,6 +14,7 @@ interface Batch {meshes:THREE.InstancedMesh[];used:number}
 /** District art only: reusable authored GLBs, instancing, distance LOD and shared sign atlas. */
 export class CityDensity {
  readonly root=new THREE.Group();readonly sites:CitySite[];
+ private foundation:CityContactShadows;readonly glass=new CityGlass();readonly interiors:CityInteriors;
  loaded=false;error='';low=false;
  private cache=new Map<boolean,Promise<Library>>();private batches=new Map<string,Batch>();
  private combined?:CityMaterialBatch;private multiDraw=false;private library?:Library;
@@ -21,6 +25,8 @@ export class CityDensity {
  constructor(private track:CityTrack){
   this.root.name='layered-city-district';this.sites=citySites(track);this.previous=this.sites.map(()=>-1);
   this.poses=this.sites.map(s=>new THREE.Matrix4().compose(new THREE.Vector3(s.x,.265-.25*s.scaleY,s.z),new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),s.heading),new THREE.Vector3(s.scaleXZ,s.scaleY,s.scaleXZ)));
+  this.foundation=new CityContactShadows(this.sites);this.root.add(this.foundation.mesh);
+  this.interiors=new CityInteriors(track,this.sites);this.root.add(this.interiors.root);
   this.terrain=this.makeTerrain();this.atlas=this.makeSigns();this.makeConnections();this.root.add(this.terrain,this.signs,this.links);
  }
  async setLow(low:boolean){
@@ -38,7 +44,7 @@ export class CityDensity {
        if(/Graphite joint/.test(material.name)){material.color.set('#14212a');material.metalness=.05;}
        if(low){material.normalMap=null;if(material instanceof THREE.MeshPhysicalMaterial)material.clearcoat=0;}
       }
-      list.push({geometry,material});
+      this.glass.prepare(material,low);list.push({geometry,material});
      }});parts.set(`${kind}:${tier}`,list);
     }
     return {scene:g.scene,parts};
@@ -47,7 +53,7 @@ export class CityDensity {
    let concrete:THREE.MeshStandardMaterial|undefined;library.scene.traverse(o=>{if(o instanceof THREE.Mesh&&/Concrete034/.test((o.material as THREE.Material).name))concrete=o.material as THREE.MeshStandardMaterial;});
    if(concrete){(this.terrain.material as THREE.Material).dispose();const material=concrete.clone();material.color.set('#88989f');material.side=THREE.DoubleSide;this.terrain.material=material;}
    this.library=library;this.createInstances(library);
-   this.signs.visible=!low;this.links.visible=!low;this.loaded=true;this.error='';this.previous.fill(-1);this.lastTime=-Infinity;
+   this.foundation.mesh.visible=!low;this.interiors.setLow(low);this.signs.visible=!low;this.links.visible=!low;this.loaded=true;this.error='';this.previous.fill(-1);this.lastTime=-Infinity;
    const center=this.track.point(.06*Math.PI*2);this.update(new THREE.Vector3(center.x,5,center.z),0,true);
   }catch(e){if(request===this.generation&&!this.disposed){this.error=String(e);this.cache.delete(low);throw e;}}
  }
@@ -66,6 +72,7 @@ export class CityDensity {
  }
  update(camera:THREE.Vector3,time:number,force=false){
   if(!this.loaded)return;
+  this.interiors.update(camera);
   if(!force&&time-this.lastTime<.15&&this.lastCamera.distanceToSquared(camera)<64)return;
   this.lastTime=time;this.lastCamera.copy(camera);for(const b of this.batches.values())b.used=0;
   const local=sampleLocal(this.track,camera),color=new THREE.Color(),tints=['#ffffff','#cbdbe1','#e7dcc6','#c9dcd4'];
@@ -78,7 +85,7 @@ export class CityDensity {
   for(const b of this.batches.values())for(const mesh of b.meshes){mesh.count=b.used;mesh.instanceMatrix.needsUpdate=true;if(mesh.instanceColor)mesh.instanceColor.needsUpdate=true;mesh.computeBoundingSphere();}
  }
  reflect(texture:THREE.Texture){
-  for(const mesh of [...(this.combined?.meshes??[]),...[...this.batches.values()].flatMap(b=>b.meshes)]){const m=mesh.material as THREE.MeshStandardMaterial;if(m instanceof THREE.MeshStandardMaterial){m.envMap=texture;m.envMapIntensity=/glazing/.test(m.name)?.7:.55;m.needsUpdate=true;}}
+  for(const mesh of [...(this.combined?.meshes??[]),...[...this.batches.values()].flatMap(b=>b.meshes)]){const m=mesh.material as THREE.MeshStandardMaterial;if(m instanceof THREE.MeshStandardMaterial){m.envMap=texture;m.envMapIntensity=/glaz|glass/i.test(m.name)?.32:.55;m.needsUpdate=true;}}
  }
  stats(){return {sites:this.sites.length,waterfront:this.sites.filter(s=>s.layer==='waterfront').length,blocks:this.sites.filter(s=>s.layer==='blocks').length,skyline:this.sites.filter(s=>s.layer==='skyline').length,lods:[0,1,2].map(t=>this.previous.filter(p=>p===t).length),mode:this.combined?'material-batch':'instanced',activeMeshes:this.combined?.meshes.length??[...this.batches.values()].filter(b=>b.used).reduce((n,b)=>n+b.meshes.length,0)};}
  private makeTerrain(){
@@ -134,7 +141,7 @@ export class CityDensity {
  }
  private clearInstances(){this.combined?.dispose();this.combined=undefined;for(const b of this.batches.values())for(const mesh of b.meshes){mesh.removeFromParent();mesh.dispose();}this.batches.clear();}
  dispose(){
-  this.disposed=true;this.generation++;this.clearInstances();this.root.removeFromParent();this.terrain.geometry.dispose();(this.terrain.material as THREE.Material).dispose();this.atlas.dispose();
+  this.disposed=true;this.foundation.dispose();this.interiors.dispose();this.glass.dispose();this.generation++;this.clearInstances();this.root.removeFromParent();this.terrain.geometry.dispose();(this.terrain.material as THREE.Material).dispose();this.atlas.dispose();
   for(const sign of this.signs.children){const face=sign.children[0] as THREE.Mesh;face.geometry.dispose();(face.material as THREE.Material).dispose();}
   const linkMaterials=new Set<THREE.Material>();for(const o of this.links.children){const m=o as THREE.Mesh;m.geometry.dispose();linkMaterials.add(m.material as THREE.Material);}linkMaterials.forEach(m=>m.dispose());
   for(const p of this.cache.values())void p.then(lib=>{

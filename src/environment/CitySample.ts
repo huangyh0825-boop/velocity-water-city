@@ -35,7 +35,7 @@ export class CitySample {
   try{
    let asset=this.cache.get(low);
    if(!asset){asset=new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}models/city-sample/waterfront${low?'-low':''}.glb`).then(g=>{
-    g.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.receiveShadow=true;const mats=Array.isArray(o.material)?o.material:[o.material];for(const mat of mats)if(mat instanceof THREE.MeshStandardMaterial){mat.envMapIntensity=.55;if(/Graphite joint/.test(mat.name)){mat.color.set('#14212a');mat.envMapIntensity=.2;mat.metalness=.05;}if(/glaz|glass/i.test(mat.name)){mat.metalness=0;if(/Blue laminated/.test(mat.name))mat.color.set('#d4e0e6');if(/Silver blue/.test(mat.name))mat.color.set('#718590');if(/Marina teal/.test(mat.name))mat.color.set('#b3c7ba');mat.envMapIntensity=.4;}if(/Concrete034/.test(mat.name))mat.color.set('#b4bec2');mat.aoMapIntensity=.7;if(low){mat.normalMap=null;if(mat instanceof THREE.MeshPhysicalMaterial)mat.clearcoat=0;mat.needsUpdate=true;}else{for(const t of [mat.map,mat.normalMap,mat.roughnessMap,mat.metalnessMap,mat.aoMap])if(t)t.anisotropy=4;}}}});return g.scene;
+    g.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.receiveShadow=true;const mats=Array.isArray(o.material)?o.material:[o.material];for(const mat of mats)if(mat instanceof THREE.MeshStandardMaterial){mat.envMapIntensity=.55;if(/Graphite joint/.test(mat.name)){mat.color.set('#14212a');mat.envMapIntensity=.2;mat.metalness=.05;}if(/glaz|glass/i.test(mat.name)){mat.metalness=0;if(/Blue laminated/.test(mat.name))mat.color.set('#d4e0e6');if(/Silver blue/.test(mat.name))mat.color.set('#718590');if(/Marina teal/.test(mat.name))mat.color.set('#b3c7ba');mat.envMapIntensity=.4;}if(/Concrete034/.test(mat.name))mat.color.set('#b4bec2');mat.aoMapIntensity=.85;this.density.glass.prepare(mat,low);if(low){mat.normalMap=null;if(mat instanceof THREE.MeshPhysicalMaterial)mat.clearcoat=0;mat.needsUpdate=true;}else{for(const t of [mat.map,mat.normalMap,mat.roughnessMap,mat.metalnessMap,mat.aoMap])if(t)t.anisotropy=4;}}}});return g.scene;
    });this.cache.set(low,asset);}
    const [group]=await Promise.all([asset,this.density.setLow(low)]);if(this.disposed||request!==this.generation)return;
    this.releaseSigns();this.atmosphere?.dispose();this.root.clear();this.root.add(group,this.contacts.mesh,this.density.root);this.contacts.mesh.visible=!low;this.loaded=true;this.error='';this.shadowWater.visible=!low;this.addSigns();this.atmosphere=new CityAtmosphere(this.track);this.atmosphere.setLow(low);this.root.add(this.atmosphere.root);if(this.sun)this.sun.shadow.needsUpdate=true;this.ready(true);
@@ -49,7 +49,7 @@ export class CitySample {
    const cube=new THREE.WebGLCubeRenderTarget(256,{type:THREE.HalfFloatType}),camera=new THREE.CubeCamera(1,1200,cube);camera.position.set(this.root.position.x,22,this.root.position.z);camera.update(renderer,scene);
    const generator=new THREE.PMREMGenerator(renderer);this.reflection=generator.fromCubemap(cube.texture);generator.dispose();cube.dispose();
   }
-  this.root.traverse(o=>{if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(m instanceof THREE.MeshStandardMaterial&&/glaz|glass|alloy|Metal032/i.test(m.name)){m.envMap=this.reflection!.texture;m.envMapIntensity=/alloy|Metal032/i.test(m.name)?.65:.7;m.needsUpdate=true;}});
+  this.root.traverse(o=>{if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(m instanceof THREE.MeshStandardMaterial&&/glaz|glass|alloy|Metal032/i.test(m.name)){m.envMap=this.reflection!.texture;m.envMapIntensity=/alloy|Metal032/i.test(m.name)?.55:.32;m.needsUpdate=true;}});
   this.density.reflect(this.reflection.texture);
  }
  private releaseSigns(){for(const child of [...this.root.children])if(child.userData.readableSign)disposeSign(child);}
@@ -67,9 +67,10 @@ export class CitySample {
  configureSun(scene:THREE.Scene){
   const sun=scene.children.find(o=>o instanceof THREE.DirectionalLight) as THREE.DirectionalLight|undefined;
   if(!sun)return;const a=CITY_SAMPLE.center*TAU,p=this.track.point(a);
-  sun.position.set(p.x-110,180,p.z+100);sun.target.position.set(p.x,0,p.z);scene.add(sun.target);
-  this.sun=sun;sun.intensity=3.25;sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-160,right:160,top:175,bottom:-175,near:1,far:450});sun.shadow.bias=-.00008;sun.shadow.normalBias=.018;sun.shadow.camera.updateProjectionMatrix();
-  for(const light of scene.children)if(light instanceof THREE.HemisphereLight)light.intensity=1.3;
+  sun.position.set(p.x-155,165,p.z+90);sun.target.position.set(p.x,0,p.z);scene.add(sun.target);
+  scene.environmentIntensity=.35;
+  this.sun=sun;sun.intensity=3.7;sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-160,right:160,top:175,bottom:-175,near:1,far:450});sun.shadow.bias=-.00008;sun.shadow.normalBias=.025;sun.shadow.camera.updateProjectionMatrix();
+  for(const light of scene.children)if(light instanceof THREE.HemisphereLight){light.intensity=.58;light.color.set('#d7e9f1');light.groundColor.set('#263748');}
   // District geometry and sun are static: refresh on asset/quality changes only.
   sun.shadow.autoUpdate=false;sun.shadow.needsUpdate=true;
  }
