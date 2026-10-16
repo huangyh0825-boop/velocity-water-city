@@ -34,6 +34,8 @@ export class Wake {
     this.updateAll(dt,[{id:'player',model,grounded}]);
   }
   setLow(low:boolean){this.low=low;this.pool.setLow(low);this.intervals.clear();this.mesh.count=this.pool.limit;this.opacity.array.fill(0);this.opacity.needsUpdate=true;}
+  /** The same world-space pool can be rendered directly by the displaced water. */
+  setSurfaceIntegrated(integrated:boolean){this.mesh.visible=!integrated;}
   updateAll(dt:number,sources:readonly WaterSource[]){
     this.pool.update(dt);
     for(const {id,model:m,grounded} of sources){

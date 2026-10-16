@@ -1,18 +1,23 @@
-# 原创视觉资源
+# 当前竞速视觉资产 · 2026-10-16
 
-制作方式：`scripts/build-models.mjs` 使用原创 Catmull-Rom 截面放样、封口曲面、轮廓挤出及管线生成；静态船体按材质合并，使用 GLTFExporter 导出二进制 GLB。运行 `npm run assets:build` 可重复生成。
+玩家使用 Blender 重构的 **VECTOR R8 PWC** 与 **R3 真人比例骑手**；AI及低画质继续使用原有低精度资产。来源、许可证和历史版本见 `assets/racecraft/README.md`。本目录数值以 `manifest.json` 为准。
 
-环境未发现可用 Blender；没有人工雕刻、外部游戏模型、照片贴图或骨骼蒙皮。这是可编辑的代码曲面资产工作流。后续可在 Blender 导入 GLB 继续手工调整。
+| 文件 | 几何GLB体积 | 三角面 | 导出材质组 |
+|---|---:|---:|---:|
+| watercraft.glb | 102,633,960 B | 3,419,130 | 21 |
+| rider.glb | 67,519,076 B | 1,437,700 | 15 |
+| watercraft-low.glb | 787,168 B | 21,611 | 10 |
+| rider-low.glb | 470,132 B | 9,929 | 6 |
 
-| 文件 | 体积 | 三角面 | 材质组/绘制 |
-| --- | ---: | ---: | ---: |
-| watercraft.glb | 1,658,964 B | 17,224 | 5 |
-| watercraft-low.glb | 926,268 B | 9,592 | 5 |
-| rider.glb | 305,904 B | 11,968 | 19 |
-| rider-low.glb | 164,876 B | 5,784 | 19 |
+高精度模型还依赖 **`pwc-r8/textures/`和`rider-r3/textures/`** 中各19张相对路径PNG，合计130,275,118 B。保留完整目录；仅拷贝GLB会丢失贴图。船体贴图为2048²及一张1024²仪表，骑手贴图为2048²。没有外部CDN依赖，也不需要Draco解码器。
 
-全套约 3.06 MB。玩家随画质选择标准/低精度；AI 复用低精度资源，缓存模型模板和基础几何。颜色材质按艇克隆。没有 Draco 压缩或额外解码依赖。
+`npm run assets:build` 通过 `scripts/build-racecraft.mjs` 依次运行 `rebuild-hero-pwc.py` 与 `rebuild-hero-rider.py`，只重新生成玩家高精度资产。需要Blender 4.5+，可设置 `BLENDER_PATH`；普通开发与构建直接使用已提交资产。
 
-船体局部 +Z 为船头，静态艇体节点 `Hull`。角色节点 `Racer`、`RiderTorso`、`UpperArm_-1/1`、`Forearm_-1/1` 用于分层姿态动画。视觉旋转不会改动物理胶囊体。上身前倾/侧倾、握把及落地缓冲由 `Rider.ts` 控制，特技跟随 `Watercraft` 视觉组。
+可编辑源：
 
-来源记录见 `docs/assets-license.md`；详细数值以同目录 manifest.json 为准。
+- `assets/racecraft/source/hero-pwc-r8.blend`：重构的主壳、船头、收腰侧体、座椅、一体驾驶舱；保留已有完整喷泵、握把和脚槽机械件。
+- `assets/racecraft/source/hero-rider-r3.blend`：CC0人体基础上的连续竞速服、新全盔/靴子/浮力背心；保留43骨骼坐姿绑定和握把IK接口。
+
+局部+Z为船头。`RiderSeat`、`Grip_L/R`、`Foot_L/R`、`JetOutlet`挂点保持不变。新模型只替换视觉资源，不提供新的物理碰撞体。车手特技继承视觉组旋转；原有驾驶、AI、比赛与碰撞代码保持独立。
+
+验收图、实际浏览器测试及限制见 `docs/hero-water-rebuild-validation.md`。

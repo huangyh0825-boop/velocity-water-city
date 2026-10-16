@@ -1,0 +1,43 @@
+{
+  "performance": {
+    "frames": 120,
+    "meanMs": 23.714166666666674,
+    "p95Ms": 25.100000000002183,
+    "startKmh": 144.21867298628305,
+    "endKmh": 180,
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "viewport": [
+      1600,
+      1000
+    ],
+    "pixelRatio": 1
+  },
+  "memory": [
+    {
+      "geometries": 437,
+      "textures": 140
+    },
+    {
+      "geometries": 453,
+      "textures": 168
+    },
+    {
+      "geometries": 437,
+      "textures": 140
+    },
+    {
+      "geometries": 453,
+      "textures": 168
+    }
+  ],
+  "reset": {
+    "energy": 40,
+    "wake": 0,
+    "spray": 0,
+    "airborne": false,
+    "trick": false,
+    "phase": "countdown"
+  },
+  "recreatedGameWithoutShaderErrors": true,
+  "errors": []
+}

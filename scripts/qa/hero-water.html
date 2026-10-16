@@ -1,0 +1,6 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.svg"></head><body><div id="app"></div><script type="module">
+import '/src/style.css';import '/src/ui/race.css';import '/src/ui/phase3.css';
+import {Game} from '/src/core/Game.ts';
+// Development QA entry only. Vite's production entry never exports this instance.
+window.testGame=new Game(document.querySelector('#app'));
+</script></body></html>

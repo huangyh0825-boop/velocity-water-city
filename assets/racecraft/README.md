@@ -1,4 +1,18 @@
-# Racecraft art sources · checked 2026-10-15
+# Racecraft art sources · checked 2026-10-16
+
+## Current hero assets · 2026-10-16
+
+The default `assets:build` now runs **`rebuild-hero-pwc.py` followed by `rebuild-hero-rider.py`**. It replaces only the high-tier player visuals. The lower sections document earlier generations, not the current default build.
+
+- `source/hero-pwc-r8.blend`: a deep exterior reconstruction of the original project PWC. New compound foredeck, double-chine lower shell, turned shoulder panels with cut-through ducts, waisted center body, stepped fitted saddle, integrated steering/display and revised mirror mounts. The original R7 jet pump, grips and footwell hardware are reused deliberately. 330 runtime/source parts plus 45 hidden design surfaces. No manufacturer's mesh, texture or branding is used.
+- `source/hero-rider-r3.blend`: the retained CC0-derived anatomical seated skin is reshaped into a continuous race suit. Smooth interpolated colour panels and sewn boundaries replace separate tube sleeves and spherical joint covers. New full-face shell/eye port, visor, vents, aerofoil, boots and woven buoyancy vest. The existing 43-bone seated rig, heat weights and closed glove digits remain; garment skin follows that binding rather than a second animation system.
+- `public/models/watercraft.glb` plus `pwc-r8/textures/`, and `rider.glb` plus `rider-r3/textures/`, are the current runtime assets. Each image URI is relative. Source `.blend` files retain packed or relative original-resolution PBR images; retain `textures/hero/` with them.
+- No new external bitmap was acquired. Original 2K BaseColor/Normal/ORM finishes are reused/reassigned; suit colours additionally use interpolated vertex attributes. Procedural microstructure and analytic AO are not scanned clothing or a new high-poly AO bake.
+- New water displacement, directional ripple spectrum, Fresnel/GGX shading, current-frame planar reflections and wake-normal/foam integration are original code built on Three.js's maintained `Water` mirror-camera helper (Three.js MIT, already in project dependencies).
+
+Free model research: the [XOIAL Kawasaki candidate](https://sketchfab.com/3d-models/kawasaki-310xultra-jet-ski-37a2348f02da472d98310fd5621307c6) and [appsnation Jetski candidate](https://sketchfab.com/3d-models/jetski-15e79c65f67a468592cdc2ac1f5b389b) were not downloaded or used. Both official download API requests returned401 without authentication on2026-10-16. Listing claims do not establish a verified source package/license; no unknown files were imported. The already retained Blender CC0 human base remains the only external anatomical base. See `docs/hero-water-rebuild-validation.md` for evidence and current limitations.
+
+The new project-authored geometry/material/shader work does not introduce a paid asset or extra attribution requirement. CC0 base files retain their provenance below; this document does not relicense the whole project.
 
 No purchases or commercial-game extractions. Both downloads were obtained and opened in Blender.
 

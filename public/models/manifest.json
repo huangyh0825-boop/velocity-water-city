@@ -1,5 +1,5 @@
 {
-  "method": "Original VECTOR R7 PWC rebuild with retained CC0-derived anatomical rider",
+  "method": "Original VECTOR R8 exterior reconstruction and CC0-derived R3 anatomical racing rider",
   "sources": [
     "assets/racecraft/source/pwc-cc0.glb",
     "assets/racecraft/source/human-base-cc0.blend"
@@ -7,9 +7,9 @@
   "assets": [
     {
       "file": "public/models/watercraft.glb",
-      "triangles": 2208092,
-      "draws": 20,
-      "bytes": 66862748,
+      "triangles": 3419130,
+      "draws": 21,
+      "bytes": 102633960,
       "textureBytes": 63266564
     },
     {
@@ -20,9 +20,10 @@
     },
     {
       "file": "public/models/rider.glb",
-      "triangles": 777360,
-      "draws": 13,
-      "bytes": 92802712
+      "triangles": 1437700,
+      "draws": 15,
+      "bytes": 67519076,
+      "textureBytes": 67008554
     },
     {
       "file": "public/models/rider-low.glb",
@@ -43,128 +44,177 @@
       0.5743600726127625
     ]
   ],
-  "heroMethod": "Blender quad lofts, layered industrial parts, tailored anatomical skin and 43-bone rider; no hero decimation",
+  "heroMethod": "Compound PWC surfaces and continuous tailored anatomical race suit; retained seated rig with closed glove digits",
   "heroSources": [
-    "assets/racecraft/source/hero-craft.blend",
-    "assets/racecraft/source/hero-racer.blend"
+    "assets/racecraft/source/hero-pwc-r8.blend",
+    "assets/racecraft/source/hero-rider-r3.blend"
   ],
   "pwcRebuild": {
-    "design": "VECTOR R7",
-    "method": "Original Blender surface and industrial assembly reconstruction",
-    "source": "assets/racecraft/source/pwc-r7.blend",
-    "partCounts": {
-      "formed shell": 9,
-      "intake duct": 4,
-      "seals and lines": 6,
-      "intake louvre": 14,
-      "lamp": 4,
-      "footwell tub": 2,
-      "foot traction": 68,
-      "drain": 14,
-      "knee grip": 12,
-      "sponson": 2,
-      "recessed fastener": 30,
-      "driver cushion": 1,
-      "rear cushion": 1,
-      "seat mounting cradle": 1,
-      "saddle seam": 32,
-      "stern deck": 20,
-      "boarding hardware": 6,
-      "steering shroud": 1,
-      "steering": 4,
-      "handgrip": 50,
-      "controls": 14,
-      "instrument console": 2,
-      "display": 1,
-      "display lens": 1,
-      "mirror": 6,
-      "instrument mounting": 1,
-      "service cap": 3,
-      "pump": 4,
-      "pump casting": 8,
-      "stator vane": 8,
-      "pump linkage": 11,
-      "reverse bucket": 1,
-      "original product graphics": 10
-    },
-    "openIntakeCuts": 4,
-    "mountsUnchanged": true,
+    "design": "VECTOR R8",
+    "method": "Deep exterior reconstruction; retained R7 jet, grips and footwell hardware",
+    "source": "assets/racecraft/source/hero-pwc-r8.blend",
+    "parts": 330,
+    "designSurfaces": 45,
     "textures": [
       {
-        "uri": "pwc-r7/textures/Forged-carbon-composite-normal-65172c9aba.png",
-        "bytes": 391662
-      },
-      {
-        "uri": "pwc-r7/textures/Forged-carbon-composite-orm-e7b1ce5b4b.png",
-        "bytes": 4377752
-      },
-      {
-        "uri": "pwc-r7/textures/Forged-carbon-composite-basecolor-9a7a94cc03.png",
-        "bytes": 1008604
-      },
-      {
-        "uri": "pwc-r7/textures/Paint-normal-6b465234a3.png",
-        "bytes": 3189856
-      },
-      {
-        "uri": "pwc-r7/textures/Paint-orm-b13b68a813.png",
-        "bytes": 3377500
-      },
-      {
-        "uri": "pwc-r7/textures/Paint-basecolor-f0c48b4ee3.png",
-        "bytes": 5059889
-      },
-      {
-        "uri": "pwc-r7/textures/Pearl-ceramic-silver-normal-6b465234a3.png",
-        "bytes": 3189856
-      },
-      {
-        "uri": "pwc-r7/textures/Pearl-ceramic-silver-orm-0330aa7967.png",
-        "bytes": 3378471
-      },
-      {
-        "uri": "pwc-r7/textures/Pearl-ceramic-silver-basecolor-3510df3292.png",
-        "bytes": 4832240
-      },
-      {
-        "uri": "pwc-r7/textures/Molded-traction-rubber-normal-b116d85e8e.png",
+        "uri": "pwc-r8/textures/Molded-traction-rubber-normal-b116d85e8e.png",
         "bytes": 584816
       },
       {
-        "uri": "pwc-r7/textures/Molded-traction-rubber-orm-560595f52b.png",
+        "uri": "pwc-r8/textures/Molded-traction-rubber-orm-560595f52b.png",
         "bytes": 5006440
       },
       {
-        "uri": "pwc-r7/textures/Molded-traction-rubber-basecolor-fe5bae937b.png",
+        "uri": "pwc-r8/textures/Molded-traction-rubber-basecolor-fe5bae937b.png",
         "bytes": 3527403
       },
       {
-        "uri": "pwc-r7/textures/Brushed-titanium-normal-37adb5e352.png",
+        "uri": "pwc-r8/textures/Brushed-titanium-normal-37adb5e352.png",
         "bytes": 3303162
       },
       {
-        "uri": "pwc-r7/textures/Brushed-titanium-orm-a740f0bc22.png",
+        "uri": "pwc-r8/textures/Brushed-titanium-orm-a740f0bc22.png",
         "bytes": 4140029
       },
       {
-        "uri": "pwc-r7/textures/Brushed-titanium-basecolor-bc1facc8dd.png",
+        "uri": "pwc-r8/textures/Brushed-titanium-basecolor-bc1facc8dd.png",
         "bytes": 5009187
       },
       {
-        "uri": "pwc-r7/textures/Perforated-marine-saddle-normal-88f5ef5807.png",
+        "uri": "pwc-r8/textures/Forged-carbon-composite-normal-65172c9aba.png",
+        "bytes": 391662
+      },
+      {
+        "uri": "pwc-r8/textures/Forged-carbon-composite-orm-e7b1ce5b4b.png",
+        "bytes": 4377752
+      },
+      {
+        "uri": "pwc-r8/textures/Forged-carbon-composite-basecolor-9a7a94cc03.png",
+        "bytes": 1008604
+      },
+      {
+        "uri": "pwc-r8/textures/Pearl-ceramic-silver-normal-6b465234a3.png",
+        "bytes": 3189856
+      },
+      {
+        "uri": "pwc-r8/textures/Pearl-ceramic-silver-orm-0330aa7967.png",
+        "bytes": 3378471
+      },
+      {
+        "uri": "pwc-r8/textures/Pearl-ceramic-silver-basecolor-3510df3292.png",
+        "bytes": 4832240
+      },
+      {
+        "uri": "pwc-r8/textures/Paint-normal-6b465234a3.png",
+        "bytes": 3189856
+      },
+      {
+        "uri": "pwc-r8/textures/Paint-orm-b13b68a813.png",
+        "bytes": 3377500
+      },
+      {
+        "uri": "pwc-r8/textures/Paint-basecolor-f0c48b4ee3.png",
+        "bytes": 5059889
+      },
+      {
+        "uri": "pwc-r8/textures/Perforated-marine-saddle-normal-88f5ef5807.png",
         "bytes": 5369987
       },
       {
-        "uri": "pwc-r7/textures/Perforated-marine-saddle-orm-fcfe459ca8.png",
+        "uri": "pwc-r8/textures/Perforated-marine-saddle-orm-fcfe459ca8.png",
         "bytes": 5904923
       },
       {
-        "uri": "pwc-r7/textures/Perforated-marine-saddle-basecolor-9ecd1e9bc5.png",
+        "uri": "pwc-r8/textures/Perforated-marine-saddle-basecolor-9ecd1e9bc5.png",
         "bytes": 1593945
       },
       {
-        "uri": "pwc-r7/textures/Original-LCD-64a0ee65ef.png",
+        "uri": "pwc-r8/textures/Original-LCD-64a0ee65ef.png",
         "bytes": 20842
+      }
+    ],
+    "mountsUnchanged": true
+  },
+  "riderRebuild": {
+    "source": "assets/racecraft/source/hero-rider-r3.blend",
+    "method": "CC0 anatomical skin with continuous tailored race suit, reconstructed full-face helmet and boots",
+    "bones": 43,
+    "textures": [
+      {
+        "uri": "rider-r3/textures/Hero-stretch-racing-textile-normal-bb50cddcad.png",
+        "bytes": 346947
+      },
+      {
+        "uri": "rider-r3/textures/Hero-stretch-racing-textile-orm-23e02b034b.png",
+        "bytes": 5540190
+      },
+      {
+        "uri": "rider-r3/textures/Hero-blue-leather-panels-normal-88f5ef5807.png",
+        "bytes": 5369987
+      },
+      {
+        "uri": "rider-r3/textures/Hero-blue-leather-panels-orm-d1cf99dabc.png",
+        "bytes": 5904892
+      },
+      {
+        "uri": "rider-r3/textures/Hero-blue-leather-panels-basecolor-ac19b5a37a.png",
+        "bytes": 4239813
+      },
+      {
+        "uri": "rider-r3/textures/Hero-woven-protection-normal-65172c9aba.png",
+        "bytes": 391662
+      },
+      {
+        "uri": "rider-r3/textures/Hero-woven-protection-orm-3f53ad5670.png",
+        "bytes": 4377827
+      },
+      {
+        "uri": "rider-r3/textures/Hero-woven-protection-basecolor-a810f3d277.png",
+        "bytes": 1464260
+      },
+      {
+        "uri": "rider-r3/textures/Hero-glove-and-boot-grip-normal-b116d85e8e.png",
+        "bytes": 584816
+      },
+      {
+        "uri": "rider-r3/textures/Hero-glove-and-boot-grip-orm-9494993a3d.png",
+        "bytes": 5006133
+      },
+      {
+        "uri": "rider-r3/textures/Hero-glove-and-boot-grip-basecolor-6a8a65e05d.png",
+        "bytes": 3836536
+      },
+      {
+        "uri": "rider-r3/textures/Hero-stretch-racing-textile-orm-a5a7a61174.png",
+        "bytes": 5554213
+      },
+      {
+        "uri": "rider-r3/textures/Hero-stretch-racing-textile-basecolor-6ee1e29f4e.png",
+        "bytes": 334889
+      },
+      {
+        "uri": "rider-r3/textures/Hero-satin-hardware-normal-37adb5e352.png",
+        "bytes": 3303162
+      },
+      {
+        "uri": "rider-r3/textures/Hero-satin-hardware-orm-a098c0c818.png",
+        "bytes": 4140586
+      },
+      {
+        "uri": "rider-r3/textures/Hero-satin-hardware-basecolor-ec0b155ef3.png",
+        "bytes": 5024660
+      },
+      {
+        "uri": "rider-r3/textures/Hero-pearl-helmet-normal-6b465234a3.png",
+        "bytes": 3189856
+      },
+      {
+        "uri": "rider-r3/textures/Hero-pearl-helmet-orm-79e4ea6cf2.png",
+        "bytes": 3377722
+      },
+      {
+        "uri": "rider-r3/textures/Hero-pearl-helmet-basecolor-fdfb661ab6.png",
+        "bytes": 5020403
       }
     ]
   }

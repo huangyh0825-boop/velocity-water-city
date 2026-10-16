@@ -1,0 +1,240 @@
+[
+  {
+    "file": "hero-pwc-r8.blend",
+    "bytes": 95117197,
+    "meshes": 375,
+    "bones": 0,
+    "images": [
+      {
+        "name": "Brushed titanium basecolor",
+        "path": "//..\\textures\\hero\\Brushed-titanium-basecolor.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Brushed titanium normal",
+        "path": "//..\\textures\\hero\\Brushed-titanium-normal.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Brushed titanium orm",
+        "path": "//..\\textures\\hero\\Brushed-titanium-orm.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Forged carbon composite basecolor",
+        "path": "//..\\textures\\hero\\Forged-carbon-composite-basecolor.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Forged carbon composite normal",
+        "path": "//..\\textures\\hero\\Forged-carbon-composite-normal.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Forged carbon composite orm",
+        "path": "//..\\textures\\hero\\Forged-carbon-composite-orm.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Hero original LCD 1K",
+        "path": "//..\\textures\\hero\\Original-LCD.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Molded traction rubber basecolor",
+        "path": "//..\\textures\\hero\\Molded-traction-rubber-basecolor.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Molded traction rubber normal",
+        "path": "//..\\textures\\hero\\Molded-traction-rubber-normal.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Molded traction rubber orm",
+        "path": "//..\\textures\\hero\\Molded-traction-rubber-orm.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Paint basecolor",
+        "path": "//..\\textures\\hero\\Paint-basecolor.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Paint normal",
+        "path": "//..\\textures\\hero\\Paint-normal.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Paint orm",
+        "path": "//..\\textures\\hero\\Paint-orm.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Pearl ceramic silver basecolor",
+        "path": "//..\\textures\\hero\\Pearl-ceramic-silver-basecolor.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Pearl ceramic silver normal",
+        "path": "//..\\textures\\hero\\Pearl-ceramic-silver-normal.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Pearl ceramic silver orm",
+        "path": "//..\\textures\\hero\\Pearl-ceramic-silver-orm.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Perforated marine saddle basecolor",
+        "path": "//..\\textures\\hero\\Perforated-marine-saddle-basecolor.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Perforated marine saddle normal",
+        "path": "//..\\textures\\hero\\Perforated-marine-saddle-normal.png",
+        "packed": false,
+        "available": true
+      },
+      {
+        "name": "Perforated marine saddle orm",
+        "path": "//..\\textures\\hero\\Perforated-marine-saddle-orm.png",
+        "packed": false,
+        "available": true
+      }
+    ]
+  },
+  {
+    "file": "hero-rider-r3.blend",
+    "bytes": 90605197,
+    "meshes": 161,
+    "bones": 43,
+    "images": [
+      {
+        "name": "Hero blue leather panels basecolor",
+        "path": "//..\\textures\\hero\\Hero-blue-leather-panels-basecolor.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero blue leather panels normal",
+        "path": "//..\\textures\\hero\\Hero-blue-leather-panels-normal.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero blue leather panels orm",
+        "path": "//..\\textures\\hero\\Hero-blue-leather-panels-orm.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero glove and boot grip basecolor",
+        "path": "//..\\textures\\hero\\Hero-glove-and-boot-grip-basecolor.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero glove and boot grip normal",
+        "path": "//..\\textures\\hero\\Hero-glove-and-boot-grip-normal.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero glove and boot grip orm",
+        "path": "//..\\textures\\hero\\Hero-glove-and-boot-grip-orm.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero pearl helmet basecolor",
+        "path": "//..\\textures\\hero\\Hero-pearl-helmet-basecolor.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero pearl helmet normal",
+        "path": "//..\\textures\\hero\\Hero-pearl-helmet-normal.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero pearl helmet orm",
+        "path": "//..\\textures\\hero\\Hero-pearl-helmet-orm.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero satin hardware basecolor",
+        "path": "//..\\textures\\hero\\Hero-satin-hardware-basecolor.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero satin hardware normal",
+        "path": "//..\\textures\\hero\\Hero-satin-hardware-normal.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero satin hardware orm",
+        "path": "//..\\textures\\hero\\Hero-satin-hardware-orm.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero stretch racing textile basecolor",
+        "path": "//..\\textures\\hero\\Hero-stretch-racing-textile-basecolor.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero stretch racing textile normal",
+        "path": "//..\\textures\\hero\\Hero-stretch-racing-textile-normal.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero stretch racing textile orm",
+        "path": "//..\\textures\\hero\\Hero-stretch-racing-textile-orm.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero woven protection basecolor",
+        "path": "//..\\textures\\hero\\Hero-woven-protection-basecolor.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero woven protection normal",
+        "path": "//..\\textures\\hero\\Hero-woven-protection-normal.png",
+        "packed": true,
+        "available": true
+      },
+      {
+        "name": "Hero woven protection orm",
+        "path": "//..\\textures\\hero\\Hero-woven-protection-orm.png",
+        "packed": true,
+        "available": true
+      }
+    ]
+  }
+]

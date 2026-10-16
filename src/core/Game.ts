@@ -29,6 +29,7 @@ import {CitySample} from '../environment/CitySample';
 import { CountdownCue } from '../audio/CountdownCue';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {distanceGain} from '../audio/AudioMix';
+import {HeroLighting} from '../player/HeroLighting';
 export class Game {
   private renderer: THREE.WebGLRenderer;
   private scene = createScene();
@@ -56,6 +57,7 @@ export class Game {
   private bodies: BoatBody[] = [{ id: 'player', model: this.craft.model }, ...this.ai.map(ai => ({ id: ai.id, model: ai.model }))];
   private race!: RaceController;
   private camera = new FollowCamera();
+  private heroLighting=new HeroLighting();
   private input = new InputController();
   private water = new Water(this.scene);
   private wake = new Wake(this.scene);
@@ -71,6 +73,7 @@ export class Game {
   private frameId = 0;
   private reflection?:THREE.WebGLRenderTarget;
   constructor(private root: HTMLElement) {
+    this.water.bindWake(this.wake.pool);this.wake.setSurfaceIntegrated(true);
     this.renderer = new THREE.WebGLRenderer({ antialias: !matchMedia('(pointer: coarse)').matches, powerPreference: 'high-performance', preserveDrawingBuffer: false });
     this.renderer.autoClear = true; // Clear every frame; no history accumulation or motion blur.
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -192,9 +195,12 @@ export class Game {
     this.audio.updateAI(this.ai.map(ai=>{const dx=ai.model.x-this.craft.model.x,dz=ai.model.z-this.craft.model.z,distance=Math.hypot(dx,dz,ai.flight.height-this.flight.height);return{id:ai.id,speed:ai.model.speed,throttle:1,boost:ai.nitro.active,airborne:ai.flight.airborne,grounded:!ai.flight.airborne&&ai.flight.height<.2,running:this.race.phase==='racing',distance,pan:(dx*Math.cos(this.craft.model.heading)-dz*Math.sin(this.craft.model.heading))/Math.max(10,distance)};}));
     this.water.update(displayTime);this.citySample.update(displayTime,this.camera.camera); this.camera.update(dt, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active);
     this.trackView.highlight(this.race.nextCheckpoint());
-    this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks); this.renderer.render(this.scene, this.camera.camera);
+    this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks);
+    if(!this.low&&this.craft.assetLoaded)this.heroLighting.update(this.renderer,this.scene,this.craft.visual);
+    this.renderer.render(this.scene, this.camera.camera);
   };
   dispose() {
+    this.heroLighting.dispose();
     this.citySample.dispose();
     this.craft.dispose();this.aiCraft.forEach(c=>c.dispose());this.reflection?.dispose();
     cancelAnimationFrame(this.frameId); this.input.dispose();

@@ -10,7 +10,7 @@ test('PWC ships portable textures and visual mounts in both geometry tiers',asyn
  for(const name of ['watercraft','watercraft-low']){
   const {json}=visualDocument(name);assert.ok(json.images.length>=5);assert.ok(json.images.every((i:any)=>{
    if(Number.isInteger(i.bufferView)&&!i.uri)return true;
-   if(typeof i.uri!=='string'||i.uri.includes('..')||!/^pwc-r7\/textures\/[A-Za-z0-9_-]+\.png$/.test(i.uri))return false;
+   if(typeof i.uri!=='string'||i.uri.includes('..')||!/^pwc-r[78]\/textures\/[A-Za-z0-9_-]+\.png$/.test(i.uri))return false;
    const bytes=readFileSync(path.join('public/models',i.uri));return bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]));
   }));assert.ok(json.materials.some((m:any)=>m.name==='Paint'));
   const {scene}=await visualGeometry(name);for(const id of ['RiderSeat','Grip_L','Grip_R','Foot_L','Foot_R'])assert.ok(scene.getObjectByName(id));

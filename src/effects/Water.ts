@@ -1,63 +1,115 @@
 import * as THREE from 'three';
+import {Water as ReflectiveWater} from 'three/addons/objects/Water.js';
 import {waterNormalTexture} from './WaterNormals';
+import {waterGrid,waterWaveGLSL} from './WaterSurface';
+import type {WakePool} from './WakePool';
+const WAKE_SAMPLES=32;
+/** Displaced water, current-frame planar reflection and integrated wake normals. */
 export class Water {
-  readonly mesh: THREE.Mesh;
-  private material: THREE.ShaderMaterial;
-  private standard=new THREE.PlaneGeometry(2600,2600,160,160);
-  private lightweight=new THREE.PlaneGeometry(2600,2600,64,64);
-  private normals=waterNormalTexture();private reflection?:THREE.WebGLCubeRenderTarget;private low=false;private capturing=false;
-  constructor(scene: THREE.Scene) {
-    this.material = new THREE.ShaderMaterial({
-      uniforms: { time: { value: 0 },detail:{value:1},ripples:{value:this.normals},cityReflection:{value:null},hasReflection:{value:0},reflectionOrigin:{value:new THREE.Vector3()} },
-      vertexShader: `uniform float time; varying vec3 world; varying float wave;
-        void main() { vec3 p = position; wave = sin(p.x*.055+p.y*.024+time*.9);
-        p.z += wave*.065+sin(p.x*-.034+p.y*.061-time*.65)*.045; vec4 w = modelMatrix*vec4(p,1.); world=w.xyz;
-        gl_Position=projectionMatrix*viewMatrix*w; }`,
-      fragmentShader: `uniform float time;uniform float detail;uniform sampler2D ripples;uniform samplerCube cityReflection;uniform float hasReflection;uniform vec3 reflectionOrigin;varying vec3 world;varying float wave;
-        void main(){vec2 p=world.xz;
-          float distanceToEye=length(cameraPosition-world),nearDetail=1.-smoothstep(45.,180.,distanceToEye);
-          vec2 slope=vec2(.7,.4)*cos(dot(p,vec2(.7,.4))+time*1.4)*.045
-                   +vec2(-.35,.85)*cos(dot(p,vec2(-.35,.85))-time*.95)*.045;
-          vec3 n1=texture2D(ripples,p*.055+vec2(time*.012,time*-.008)).xyz*2.-1.;
-          slope+=n1.xy*.38;
-          if(detail>.5){vec3 n2=texture2D(ripples,p*.135+vec2(time*-.019,time*.011)).xyz*2.-1.;slope+=n2.xy*.23*nearDetail;}
-          vec3 normal=normalize(vec3(-slope.x,1.,-slope.y));
-          vec3 view=normalize(cameraPosition-world),sun=normalize(vec3(-.45,.8,.4));
-          float fresnel=.02+.98*pow(1.-max(0.,dot(normal,view)),5.);
-          float light=max(0.,dot(normal,sun));
-          float broad=sin(dot(p,vec2(.026,-.018))+time*.20)*.5+.5;
-          float crossed=sin(dot(p,vec2(-.044,.031))-time*.15)*.5+.5;
-          vec3 col=mix(vec3(.018,.19,.235),vec3(.035,.34,.38),broad*.48+crossed*.14+light*.19);
-          vec3 reflected=reflect(-view,normal);vec3 sky=mix(vec3(.46,.66,.72),vec3(.09,.30,.47),smoothstep(0.,.75,reflected.y));
-          if(hasReflection>.5){float local=1.-smoothstep(180.,360.,length(world.xz-reflectionOrigin.xz));vec3 city=textureCube(cityReflection,reflected).rgb;sky=mix(sky,city,local*.48);}
-          col=mix(col,sky,clamp(fresnel*.66,0.,.78));
-          float glint=pow(max(0.,dot(reflect(-sun,normal),view)),detail>.5?155.:90.);
-          col+=vec3(1.,.92,.76)*glint*.58;
-          col+=vec3(.035,.07,.055)*pow(max(0.,dot(-view,sun)),3.)*(.4+wave*.2);
-          float fog=1.-exp(-length(cameraPosition-world)*.0015);col=mix(col,vec3(.50,.74,.83),fog);
-          gl_FragColor=vec4(col,1.);
-          #include <tonemapping_fragment>
-          #include <colorspace_fragment>
-        }`,
-    });
-    this.mesh = new THREE.Mesh(this.standard, this.material);
-    this.mesh.rotation.x = -Math.PI / 2; scene.add(this.mesh);
-    // One 128px static district cubemap, no reflection pass during normal driving.
-    this.mesh.onBeforeRender=(renderer)=>{
-      const district=scene.getObjectByName('blender-waterfront-sample');
-      if(this.low||this.reflection||this.capturing||!district?.children.length)return;
-      const hidden:THREE.Object3D[]=[];
-      for(const child of scene.children){let racer=false;child.traverse(o=>{if(o instanceof THREE.SkinnedMesh)racer=true;});if(racer&&child.visible)hidden.push(child);}
-      if(hidden.length<5)return;
-      this.capturing=true;hidden.forEach(o=>o.visible=false);
-      const target=new THREE.WebGLCubeRenderTarget(128,{generateMipmaps:true,minFilter:THREE.LinearMipmapLinearFilter});
-      const camera=new THREE.CubeCamera(2,700,target);camera.position.copy(district.position);camera.position.y=1.4;
-      this.mesh.visible=false;
-      try{camera.update(renderer,scene);this.reflection=target;this.material.uniforms.cityReflection.value=target.texture;this.material.uniforms.reflectionOrigin.value.copy(camera.position);this.material.uniforms.hasReflection.value=1;}
-      finally{this.mesh.visible=true;hidden.forEach(o=>o.visible=true);this.capturing=false;if(!this.reflection)target.dispose();}
-    };
+ readonly mesh:ReflectiveWater;
+ private standard=waterGrid(320);
+ private lightweight=waterGrid(64);
+ private normals=waterNormalTexture();
+ private material:THREE.ShaderMaterial;
+ private low=false;
+ private pool?:WakePool;
+ private wakePositions=Array.from({length:WAKE_SAMPLES},()=>new THREE.Vector4());
+ private wakeAges=Array.from({length:WAKE_SAMPLES},()=>new THREE.Vector2(10,0));
+ constructor(scene:THREE.Scene) {
+  // Maintained Three.js mirror camera and oblique clipping. A current reflection,
+  // with no temporal history or accumulated motion frames.
+  this.mesh=new ReflectiveWater(this.standard,{textureWidth:1024,textureHeight:1024,clipBias:.003,waterNormals:this.normals,eye:new THREE.Vector3()});
+  this.mesh.name='racing-water-surface';this.mesh.rotation.x=-Math.PI/2;
+  this.material=this.mesh.material;
+  Object.assign(this.material.uniforms,{
+   detail:{value:1},wakeCount:{value:0},wakePositions:{value:this.wakePositions},wakeAges:{value:this.wakeAges},reflectionEnabled:{value:1},
+  });
+  this.material.vertexShader=`
+   uniform float time;uniform mat4 textureMatrix;
+   varying vec3 world;varying vec4 mirrorCoord;
+   ${waterWaveGLSL}
+   void main(){vec4 w=modelMatrix*vec4(position,1.);float height;vec2 slope;
+    waterWaves(w.xz,time,height,slope);w.y+=height;
+    world=w.xyz;mirrorCoord=textureMatrix*vec4(w.x,0.,w.z,1.);
+    gl_Position=projectionMatrix*viewMatrix*w;}`;
+  this.material.fragmentShader=`
+   uniform float time;uniform float detail;uniform float reflectionEnabled;
+   uniform sampler2D normalSampler;uniform sampler2D mirrorSampler;
+   uniform int wakeCount;uniform vec4 wakePositions[${WAKE_SAMPLES}];uniform vec2 wakeAges[${WAKE_SAMPLES}];
+   varying vec3 world;varying vec4 mirrorCoord;
+   ${waterWaveGLSL}
+   float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+   float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1.,0.)),f.x),mix(hash(i+vec2(0.,1.)),hash(i+1.),f.x),f.y);}
+   void main(){
+    vec2 p=world.xz;vec3 V=normalize(cameraPosition-world);
+    float distanceToEye=length(cameraPosition-world),nearDetail=1.-smoothstep(35.,170.,distanceToEye);
+    float height;vec2 slope;waterWaves(p,time,height,slope);
+    vec3 ripple=texture2D(normalSampler,p*.043+vec2(time*.009,-time*.006)).xyz*2.-1.;
+    vec3 micro=texture2D(normalSampler,p*vec2(-.137,.131)+vec2(-time*.018,time*.014)).xyz*2.-1.;
+    slope+=ripple.xy*.75+micro.xy*(.30*nearDetail*detail);
+    float foam=0.,aeration=0.;
+    for(int i=0;i<${WAKE_SAMPLES};i++){
+     if(i>=wakeCount)break;
+     vec4 source=wakePositions[i];float age=wakeAges[i].x,strength=source.w;
+     vec2 delta=p-source.xy;float sh=sin(source.z),ch=cos(source.z);
+     float lateral=dot(delta,vec2(ch,-sh)),forward=dot(delta,vec2(sh,ch));
+     float aft=2.-forward,gate=smoothstep(0.,.6,aft)*(1.-smoothstep(5.+age*2.,8.+age*3.,aft));
+     float spread=.22+aft*.27+age*.35;
+     float edge=abs(lateral)-spread,width=.10+age*.12;
+     float envelope=exp(-edge*edge/(width*width))*gate;
+     float life=pow(max(0.,1.-age/1.45),1.8)*smoothstep(0.,.08,age)*strength;
+     vec2 right=vec2(ch,-sh)*sign(lateral);
+     slope+=right*envelope*sin(edge*25.-age*7.)*life*.055;
+     float cells=noise(p*12.+vec2(age*2.,-age*3.));
+     foam+=envelope*life*smoothstep(.30,.78,cells)*.35;
+     aeration+=exp(-lateral*lateral/(.22+age*.5))*gate*life*.12;
+    }
+    vec3 N=normalize(vec3(-slope.x,1.,-slope.y));
+    vec3 sun=normalize(vec3(-.45,.8,.4));float NV=max(.001,dot(N,V));
+    float fresnel=.0204+.9796*pow(1.-NV,5.);
+    float waterVariation=noise(p*.024)+noise(p*.071)*.25;
+    vec3 body=mix(vec3(.005,.045,.10),vec3(.012,.13,.21),smoothstep(.10,1.1,waterVariation));
+    body*=.75+.30*max(0.,dot(N,sun));body+=vec3(.013,.043,.039)*(height+.08)*2.;
+    vec3 R=reflect(-V,N);
+    vec3 sky=mix(vec3(.57,.76,.82),vec3(.075,.30,.49),smoothstep(0.,.75,R.y));
+    vec2 reflectedUV=mirrorCoord.xy/mirrorCoord.w;
+    vec2 distortion=N.xz*(.015+1.2/max(4.,distanceToEye));
+    reflectedUV=clamp(reflectedUV+distortion,vec2(.002),vec2(.998));
+    vec2 blur=vec2(.0012,.0012)*(1.+distanceToEye*.001);
+    vec3 reflectionSample=texture2D(mirrorSampler,reflectedUV).rgb*.40;
+    reflectionSample+=(texture2D(mirrorSampler,reflectedUV+blur).rgb+texture2D(mirrorSampler,reflectedUV-blur).rgb)*.15;
+    reflectionSample+=(texture2D(mirrorSampler,reflectedUV+vec2(blur.x,-blur.y)).rgb+texture2D(mirrorSampler,reflectedUV+vec2(-blur.x,blur.y)).rgb)*.15;
+    vec3 reflected=mix(sky,reflectionSample,reflectionEnabled);
+    vec3 col=mix(body,reflected,clamp(fresnel*.93,0.,.94));
+    vec3 H=normalize(V+sun);float NH=max(0.,dot(N,H));float rough=.10+.03*(1.-nearDetail);
+    float alpha=rough*rough,denom=NH*NH*(alpha*alpha-1.)+1.;
+    float D=alpha*alpha/(3.14159265*denom*denom+.00001);
+    col+=vec3(1.,.91,.72)*min(2.2,D*.018)*max(0.,dot(N,sun));
+    col=mix(col,vec3(.29,.55,.57),clamp(aeration,0.,.34));
+    col=mix(col,vec3(.72,.88,.88),clamp(foam,0.,.65));
+    col=mix(col,vec3(.50,.74,.83),1.-exp(-distanceToEye*.0015));
+    gl_FragColor=vec4(col,1.);
+    #include <tonemapping_fragment>
+    #include <colorspace_fragment>
+   }`;
+  const reflect=this.mesh.onBeforeRender;
+  this.mesh.onBeforeRender=(renderer,scene,camera,geometry,material,group)=>{
+   this.mesh.position.x=camera.position.x;this.mesh.position.z=camera.position.z;this.mesh.updateMatrixWorld();
+   if(!this.low)reflect.call(this.mesh,renderer,scene,camera,geometry,material,group);
+  };
+  scene.add(this.mesh);
+ }
+ bindWake(pool:WakePool){this.pool=pool;}
+ update(time:number){
+  this.material.uniforms.time.value=time;
+  const active=this.pool?.stamps.filter(p=>p.age<this.pool!.lifetime)??[];active.sort((a,b)=>a.age-b.age);
+  const count=Math.min(WAKE_SAMPLES,active.length);
+  for(let i=0;i<count;i++){
+   const p=active[Math.floor(i*active.length/count)];
+   this.wakePositions[i].set(p.x,p.z,p.heading,Math.min(1,p.speed/50));this.wakeAges[i].set(p.age,p.speed);
   }
-  update(time: number) { this.material.uniforms.time.value = time; }
-  setLow(low:boolean){this.low=low;this.mesh.geometry=low?this.lightweight:this.standard;this.material.uniforms.detail.value=low?0:1;this.material.uniforms.hasReflection.value=low?0:this.reflection?1:0;}
-  dispose(){this.standard.dispose();this.lightweight.dispose();this.normals.dispose();this.reflection?.dispose();this.material.dispose();}
+  this.material.uniforms.wakeCount.value=count;
+ }
+ setLow(low:boolean){this.low=low;this.mesh.geometry=low?this.lightweight:this.standard;this.material.uniforms.detail.value=low?0:1;this.material.uniforms.reflectionEnabled.value=low?0:1;}
+ dispose(){this.standard.dispose();this.lightweight.dispose();this.normals.dispose();(this.material.uniforms.mirrorSampler.value as THREE.Texture).renderTarget?.dispose();this.material.dispose();}
 }
