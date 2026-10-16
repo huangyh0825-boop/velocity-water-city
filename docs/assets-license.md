@@ -43,3 +43,9 @@ Three.js、Vite 与原项目 npm 依赖继续适用各自许可证。本阶段�
 继续使用以上已保留的Innerscene CC0与Blender官方CC0基础资产，不新增下载、付费素材或第三方动画。快艇主要船体/船头外壳、分层侧壳、控制总成与喷泵结构为本项目Blender重建；车手使用同一真人基础网格重新塑造骑姿、制作服装装备和43骨绑定。原始来源及完整许可文本不变，保留Blender Foundation署名。
 
 新37张贴图均由 `scripts/art/refine-hero-assets.py` 原创生成：36张2048²的BaseColor/Normal/ORM和1张1024²仪表图；包括烤漆、珍珠银、碳纤维、金属、橡胶、皮革和织物。没有品牌标识、商业游戏贴图、AI生成素材或外部照片。源文件与路径见 [模型来源和制作记录](../assets/racecraft/README.md)。本轮不改水面、环境或音效。原创部分由项目所有者决定整体公开授权。
+
+## VECTOR R7主快艇重建 · 2026-10-16
+
+当前玩家快艇为本项目Blender原创重建，脚本 `scripts/art/build-pwc-r7.py`，源文件 `assets/racecraft/source/pwc-r7.blend`。没有复用旧外壳/座椅/推进网格；仅复用上一轮项目原创PBR纹理/仪表图和固定挂点。新增VECTOR/R7标识为原创几何文字，不使用现实厂商品牌。设计功能参考的官方PWC页面和未采用的免费候选资源记录见 [本轮验收说明](pwc-r7-validation.md)。候选下载未获认证，未导入任何新第三方模型。
+
+运行纹理分文件保存在 `public/models/pwc-r7/textures/`，为原分辨率PNG而非新增外部素材；公开源项目/部署时应同时保留GLB及其相对纹理目录。没有新增第三方署名义务，原创部分由项目所有者决定整体许可。车手和AI资产及其原许可不变。

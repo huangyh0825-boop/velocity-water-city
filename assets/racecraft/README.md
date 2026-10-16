@@ -40,4 +40,14 @@ The default `assets:build` now runs `scripts/art/refine-hero-assets.py`, opening
 
 Both source licenses and their redistribution rights above still apply. New geometry, textures, equipment and rig additions are original project work; no new third-party asset or attribution obligation. No manufacturer marks or extracted commercial-game content. See `docs/hero-refinement-validation.md` for current screenshots and verification boundaries.
 
+## VECTOR R7 PWC reconstruction · 2026-10-16
+
+The current default `assets:build` runs `scripts/art/build-pwc-r7.py` and rebuilds **only the player PWC**. Rider and both low-tier GLBs are left byte-for-byte unchanged. The earlier hero generator remains a historical tool; running it directly replaces the current PWC with that historical version.
+
+All current hull, foredeck, shoulders, pedestal, seat, footwell, steering and pump geometry is newly authored in Blender. The previous `hero-craft.blend` supplies only original project PBR finishes/LCD and unchanged sockets. The new editable source is `source/pwc-r7.blend`: 351 categorized parts and 11 hidden design-control meshes before cuts/thickness/subdivision. These cages are editable design snapshots, not a live parametric dependency graph. Original 2K maps are referenced relatively from `textures/hero/`; retain that folder with the source file.
+
+Runtime: `public/models/watercraft.glb` plus **all** files in `public/models/pwc-r7/textures/`. The 19 PNGs retain full resolution and encoded pixel data; separating images from geometry avoids a single oversized file without decimation or image quality changes. The existing Three.js GLTFLoader resolves the relative glTF image URLs. No loader or driving code was changed. `public/models/manifest.json` lists each dependency.
+
+New geometry and VECTOR/R7 markings are project-original, with no new downloaded assets, brand marks or attribution requirements. Candidate Sketchfab downloads required authentication and were not used; details, author/license listings and actual HTTP401 records are in `docs/pwc-r7-validation.md`. Existing CC0 source documentation is retained as provenance for historical assets, not a claim that the new PWC's geometry was downloaded or is automatically relicensed CC0.
+
 Digital instrument, helmet/equipment, weave textures and water normal/shader are original project work. CC0 source parts remain CC0; original additions retain the project owner's chosen license. This file does not grant a new license for the entire game.

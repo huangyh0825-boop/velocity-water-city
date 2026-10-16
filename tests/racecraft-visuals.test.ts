@@ -1,4 +1,5 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import * as THREE from 'three';
+import {readFileSync} from 'node:fs';import path from 'node:path';
 import {clone} from 'three/addons/utils/SkeletonUtils.js';
 import {visualDocument,visualGeometry} from './helpers/visual-glb';
 import {AnatomicalRider} from '../src/player/AnatomicalRider';
@@ -7,7 +8,11 @@ import {BoosterJet} from '../src/effects/BoosterJet';
 
 test('PWC ships portable textures and visual mounts in both geometry tiers',async()=>{
  for(const name of ['watercraft','watercraft-low']){
-  const {json}=visualDocument(name);assert.ok(json.images.length>=5);assert.ok(json.images.every((i:any)=>Number.isInteger(i.bufferView)&&!i.uri));assert.ok(json.materials.some((m:any)=>m.name==='Paint'));
+  const {json}=visualDocument(name);assert.ok(json.images.length>=5);assert.ok(json.images.every((i:any)=>{
+   if(Number.isInteger(i.bufferView)&&!i.uri)return true;
+   if(typeof i.uri!=='string'||i.uri.includes('..')||!/^pwc-r7\/textures\/[A-Za-z0-9_-]+\.png$/.test(i.uri))return false;
+   const bytes=readFileSync(path.join('public/models',i.uri));return bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]));
+  }));assert.ok(json.materials.some((m:any)=>m.name==='Paint'));
   const {scene}=await visualGeometry(name);for(const id of ['RiderSeat','Grip_L','Grip_R','Foot_L','Foot_R'])assert.ok(scene.getObjectByName(id));
   const seat=scene.getObjectByName('RiderSeat')!,left=scene.getObjectByName('Grip_L')!,right=scene.getObjectByName('Grip_R')!;assert.ok(left.position.x<0&&right.position.x>0);assert.ok(left.position.y>seat.position.y);
  }

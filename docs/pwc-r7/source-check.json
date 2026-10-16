@@ -1,0 +1,121 @@
+{
+  "cages": 11,
+  "parts": 351,
+  "images": [
+    {
+      "name": "Brushed titanium basecolor",
+      "path": "//..\\textures\\hero\\Brushed-titanium-basecolor.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Brushed titanium normal",
+      "path": "//..\\textures\\hero\\Brushed-titanium-normal.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Brushed titanium orm",
+      "path": "//..\\textures\\hero\\Brushed-titanium-orm.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Forged carbon composite basecolor",
+      "path": "//..\\textures\\hero\\Forged-carbon-composite-basecolor.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Forged carbon composite normal",
+      "path": "//..\\textures\\hero\\Forged-carbon-composite-normal.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Forged carbon composite orm",
+      "path": "//..\\textures\\hero\\Forged-carbon-composite-orm.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Hero original LCD 1K",
+      "path": "//..\\textures\\hero\\Original-LCD.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Molded traction rubber basecolor",
+      "path": "//..\\textures\\hero\\Molded-traction-rubber-basecolor.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Molded traction rubber normal",
+      "path": "//..\\textures\\hero\\Molded-traction-rubber-normal.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Molded traction rubber orm",
+      "path": "//..\\textures\\hero\\Molded-traction-rubber-orm.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Paint basecolor",
+      "path": "//..\\textures\\hero\\Paint-basecolor.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Paint normal",
+      "path": "//..\\textures\\hero\\Paint-normal.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Paint orm",
+      "path": "//..\\textures\\hero\\Paint-orm.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Pearl ceramic silver basecolor",
+      "path": "//..\\textures\\hero\\Pearl-ceramic-silver-basecolor.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Pearl ceramic silver normal",
+      "path": "//..\\textures\\hero\\Pearl-ceramic-silver-normal.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Pearl ceramic silver orm",
+      "path": "//..\\textures\\hero\\Pearl-ceramic-silver-orm.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Perforated marine saddle basecolor",
+      "path": "//..\\textures\\hero\\Perforated-marine-saddle-basecolor.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Perforated marine saddle normal",
+      "path": "//..\\textures\\hero\\Perforated-marine-saddle-normal.png",
+      "packed": false,
+      "available": true
+    },
+    {
+      "name": "Perforated marine saddle orm",
+      "path": "//..\\textures\\hero\\Perforated-marine-saddle-orm.png",
+      "packed": false,
+      "available": true
+    }
+  ],
+  "missing": []
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "url": "https://api.sketchfab.com/v3/models/15e79c65f67a468592cdc2ac1f5b389b/download",
+    "status": 401,
+    "body": "{\"detail\":\"Authentication credentials were not provided.\"}"
+  },
+  {
+    "url": "https://api.sketchfab.com/v3/models/d261f758b40c45fdb03ddb57fe89a59e/download",
+    "status": 401,
+    "body": "{\"detail\":\"Authentication credentials were not provided.\"}"
+  }
+]
