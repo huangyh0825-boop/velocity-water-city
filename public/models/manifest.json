@@ -7,9 +7,9 @@
   "assets": [
     {
       "file": "public/models/watercraft.glb",
-      "triangles": 51473,
-      "draws": 10,
-      "bytes": 1935236
+      "triangles": 689146,
+      "draws": 12,
+      "bytes": 81175464
     },
     {
       "file": "public/models/watercraft-low.glb",
@@ -19,9 +19,9 @@
     },
     {
       "file": "public/models/rider.glb",
-      "triangles": 21586,
-      "draws": 6,
-      "bytes": 894164
+      "triangles": 777360,
+      "draws": 13,
+      "bytes": 92802712
     },
     {
       "file": "public/models/rider-low.glb",
@@ -41,5 +41,10 @@
       0.1195300817489624,
       0.5743600726127625
     ]
+  ],
+  "heroMethod": "Blender quad lofts, layered industrial parts, tailored anatomical skin and 43-bone rider; no hero decimation",
+  "heroSources": [
+    "assets/racecraft/source/hero-craft.blend",
+    "assets/racecraft/source/hero-racer.blend"
   ]
 }
