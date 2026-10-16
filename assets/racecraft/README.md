@@ -1,4 +1,19 @@
-# Racecraft art sources · checked 2026-10-16
+# Rider / racer visual assets · current 2026-10-16
+
+The current standard-quality game uses **the identical VECTOR R8 PWC and R4 rider for all five racers**. AI no longer selects the old low-tier meshes by default. Only a user-selected low-quality setting switches all racers together to the retained fallback tier.
+
+- Rider anatomy: retained official Blender **Human Base Meshes v1.4.1**, realistic adult male, CC0. Provenance and the bundle's original license/readme are retained below and in source/. No new third-party rider, texture, motion-capture or paid model was imported. Official listing: https://www.blender.org/download/demo-files/#assets . CC0 permits sharing the base and adaptations in a public repository.
+- Original R4 work: fitted curved flotation vest with scooped neckline/armholes, flat adjustment webbing, zipper and channels; implicit-curve clipped deltoid/forearm/knee/thigh reinforcement and interpolated skinned seams; tightened anatomical garment allowance; adult-scaled full-face shell, neutral semi-transparent optical visor; flexible neck gaiter. Helmet width scaled to 91%, height to 90%, depth to 94% of R3. Shoulder shaping adds up to 13mm per side locally without moving grip or foot sockets. It is an anatomical adaptation, not a scanned or hand-sculpted commercial racing character.
+- Rig: 43 → **46 bones**. New thoracic and two clavicle bones, reparented neck/shoulders, height-blended torso weights and blended gaiter weights. Retains the 28 closed-glove digit bones and original pelvis/leg anchors. Runtime lumbar/thoracic flexion, head counter-rotation and two-bone grip IK are visual only. No physics bone/collider is substituted.
+- Editable source: **source/hero-rider-r4.blend**; generator **scripts/art/rebuild-rider-r4.py**. Export: **public/models/rider.glb**, 1,508,630 triangles / 15 material groups / 71,141,176 bytes, with 18 relative 2048² PNGs in **public/models/rider-r4/textures/** (62,768,741 bytes). Existing original project-authored BaseColor/Normal/ORM finishes are reused; no new photographed fabric/skin or high-poly AO bake is claimed.
+- Boat **source/hero-pwc-r8.blend**, watercraft.glb and its PNGs are byte-identical to the checkpoint. AI uses those same geometry and textures. Per-racer material copies allow blue/orange/violet/gold/mint boat, PFD, leather and helmet accents; they do not alter source textures. Each has independent bones and a 2048² local self-shadow pass.
+- Default asset rebuild: scripts/build-racecraft.mjs runs rebuild-hero-pwc.py then rebuild-rider-r4.py. Directly run only the latter when editing the character. Blender 4.5.9 LTS was used. Game development/build does not require Blender.
+- R3 sources/textures and low-tier files are retained for history/fallback; they are not the standard AI visuals. Character quality still needs user acceptance: facial skin is unscanned and uses a simple material; clothing is authored geometric/procedural detail, with no cloth simulation or facial animation.
+
+Actual browser captures and verification: **docs/rider-ai-review/index.html**, **docs/rider-ai-validation.md**.
+
+## Previous R8 / R3 implementation record
+
 
 ## Current hero assets · 2026-10-16
 

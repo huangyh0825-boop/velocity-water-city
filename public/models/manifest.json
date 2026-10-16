@@ -1,5 +1,5 @@
 {
-  "method": "Original VECTOR R8 exterior reconstruction and CC0-derived R3 anatomical racing rider",
+  "method": "Original VECTOR R8 exterior reconstruction and CC0-derived R4 articulated anatomical racing rider",
   "sources": [
     "assets/racecraft/source/pwc-cc0.glb",
     "assets/racecraft/source/human-base-cc0.blend"
@@ -20,10 +20,10 @@
     },
     {
       "file": "public/models/rider.glb",
-      "triangles": 1437700,
+      "triangles": 1508630,
       "draws": 15,
-      "bytes": 67519076,
-      "textureBytes": 67008554
+      "bytes": 71141176,
+      "textureBytes": 62768741
     },
     {
       "file": "public/models/rider-low.glb",
@@ -44,10 +44,10 @@
       0.5743600726127625
     ]
   ],
-  "heroMethod": "Compound PWC surfaces and continuous tailored anatomical race suit; retained seated rig with closed glove digits",
+  "heroMethod": "Shared R8 PWC and R4 adult rider with fitted flotation gear, sewn anatomical reinforcements and 46-bone lumbar/thoracic/clavicle posture",
   "heroSources": [
     "assets/racecraft/source/hero-pwc-r8.blend",
-    "assets/racecraft/source/hero-rider-r3.blend"
+    "assets/racecraft/source/hero-rider-r4.blend"
   ],
   "pwcRebuild": {
     "design": "VECTOR R8",
@@ -136,84 +136,80 @@
     "mountsUnchanged": true
   },
   "riderRebuild": {
-    "source": "assets/racecraft/source/hero-rider-r3.blend",
-    "method": "CC0 anatomical skin with continuous tailored race suit, reconstructed full-face helmet and boots",
-    "bones": 43,
+    "source": "assets/racecraft/source/hero-rider-r4.blend",
+    "method": "CC0 adult anatomical skin, fitted flotation equipment, sewn reinforcement panels, adult-scaled full-face helmet and lumbar/chest/clavicle articulation",
+    "bones": 46,
     "textures": [
       {
-        "uri": "rider-r3/textures/Hero-stretch-racing-textile-normal-bb50cddcad.png",
+        "uri": "rider-r4/textures/Hero-stretch-racing-textile-normal-bb50cddcad.png",
         "bytes": 346947
       },
       {
-        "uri": "rider-r3/textures/Hero-stretch-racing-textile-orm-23e02b034b.png",
+        "uri": "rider-r4/textures/Hero-stretch-racing-textile-orm-23e02b034b.png",
         "bytes": 5540190
       },
       {
-        "uri": "rider-r3/textures/Hero-blue-leather-panels-normal-88f5ef5807.png",
+        "uri": "rider-r4/textures/Hero-blue-leather-panels-normal-88f5ef5807.png",
         "bytes": 5369987
       },
       {
-        "uri": "rider-r3/textures/Hero-blue-leather-panels-orm-d1cf99dabc.png",
+        "uri": "rider-r4/textures/Hero-blue-leather-panels-orm-d1cf99dabc.png",
         "bytes": 5904892
       },
       {
-        "uri": "rider-r3/textures/Hero-blue-leather-panels-basecolor-ac19b5a37a.png",
-        "bytes": 4239813
-      },
-      {
-        "uri": "rider-r3/textures/Hero-woven-protection-normal-65172c9aba.png",
+        "uri": "rider-r4/textures/Hero-woven-protection-normal-65172c9aba.png",
         "bytes": 391662
       },
       {
-        "uri": "rider-r3/textures/Hero-woven-protection-orm-3f53ad5670.png",
+        "uri": "rider-r4/textures/Hero-woven-protection-orm-3f53ad5670.png",
         "bytes": 4377827
       },
       {
-        "uri": "rider-r3/textures/Hero-woven-protection-basecolor-a810f3d277.png",
+        "uri": "rider-r4/textures/Hero-woven-protection-basecolor-a810f3d277.png",
         "bytes": 1464260
       },
       {
-        "uri": "rider-r3/textures/Hero-glove-and-boot-grip-normal-b116d85e8e.png",
+        "uri": "rider-r4/textures/Hero-glove-and-boot-grip-normal-b116d85e8e.png",
         "bytes": 584816
       },
       {
-        "uri": "rider-r3/textures/Hero-glove-and-boot-grip-orm-9494993a3d.png",
+        "uri": "rider-r4/textures/Hero-glove-and-boot-grip-orm-9494993a3d.png",
         "bytes": 5006133
       },
       {
-        "uri": "rider-r3/textures/Hero-glove-and-boot-grip-basecolor-6a8a65e05d.png",
+        "uri": "rider-r4/textures/Hero-glove-and-boot-grip-basecolor-6a8a65e05d.png",
         "bytes": 3836536
       },
       {
-        "uri": "rider-r3/textures/Hero-stretch-racing-textile-orm-a5a7a61174.png",
+        "uri": "rider-r4/textures/Hero-stretch-racing-textile-orm-a5a7a61174.png",
         "bytes": 5554213
       },
       {
-        "uri": "rider-r3/textures/Hero-stretch-racing-textile-basecolor-6ee1e29f4e.png",
+        "uri": "rider-r4/textures/Hero-stretch-racing-textile-basecolor-6ee1e29f4e.png",
         "bytes": 334889
       },
       {
-        "uri": "rider-r3/textures/Hero-satin-hardware-normal-37adb5e352.png",
+        "uri": "rider-r4/textures/Hero-satin-hardware-normal-37adb5e352.png",
         "bytes": 3303162
       },
       {
-        "uri": "rider-r3/textures/Hero-satin-hardware-orm-a098c0c818.png",
+        "uri": "rider-r4/textures/Hero-satin-hardware-orm-a098c0c818.png",
         "bytes": 4140586
       },
       {
-        "uri": "rider-r3/textures/Hero-satin-hardware-basecolor-ec0b155ef3.png",
+        "uri": "rider-r4/textures/Hero-satin-hardware-basecolor-ec0b155ef3.png",
         "bytes": 5024660
       },
       {
-        "uri": "rider-r3/textures/Hero-pearl-helmet-normal-6b465234a3.png",
+        "uri": "rider-r4/textures/Hero-pearl-helmet-normal-6b465234a3.png",
         "bytes": 3189856
       },
       {
-        "uri": "rider-r3/textures/Hero-pearl-helmet-orm-79e4ea6cf2.png",
+        "uri": "rider-r4/textures/Hero-pearl-helmet-orm-79e4ea6cf2.png",
         "bytes": 3377722
       },
       {
-        "uri": "rider-r3/textures/Hero-pearl-helmet-basecolor-fdfb661ab6.png",
+        "uri": "rider-r4/textures/Hero-pearl-helmet-basecolor-fdfb661ab6.png",
         "bytes": 5020403
       }
     ]

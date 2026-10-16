@@ -57,13 +57,13 @@ export class Rider {
     this.anatomical=undefined;
     this.arms=[-1,1].map(side=>({side,upper:asset.getObjectByName(`UpperArm_${side}`) as THREE.Mesh,lower:asset.getObjectByName(`Forearm_${side}`) as THREE.Mesh}));
   }
-  update(time:number,speed:number,yawRate:number,landing=0){
+  update(time:number,speed:number,yawRate:number,landing=0,airborne=0){
     const dt=this.elapsed?Math.max(0,Math.min(.1,time-this.previousTime)):0;
     const acceleration=dt>0?(speed-this.previousSpeed)/dt:0;
     const target=.15+Math.min(1.2,speed/50)*.14+Math.max(-.03,Math.min(.045,acceleration*.003))+landing;
     const smooth=this.elapsed?1-Math.exp(-dt*7):1;
     this.lean+=(target-this.lean)*smooth;this.bank+=(-yawRate*.16-this.bank)*smooth;
-    if(this.anatomical)this.anatomical.update(this.lean,this.bank);
+    if(this.anatomical)this.anatomical.update(this.lean,this.bank,airborne);
     else this.torso.rotation.set(this.lean,0,this.bank);
     for(const {upper,lower,side} of this.arms){
       const shoulder=new THREE.Vector3(side*.28,.63,.035).applyEuler(this.torso.rotation).add(this.torso.position);

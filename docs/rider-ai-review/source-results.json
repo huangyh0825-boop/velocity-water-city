@@ -1,0 +1,11 @@
+{
+  "source": "assets\\racecraft\\source\\hero-rider-r4.blend",
+  "bytes": 92846558,
+  "bones": 46,
+  "meshParts": 205,
+  "usedImages": 18,
+  "missingImages": [],
+  "finiteVertices": true,
+  "necklineDistanceMax": 0,
+  "necklineWeightError": 0
+}

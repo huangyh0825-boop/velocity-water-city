@@ -50,7 +50,10 @@ export class Game {
     new AIController('ai-3', '极光 / AURORA', kmhToMps(SPEED_TUNING.normalAI.maxKmh[2]), -7, this.track, -0.029),
     new AIController('ai-4', '回声 / ECHO', kmhToMps(SPEED_TUNING.normalAI.maxKmh[3]), 7, this.track, -0.029),
   ];
-  private aiCraft = this.ai.map((ai, i) => new Watercraft(this.scene, ['#ee7953', '#a583ed', '#f6cc61', '#55c8a2'][i], ai.model,true));
+  private aiCraft = this.ai.map((ai, i) => {
+    const craft=new Watercraft(this.scene, ['#ee7953', '#a583ed', '#f6cc61', '#55c8a2'][i], ai.model);
+    craft.rider.root.name='ai-rider';return craft;
+  });
   private aiJets = this.aiCraft.map(craft=>new BoosterJet(craft.visual));
   private aiMotion = this.ai.map(ai => new MotionInterpolation(ai.model));
   private collisions = new BoatCollisions();
@@ -58,6 +61,7 @@ export class Game {
   private race!: RaceController;
   private camera = new FollowCamera();
   private heroLighting=new HeroLighting();
+  private aiLighting=this.aiCraft.map((_,i)=>new HeroLighting(3+i));
   private input = new InputController();
   private water = new Water(this.scene);
   private wake = new Wake(this.scene);
@@ -86,7 +90,7 @@ export class Game {
     root.append(this.renderer.domElement);
     this.ai.forEach(ai=>ai.setRamps(this.ramps));
     this.restart();
-    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low);void this.citySample.setLow(low);this.renderer.shadowMap.enabled=!low;void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(true)); this.resize(); },this.audio);
+    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low);void this.citySample.setLow(low);this.renderer.shadowMap.enabled=!low;void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(low)); this.resize(); },this.audio);
     this.debug=new RampDebug(root);this.ramps.onDecision=value=>this.debug.record(value);
     window.addEventListener('pointerdown',this.activateAudio);
     window.addEventListener('keydown',this.activateAudio);
@@ -197,10 +201,11 @@ export class Game {
     this.trackView.highlight(this.race.nextCheckpoint());
     this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks);
     if(!this.low&&this.craft.assetLoaded)this.heroLighting.update(this.renderer,this.scene,this.craft.visual);
+    if(!this.low)this.aiCraft.forEach((craft,i)=>{if(craft.assetLoaded)this.aiLighting[i].updateVisible(this.renderer,this.scene,craft.visual,this.camera.camera);});
     this.renderer.render(this.scene, this.camera.camera);
   };
   dispose() {
-    this.heroLighting.dispose();
+    this.heroLighting.dispose();this.aiLighting.forEach(light=>light.dispose());
     this.citySample.dispose();
     this.craft.dispose();this.aiCraft.forEach(c=>c.dispose());this.reflection?.dispose();
     cancelAnimationFrame(this.frameId); this.input.dispose();

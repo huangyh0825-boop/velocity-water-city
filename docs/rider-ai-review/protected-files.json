@@ -1,0 +1,386 @@
+{
+  "baseline": "rider-ai-baseline",
+  "protectedCount": 76,
+  "protectedFiles": [
+    {
+      "path": "src/ai/AIController.ts",
+      "unchanged": true,
+      "sha256": "6143a6e8ceb14a3abb764576eae85eb388795528f705aab6ab4d092f61da701a"
+    },
+    {
+      "path": "src/ai/NitroDecision.ts",
+      "unchanged": true,
+      "sha256": "068576a22b88df65eba7ba42c42508b4862de668b21483d2ea4687ba1a5232e2"
+    },
+    {
+      "path": "src/audio/AudioController.ts",
+      "unchanged": true,
+      "sha256": "7842deb7c88fe9a1fd0ef045c43b2145d5362432243619a2be7421a4bb9735a6"
+    },
+    {
+      "path": "src/audio/AudioMix.ts",
+      "unchanged": true,
+      "sha256": "473ed2d019f8b8597864c81f210e9bb5342ef5e76a8ef7f5c1cdbf5afac1db49"
+    },
+    {
+      "path": "src/audio/CountdownCue.ts",
+      "unchanged": true,
+      "sha256": "1e12f30765fd4a146c3341ec0b0f574b14d2c9877035dff83d717ecf230f1a28"
+    },
+    {
+      "path": "src/camera/FollowCamera.ts",
+      "unchanged": true,
+      "sha256": "70cb33a2325b8572254a4c7edbd3d31479e42feb1778fc170853f2f45bf1501d"
+    },
+    {
+      "path": "src/config/phase3.ts",
+      "unchanged": true,
+      "sha256": "c5c57c173faf5f9bc7b7bae77a2c87b2aaa284e2a95e5901cd7fb87cf2b8db82"
+    },
+    {
+      "path": "src/config/speed.ts",
+      "unchanged": true,
+      "sha256": "592b0e9a6f75b4b1710fab0222cb80611f8a6c7a561651c0e2404f636a227f57"
+    },
+    {
+      "path": "src/controls/InputController.ts",
+      "unchanged": true,
+      "sha256": "3fc30c017917e136c57b1d7bf334a5dfa1b3d0bd055262904290bf3a3c002d6d"
+    },
+    {
+      "path": "src/core/Scene.ts",
+      "unchanged": true,
+      "sha256": "f73b7a376d4de825d5a0932af5bc6cf967a36ab396183e5aeaad170613ceb409"
+    },
+    {
+      "path": "src/debug/RampDebug.ts",
+      "unchanged": true,
+      "sha256": "eba854f8173f5413854ecbd69a68a6bf9e22e1e61d53afc619689b69cf44b3b4"
+    },
+    {
+      "path": "src/effects/BoosterJet.ts",
+      "unchanged": true,
+      "sha256": "af7372e2a0b0fe38a44fe2d038897e0ab2f540c0ce8c1085873b79d3285298d0"
+    },
+    {
+      "path": "src/effects/EventLimiter.ts",
+      "unchanged": true,
+      "sha256": "47a77145b2c13bf906c9cbf2d1630912172793339914ffce03fca3101f762fff"
+    },
+    {
+      "path": "src/effects/Spray.ts",
+      "unchanged": true,
+      "sha256": "cf8c103473e7bbb0a1b8262a365036f17211795a27a53164c2030daa3c6f7bae"
+    },
+    {
+      "path": "src/effects/SprayPool.ts",
+      "unchanged": true,
+      "sha256": "ef18b1dc8a908c1bbfd2bc4a41de4cf8dc8fbb48557a4a89ff1181658859c1f1"
+    },
+    {
+      "path": "src/effects/Wake.ts",
+      "unchanged": true,
+      "sha256": "c91eac02ec222b3dd6a56a07e378c128a4a4ed9f4b2cfd123a2237623a94cd3c"
+    },
+    {
+      "path": "src/effects/WakePool.ts",
+      "unchanged": true,
+      "sha256": "d6142f7873346cd7de17c53cf06a528e7ad9bb72cee4fe3f5ac321e4574d94f7"
+    },
+    {
+      "path": "src/effects/Water.ts",
+      "unchanged": true,
+      "sha256": "6ef944bc77f21b49fa79bf6dcf563bdb667d17c24cf51a2cd1ceb288fbbef449"
+    },
+    {
+      "path": "src/effects/WaterNormals.ts",
+      "unchanged": true,
+      "sha256": "7e068620dffd05a2613317484cd5a5a7d8c1629745d82e733f2ec79544cb58f6"
+    },
+    {
+      "path": "src/effects/WaterSurface.ts",
+      "unchanged": true,
+      "sha256": "99f0a9474dd6b00178acdd5b1139b3608cb9671e670b84eca312ea50fe030ea9"
+    },
+    {
+      "path": "src/environment/CityAtmosphere.ts",
+      "unchanged": true,
+      "sha256": "497659e917e1023c8034ceceeefc566ce1b0091d9a4a815e52728f321c019c63"
+    },
+    {
+      "path": "src/environment/CityContactShadows.ts",
+      "unchanged": true,
+      "sha256": "b00df308eef58eb55df6e9d07f0d08b377acdd40935798cd51151f2cc1b265b1"
+    },
+    {
+      "path": "src/environment/CityDensity.ts",
+      "unchanged": true,
+      "sha256": "ec0c3eb10aba60eaf39e40ea6380af276fdb80a1c52f35aca079a19ce982a0dd"
+    },
+    {
+      "path": "src/environment/CityDensityLayout.ts",
+      "unchanged": true,
+      "sha256": "094be578526bd53e46d73c74e500345d634d534c33aa3af6a1400b52d2302fd0"
+    },
+    {
+      "path": "src/environment/CityDistricts.ts",
+      "unchanged": true,
+      "sha256": "b87ae68e9324a84bc1e7c0226e3e9b19d299c93020a53b3083a07af2c8669155"
+    },
+    {
+      "path": "src/environment/CityEnvironment.ts",
+      "unchanged": true,
+      "sha256": "d9cbbfb0c3240aa0073cad0bbdd8d6ec227c214cf0251062a8ef3bba0ce2ee57"
+    },
+    {
+      "path": "src/environment/CityGlass.ts",
+      "unchanged": true,
+      "sha256": "ee3a52aed53dea6c79f23516c4276a21fb31fa444321e38f58510b1aa678eef1"
+    },
+    {
+      "path": "src/environment/CityInteriors.ts",
+      "unchanged": true,
+      "sha256": "16e74edbddecdb239802613d848d520a19fe95119c5d57e83e14e2cfc27644cb"
+    },
+    {
+      "path": "src/environment/CityMaterialBatch.ts",
+      "unchanged": true,
+      "sha256": "86be067352cbf03bf831fd4e203d1c3aa7009b72cdb52d7ba1955dbd2804a0d8"
+    },
+    {
+      "path": "src/environment/CitySample.ts",
+      "unchanged": true,
+      "sha256": "444ded2b404e57882a4321da0ee2586684a66ef6f63f2254483c14ac6c341d15"
+    },
+    {
+      "path": "src/environment/ReadableSign.ts",
+      "unchanged": true,
+      "sha256": "8d9819d7234d3edb42d9f7c8d77e13751a38df74eaa2c6c6667e342009051646"
+    },
+    {
+      "path": "src/environment/ScreenHousing.ts",
+      "unchanged": true,
+      "sha256": "5fca963efc955183d9571ff6d1633f6dde76e2f5a862d38cc14f7759abcc4564"
+    },
+    {
+      "path": "src/environment/SurfaceContacts.ts",
+      "unchanged": true,
+      "sha256": "6db74cd5adec33025d2a19131b4c2cbc6a43c976af9d5cd7ce2f3984154f42c9"
+    },
+    {
+      "path": "src/main.ts",
+      "unchanged": true,
+      "sha256": "c324ff15be3cc8158ffbd6c0001aaa8acb5b9ffab5b788a6854be404737244ca"
+    },
+    {
+      "path": "src/physics/BoatCollisions.ts",
+      "unchanged": true,
+      "sha256": "db3ea5efe814440e3e77da0ee0d55ceca75798e78dd470cbe0075c5ba7eaf795"
+    },
+    {
+      "path": "src/player/DrivingModel.ts",
+      "unchanged": true,
+      "sha256": "f31b07003e273f8fa1790d4e510eed80dce469f252cab846fcc89d4a3bc569c9"
+    },
+    {
+      "path": "src/player/FlightController.ts",
+      "unchanged": true,
+      "sha256": "0810927cf5bb5357f1062b1ecd35f27cf792ee387b79196938dbd776c8406a9a"
+    },
+    {
+      "path": "src/player/ModelBatch.ts",
+      "unchanged": true,
+      "sha256": "dd5abd4f673ba0d42a911f32f597c7b062148bb2a6cd83c3ba181a4e75cfb6db"
+    },
+    {
+      "path": "src/player/MotionInterpolation.ts",
+      "unchanged": true,
+      "sha256": "46f6cb78aead4a90d959faa6e236562f10799cc2e6a3db80daa2cd0ef72d3ac0"
+    },
+    {
+      "path": "src/player/NitroController.ts",
+      "unchanged": true,
+      "sha256": "5acc6f89e6e98f390cb83ea3b5ba1de7b84a158c721d8a61c5687536d937bbad"
+    },
+    {
+      "path": "src/player/TrickController.ts",
+      "unchanged": true,
+      "sha256": "4aa325d826036057d9a3df68709cd5b70596ec58e3a86c530242574cde24baf3"
+    },
+    {
+      "path": "src/player/VisualAssets.ts",
+      "unchanged": true,
+      "sha256": "e28aea9c2ca6a03fd08235cc05bea46a6822d75ae80d1e671d89b8d125dba806"
+    },
+    {
+      "path": "src/race/RaceController.ts",
+      "unchanged": true,
+      "sha256": "79a341510e96b71e04ea9ffa3461d8d31133279f17ad75d6c7c3093372c280da"
+    },
+    {
+      "path": "src/style.css",
+      "unchanged": true,
+      "sha256": "7e6f40dd07b538313c40cec06203034c84a2d63638c89700362a5747d8a54e83"
+    },
+    {
+      "path": "src/track/CityTrack.ts",
+      "unchanged": true,
+      "sha256": "a79d064ef9d7536f531252683e46b7d0ea3cd37282bb96bf0fd31c8957b4c811"
+    },
+    {
+      "path": "src/track/CityTrackView.ts",
+      "unchanged": true,
+      "sha256": "e5d8b9769ebb810f7d83e67eaad0700a02ca6766dd57e3d1056e961feabd9ef3"
+    },
+    {
+      "path": "src/track/Ramps.ts",
+      "unchanged": true,
+      "sha256": "fcf6b50b8c5aba2f75be9ed7afe5b85de5f3d3b5ca21040c89d5a5e2151edfba"
+    },
+    {
+      "path": "src/track/Track.ts",
+      "unchanged": true,
+      "sha256": "c0de770bd885c6010c89bb8765284d00bd07bd1da09eb1c66efdda55a295d3d6"
+    },
+    {
+      "path": "src/track/TrackView.ts",
+      "unchanged": true,
+      "sha256": "89e6d10848ab00905e14a286769ff3dc656e19e2d7dd75dd9fd4aa4d56c8f0f9"
+    },
+    {
+      "path": "src/ui/Hud.ts",
+      "unchanged": true,
+      "sha256": "442a5fbcace8262e2c989ee6a3030ec60ffb0a8f9ad8239d3f9f0c5241fb7cd7"
+    },
+    {
+      "path": "src/ui/formatTime.ts",
+      "unchanged": true,
+      "sha256": "a88465cb63f645148814119922cc082950fd1574d5fb936a25855cbcfd165322"
+    },
+    {
+      "path": "src/ui/phase3.css",
+      "unchanged": true,
+      "sha256": "6f5ffd280eb3b54526358bf0c4796ef496f2096a7446d61a444531233981e64d"
+    },
+    {
+      "path": "src/ui/race.css",
+      "unchanged": true,
+      "sha256": "3e8b51059dcf9b0c5716c1b6033a24b51b8cdc2b22b3158e5b6bb8f7711366d5"
+    },
+    {
+      "path": "src/vite-env.d.ts",
+      "unchanged": true,
+      "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Brushed-titanium-basecolor-bc1facc8dd.png",
+      "unchanged": true,
+      "sha256": "bc1facc8ddffc28b00dcbb727243a855ae024f6144950eb209ab0ce009fb98d0"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Brushed-titanium-normal-37adb5e352.png",
+      "unchanged": true,
+      "sha256": "37adb5e352224afdbd7a15188b251724eeb91e3f418f20de74906fcd42b13381"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Brushed-titanium-orm-a740f0bc22.png",
+      "unchanged": true,
+      "sha256": "a740f0bc2240186e9237c4ce86f265b48bdfdc215ae82924e5ad42ef21f80e86"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Forged-carbon-composite-basecolor-9a7a94cc03.png",
+      "unchanged": true,
+      "sha256": "9a7a94cc03bf1bc153676c0f7442666472e9fe81c030c64a252b539f4555f67a"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Forged-carbon-composite-normal-65172c9aba.png",
+      "unchanged": true,
+      "sha256": "65172c9abac5eca46625d9180ac9de6f2b3e3790f65a2ddcee6bd9f243ffbd68"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Forged-carbon-composite-orm-e7b1ce5b4b.png",
+      "unchanged": true,
+      "sha256": "e7b1ce5b4bc2ece5ed9e92d965ab4ccf974964f97ab3212d7959f95cb28f695b"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Molded-traction-rubber-basecolor-fe5bae937b.png",
+      "unchanged": true,
+      "sha256": "fe5bae937b9c22e9ffaaf19753ed7e424bee0fadd1ca1fc461ac1de1456fb17b"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Molded-traction-rubber-normal-b116d85e8e.png",
+      "unchanged": true,
+      "sha256": "b116d85e8e62abe1fc2f416be408ece0dfb671d146647d0cf46d4d0b7caed191"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Molded-traction-rubber-orm-560595f52b.png",
+      "unchanged": true,
+      "sha256": "560595f52bc94612094544023f9ab2439a8a10b2b3d4e50ae3665305bba1193a"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Original-LCD-64a0ee65ef.png",
+      "unchanged": true,
+      "sha256": "64a0ee65ef3cfa6f2438c64bb0209a3dfac078fcbf12f8008b3c6ba56b1f790d"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Paint-basecolor-f0c48b4ee3.png",
+      "unchanged": true,
+      "sha256": "f0c48b4ee3e12ffd33c0e8e4fc225fbb39b2a65bbda7c0d2655fcb64a9897517"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Paint-normal-6b465234a3.png",
+      "unchanged": true,
+      "sha256": "6b465234a3a520d779df4f9043defc790d4a0783b3f710d9d958e8db0c46169e"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Paint-orm-b13b68a813.png",
+      "unchanged": true,
+      "sha256": "b13b68a813320992ea622ed969e28a246e781fc14eac5c9571967d55588e026a"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Pearl-ceramic-silver-basecolor-3510df3292.png",
+      "unchanged": true,
+      "sha256": "3510df3292199a428ea7fade569183a9e75b5a1996027392998623e009e0ef70"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Pearl-ceramic-silver-normal-6b465234a3.png",
+      "unchanged": true,
+      "sha256": "6b465234a3a520d779df4f9043defc790d4a0783b3f710d9d958e8db0c46169e"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Pearl-ceramic-silver-orm-0330aa7967.png",
+      "unchanged": true,
+      "sha256": "0330aa7967182acbb1c89b1f6c5a916672b8fa2702028cab7ce7b016b1af3515"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Perforated-marine-saddle-basecolor-9ecd1e9bc5.png",
+      "unchanged": true,
+      "sha256": "9ecd1e9bc5b81ac62ff55ebaa6f11b8f27759419eebb40ac422f4820f8ebe411"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Perforated-marine-saddle-normal-88f5ef5807.png",
+      "unchanged": true,
+      "sha256": "88f5ef580707967548d02317c0f3e97c0b562ebfb43f57fcaa1f9797f1112276"
+    },
+    {
+      "path": "public/models/pwc-r8/textures/Perforated-marine-saddle-orm-fcfe459ca8.png",
+      "unchanged": true,
+      "sha256": "fcfe459ca867733ea6f01cffff3354398f76843fbb9ed3e86ad78cd0b2089829"
+    },
+    {
+      "path": "public/models/watercraft.glb",
+      "unchanged": true,
+      "sha256": "79373d98ce397c48f9c198d2116c33c914446d36fad05f155302b6591825e34a"
+    },
+    {
+      "path": "public/models/watercraft-low.glb",
+      "unchanged": true,
+      "sha256": "90a31f97205cda1f0ddb78ab41fa1b95848c93ebe9abc08847777aa080f20503"
+    },
+    {
+      "path": "public/models/rider-low.glb",
+      "unchanged": true,
+      "sha256": "eaf238fb08e5ee291a6fcd7c55a06f70e73ce1e3a1b1102255602ce3548e7bc7"
+    }
+  ]
+}

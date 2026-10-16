@@ -5,10 +5,15 @@ interface Limb {upper:THREE.Bone;lower:THREE.Bone;hand:THREE.Object3D;handRest:T
 export class AnatomicalRider {
  private limbs:Limb[]=[];private torsoRest:THREE.Quaternion;
  private hero=false;private neck?:THREE.Object3D;private neckRest=new THREE.Quaternion();
+ private chest?:THREE.Object3D;private chestRest=new THREE.Quaternion();
+ private clavicles:{bone:THREE.Object3D;rest:THREE.Quaternion;side:number}[]=[];
  constructor(private root:THREE.Group,private torso:THREE.Object3D,private grips:THREE.Vector3[]){
   root.updateWorldMatrix(true,true);const inverse=root.getWorldQuaternion(new THREE.Quaternion()).invert();
   this.torsoRest=inverse.clone().multiply(torso.getWorldQuaternion(new THREE.Quaternion()));
   this.hero=Boolean(root.getObjectByName('RaceRig')?.userData.heroDetailVersion);
+  this.chest=root.getObjectByName('RiderChest');
+  if(this.chest)this.chestRest.copy(inverse).multiply(this.chest.getWorldQuaternion(new THREE.Quaternion()));
+  for(const side of [-1,1]){const bone=root.getObjectByName('Clavicle_'+side);if(bone)this.clavicles.push({bone,side,rest:inverse.clone().multiply(bone.getWorldQuaternion(new THREE.Quaternion()))});}
   this.neck=root.getObjectByName('Neck');
   if(this.neck)this.neckRest.copy(inverse).multiply(this.neck.getWorldQuaternion(new THREE.Quaternion()));
   for(const side of [-1,1]){
@@ -21,9 +26,16 @@ export class AnatomicalRider {
   const rootRotation=this.root.getWorldQuaternion(new THREE.Quaternion()),parentRotation=bone.parent!.getWorldQuaternion(new THREE.Quaternion());
   bone.quaternion.copy(parentRotation.invert().multiply(rootRotation).multiply(localWorld));bone.updateWorldMatrix(false,true);
  }
- update(lean:number,bank:number){
+ update(lean:number,bank:number,airborne=0){
   this.root.updateWorldMatrix(true,true);
-  this.orient(this.torso,new THREE.Quaternion().setFromEuler(new THREE.Euler(lean-.15,0,bank)).multiply(this.torsoRest));
+  const flex=lean-.15;
+  this.orient(this.torso,new THREE.Quaternion().setFromEuler(new THREE.Euler(this.chest ? .12+flex*.4 : flex,0,this.chest ? bank*.55 : bank)).multiply(this.torsoRest));
+  if(this.chest){
+   // Lumbar and thoracic flexion form a curved back; the pelvis/feet stay seated.
+   const pitch=.20+flex-Math.min(.05,airborne*.018);
+   this.orient(this.chest,new THREE.Quaternion().setFromEuler(new THREE.Euler(pitch,0,bank)).multiply(this.chestRest));
+   for(const {bone,rest,side} of this.clavicles)this.orient(bone,new THREE.Quaternion().setFromEuler(new THREE.Euler(pitch,side*flex*.10,bank+side*flex*.10)).multiply(rest));
+  }
   for(const limb of this.limbs){
    const a=this.root.worldToLocal(limb.upper.getWorldPosition(new THREE.Vector3())),grip=this.grips[limb.side<0?0:1],delta=grip.clone().sub(a),axis=delta.clone().normalize();
    const distance=Math.max(.0001,Math.min(delta.length(),limb.length1+limb.length2-.0001)),along=(distance*distance+limb.length1**2-limb.length2**2)/(2*distance);
@@ -37,6 +49,6 @@ export class AnatomicalRider {
    if(this.hero)this.orient(limb.hand,limb.handRest);
   }
   // Visual counter-rotation lets the rider look ahead without a rigid torso/head block.
-  if(this.hero&&this.neck)this.orient(this.neck,new THREE.Quaternion().setFromEuler(new THREE.Euler((lean-.15)*.28,bank*.18,bank*.3)).multiply(this.neckRest));
+  if(this.hero&&this.neck)this.orient(this.neck,new THREE.Quaternion().setFromEuler(new THREE.Euler((this.chest ? .055 : 0)+flex*.28,bank*.18,bank*.3)).multiply(this.neckRest));
  }
 }

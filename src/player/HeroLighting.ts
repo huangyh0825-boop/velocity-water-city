@@ -13,7 +13,15 @@ export class HeroLighting {
  private environment?:THREE.Texture;
  private direction=new THREE.Vector3(-155,165,90).normalize();
  private biasMatrix=new THREE.Matrix4().set(.5,0,0,.5,0,.5,0,.5,0,0,.5,.5,0,0,0,1);
- constructor(){this.camera.layers.set(2);this.target.texture.name='Hero local depth pass';}
+ private viewFrustum=new THREE.Frustum();private viewMatrix=new THREE.Matrix4();private bounds=new THREE.Sphere(new THREE.Vector3(),3.8);
+ constructor(private layer=2){this.camera.layers.set(layer);this.target.texture.name='Racer local depth pass '+layer;}
+ updateVisible(renderer:THREE.WebGLRenderer,scene:THREE.Scene,racer:THREE.Object3D,view:THREE.Camera){
+  // Skip only invisible self-shadow passes, never substitute lower-quality assets.
+  view.updateMatrixWorld();this.viewFrustum.setFromProjectionMatrix(this.viewMatrix.multiplyMatrices(view.projectionMatrix,view.matrixWorldInverse));
+  racer.getWorldPosition(this.bounds.center);this.bounds.center.y+=.8;
+  if(!racer.visible||!racer.parent?.visible||!this.viewFrustum.intersectsSphere(this.bounds))return false;
+  this.update(renderer,scene,racer);return true;
+ }
  private configure(material:THREE.MeshStandardMaterial) {
   if(this.originals.has(material))return;
   this.originals.set(material,{compile:material.onBeforeCompile,key:material.customProgramCacheKey,environment:material.envMap,intensity:material.envMapIntensity});
@@ -49,16 +57,25 @@ export class HeroLighting {
   if(!this.environment)scene.getObjectByName('blender-waterfront-sample')?.traverse(o=>{
    if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(m instanceof THREE.MeshStandardMaterial&&m.envMap)this.environment=m.envMap;
   });
+  const current=new Set<THREE.MeshStandardMaterial>();
   hero.traverse(o=>{if(o instanceof THREE.Mesh){
    const materials=Array.isArray(o.material)?o.material:[o.material];
    if(materials.every(m=>m instanceof THREE.MeshStandardMaterial)){
     // Receiving moves to the local map; this is not a shadow-free fallback.
-    o.receiveShadow=false;o.layers.enable(2);
-    for(const m of materials){const surface=m as THREE.MeshStandardMaterial;this.configure(surface);
+    o.receiveShadow=false;
+    // The depth override cannot transmit tinted glass. An opaque visor shadow
+    // would hide the real face/eyes and make a transparent helmet look empty.
+    if(materials.every(m=>m.transparent&&m.opacity<.98))o.layers.disable(this.layer);
+    else o.layers.enable(this.layer);
+    for(const m of materials){const surface=m as THREE.MeshStandardMaterial;current.add(surface);this.configure(surface);
      if(this.environment&&surface.envMap!==this.environment){surface.envMap=this.environment;surface.envMapIntensity=/fabric|textile|nylon/i.test(surface.name)?.22:.72;surface.needsUpdate=true;}
     }
    }
   }});
+  // Quality reloads replace owned material clones. Do not retain obsolete assets.
+  for(const [material,original] of this.originals)if(!current.has(material)){
+   material.onBeforeCompile=original.compile;material.customProgramCacheKey=original.key;material.envMap=original.environment;material.envMapIntensity=original.intensity;this.originals.delete(material);
+  }
   const center=hero.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0,.85,0));
   this.camera.position.copy(center).addScaledVector(this.direction,8);this.camera.lookAt(center);this.camera.updateMatrixWorld();
   this.matrix.copy(this.biasMatrix).multiply(this.camera.projectionMatrix).multiply(this.camera.matrixWorldInverse);

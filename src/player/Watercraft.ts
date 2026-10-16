@@ -3,6 +3,7 @@ import { DrivingModel, MAX_SPEED } from './DrivingModel';
 import { ModelBatch } from './ModelBatch';
 import { Rider } from './Rider';
 import {loadVisual} from './VisualAssets';
+import {RacerMaterials} from './RacerMaterials';
 export class Watercraft {
   readonly model: DrivingModel;
   readonly object = new THREE.Group();
@@ -13,6 +14,7 @@ export class Watercraft {
   private visualRequest=0;
   private fallback:THREE.Object3D[]=[];
   private asset?:THREE.Object3D;
+  private finishes=new RacerMaterials();
   private color:string;
   private landingCompression=0;
   private visualTime=0;
@@ -58,8 +60,10 @@ export class Watercraft {
     this.shadow.visible=!low;
     const request=++this.visualRequest;
     try{const [boat,racer]=await Promise.all([loadVisual('watercraft',low),loadVisual('rider',low)]);if(request!==this.visualRequest)return;
-      boat.traverse(o=>{if(o instanceof THREE.Mesh){const mat=o.material as THREE.MeshStandardMaterial;if(mat.name==='Paint'){o.material=mat.clone();o.material.userData.paletteClone=true;(o.material as THREE.MeshStandardMaterial).color.set(this.color);}o.castShadow=true;o.receiveShadow=true;}});
-      if(this.asset){this.asset.traverse(o=>{if(o instanceof THREE.Mesh&&(o.material as THREE.Material).userData.paletteClone)(o.material as THREE.Material).dispose();});this.visual.remove(this.asset);}
+      this.finishes.dispose();this.finishes=new RacerMaterials();
+      this.finishes.apply(boat,this.color);this.finishes.apply(racer,this.color);
+      boat.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.receiveShadow=true;}});
+      if(this.asset)this.visual.remove(this.asset);
       this.fallback.forEach(o=>{this.visual.remove(o);if(o instanceof THREE.Mesh){o.geometry.dispose();(o.material as THREE.Material).dispose();}});this.fallback=[];
       this.visual.add(boat);this.asset=boat;
       // Model-local authoring sockets affect visuals only; physical hull is unchanged.
@@ -70,13 +74,13 @@ export class Watercraft {
     }catch(error){this.assetError=String(error);console.warn('GLB unavailable: fallback model retained',error);}
   }
   land(){this.landingCompression=.10;}
-  dispose(){this.visualRequest++;this.rider.dispose();}
+  dispose(){this.visualRequest++;this.rider.dispose();this.finishes.dispose();}
   sync(time: number, m: DrivingModel = this.model, height = 0, trick = {pitch:0,yaw:0}) {
     this.shadow.position.set(m.x,.14,m.z);this.shadow.rotation.z=-m.heading;this.shadow.material.uniforms.alpha.value=.20*Math.exp(-height*.3);
     this.object.position.set(m.x, height + 0.16 + Math.sin(time * 3.2) * 0.07, m.z);
     this.object.rotation.set(-Math.min(1, m.speed / MAX_SPEED) * 0.035, m.heading, -m.yawRate * 0.22);
     this.visual.rotation.set(trick.pitch, trick.yaw, 0);
     const dt=Math.max(0,Math.min(.1,time-this.visualTime));this.visualTime=time;
-    this.landingCompression*=Math.exp(-dt*10);this.rider.update(time,m.speed,m.yawRate,this.landingCompression);
+    this.landingCompression*=Math.exp(-dt*10);this.rider.update(time,m.speed,m.yawRate,this.landingCompression,height);
   }
 }

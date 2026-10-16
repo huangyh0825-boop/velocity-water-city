@@ -62,13 +62,13 @@ test('R8 foot mats are exposed to the rider feet, not buried under the new hull 
  }
 });
 
-test('R3 anatomical garment exports interpolated colour panels, portable maps and the shared seated rig',async()=>{
+test('R4 anatomical garment exports interpolated colour panels, portable maps and the articulated seated rig',async()=>{
  const {json}=visualDocument('rider');
- assert.ok(json.materials.some((m:any)=>m.name==='R3 continuous tailored microfabric'));
- const garment=json.materials.findIndex((m:any)=>m.name==='R3 continuous tailored microfabric');
+ assert.ok(json.materials.some((m:any)=>m.name==='R4 articulated technical race suit'));
+ const garment=json.materials.findIndex((m:any)=>m.name==='R4 articulated technical race suit');
  assert.ok(json.meshes.some((m:any)=>m.primitives.some((p:any)=>p.material===garment&&p.attributes.COLOR_0!==undefined)));
- for(const image of json.images){assert.match(image.uri,/^rider-r3\/textures\/[A-Za-z0-9_-]+\.png$/);assert.ok(statSync('public/models/'+image.uri).size>0);}
+ for(const image of json.images){assert.match(image.uri,/^rider-r4\/textures\/[A-Za-z0-9_-]+\.png$/);assert.ok(statSync('public/models/'+image.uri).size>0);}
  const manifest=JSON.parse(readFileSync('public/models/manifest.json','utf8'));
- assert.equal(manifest.pwcRebuild.design,'VECTOR R8');assert.equal(manifest.riderRebuild.bones,43);
+ assert.equal(manifest.pwcRebuild.design,'VECTOR R8');assert.equal(manifest.riderRebuild.bones,46);
  const {scene}=await visualGeometry('rider');assert.ok(scene.getObjectByName('RaceRig')!.userData.riderRebuild);
 });
