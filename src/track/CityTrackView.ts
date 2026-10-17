@@ -20,10 +20,12 @@ export class CityTrackView {
   }scene.add(banks,rims);
   for(let i=0;i<track.checkpointCount;i++){
    const angle=track.checkpointAngle(i),point=track.point(angle),group=new THREE.Group(),glow=new THREE.MeshBasicMaterial({color:i===0?'#ffe4a0':'#527c91'});this.gates.push(glow);group.position.set(point.x,point.y??0,point.z);group.rotation.y=track.heading(angle);const width=track.widthAt(angle);
-   for(const side of [-1,1]){const pillar=new THREE.Mesh(new THREE.BoxGeometry(.8,13,.8),white);pillar.position.set(side*width,6.4,0);group.add(pillar);}
-   const beam=new THREE.Mesh(new THREE.BoxGeometry(width*2+.8,.3,.8),glow);beam.position.y=12.8;group.add(beam);
+   // CP18 sits beside the S2 aerial crossover: keep its sign above the flight corridor.
+   const gateHeight=i===18?24:13;
+   for(const side of [-1,1]){const pillar=new THREE.Mesh(new THREE.BoxGeometry(.8,gateHeight,.8),white);pillar.position.set(side*width,gateHeight/2-.1,0);group.add(pillar);}
+   const beam=new THREE.Mesh(new THREE.BoxGeometry(width*2+.8,.3,.8),glow);beam.position.y=gateHeight-.2;group.add(beam);
    const canvas=document.createElement('canvas');canvas.width=512;canvas.height=128;const ctx=canvas.getContext('2d')!;ctx.fillStyle='#143e53';ctx.fillRect(0,0,512,128);ctx.fillStyle='#ecfcff';ctx.textAlign='center';ctx.font='bold 30px sans-serif';ctx.fillText(i===0?'START / FINISH':`CP ${String(i).padStart(2,'0')} · ${DISTRICTS[Math.min(5,Math.floor(i/4))]}`,256,78);
-   const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;const sign=readableSign(texture,14,3.5,`checkpoint-sign-${i}`);sign.position.set(0,10.8,0);group.add(sign);scene.add(group);
+   const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;const sign=readableSign(texture,14,3.5,`checkpoint-sign-${i}`);sign.position.set(0,gateHeight-2.2,0);group.add(sign);scene.add(group);
    for(const shortcut of track.shortcuts)if(angle>shortcut.from&&angle<shortcut.to){const p=track.routePoint(angle,0,shortcut.id),marker=new THREE.Mesh(new THREE.BoxGeometry(shortcut.width*2,.1,1),glow);marker.position.set(p.x,(p.y??0)+.3,p.z);marker.rotation.y=track.routeHeading(angle,shortcut.id);scene.add(marker);}
   }
   const arrowGeometry=new THREE.BufferGeometry();arrowGeometry.setAttribute('position',new THREE.Float32BufferAttribute([-1.3,0,-1,0,0,2,1.3,0,-1,0,0,0,-1.3,0,-1,1.3,0,-1],3));

@@ -3,11 +3,11 @@ import {CityTrack} from '../src/track/CityTrack';import {DrivingModel} from '../
 import{BoatCollisions,hullOverlap}from'../src/physics/BoatCollisions';import{readBest,saveBest}from'../src/race/BestTimes';import{simulateVerticalRace}from'./helpers/vertical-race';
 import{AIController}from'../src/ai/AIController';
 const tau=Math.PI*2;
-function traverse(from:number,to:number,speed:number,route:string|null=null){
+function traverse(from:number,to:number,speed:number,route:string|null=null,dt=1/60){
  const track=new CityTrack(),ramps=new Ramps(track),m=new DrivingModel(),f=new FlightController(),cut=track.shortcuts.find(s=>s.id===route),length=cut?.length??track.length;
  let q=from;const angle=()=>cut?cut.from+q*(cut.to-cut.from):q*tau;
  Object.assign(m,track.routePoint(angle(),0,route));ramps.place(m,f);let launches=0,lands=0,peak=0,lastLanding=0,legal=false;
- while(q<to){const before={x:m.x,z:m.z};f.beginStep(1/60);q+=speed/length/60;const p=track.routePoint(angle(),0,route);m.heading=Math.atan2(p.x-m.x,p.z-m.z);m.vx=Math.sin(m.heading)*speed;m.vz=Math.cos(m.heading)*speed;m.speed=speed;m.x=p.x;m.z=p.z;ramps.prepare(m,f);ramps.update(before,m,f);if(f.takeoff){launches++;legal=f.legalLaunch;}if(f.landed){lands++;lastLanding=q;}peak=Math.max(peak,f.height);assert.ok(Number.isFinite(f.height)&&f.height>=-.01);}
+ while(q<to){const before={x:m.x,z:m.z};f.beginStep(dt);q+=speed/length*dt;const p=track.routePoint(angle(),0,route);m.heading=Math.atan2(p.x-m.x,p.z-m.z);m.vx=Math.sin(m.heading)*speed;m.vz=Math.cos(m.heading)*speed;m.speed=speed;m.x=p.x;m.z=p.z;ramps.prepare(m,f);ramps.update(before,m,f);if(f.takeoff){launches++;legal=f.legalLaunch;}if(f.landed){lands++;lastLanding=q;}peak=Math.max(peak,f.height);assert.ok(Number.isFinite(f.height)&&f.height>=-.01);}
  return{launches,lands,peak,lastLanding,legal,f,m};
 }
 test('16m engineered spillway leaves support ballistically at different speeds and lands on actual water',()=>{
@@ -17,6 +17,21 @@ test('8m convex crest holds slow boats but releases high speed boats without a r
  const slow=traverse(.685,.76,8),fast=traverse(.685,.76,50);assert.equal(slow.launches,0);assert.equal(slow.lands,0);assert.equal(fast.launches,1);assert.equal(fast.lands,1);assert.ok(fast.legal);assert.equal(fast.f.height,0);
 });
 test('high shortcut has a real supported climb, one 14m departure and a finite landing',()=>{const r=traverse(.01,.70,50,'harbor-cut');assert.equal(r.launches,1);assert.equal(r.lands,1);assert.ok(r.peak>=14&&r.peak<17);assert.equal(r.f.height,0);});
+test('30/60/120Hz support steps do not miss or duplicate natural takeoffs',()=>{
+ for(const hz of [30,60,120])for(const [from,to,route]of [[.295,.398,null],[.685,.76,null],[.01,.70,'harbor-cut']] as const){const r=traverse(from,to,50,route,1/hz);assert.equal(r.launches,1,`${hz} ${route??from} launch`);assert.equal(r.lands,1,`${hz} ${route??from} land`);assert.equal(r.f.height,0);}
+});
+test('S2 physically flies across the lower main canal and retains branch progress',()=>{
+ const t=new CityTrack(),cut=t.shortcuts[1],ramps=new Ramps(t),m=new DrivingModel(),f=new FlightController(),angle=(q:number)=>cut.from+q*(cut.to-cut.from);
+ assert.ok(cut.length<(cut.to-cut.from)*t.radius);
+ for(const speed of [40,50,60]){Object.assign(m,t.routePoint(angle(.43),0,cut.id));f.reset();ramps.place(m,f);let crossed=false;
+  for(let q=.43;q<.57;){const before={x:m.x,z:m.z,route:cut.id};f.beginStep(1/60);q+=speed/cut.length/60;Object.assign(m,t.routePoint(angle(q),0,cut.id));m.heading=t.routeHeading(angle(q),cut.id);m.speed=speed;m.vx=Math.sin(m.heading)*speed;m.vz=Math.cos(m.heading)*speed;ramps.prepare(m,f);ramps.update(before,m,f);const main=t.project(m,null);
+   if(q>.47&&q<.54&&main.distance<1){crossed=true;assert.ok(f.airborne&&f.legalLaunch&&f.height>4);assert.equal(m.route,cut.id);assert.ok(main.angle/tau>.74&&main.angle/tau<.76);}
+  }assert.ok(crossed);
+ }
+});
+test('a narrow crossing branch cannot hide points inside the main checkpoint aperture',()=>{
+ const t=new CityTrack(),gate=18;for(const lane of [-7,0,7]){const a=t.point((gate/24-.0001)*tau,lane),b=t.point((gate/24+.0001)*tau,lane);assert.ok(t.contains({x:b.x,z:b.z}));assert.ok(t.crossesGate(a,b,gate,null));}
+});
 test('descending flight contacts an elevated deck rather than being forced to world zero',()=>{
  const t=new CityTrack(),r=new Ramps(t),m=new DrivingModel(),f=new FlightController();Object.assign(m,t.point(.335*tau));f.managedSurface=true;f.height=13;f.verticalSpeed=-6;f.airborne=true;
  for(let i=0;i<20&&f.airborne;i++){f.beginStep(1/60);r.update(m,m,f);}assert.ok(f.landed);assert.equal(f.height,12);assert.equal(m.y,12);
@@ -45,5 +60,7 @@ test('two actual AI collide on the 12m deck and continue through its departure w
  assert.ok(highContacts>0);assert.ok(departures>=2);
 });
 test('player and four solid AI complete three laps including both legal branches, tricks and finite nitro',()=>{
- const r=simulateVerticalRace();assert.deepEqual(r.passed,[72,72,72,72,72],JSON.stringify(r));assert.equal(r.phase,'finished');assert.ok(r.routes.includes('player:tunnel-cut')&&r.routes.includes('player:harbor-cut'),JSON.stringify(r));assert.ok(r.jumps['player:D1']>=1&&r.jumps['player:D2']>=1&&r.jumps['player:S2J']>=1);assert.ok(r.peaks.every(h=>h>=16&&h<35));assert.ok(r.energy.every(e=>e>=0&&e<=100));assert.ok(r.rewards.player>0);
+ const r=simulateVerticalRace();assert.deepEqual(r.passed,[72,72,72,72,72],JSON.stringify(r));assert.equal(r.phase,'finished');assert.ok(r.routes.includes('player:tunnel-cut')&&r.routes.includes('player:harbor-cut'),JSON.stringify(r));assert.ok(r.jumps['player:D1']>=1&&r.jumps['player:D2']>=1&&r.jumps['player:S2J']>=1);assert.ok(r.peaks.every(h=>h>=16&&h<35));assert.ok(r.energy.every(e=>e>=0&&e<=100));assert.ok(r.rewards.player>0);assert.equal(r.jumps["ai-4:D2"],3,"landing on a descending canal must not create another jump");
 });
+
+

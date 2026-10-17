@@ -20,7 +20,7 @@ export class CityTrack extends Track {
  private surfaces=new WeakMap<object,{x:number;z:number;height:number;slope:number;heading:number;branch:string|null;route?:string|null}>();
  constructor(){
   super();
-  const points=[[-250,-450],[-250,-160],[-300,100],[-100,310],[-270,500],[-80,730],[240,860],[650,860],[940,660],[1190,400],[1100,110],[820,-90],[790,-310],[1100,-430],[1070,-700],[700,-910],[280,-920],[-80,-820],[-440,-750],[-560,-570]];
+  const points=[[-250,-450],[-250,-160],[-300,100],[-100,310],[-270,500],[-80,730],[240,860],[650,860],[940,660],[1190,400],[1100,110],[820,-90],[790,-310],[1100,-430],[1070,-700],[700,-640],[280,-920],[-80,-820],[-440,-750],[-560,-570]];
   const curve=new CatmullRomCurve3(points.map(([x,z])=>new Vector3(x*.72,0,z*.72)),true,'centripetal');curve.arcLengthDivisions=4096;
   this.length=curve.getLength();this.radius=this.length/TAU;
   this.samples=Array.from({length:1025},(_,i)=>{const p=curve.getPointAt(i/1024),t=curve.getTangentAt(i/1024);return{x:p.x,z:p.z,angle:i/1024*TAU,heading:Math.atan2(t.x,t.z),width:this.widthAt(i/1024*TAU),branch:null};});
@@ -36,12 +36,14 @@ export class CityTrack extends Track {
  override widthAt(angle:number){const t=((angle/TAU)%1+1)%1,borders=[0,.13,.28,.45,.66,.84,1],widths=[23,16,22,15,28,24];
   const zone=Math.max(0,borders.findIndex((b,i)=>i>0&&t<b)-1);let width=widths[zone];
   for(let i=1;i<6;i++){const blend=.009;if(Math.abs(t-borders[i])<blend){const f=(t-borders[i]+blend)/(2*blend),smooth=f*f*(3-2*f);width=widths[i-1]+(widths[i]-widths[i-1])*smooth;}}
-  return width;
+  // Separate the elevated branch's low entrance from the lower harbor canal.
+  const edge=Math.min(t-.643,.707-t),blend=Math.max(0,Math.min(1,edge/.012));
+  return width+(12-width)*blend*blend*(3-2*blend);
  }
  private makeShortcut(id:string,from:number,to:number,width:number):Shortcut{
   const a=this.point(from),b=this.point(to),ha=this.heading(from),hb=this.heading(to),mid={x:(a.x+b.x)/2,z:(a.z+b.z)/2};
   const local=(p:Point,h:number,forward:number,lateral:number)=>new Vector3(p.x+Math.sin(h)*forward+Math.cos(h)*lateral,0,p.z+Math.cos(h)*forward-Math.sin(h)*lateral);
-  const points=[new Vector3(a.x,0,a.z),local(a,ha,45,0),new Vector3(mid.x+(id==='tunnel-cut'?12:0),0,mid.z),local(b,hb,-45,0),new Vector3(b.x,0,b.z)];
+  const points=id==='harbor-cut'?[new Vector3(a.x,0,a.z),local(a,ha,15,0),local(a,ha,90,-20),new Vector3(mid.x,0,mid.z),local(b,hb,-45,0),new Vector3(b.x,0,b.z)]:[new Vector3(a.x,0,a.z),local(a,ha,45,0),new Vector3(mid.x+12,0,mid.z),local(b,hb,-45,0),new Vector3(b.x,0,b.z)];
   const curve=new CatmullRomCurve3(points,false,'centripetal');curve.arcLengthDivisions=512;
   const samples=Array.from({length:129},(_,i)=>{const q=i/128,p=curve.getPointAt(q),h=curve.getTangentAt(q),offset=id==='tunnel-cut'?-40*Math.sin(Math.PI*q):0;return{x:p.x+h.z*offset,z:p.z-h.x*offset,angle:from+(to-from)*q,heading:Math.atan2(h.x,h.z),width:id==='harbor-cut'?6:width,branch:id};});
   let length=0;for(let i=1;i<samples.length;i++){const a=samples[i-1],b=samples[i];length+=Math.hypot(b.x-a.x,b.z-a.z);a.heading=Math.atan2(b.x-a.x,b.z-a.z);}
@@ -73,7 +75,12 @@ export class CityTrack extends Track {
  }
  override angle(p:Point){let angle=this.project(p).angle;return angle>Math.PI?angle-TAU:angle;}
  override offset(p:Point){return this.project(p).offset;}
- override contains(p:Point,margin=0){const projection=this.project(p);return projection.distance<=projection.width-margin+1e-6;}
+ override contains(p:Point,margin=0){
+  const projection=this.project(p);if(projection.distance<=projection.width-margin+1e-6)return true;
+  if(p.route!==undefined)return false;
+  // A nearby narrow branch must not mask a valid point inside the wider main canal.
+  return [null,...this.shortcuts.map(s=>s.id)].some(route=>{const q=this.project(p,route);return q.distance<=q.width-margin+1e-6;});
+ }
  override target(p:Point,distance:number,lane=0){const loc=this.project(p),shortcut=this.shortcuts.find(s=>s.id===loc.branch);
   if(shortcut){const angle=loc.angle+distance/shortcut.length*(shortcut.to-shortcut.from);if(angle<=shortcut.to){const q=this.at(angle,shortcut.samples);return{x:q.x+Math.cos(q.heading)*lane,z:q.z-Math.sin(q.heading)*lane};}}
   return this.point(loc.angle+distance/this.radius,lane);

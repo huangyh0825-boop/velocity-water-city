@@ -2,7 +2,7 @@ import {test} from 'node:test';import assert from 'node:assert/strict';import {C
 import {FlightController} from '../src/player/FlightController';
 test('new course is a 4.7km closed noncircular loop with variable widths and shorter narrow alternatives',()=>{
  const t=new CityTrack();assert.ok(t.length>4600&&t.length<5000);assert.ok(Math.hypot(t.point(0).x-t.point(TAU).x,t.point(0).z-t.point(TAU).z)<1e-6);assert.ok(new Set(t.samples.map(p=>Math.round(p.width))).size>4);
- for(const s of t.shortcuts){assert.ok(s.length<(s.to-s.from)*t.radius-30);assert.ok(s.width<10);for(const p of s.samples)assert.ok(t.contains(p));}
+ for(const s of t.shortcuts){assert.ok(s.length<(s.to-s.from)*t.radius-15);assert.ok(s.width<10);for(const p of s.samples)assert.ok(t.contains(p));}
 });
 test('shortcut gates credit the same ordered checkpoint IDs, reverse/skip/teleport remain invalid',()=>{
  const t=new CityTrack(),shortcut=t.shortcuts[0],index=Math.ceil(shortcut.from/TAU*t.checkpointCount),angle=t.checkpointAngle(index),f=(angle-shortcut.from)/(shortcut.to-shortcut.from),i=Math.round(f*128),before=shortcut.samples[i-2],after=shortcut.samples[i+2];

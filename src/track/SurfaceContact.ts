@@ -22,7 +22,8 @@ export class SurfaceContact {
   // Projection of a wide curved canal has small longitudinal discretisation
   // error. It must never turn an ascending surface into a false departure.
   const leavingDownhill=floor.height<prior.height-1||floor.slope<-.005;
-  if(onSurface&&leavingDownhill&&floor.height<predicted-.002){
+  const separationTolerance=.002*(dt*60)**2;
+  if(onSurface&&leavingDownhill&&floor.height<predicted-separationTolerance){
    const legal=forward>12&&Math.cos(model.heading-prior.heading)>.65;
    flight.depart(oldY,velocity,dt,legal);flight.contactSurface(floor.height);
   }else if(floor.height-flight.height>1){

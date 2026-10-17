@@ -57,6 +57,7 @@ export class Ramps {
     let lock=this.locks.get(flight);
     if(lock&&(lock.generation!==flight.generation||Math.hypot(model.x-this.data.find(r=>r.id===lock!.rampId)!.lip.x,model.z-this.data.find(r=>r.id===lock!.rampId)!.lip.z)>this.length+12)){this.locks.delete(flight);lock=undefined;}
     if(flight.airborne){flight.contactSurface(this.surfaceHeight(model));if(flight.airborne&&flight.height<flight.landingHeight-.1)flight.landingHeight=0;if(flight.airborne&&flight.height<=0)flight.contactSurface(0);}
+    if(this.track.vertical&&flight.landed){const floor=this.track.surface(model);flight.verticalSpeed=floor.slope*(model.vx*Math.sin(floor.heading)+model.vz*Math.cos(floor.heading));}
     if(flight.airborne||flight.landed){model.y=flight.height;const last=this.decisions.get(boatId);if(last){const value={...last,reason:flight.landed?'landed':flight.legalLaunch?'airborne-preserved':'falling',triggered:false,position:{x:model.x,z:model.z,heading:model.heading},height:flight.height,verticalSpeed:flight.verticalSpeed,state:flight.state,path,correction,speed:model.speed,horizontalVelocity:{x:model.vx,z:model.vz}};this.decisions.set(boatId,value);this.onDecision?.(value);}return;}
     for(const r of this.data){
       const end=this.local(model,r);let reason='no-lip-crossing',support=this.support(model,r,model.heading),triggered=false,near=Math.abs(end.along)<30&&Math.abs(end.radial)<12;

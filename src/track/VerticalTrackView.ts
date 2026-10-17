@@ -55,7 +55,7 @@ export class VerticalTrackView {
    sign(index?'S2 合流 / OUT':'S1 合流 / OUT',cut.from+(cut.to-cut.from)*(cut.exitPortal??.85),cut.id,0,index?'#d0b1ff':'#91fff2');
    const side=Math.sign(track.project(track.routePoint(cut.from+(cut.to-cut.from)*.20,0,cut.id),null).offset)||1;
    // +Z is boat-forward, so +local X projects to the driver's screen-left.
-   sign(`S${index+1} ${side>0?'↖':'↗'} / MAIN ↑`,cut.from-80/track.radius,null,side*(track.widthAt(cut.from)+10),index?'#d0b1ff':'#91fff2');
+   sign(`S${index+1} ${side>0?'↖':'↗'} / MAIN ↑`,cut.from-80/track.radius,null,side*(track.widthAt(cut.from-80/track.radius)+10),index?'#d0b1ff':'#91fff2');
    // Portal ribs and interior side panels follow the actual curved branch.
    if(!index)for(let i=Math.ceil((cut.entryPortal??.15)*128);i<Math.floor((cut.exitPortal??.85)*128);i+=5){const p=cut.samples[i],h=p.heading,points=Array.from({length:17},(_,j)=>{const a=j/16*Math.PI;return new THREE.Vector3(Math.cos(a)*(cut.width+.5),.8+Math.sin(a)*8.6,0);});
      part(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points),24,.23,6,false),alloy,new THREE.Vector3(p.x,0,p.z),h);
