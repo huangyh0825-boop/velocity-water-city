@@ -56,7 +56,12 @@ export class CityDistricts {
   }
   for(let i=Math.floor(track.samples.length*.48);i<track.samples.length*.56;i+=4){const a=track.samples[i],b=track.samples[i+4],heading=Math.atan2(b.x-a.x,b.z-a.z),length=Math.hypot(b.x-a.x,b.z-a.z);
     part(base,new THREE.BoxGeometry(a.width*2+3,.8,length+.6),dark,(a.x+b.x)/2,14.5,(a.z+b.z)/2,heading);
-    for(const side of [-1,1]){part(base,new THREE.BoxGeometry(.6,13,.6),silver,a.x+Math.cos(heading)*(a.width+1.5)*side,7,a.z-Math.sin(heading)*(a.width+1.5)*side,heading);part(detail,new THREE.BoxGeometry(.12,.08,length),glow,(a.x+b.x)/2+Math.cos(heading)*(a.width-1)*side,13.9,(a.z+b.z)/2-Math.sin(heading)*(a.width-1)*side,heading);}
+    for(const side of [-1,1]){const original=a.width+1.5;let extent=original;
+      // The redesigned underpass must not pass through a legacy roof support.
+      for(let attempt=0;attempt<16;attempt++){const p={x:a.x+Math.cos(heading)*extent*side,z:a.z-Math.sin(heading)*extent*side};if(track.shortcuts.every(c=>track.project(p,c.id).distance>c.width+1.4))break;extent+=2;}
+      part(base,new THREE.BoxGeometry(.6,13,.6),silver,a.x+Math.cos(heading)*extent*side,7,a.z-Math.sin(heading)*extent*side,heading);
+      if(extent>original)part(base,new THREE.BoxGeometry(extent-original+.6,.8,1.2),silver,a.x+Math.cos(heading)*(extent+original)*.5*side,13.8,a.z-Math.sin(heading)*(extent+original)*.5*side,heading);
+      part(detail,new THREE.BoxGeometry(.12,.08,length),glow,(a.x+b.x)/2+Math.cos(heading)*(a.width-1)*side,13.9,(a.z+b.z)/2-Math.sin(heading)*(a.width-1)*side,heading);}
   }
   const cut=track.shortcuts[0];
   for(let i=8;i<cut.samples.length-8;i+=4){const a=cut.samples[i],b=cut.samples[i+4],length=Math.hypot(b.x-a.x,b.z-a.z),heading=Math.atan2(b.x-a.x,b.z-a.z);

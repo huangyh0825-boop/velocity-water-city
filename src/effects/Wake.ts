@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { DrivingModel } from '../player/DrivingModel';
 import { WakePool } from './WakePool';
-export interface WaterSource {id:string;model:DrivingModel;grounded:boolean;weight?:number}
+export interface WaterSource {id:string;model:DrivingModel;grounded:boolean;weight?:number;height?:number}
 const COUNT = 200;
 const LIFETIME = 1.45;
 export class Wake {
@@ -38,17 +38,17 @@ export class Wake {
   setSurfaceIntegrated(integrated:boolean){this.mesh.visible=!integrated;}
   updateAll(dt:number,sources:readonly WaterSource[]){
     this.pool.update(dt);
-    for(const {id,model:m,grounded} of sources){
+    for(const {id,model:m,grounded,height=0} of sources){
       let interval=(this.intervals.get(id)??0)+dt;
       const cadence=this.low?.1:.055;
       if(!grounded||m.speed<2)interval=0;
-      else if(interval>=cadence){interval%=cadence;this.pool.spawn(m.x-Math.sin(m.heading)*4,m.z-Math.cos(m.heading)*4,m.heading,m.speed);}
+      else if(interval>=cadence){interval%=cadence;this.pool.spawn(m.x-Math.sin(m.heading)*4,m.z-Math.cos(m.heading)*4,m.heading,m.speed,height);}
       this.intervals.set(id,interval);
     }
     this.pool.stamps.forEach((p, i) => {
       const life = Math.max(0, 1 - p.age / LIFETIME),strength=Math.min(1,p.speed/50);
       this.opacity.setX(i, Math.min(1,p.age/.08)*life*life*(.08+strength*.36));
-      this.dummy.position.set(p.x, 0.20, p.z);
+      this.dummy.position.set(p.x, (p.height??0)+0.20, p.z);
       this.dummy.rotation.set(-Math.PI / 2, 0, -p.heading);
       this.dummy.scale.set(life>0?2.3+strength*2.5+p.age*3.2:0,life>0?3.5+strength*3+p.age*2:0,1);
       this.dummy.updateMatrix(); this.mesh.setMatrixAt(i, this.dummy.matrix);

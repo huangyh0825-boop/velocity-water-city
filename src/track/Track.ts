@@ -1,5 +1,5 @@
 import type { DrivingModel } from '../player/DrivingModel';
-export interface Point { x: number; z: number }
+export interface Point { x: number; z: number; y?:number;route?:string|null;routeIntent?:string|null }
 export const TAU = Math.PI * 2;
 export const signedAngle = (angle: number) => Math.atan2(Math.sin(angle), Math.cos(angle));
 /** First course: a circular canal, measured in metres. Rendering is separate. */
@@ -10,6 +10,10 @@ export class Track {
   readonly halfWidth:number = 22;
   readonly checkpointCount:number = 8;
   readonly length = TAU * this.radius;
+  readonly vertical=false as boolean;
+  surface(p:Point){return{height:0,slope:0,heading:this.heading(this.angle(p)),branch:null as string|null};}
+  raceRoute(before:Point,after:Point,active:string|null){return active;}
+  raceAngle(p:Point,route:string|null){return this.angle(p);}
   point(angle: number, lane = 0): Point {
     return { x: Math.cos(angle) * (this.radius + lane), z: Math.sin(angle) * (this.radius + lane) };
   }
@@ -25,7 +29,7 @@ export class Track {
     model.reset(); Object.assign(model, this.point(angle, lane)); model.heading = this.heading(angle);
   }
   /** Sweep through the gate plane, in the race direction, inside its aperture. */
-  crossesGate(before: Point, after: Point, index: number): boolean {
+  crossesGate(before: Point, after: Point, index: number,route?:string|null): boolean {
     const angle = this.checkpointAngle(index), gate = this.point(angle);
     const tx = -Math.sin(angle), tz = Math.cos(angle);
     const a = (before.x - gate.x) * tx + (before.z - gate.z) * tz;

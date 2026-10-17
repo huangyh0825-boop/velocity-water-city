@@ -15,6 +15,7 @@ export class Water {
  private low=false;
  private pool?:WakePool;
  private active:WakeStamp[]=[];
+ private channels:{mesh:THREE.Mesh;visible:boolean}[]=[];
  private wakePositions=Array.from({length:WAKE_SAMPLES},()=>new THREE.Vector4());
  private wakeAges=Array.from({length:WAKE_SAMPLES},()=>new THREE.Vector2(10,0));
  constructor(scene:THREE.Scene) {
@@ -52,6 +53,7 @@ export class Water {
     float foam=0.,aeration=0.;
     for(int i=0;i<${WAKE_SAMPLES};i++){
      if(i>=wakeCount)break;
+     if(abs(world.y-wakeAges[i].y)>2.5)continue;
      vec4 source=wakePositions[i];float age=wakeAges[i].x,strength=source.w;
      vec2 delta=p-source.xy;float sh=sin(source.z),ch=cos(source.z);
      float lateral=dot(delta,vec2(ch,-sh)),forward=dot(delta,vec2(sh,ch));
@@ -100,11 +102,14 @@ export class Water {
   const reflect=this.mesh.onBeforeRender;
   this.mesh.onBeforeRender=(renderer,scene,camera,geometry,material,group)=>{
    this.mesh.position.x=camera.position.x;this.mesh.position.z=camera.position.z;this.mesh.updateMatrixWorld();
-   if(!this.low)reflect.call(this.mesh,renderer,scene,camera,geometry,material,group);
+   if(!this.low){try{for(const c of this.channels){c.visible=c.mesh.visible;c.mesh.visible=false;}reflect.call(this.mesh,renderer,scene,camera,geometry,material,group);}finally{for(const c of this.channels)c.mesh.visible=c.visible;}}
   };
   scene.add(this.mesh);
  }
  bindWake(pool:WakePool){this.pool=pool;}
+  /** Raised surfaces share current-frame reflection and the full water shader;
+   * exclude their water skin from its own reflection target to prevent feedback. */
+  channel(geometry:THREE.BufferGeometry){const mesh=new THREE.Mesh(geometry,this.material);mesh.name='elevated-water-surface';this.channels.push({mesh,visible:true});return mesh;}
  update(time:number){
   this.material.uniforms.time.value=time;
   const active=this.active;active.length=0;
@@ -113,7 +118,7 @@ export class Water {
   const count=Math.min(WAKE_SAMPLES,active.length);
   for(let i=0;i<count;i++){
    const p=active[Math.floor(i*active.length/count)];
-   this.wakePositions[i].set(p.x,p.z,p.heading,Math.min(1,p.speed/50));this.wakeAges[i].set(p.age,p.speed);
+   this.wakePositions[i].set(p.x,p.z,p.heading,Math.min(1,p.speed/50));this.wakeAges[i].set(p.age,p.height??0);
   }
   this.material.uniforms.wakeCount.value=count;
  }

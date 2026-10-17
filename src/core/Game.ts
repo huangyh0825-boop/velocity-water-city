@@ -30,6 +30,7 @@ import { CountdownCue } from '../audio/CountdownCue';
 import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {distanceGain} from '../audio/AudioMix';
 import {HeroLighting} from '../player/HeroLighting';
+import {VerticalTrackView} from '../track/VerticalTrackView';
 export class Game {
   private renderer: THREE.WebGLRenderer;
   private scene = createScene();
@@ -64,6 +65,7 @@ export class Game {
   private aiLighting=this.aiCraft.map((_,i)=>new HeroLighting(3+i));
   private input = new InputController();
   private water = new Water(this.scene);
+  private verticalView=new VerticalTrackView(this.scene,this.track,this.water);
   private wake = new Wake(this.scene);
   private spray = new Spray(this.scene);
   private impactLimiter = new EventLimiter();
@@ -102,7 +104,7 @@ export class Game {
   }
   private restart = () => {
     this.input.clear(); this.track.spawn(this.craft.model); this.ai.forEach(ai => ai.reset());
-    this.flight.reset(); this.bodies[0].height = 0;
+    this.ramps.place(this.craft.model,this.flight); this.bodies[0].height = this.flight.height;
     this.bodies.forEach(body=>body.height=0);this.ramps.decisions.clear();
     this.tricks.reset(); this.nitro.reset();
     this.spray.reset(); this.impactLimiter.reset();
@@ -117,13 +119,15 @@ export class Game {
   private recover = () => {
     if (this.race.phase !== 'racing') return;
     const angle = this.race.player.passed === 0 ? -0.014 : this.track.checkpointAngle(this.race.player.passed % this.track.checkpointCount) + 10/this.track.radius;
+    const branch=this.race.player.route,cut=this.track.shortcuts.find(s=>s.id===branch),valid=cut&&angle>cut.from&&angle<cut.to;
     this.input.clear(); this.track.spawn(this.craft.model, angle);
-    this.flight.reset(); this.bodies[0].height = 0;
+    if(valid){Object.assign(this.craft.model,this.track.routePoint(angle,0,branch));this.craft.model.route=branch;this.craft.model.heading=this.track.routeHeading(angle,branch);}
+    this.ramps.place(this.craft.model,this.flight); this.bodies[0].height = this.flight.height;
     this.tricks.reset(); this.nitro.active=false;
     this.spray.reset();
     this.craftMotion.reset();
-    this.race.syncPosition('player', this.craft.model); this.wake.reset(); this.wallContact = false;
-    this.camera.update(0, this.craft.model, true);
+    this.race.syncPosition('player', this.craft.model);if(valid)this.race.player.route=branch; this.wake.reset(); this.wallContact = false;
+    this.camera.update(0, this.craft.model, true,this.flight.height,false,this.track.surface(this.craft.model).height);
   };
   private resize = () => {
     const width = this.root.clientWidth, height = this.root.clientHeight;
@@ -144,7 +148,7 @@ export class Game {
       if (canDrive) {
         this.craftMotion.capture(); this.aiMotion.forEach(motion => motion.capture());
         this.collisions.capture(this.bodies);
-        const before = { x: this.craft.model.x, z: this.craft.model.z };
+        const before = { x: this.craft.model.x, z: this.craft.model.z,route:this.craft.model.route };
         this.flight.beginStep(step);
         this.nitro.update(step,this.input.boost);
         this.craft.model.update(step, input, this.nitro.active); this.wallContact = this.track.constrain(this.craft.model);
@@ -164,17 +168,19 @@ export class Game {
         this.ai.forEach(ai => { if (this.collisions.hasContact(ai.id)) ai.onContact(); });
         this.ai.forEach(ai=>{
           const volume=distanceGain(Math.hypot(ai.model.x-this.craft.model.x,ai.model.z-this.craft.model.z,ai.flight.height-this.flight.height))*.55;
-          if(ai.flight.takeoff){this.spray.burst(ai.model.x,ai.model.z,ai.model.speed*.65,'takeoff');this.audio.event('takeoff',ai.model.speed,volume);}
-          if(ai.flight.landed&&ai.flight.height<.2){this.spray.burst(ai.model.x,ai.model.z,ai.flight.landingSpeed,'landing');this.audio.event('landing',ai.flight.landingSpeed,volume);}
+          if(ai.flight.takeoff){this.spray.burst(ai.model.x,ai.model.z,ai.model.speed*.65,'takeoff',ai.flight.height);this.audio.event('takeoff',ai.model.speed,volume);}
+          if(ai.flight.landed&&Math.abs(ai.flight.height-this.track.surface(ai.model).height)<.3){this.spray.burst(ai.model.x,ai.model.z,ai.flight.landingSpeed,'landing',ai.flight.height);this.audio.event('landing',ai.flight.landingSpeed,volume);}
           else if(ai.flight.landed)this.audio.event('collision',ai.flight.landingSpeed,volume);
         });
         this.ai.forEach((ai,i)=>{if(ai.flight.landed)this.aiCraft[i].land();});
-        for(const event of this.collisions.events) if(event.strength>2 && this.impactLimiter.accept(event.key,this.time)) {if(event.height<1.2)this.spray.burst(event.x,event.z,event.strength,'collision');this.audio.event('collision',event.strength,distanceGain(Math.hypot(event.x-this.craft.model.x,event.z-this.craft.model.z,event.height-this.flight.height)));}
-        if(this.flight.takeoff) {this.spray.burst(this.craft.model.x,this.craft.model.z,this.craft.model.speed,'takeoff');this.audio.event('takeoff',this.craft.model.speed);}
+        for(const event of this.collisions.events) if(event.strength>2 && this.impactLimiter.accept(event.key,this.time)) {if(Math.abs(event.height-this.track.surface(event).height)<1.2)this.spray.burst(event.x,event.z,event.strength,'collision',event.height);this.audio.event('collision',event.strength,distanceGain(Math.hypot(event.x-this.craft.model.x,event.z-this.craft.model.z,event.height-this.flight.height)));}
+        if(this.flight.takeoff) {this.spray.burst(this.craft.model.x,this.craft.model.z,this.craft.model.speed,'takeoff',this.flight.height);this.audio.event('takeoff',this.craft.model.speed);}
         if(this.flight.landed) {
           this.craft.land();
-          if(this.flight.height<.2)this.spray.burst(this.craft.model.x,this.craft.model.z,this.flight.landingSpeed,'landing');
-          this.audio.event(this.flight.height<.2?'landing':'collision',this.flight.landingSpeed);
+          const waterLanding=Math.abs(this.flight.height-this.track.surface(this.craft.model).height)<.3;
+          if(waterLanding)this.spray.burst(this.craft.model.x,this.craft.model.z,this.flight.landingSpeed,'landing',this.flight.height);
+          this.audio.event(waterLanding?'landing':'collision',this.flight.landingSpeed);
+          const factor=this.flight.impactFactor;this.craft.model.speed*=factor;this.craft.model.vx*=factor;this.craft.model.vz*=factor;
           const result=this.tricks.land(!this.wallContact && this.craft.model.speed>8 && !this.collisions.hasContact('player'));
           this.nitro.reward(result.reward);
           if(result.penalty) { this.craft.model.speed*=0.72; this.craft.model.vx*=0.72; this.craft.model.vz*=0.72; }
@@ -184,20 +190,21 @@ export class Game {
         this.race.completeStep();
         if (this.race.phase === 'finished') { this.input.clear(); this.nitro.active=false;this.ai.forEach(ai=>ai.nitro.active=false); this.craft.model.speed = 0; this.craftMotion.reset(); this.aiMotion.forEach(motion => motion.reset()); }
       }
-      const waterSources=[{id:'player',model:this.craft.model,grounded:canDrive&&this.flight.height<.2&&!this.flight.airborne},
-        ...this.ai.map(ai=>({id:ai.id,model:ai.model,grounded:canDrive&&ai.flight.height<.2&&!ai.flight.airborne,weight:.65}))];
+      const waterSources=[{id:'player',model:this.craft.model,grounded:canDrive&&Math.abs(this.flight.height-this.track.surface(this.craft.model).height)<.3&&!this.flight.airborne,height:this.flight.height},
+        ...this.ai.map(ai=>({id:ai.id,model:ai.model,grounded:canDrive&&Math.abs(ai.flight.height-this.track.surface(ai.model).height)<.3&&!ai.flight.airborne,height:ai.flight.height,weight:.65}))];
       this.wake.updateAll(step,waterSources);this.spray.updateAll(step,waterSources);
       this.time += step; this.accumulator -= step;
     }
     const displayTime = this.time + this.accumulator;
     const displayModel = this.craftMotion.sample(this.accumulator / step);
-    this.craft.sync(displayTime, displayModel, this.flight.displayHeight(this.accumulator / step), this.tricks.rotation);
-    this.aiCraft.forEach((craft, i) => craft.sync(displayTime, this.aiMotion[i].sample(this.accumulator / step),this.ai[i].flight.displayHeight(this.accumulator/step),this.ai[i].tricks.rotation));
+    const ground=this.track.surface(this.craft.model).height;
+    this.craft.sync(displayTime, displayModel, this.flight.displayHeight(this.accumulator / step), this.tricks.rotation,ground,this.flight.airborne?0:this.ramps.slope(this.craft.model));
+    this.aiCraft.forEach((craft, i) => craft.sync(displayTime, this.aiMotion[i].sample(this.accumulator / step),this.ai[i].flight.displayHeight(this.accumulator/step),this.ai[i].tricks.rotation,this.track.surface(this.ai[i].model).height,this.ai[i].flight.airborne?0:this.ramps.slope(this.ai[i].model)));
     this.jet.update(displayTime,this.nitro.active);
     this.aiJets.forEach((jet,i)=>jet.update(displayTime,this.ai[i].nitro.active));
-    this.audio.update({speed:this.craft.model.speed,throttle:input.throttle,boost:this.nitro.active,grounded:!this.flight.airborne&&this.flight.height<.2,airborne:this.flight.airborne,running:this.race.phase==='racing'});
-    this.audio.updateAI(this.ai.map(ai=>{const dx=ai.model.x-this.craft.model.x,dz=ai.model.z-this.craft.model.z,distance=Math.hypot(dx,dz,ai.flight.height-this.flight.height);return{id:ai.id,speed:ai.model.speed,throttle:1,boost:ai.nitro.active,airborne:ai.flight.airborne,grounded:!ai.flight.airborne&&ai.flight.height<.2,running:this.race.phase==='racing',distance,pan:(dx*Math.cos(this.craft.model.heading)-dz*Math.sin(this.craft.model.heading))/Math.max(10,distance)};}));
-    this.water.update(displayTime);this.citySample.update(displayTime,this.camera.camera); this.camera.update(dt, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active);
+    this.audio.update({speed:this.craft.model.speed,throttle:input.throttle,boost:this.nitro.active,grounded:!this.flight.airborne&&Math.abs(this.flight.height-ground)<.3,airborne:this.flight.airborne,running:this.race.phase==='racing'});
+    this.audio.updateAI(this.ai.map(ai=>{const dx=ai.model.x-this.craft.model.x,dz=ai.model.z-this.craft.model.z,distance=Math.hypot(dx,dz,ai.flight.height-this.flight.height);return{id:ai.id,speed:ai.model.speed,throttle:1,boost:ai.nitro.active,airborne:ai.flight.airborne,grounded:!ai.flight.airborne&&Math.abs(ai.flight.height-this.track.surface(ai.model).height)<.3,running:this.race.phase==='racing',distance,pan:(dx*Math.cos(this.craft.model.heading)-dz*Math.sin(this.craft.model.heading))/Math.max(10,distance)};}));
+    this.water.update(displayTime);this.citySample.update(displayTime,this.camera.camera); this.camera.update(dt, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active,ground);
     this.trackView.highlight(this.race.nextCheckpoint());
     this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks);
     if(!this.low&&this.craft.assetLoaded)this.heroLighting.update(this.renderer,this.scene,this.craft.visual);

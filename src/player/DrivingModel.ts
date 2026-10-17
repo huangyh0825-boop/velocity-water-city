@@ -9,6 +9,10 @@ export const WORLD_LIMIT = 680;
 export class DrivingModel {
   x = 0; z = 0; heading = 0; speed = 0; yawRate = 0; vx = 0; vz = 0;
   worldLimit:number=WORLD_LIMIT;
+  /** World-space surface/flight height metadata; horizontal driving curves are unchanged. */
+  y=0;
+  route:string|null|undefined=undefined;
+  routeIntent:string|null|undefined=undefined;
   update(dt: number, input: InputState, boost = false) {
     const speedRatio = Math.min(1, this.speed / MAX_SPEED);
     const thrust = SPEED_TUNING.player.launchAcceleration + (SPEED_TUNING.player.topSpeedAcceleration - SPEED_TUNING.player.launchAcceleration) * speedRatio;
@@ -29,5 +33,5 @@ export class DrivingModel {
       this.speed *= Math.exp(-dt * 7); this.vx *= Math.exp(-dt * 10); this.vz *= Math.exp(-dt * 10);
     }
   }
-  reset() { this.x = this.z = this.heading = this.speed = this.yawRate = this.vx = this.vz = 0; }
+  reset() { this.routeIntent=undefined;this.route=undefined;this.y=0;this.x = this.z = this.heading = this.speed = this.yawRate = this.vx = this.vz = 0; }
 }

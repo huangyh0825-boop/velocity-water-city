@@ -76,12 +76,12 @@ export class Watercraft {
   }
   land(){this.landingCompression=.10;}
   dispose(){this.visualRequest++;this.rider.dispose();this.finishes.dispose();}
-  sync(time: number, m: DrivingModel = this.model, height = 0, trick = {pitch:0,yaw:0}) {
-    this.shadow.position.set(m.x,.14,m.z);this.shadow.rotation.z=-m.heading;this.shadow.material.uniforms.alpha.value=.20*Math.exp(-height*.3);
+  sync(time: number, m: DrivingModel = this.model, height = 0, trick = {pitch:0,yaw:0},ground=0,slope=0) {
+    this.shadow.position.set(m.x,ground+.14,m.z);this.shadow.rotation.z=-m.heading;this.shadow.material.uniforms.alpha.value=.20*Math.exp(-Math.max(0,height-ground)*.3);
     this.object.position.set(m.x, height + 0.16 + Math.sin(time * 3.2) * 0.07, m.z);
-    this.object.rotation.set(-Math.min(1, m.speed / MAX_SPEED) * 0.035, m.heading, -m.yawRate * 0.22);
+    this.object.rotation.set(-Math.atan(slope)-Math.min(1, m.speed / MAX_SPEED) * 0.035, m.heading, -m.yawRate * 0.22);
     this.visual.rotation.set(trick.pitch, trick.yaw, 0);
     const dt=Math.max(0,Math.min(.1,time-this.visualTime));this.visualTime=time;
-    this.landingCompression*=Math.exp(-dt*10);this.rider.update(time,m.speed,m.yawRate,this.landingCompression,height);
+    this.landingCompression*=Math.exp(-dt*10);this.rider.update(time,m.speed,m.yawRate,this.landingCompression,Math.max(0,height-ground));
   }
 }

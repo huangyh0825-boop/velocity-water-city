@@ -62,7 +62,7 @@ export class Hud {
     }
     if (race.phase === 'finished' && !this.resultShown) {
       this.resultShown = true; this.result.hidden = false;
-      this.result.querySelector('#result-summary')!.textContent = `第 ${race.playerRank} 名 / ${race.racers.length} 位选手 · ${formatTime(race.player.finishTime!)}`;
+      this.result.querySelector('#result-summary')!.textContent = `第 ${race.playerRank} 名 / ${race.racers.length} 位选手 · ${formatTime(race.player.finishTime!)}${race.bestTime===null?'':` · 本赛道最佳 ${formatTime(race.bestTime)}`}`;
       const table = document.createElement('table'); table.innerHTML = '<thead><tr><th>POS</th><th>选手</th><th>TIME</th></tr></thead>';
       const body = table.createTBody();
       race.standings().forEach((racer, i) => {
