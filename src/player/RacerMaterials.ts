@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {sharePackedMaterialSampling} from './PackedMaterialSampling';
 
 /** Independent finishes, shared geometry/textures. No AI-specific asset downgrade. */
 export class RacerMaterials {
@@ -12,6 +13,7 @@ export class RacerMaterials {
     if(material instanceof THREE.MeshStandardMaterial){
      if(source.name==='Paint')material.color.set(color);
      if(/Team woven flotation|Hero blue leather panels/.test(source.name))material.color.copy(new THREE.Color(color)).multiplyScalar(.62);
+     sharePackedMaterialSampling(material);
     }
     return material;
    };

@@ -2,8 +2,9 @@ import * as THREE from 'three';
 import {Water as ReflectiveWater} from 'three/addons/objects/Water.js';
 import {waterNormalTexture} from './WaterNormals';
 import {waterGrid,waterWaveGLSL} from './WaterSurface';
-import type {WakePool} from './WakePool';
+import type {WakePool,WakeStamp} from './WakePool';
 const WAKE_SAMPLES=32;
+const byAge=(a:WakeStamp,b:WakeStamp)=>a.age-b.age;
 /** Displaced water, current-frame planar reflection and integrated wake normals. */
 export class Water {
  readonly mesh:ReflectiveWater;
@@ -13,6 +14,7 @@ export class Water {
  private material:THREE.ShaderMaterial;
  private low=false;
  private pool?:WakePool;
+ private active:WakeStamp[]=[];
  private wakePositions=Array.from({length:WAKE_SAMPLES},()=>new THREE.Vector4());
  private wakeAges=Array.from({length:WAKE_SAMPLES},()=>new THREE.Vector2(10,0));
  constructor(scene:THREE.Scene) {
@@ -54,6 +56,9 @@ export class Water {
      vec2 delta=p-source.xy;float sh=sin(source.z),ch=cos(source.z);
      float lateral=dot(delta,vec2(ch,-sh)),forward=dot(delta,vec2(sh,ch));
      float aft=2.-forward,gate=smoothstep(0.,.6,aft)*(1.-smoothstep(5.+age*2.,8.+age*3.,aft));
+     // The original contribution is exactly zero outside this longitudinal gate.
+     // Keep every wave, stamp and texture sample inside it; skip only zero work.
+     if(gate==0. || strength==0.)continue;
      float spread=.22+aft*.27+age*.35;
      float edge=abs(lateral)-spread,width=.10+age*.12;
      float envelope=exp(-edge*edge/(width*width))*gate;
@@ -102,7 +107,9 @@ export class Water {
  bindWake(pool:WakePool){this.pool=pool;}
  update(time:number){
   this.material.uniforms.time.value=time;
-  const active=this.pool?.stamps.filter(p=>p.age<this.pool!.lifetime)??[];active.sort((a,b)=>a.age-b.age);
+  const active=this.active;active.length=0;
+  if(this.pool)for(const p of this.pool.stamps)if(p.age<this.pool.lifetime)active.push(p);
+  active.sort(byAge);
   const count=Math.min(WAKE_SAMPLES,active.length);
   for(let i=0;i<count;i++){
    const p=active[Math.floor(i*active.length/count)];

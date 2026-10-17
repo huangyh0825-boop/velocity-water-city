@@ -14,7 +14,13 @@ export class HeroLighting {
  private direction=new THREE.Vector3(-155,165,90).normalize();
  private biasMatrix=new THREE.Matrix4().set(.5,0,0,.5,0,.5,0,.5,0,0,.5,.5,0,0,0,1);
  private viewFrustum=new THREE.Frustum();private viewMatrix=new THREE.Matrix4();private bounds=new THREE.Sphere(new THREE.Vector3(),3.8);
- constructor(private layer=2){this.camera.layers.set(layer);this.target.texture.name='Racer local depth pass '+layer;}
+ private root?:THREE.Object3D;private revision?:number;
+ private casters:{mesh:THREE.Mesh;material:THREE.Material|THREE.Material[]}[]=[];
+ private surfaces=new Set<THREE.MeshStandardMaterial>();private center=new THREE.Vector3();
+ constructor(private layer=2){
+  this.camera.layers.set(layer);this.target.texture.name='Racer local depth pass '+layer;
+
+ }
  updateVisible(renderer:THREE.WebGLRenderer,scene:THREE.Scene,racer:THREE.Object3D,view:THREE.Camera){
   // Skip only invisible self-shadow passes, never substitute lower-quality assets.
   view.updateMatrixWorld();this.viewFrustum.setFromProjectionMatrix(this.viewMatrix.multiplyMatrices(view.projectionMatrix,view.matrixWorldInverse));
@@ -25,7 +31,7 @@ export class HeroLighting {
  private configure(material:THREE.MeshStandardMaterial) {
   if(this.originals.has(material))return;
   this.originals.set(material,{compile:material.onBeforeCompile,key:material.customProgramCacheKey,environment:material.envMap,intensity:material.envMapIntensity});
-  const original=material.onBeforeCompile;
+  const original=material.onBeforeCompile,programKey=material.customProgramCacheKey();
   material.onBeforeCompile=(shader,renderer)=>{
    original.call(material,shader,renderer);
    Object.assign(shader.uniforms,{heroDepth:{value:this.target.depthTexture},heroShadowMatrix:{value:this.matrix}});
@@ -49,7 +55,7 @@ export class HeroLighting {
      float heroShadow=heroVisibility(normal);
      reflectedLight.directDiffuse*=heroShadow;reflectedLight.directSpecular*=heroShadow;`);
   };
-  material.customProgramCacheKey=()=> 'hero-local-shadow-v1';material.needsUpdate=true;
+  material.customProgramCacheKey=()=> programKey+'|racer-local-shadow-v1';material.needsUpdate=true;
  }
  update(renderer:THREE.WebGLRenderer,scene:THREE.Scene,hero:THREE.Object3D){
   // Reuse the district's existing HDR reflection probe for outdoor paint/metal;
@@ -57,8 +63,10 @@ export class HeroLighting {
   if(!this.environment)scene.getObjectByName('blender-waterfront-sample')?.traverse(o=>{
    if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(m instanceof THREE.MeshStandardMaterial&&m.envMap)this.environment=m.envMap;
   });
-  const current=new Set<THREE.MeshStandardMaterial>();
-  hero.traverse(o=>{if(o instanceof THREE.Mesh){
+  const revision=hero.userData.visualRevision;
+  if(this.root!==hero||revision===undefined||this.revision!==revision){
+   this.root=hero;this.revision=revision;this.casters.length=0;this.surfaces.clear();
+   hero.traverse(o=>{if(o instanceof THREE.Mesh){
    const materials=Array.isArray(o.material)?o.material:[o.material];
    if(materials.every(m=>m instanceof THREE.MeshStandardMaterial)){
     // Receiving moves to the local map; this is not a shadow-free fallback.
@@ -66,27 +74,31 @@ export class HeroLighting {
     // The depth override cannot transmit tinted glass. An opaque visor shadow
     // would hide the real face/eyes and make a transparent helmet look empty.
     if(materials.every(m=>m.transparent&&m.opacity<.98))o.layers.disable(this.layer);
-    else o.layers.enable(this.layer);
-    for(const m of materials){const surface=m as THREE.MeshStandardMaterial;current.add(surface);this.configure(surface);
-     if(this.environment&&surface.envMap!==this.environment){surface.envMap=this.environment;surface.envMapIntensity=/fabric|textile|nylon/i.test(surface.name)?.22:.72;surface.needsUpdate=true;}
-    }
+    else {o.layers.enable(this.layer);this.casters.push({mesh:o,material:o.material});}
+    for(const m of materials){const surface=m as THREE.MeshStandardMaterial;this.surfaces.add(surface);this.configure(surface);}
    }
-  }});
+   }});
   // Quality reloads replace owned material clones. Do not retain obsolete assets.
-  for(const [material,original] of this.originals)if(!current.has(material)){
+   for(const [material,original] of this.originals)if(!this.surfaces.has(material)){
    material.onBeforeCompile=original.compile;material.customProgramCacheKey=original.key;material.envMap=original.environment;material.envMapIntensity=original.intensity;this.originals.delete(material);
+   }
   }
-  const center=hero.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0,.85,0));
+  for(const surface of this.surfaces)if(this.environment&&surface.envMap!==this.environment){surface.envMap=this.environment;surface.envMapIntensity=/fabric|textile|nylon/i.test(surface.name)?.22:.72;surface.needsUpdate=true;}
+  const center=hero.getWorldPosition(this.center);center.y+=.85;
   this.camera.position.copy(center).addScaledVector(this.direction,8);this.camera.lookAt(center);this.camera.updateMatrixWorld();
   this.matrix.copy(this.biasMatrix).multiply(this.camera.projectionMatrix).multiply(this.camera.matrixWorldInverse);
   const target=renderer.getRenderTarget(),override=scene.overrideMaterial,background=scene.background,xr=renderer.xr.enabled,auto=renderer.shadowMap.autoUpdate;
   try {
-   scene.overrideMaterial=this.depth;scene.background=null;renderer.xr.enabled=false;renderer.shadowMap.autoUpdate=false;
-   renderer.setRenderTarget(this.target);renderer.clear();renderer.render(scene,this.camera);
-  }finally{renderer.setRenderTarget(target);scene.overrideMaterial=override;scene.background=background;renderer.xr.enabled=xr;renderer.shadowMap.autoUpdate=auto;}
+   // Render exactly the same caster meshes from their own root. Traversing the
+   // entire city with an empty-light camera invalidated Three's main-scene light
+   // program state every pass, despite only this racer contributing depth.
+   for(const caster of this.casters)caster.mesh.material=this.depth;
+   renderer.xr.enabled=false;renderer.shadowMap.autoUpdate=false;
+   renderer.setRenderTarget(this.target);renderer.clear();renderer.render(hero,this.camera);
+  }finally{for(const caster of this.casters)caster.mesh.material=caster.material;renderer.setRenderTarget(target);scene.overrideMaterial=override;scene.background=background;renderer.xr.enabled=xr;renderer.shadowMap.autoUpdate=auto;}
  }
  dispose(){
   for(const [material,original] of this.originals){material.onBeforeCompile=original.compile;material.customProgramCacheKey=original.key;material.envMap=original.environment;material.envMapIntensity=original.intensity;material.needsUpdate=true;}
-  this.originals.clear();this.target.dispose();this.depth.dispose();
+  this.originals.clear();this.surfaces.clear();this.casters.length=0;this.root=undefined;this.target.dispose();this.depth.dispose();
  }
 }

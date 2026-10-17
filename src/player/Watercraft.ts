@@ -21,6 +21,7 @@ export class Watercraft {
   private shadow:THREE.Mesh<THREE.PlaneGeometry,THREE.ShaderMaterial>;
   constructor(scene: THREE.Scene, color = '#126bba', model = new DrivingModel(),simple=false) {
     this.model = model;
+    this.visual.userData.visualRevision=0;
     this.color=color;
     this.shadow=new THREE.Mesh(new THREE.PlaneGeometry(2.2,5.2),new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{alpha:{value:.18}},vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',fragmentShader:'varying vec2 vUv;uniform float alpha;void main(){float d=length((vUv-.5)*vec2(2.,1.5));gl_FragColor=vec4(.015,.07,.10,alpha*(1.-smoothstep(.2,.65,d)));}'}));
     this.shadow.rotation.x=-Math.PI/2;scene.add(this.shadow);
@@ -70,7 +71,7 @@ export class Watercraft {
       const seat=boat.getObjectByName('RiderSeat');
       if(seat){boat.updateWorldMatrix(true,true);this.rider.root.position.copy(boat.worldToLocal(seat.getWorldPosition(new THREE.Vector3())));
         for(const [i,name] of ['Grip_L','Grip_R'].entries()){const grip=boat.getObjectByName(name);if(grip)this.rider.grips[i].copy(boat.worldToLocal(grip.getWorldPosition(new THREE.Vector3()))).sub(this.rider.root.position);}}
-      this.rider.bindAsset(racer);this.assetLoaded=true;this.assetError='';
+      this.rider.bindAsset(racer);this.visual.userData.visualRevision++;this.assetLoaded=true;this.assetError='';
     }catch(error){this.assetError=String(error);console.warn('GLB unavailable: fallback model retained',error);}
   }
   land(){this.landingCompression=.10;}
