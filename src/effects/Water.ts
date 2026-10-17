@@ -12,6 +12,8 @@ export class Water {
  private lightweight=waterGrid(64);
  private normals=waterNormalTexture();
  private material:THREE.ShaderMaterial;
+ private channelMaterial:THREE.ShaderMaterial;
+ private preparedFrame=-1;private preparedCamera?:THREE.Camera;
  private low=false;
  private pool?:WakePool;
  private active:WakeStamp[]=[];
@@ -99,17 +101,29 @@ export class Water {
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
    }`;
+  // Elevated and base surfaces have different tessellations. At the seam their
+  // interpolated waves can exchange depth even with identical wave equations.
+  // Exact per-pixel coverage, not a coarse world mask or depth offset, prevents
+  // the underlying ocean from drawing over the engineered water skin.
+  this.channelMaterial=new THREE.ShaderMaterial({uniforms:this.material.uniforms,vertexShader:this.material.vertexShader,fragmentShader:this.material.fragmentShader,lights:this.material.lights,side:this.material.side,fog:this.material.fog});
+  Object.assign(this.channelMaterial,{stencilWrite:true,stencilRef:1,stencilFunc:THREE.AlwaysStencilFunc,stencilZPass:THREE.ReplaceStencilOp});
+  Object.assign(this.material,{stencilWrite:true,stencilRef:1,stencilFunc:THREE.NotEqualStencilFunc});
+  this.mesh.renderOrder=-1;
   const reflect=this.mesh.onBeforeRender;
-  this.mesh.onBeforeRender=(renderer,scene,camera,geometry,material,group)=>{
+  this.prepare=(renderer,scene,camera)=>{
+   if(this.preparedFrame===renderer.info.render.frame&&this.preparedCamera===camera)return;
    this.mesh.position.x=camera.position.x;this.mesh.position.z=camera.position.z;this.mesh.updateMatrixWorld();
-   if(!this.low){try{for(const c of this.channels){c.visible=c.mesh.visible;c.mesh.visible=false;}reflect.call(this.mesh,renderer,scene,camera,geometry,material,group);}finally{for(const c of this.channels)c.mesh.visible=c.visible;}}
+   if(!this.low){try{for(const c of this.channels){c.visible=c.mesh.visible;c.mesh.visible=false;}reflect.call(this.mesh,renderer,scene,camera,this.mesh.geometry,this.material,null!);}finally{for(const c of this.channels)c.mesh.visible=c.visible;}}
+   this.preparedFrame=renderer.info.render.frame;this.preparedCamera=camera;
   };
+  this.mesh.onBeforeRender=this.prepare;
   scene.add(this.mesh);
  }
  bindWake(pool:WakePool){this.pool=pool;}
+ private prepare:THREE.Object3D['onBeforeRender'];
   /** Raised surfaces share current-frame reflection and the full water shader;
    * exclude their water skin from its own reflection target to prevent feedback. */
-  channel(geometry:THREE.BufferGeometry){const mesh=new THREE.Mesh(geometry,this.material);mesh.name='elevated-water-surface';this.channels.push({mesh,visible:true});return mesh;}
+  channel(geometry:THREE.BufferGeometry){const mesh=new THREE.Mesh(geometry,this.channelMaterial);mesh.name='elevated-water-surface';mesh.renderOrder=-2;mesh.onBeforeRender=this.prepare;this.channels.push({mesh,visible:true});return mesh;}
  update(time:number){
   this.material.uniforms.time.value=time;
   const active=this.active;active.length=0;
@@ -123,5 +137,5 @@ export class Water {
   this.material.uniforms.wakeCount.value=count;
  }
  setLow(low:boolean){this.low=low;this.mesh.geometry=low?this.lightweight:this.standard;this.material.uniforms.detail.value=low?0:1;this.material.uniforms.reflectionEnabled.value=low?0:1;}
- dispose(){this.standard.dispose();this.lightweight.dispose();this.normals.dispose();(this.material.uniforms.mirrorSampler.value as THREE.Texture).renderTarget?.dispose();this.material.dispose();}
+ dispose(){this.standard.dispose();this.lightweight.dispose();this.normals.dispose();(this.material.uniforms.mirrorSampler.value as THREE.Texture).renderTarget?.dispose();this.channelMaterial.dispose();this.material.dispose();}
 }

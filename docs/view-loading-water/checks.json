@@ -1,0 +1,11 @@
+{
+  "baseline": "c571d2e6c6662f2dea38252db8685100a063599a",
+  "physicsRaceFrameUnchanged": true,
+  "protectedSourceAndAssetDiff": "",
+  "tests142": true,
+  "galleryImages": 30,
+  "galleryImagesOK": true,
+  "typecheck": "Passed node node_modules/typescript/bin/tsc --noEmit",
+  "productionBuild": "Passed, see build.txt",
+  "normalEntryContainsTestGame": false
+}

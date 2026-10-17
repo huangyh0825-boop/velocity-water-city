@@ -22,7 +22,7 @@ export class CityDistricts {
   const terrainGeometry=new THREE.BufferGeometry();terrainGeometry.setAttribute('position',new THREE.Float32BufferAttribute(terrainVertices,3));terrainGeometry.computeVertexNormals();
   const shore=new THREE.Mesh(terrainGeometry,new THREE.MeshStandardMaterial({color:'#b7cbd4',roughness:.95,side:THREE.DoubleSide}));this.root.add(shore);
   shore.name='continuous-quay-ground';(shore.material as THREE.Material).name='world-quay-concrete';const uv:number[]=[];for(let i=0;i<terrainVertices.length;i+=3)uv.push(terrainVertices[i]/4,terrainVertices[i+2]/4);terrainGeometry.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));shore.receiveShadow=true;
-  const part=(batch:ModelBatch,g:THREE.BufferGeometry,m:THREE.Material,x:number,y:number,z:number,rotation=0)=>batch.add(g,m,new THREE.Vector3(x,y,z),undefined,new THREE.Euler(0,rotation,0));
+  const part=(batch:ModelBatch,g:THREE.BufferGeometry,m:THREE.Material,x:number,y:number,z:number,rotation=0)=>{g.computeBoundingBox();const size=g.boundingBox!.getSize(new THREE.Vector3());(this.root.userData.cameraSolids??=[]).push({x,y,z,width:size.x,height:size.y,depth:size.z,heading:rotation});batch.add(g,m,new THREE.Vector3(x,y,z),undefined,new THREE.Euler(0,rotation,0));};
   // Authored GLB buildings now cover all six districts through CityDensity.
   // Crossing bridges use the original sample GLB engineering, not placeholders.
   for(let i=Math.floor(track.samples.length*.48);i<track.samples.length*.56;i+=4){const a=track.samples[i],b=track.samples[i+4],heading=Math.atan2(b.x-a.x,b.z-a.z),length=Math.hypot(b.x-a.x,b.z-a.z);

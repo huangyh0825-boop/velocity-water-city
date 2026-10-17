@@ -70,7 +70,7 @@ export class CityGlass {
    shader.fragmentShader=`#define CITY_ROOM_DETAIL ${low?0:1}\n`+shader.fragmentShader;
    shader.vertexShader=shader.vertexShader.replace('#include <common>','#include <common>\nvarying vec2 vCityRoomUV;').replace('#include <uv_vertex>','#include <uv_vertex>\nvCityRoomUV=vec2(uv.x,1.0-uv.y);');
    shader.fragmentShader=shader.fragmentShader.replace('#include <common>','#include <common>\n'+ROOM_GLSL).replace('#include <emissivemap_fragment>',`#include <emissivemap_fragment>
-    float cityNear=1.0-smoothstep(95.0,175.0,length(vViewPosition));
+    float cityNear=1.0-smoothstep(${low?'95.0,175.0':'260.0,480.0'},length(vViewPosition));
     if(cityNear>0.0){
      vec3 cityWorldNormal=inverseTransformDirection(normal,viewMatrix);
      float cityVertical=1.0-smoothstep(.65,.9,abs(cityWorldNormal.y));

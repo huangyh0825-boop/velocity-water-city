@@ -66,7 +66,7 @@ export class CityInteriors {
  setLow(low:boolean){this.low=low;this.lastCamera.set(Infinity,Infinity,Infinity);this.root.visible=!low;}
  update(camera:THREE.Vector3){
   if(this.low||this.lastCamera.distanceToSquared(camera)<16)return;this.lastCamera.copy(camera);const p=sampleLocal(this.track,camera);
-  const visible=new Set(this.selected.filter(s=>Math.hypot(s.x-p.x,s.z-p.z)<115).map(s=>s.id)),signature=[...visible].join('|');
+  const visible=new Set(this.selected.filter(s=>Math.hypot(s.x-p.x,s.z-p.z)<240).map(s=>s.id)),signature=[...visible].join('|');
   if(signature!==this.visibleSignature){this.visibleSignature=signature;this.revision++;}
   for(const pool of this.pools){let count=0;for(const piece of pool.pieces)if(visible.has(piece.site.id))pool.mesh.setMatrixAt(count++,piece.matrix);pool.mesh.count=count;pool.mesh.instanceMatrix.needsUpdate=true;pool.mesh.computeBoundingSphere();}
  }

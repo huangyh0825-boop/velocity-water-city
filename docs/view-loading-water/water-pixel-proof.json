@@ -1,0 +1,114 @@
+{
+  "method": "Actual WebGL framebuffer readback over 120 animated frames at A ramp entrance. Only diagnostic colours changed: base red, raised canal green, original displacement and depth/stencil states retained. Samples project raised-surface triangle centres. A red pixel inside a raised triangle is erroneous underlying-ocean coverage; green is intended. Edges/occluded pixels omitted by colour classification. Not a performance benchmark.",
+  "results": [
+    {
+      "label": "before",
+      "frames": 120,
+      "channelSamples": 132,
+      "redUnderlay": 126,
+      "greenChannel": 11984,
+      "colourFlips": 18,
+      "samples": [
+        {
+          "x": 331.1983947753906,
+          "z": 645.7753092447916,
+          "y": 0.03714925174911817,
+          "last": "green",
+          "red": 11,
+          "green": 108,
+          "flips": 2
+        },
+        {
+          "x": 331.2305501302083,
+          "z": 642.1337890625,
+          "y": 0.03714925174911817,
+          "last": "red",
+          "red": 12,
+          "green": 108,
+          "flips": 1
+        },
+        {
+          "x": 331.2626953125,
+          "z": 638.4922688802084,
+          "y": 0.03714925174911817,
+          "last": "green",
+          "red": 24,
+          "green": 94,
+          "flips": 2
+        },
+        {
+          "x": 331.58445231119794,
+          "z": 637.2811686197916,
+          "y": 0.041136021415392555,
+          "last": "green",
+          "red": 17,
+          "green": 102,
+          "flips": 2
+        },
+        {
+          "x": 331.3269958496094,
+          "z": 631.2092081705729,
+          "y": 0.03714925174911817,
+          "last": "green",
+          "red": 30,
+          "green": 89,
+          "flips": 3
+        },
+        {
+          "x": 331.35915120442706,
+          "z": 627.5677083333334,
+          "y": 0.03714925174911817,
+          "last": "green",
+          "red": 9,
+          "green": 111,
+          "flips": 2
+        },
+        {
+          "x": 331.680908203125,
+          "z": 626.3566080729166,
+          "y": 0.041136021415392555,
+          "last": "red",
+          "red": 4,
+          "green": 116,
+          "flips": 1
+        },
+        {
+          "x": 331.39129638671875,
+          "z": 623.9261678059896,
+          "y": 0.03714925174911817,
+          "last": "green",
+          "red": 6,
+          "green": 111,
+          "flips": 2
+        },
+        {
+          "x": 332.5497233072917,
+          "z": 633.6478678385416,
+          "y": 0.05431643004218737,
+          "last": "green",
+          "red": 7,
+          "green": 112,
+          "flips": 2
+        },
+        {
+          "x": 332.2922668457031,
+          "z": 627.5759480794271,
+          "y": 0.04971961056192716,
+          "last": "red",
+          "red": 6,
+          "green": 113,
+          "flips": 1
+        }
+      ]
+    },
+    {
+      "label": "after",
+      "frames": 120,
+      "channelSamples": 132,
+      "redUnderlay": 0,
+      "greenChannel": 12120,
+      "colourFlips": 0,
+      "samples": []
+    }
+  ]
+}

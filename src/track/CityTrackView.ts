@@ -17,6 +17,7 @@ export class CityTrackView {
       const otherRoutes=a.branch?[track.samples]:track.shortcuts.map(s=>s.samples);
       const mouth=otherRoutes.some(route=>route.some(s=>Math.hypot(s.x-x,s.z-z)<s.width+1));
       const drop=(a.y??0)-(b.y??0)>2,base=((a.y??0)+(b.y??0))/2,pitch=-Math.atan2((b.y??0)-(a.y??0),length);
+      if(!mouth&&!drop)(scene.userData.cameraSolids??=[]).push({x,y:base+.75,z,width:1.2,height:1.8+Math.abs((b.y??0)-(a.y??0)),depth:length+.4,heading});
       dummy.position.set(x,base+.75,z);dummy.rotation.set(pitch,heading,0,'YXZ');dummy.scale.set(1.2,mouth||drop?0:1.8,length+.4);dummy.updateMatrix();banks.setMatrixAt(cursor,dummy.matrix);dummy.position.y=base+1.69;dummy.scale.y=mouth||drop?0:.07;dummy.updateMatrix();rims.setMatrixAt(cursor++,dummy.matrix);
     }
   }scene.add(banks,rims);

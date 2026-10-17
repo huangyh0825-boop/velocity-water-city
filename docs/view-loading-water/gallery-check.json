@@ -1,0 +1,155 @@
+{
+  "images": [
+    {
+      "src": "before-city-distance.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-city-distance.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "before-city-driver.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-city-driver.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-approach-0.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-approach-1.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-approach-2.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-approach-3.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-approach-4.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-approach-5.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-approach-6.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-approach-7.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-approach-8.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-approach-9.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "loading.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "loading-failure.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "camera-side.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "camera-fallback.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "camera-driving-nitro.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "camera-air-trick.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "water-flat.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "water-slope-A.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "water-deck-A.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "water-slope-B.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "water-slope-C.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "water-S2-ramp.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-low-distance.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "full-race/race-result.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "before-water-coverage-diagnostic.png",
+      "width": 1600,
+      "ok": true
+    },
+    {
+      "src": "after-water-coverage-diagnostic.png",
+      "width": 1600,
+      "ok": true
+    }
+  ],
+  "slider": "inset(0px 25% 0px 0px)"
+}

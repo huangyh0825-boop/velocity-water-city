@@ -1,0 +1,37 @@
+[
+  {
+    "t": 0.3,
+    "triangles": 168,
+    "baseOverChannelSamples": 264,
+    "depthOrderFlips": 29,
+    "maxOverMetres": 0.017483884280553554
+  },
+  {
+    "t": 0.301,
+    "triangles": 168,
+    "baseOverChannelSamples": 293,
+    "depthOrderFlips": 31,
+    "maxOverMetres": 0.017722229453182192
+  },
+  {
+    "t": 0.69,
+    "triangles": 240,
+    "baseOverChannelSamples": 0,
+    "depthOrderFlips": 0,
+    "maxOverMetres": 0
+  },
+  {
+    "t": 0.691,
+    "triangles": 240,
+    "baseOverChannelSamples": 0,
+    "depthOrderFlips": 0,
+    "maxOverMetres": 0
+  },
+  {
+    "t": 0.786,
+    "triangles": 108,
+    "baseOverChannelSamples": 26,
+    "depthOrderFlips": 7,
+    "maxOverMetres": 0.003417201257925745
+  }
+]

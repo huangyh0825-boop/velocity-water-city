@@ -15,7 +15,7 @@ export class CitySample {
  private generation=0;private disposed=false;private shadowWater:THREE.Mesh;private sun?:THREE.DirectionalLight;
  private cache=new Map<boolean,Promise<THREE.Group>>();
  private atmosphere?:CityAtmosphere;private reflection?:THREE.WebGLRenderTarget;
- private contacts:SurfaceContacts;private interiorRevision=-1;
+ private contacts:SurfaceContacts;private interiorRevision=-1;private geometryRevision=-1;
  private shadowAnchor=new THREE.Vector3(Infinity,0,Infinity);
  private quayMaterial?:THREE.MeshStandardMaterial;
  readonly density:CityDensity;
@@ -64,7 +64,7 @@ export class CitySample {
    }
   }
   const revision=this.density.interiors.revision;
-  if(revision!==this.interiorRevision){this.interiorRevision=revision;if(this.sun)this.sun.shadow.needsUpdate=true;}
+  if(revision!==this.interiorRevision||this.geometryRevision!==this.density.revision){this.interiorRevision=revision;this.geometryRevision=this.density.revision;if(this.sun)this.sun.shadow.needsUpdate=true;}
  }
  bakeReflections(renderer:THREE.WebGLRenderer,scene:THREE.Scene){
   if(!this.loaded||!renderer.shadowMap.enabled)return;

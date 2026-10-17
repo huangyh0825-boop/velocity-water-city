@@ -13,7 +13,13 @@ export class VerticalTrackView {
   const clearance=trackClearance(track);
   this.root.name='vertical-track-infrastructure';scene.add(this.root);
   const batch=new ModelBatch(),alloy=new THREE.MeshStandardMaterial({color:'#9db7c3',metalness:.62,roughness:.4}),dark=new THREE.MeshStandardMaterial({color:'#263f50',metalness:.45,roughness:.56}),cyan=new THREE.MeshBasicMaterial({color:'#91fff2'}),purple=new THREE.MeshBasicMaterial({color:'#d0b1ff'});
-  const part=(g:THREE.BufferGeometry,m:THREE.Material,p:THREE.Vector3,h=0)=>{g.rotateY(h);batch.add(g,m,p);};
+  const part=(g:THREE.BufferGeometry,m:THREE.Material,p:THREE.Vector3,h=0)=>{
+   if(g instanceof THREE.BoxGeometry||g instanceof THREE.CylinderGeometry){g.computeBoundingBox();const size=g.boundingBox!.getSize(new THREE.Vector3());(this.root.userData.cameraSolids??=[]).push({x:p.x,y:p.y,z:p.z,width:size.x,height:size.y,depth:size.z,heading:h});}
+   if(g instanceof THREE.TubeGeometry){const axis=new THREE.Vector3(0,1,0),points=g.parameters.path.getPoints(g.parameters.tubularSegments).map(v=>v.applyAxisAngle(axis,h).add(p)),diameter=g.parameters.radius*2;
+    // Rib segments, not a solid box across the usable tunnel opening.
+    for(let i=1;i<points.length;i++){const a=points[i-1],b=points[i];(this.root.userData.cameraSolids??=[]).push({x:(a.x+b.x)/2,y:(a.y+b.y)/2,z:(a.z+b.z)/2,width:Math.abs(a.x-b.x)+diameter,height:Math.abs(a.y-b.y)+diameter,depth:Math.abs(a.z-b.z)+diameter});}
+   }g.rotateY(h);batch.add(g,m,p);
+  };
   const routes=[{id:null as string|null,samples:track.samples},...track.shortcuts.map(s=>({id:s.id,samples:s.samples}))];
   for(const route of routes){
    // Include the exact supported side of discontinuous spillway lips, instead

@@ -64,8 +64,9 @@ test('exported city binaries contain complete embedded textures and valid mesh i
   }
  }
 });
-test('distance LOD has hysteresis, keeps the skyline cheap and lowers mobile detail thresholds',()=>{
- assert.equal(cityLOD('blocks',129,0,false),0);assert.equal(cityLOD('blocks',129,1,false),1);assert.equal(cityLOD('blocks',110,1,false),0);
- assert.equal(cityLOD('blocks',282,2,false),2);assert.equal(cityLOD('blocks',275,2,false),1);
- assert.equal(cityLOD('skyline',5,0,false),2);assert.equal(cityLOD('blocks',90,0,true),1);
+test('PC extends authored detail threefold with hysteresis; low retains its original ranges',()=>{
+ assert.equal(cityLOD('blocks',390,0,false),0);assert.equal(cityLOD('blocks',390,1,false),1);assert.equal(cityLOD('blocks',330,1,false),0);
+ assert.equal(cityLOD('blocks',780,2,false),2);assert.equal(cityLOD('blocks',750,2,false),1);
+ assert.equal(cityLOD('skyline',300,0,false),0);assert.equal(cityLOD('skyline',5,0,true),2);assert.equal(cityLOD('blocks',90,0,true),1);
+ assert.equal(cityLOD('blocks',129,0,false),0);assert.equal(cityLOD('blocks',900,0,false),2);
 });

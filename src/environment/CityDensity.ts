@@ -19,7 +19,7 @@ interface Batch {meshes:THREE.InstancedMesh[];used:number}
 export class CityDensity {
  readonly root=new THREE.Group();readonly sites:CitySite[];
  private foundation:CityContactShadows;readonly glass=new CityGlass();readonly interiors:CityInteriors;
- loaded=false;error='';low=false;
+ loaded=false;error='';low=false;revision=0;
  private cache=new Map<boolean,Promise<Library>>();private batches=new Map<string,Batch>();
  private combined?:CityMaterialBatch;private multiDraw=false;private library?:Library;
  private generation=0;private disposed=false;private previous:number[];private poses:THREE.Matrix4[];
@@ -84,12 +84,13 @@ export class CityDensity {
   if(!force&&time-this.lastTime<.15&&this.lastCamera.distanceToSquared(camera)<64)return;
   this.lastTime=time;this.lastCamera.copy(camera);for(const b of this.batches.values())b.used=0;
   const local=sampleLocal(this.track,camera),color=new THREE.Color(),tints=['#ffffff','#cbdbe1','#e7dcc6','#c9dcd4'];
-  for(let i=0;i<this.sites.length;i++){
+  let lodChanged=false;for(let i=0;i<this.sites.length;i++){
    const s=this.sites[i],distance=Math.hypot(s.x-local.x,s.z-local.z),layer=s.id.startsWith('world-')&&s.layer==='skyline'?'blocks':s.layer,tier=cityLOD(layer,distance,this.previous[i],this.low);const changed=this.previous[i]!==tier;this.previous[i]=tier;
-   if(this.combined){if(changed)this.combined.setLOD(i,tier);continue;}
+   if(changed)lodChanged=true;if(this.combined){if(changed)this.combined.setLOD(i,tier);continue;}
    const b=this.batches.get(`${s.kind}:${['near','mid','far'][tier]}`)!;color.set(tints[s.tint]);
    for(const mesh of b.meshes){mesh.setMatrixAt(b.used,this.poses[i]);mesh.setColorAt(b.used,color);}b.used++;
   }
+  if(lodChanged)this.revision++;
   for(const b of this.batches.values())for(const mesh of b.meshes){mesh.count=b.used;mesh.instanceMatrix.needsUpdate=true;if(mesh.instanceColor)mesh.instanceColor.needsUpdate=true;mesh.computeBoundingSphere();}
  }
  reflect(texture:THREE.Texture){

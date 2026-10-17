@@ -1,0 +1,56 @@
+{
+  "r": {
+    "ready": true,
+    "log": [
+      {
+        "task": "renderer",
+        "elapsedMs": 102.30000001192093,
+        "percent": 11
+      },
+      {
+        "task": "track",
+        "elapsedMs": 102.30000001192093,
+        "percent": 22
+      },
+      {
+        "task": "city",
+        "elapsedMs": 1037,
+        "percent": 33
+      },
+      {
+        "task": "racers",
+        "elapsedMs": 1293.1000000089407,
+        "percent": 44
+      },
+      {
+        "task": "textures",
+        "elapsedMs": 2057.800000011921,
+        "percent": 55
+      },
+      {
+        "task": "effects",
+        "elapsedMs": 2059,
+        "percent": 66
+      },
+      {
+        "task": "reflection",
+        "elapsedMs": 6543,
+        "percent": 77
+      },
+      {
+        "task": "shaders",
+        "elapsedMs": 9060.300000011921,
+        "percent": 88
+      },
+      {
+        "task": "scene",
+        "elapsedMs": 9076.60000000894,
+        "percent": 100
+      }
+    ],
+    "countdown": 3,
+    "programs": 127,
+    "stencil": true
+  },
+  "errors": []
+}

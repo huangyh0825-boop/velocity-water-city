@@ -31,12 +31,17 @@ import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
 import {distanceGain} from '../audio/AudioMix';
 import {HeroLighting} from '../player/HeroLighting';
 import {VerticalTrackView} from '../track/VerticalTrackView';
+import {LoadingScreen} from '../ui/LoadingScreen';
+import {CameraControls} from '../controls/CameraControls';
+import {CameraObstacles} from '../camera/CameraObstacles';
 export class Game {
+  readonly ready:Promise<void>;
+  private initialized=false;private disposed=false;
   private renderer: THREE.WebGLRenderer;
   private scene = createScene();
   private track = new CityTrack();
   private city=new CityDistricts(this.scene,this.track);
-  private citySample=new CitySample(this.scene,this.track,loaded=>{this.city.setSampleLoaded(loaded);if(loaded)this.citySample.bakeReflections(this.renderer,this.scene);});
+  private citySample=new CitySample(this.scene,this.track,loaded=>this.city.setSampleLoaded(loaded));
   private trackView = new TrackView(this.scene, this.track);
   private craft = new Watercraft(this.scene);
   private flight = new FlightController();
@@ -61,6 +66,7 @@ export class Game {
   private bodies: BoatBody[] = [{ id: 'player', model: this.craft.model }, ...this.ai.map(ai => ({ id: ai.id, model: ai.model }))];
   private race!: RaceController;
   private camera = new FollowCamera();
+  private cameraControls:CameraControls;
   private heroLighting=new HeroLighting();
   private aiLighting=this.aiCraft.map((_,i)=>new HeroLighting(3+i));
   private input = new InputController();
@@ -78,9 +84,10 @@ export class Game {
   private paused = document.hidden; private low = false; private wallContact = false;
   private frameId = 0;
   private reflection?:THREE.WebGLRenderTarget;
-  constructor(private root: HTMLElement) {
+  constructor(private root: HTMLElement,private loading=new LoadingScreen(root)) {
+    loading.begin('renderer');
     this.water.bindWake(this.wake.pool);this.wake.setSurfaceIntegrated(true);
-    this.renderer = new THREE.WebGLRenderer({ antialias: !matchMedia('(pointer: coarse)').matches, powerPreference: 'high-performance', preserveDrawingBuffer: false });
+    this.renderer = new THREE.WebGLRenderer({ antialias: !matchMedia('(pointer: coarse)').matches, stencil:true, powerPreference: 'high-performance', preserveDrawingBuffer: false });
     this.renderer.autoClear = true; // Clear every frame; no history accumulation or motion blur.
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;this.citySample.configureSun(this.scene);
@@ -90,9 +97,11 @@ export class Game {
     this.renderer.domElement.className = 'game-canvas';
     this.renderer.domElement.setAttribute('aria-label', '3D 城市水道三圈竞速场景');
     root.append(this.renderer.domElement);
+    this.cameraControls=new CameraControls(this.renderer.domElement,this.camera,root,this.input.clear);
+    loading.complete('renderer');loading.complete('track');
     this.ai.forEach(ai=>ai.setRamps(this.ramps));
     this.restart();
-    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low);void this.citySample.setLow(low);this.renderer.shadowMap.enabled=!low;void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(low)); this.resize(); },this.audio);
+    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { if(this.low===low)return;this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low);void this.citySample.setLow(low).then(()=>this.citySample.bakeReflections(this.renderer,this.scene));this.renderer.shadowMap.enabled=!low;void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(low)); this.resize(); },this.audio);
     this.debug=new RampDebug(root);this.ramps.onDecision=value=>this.debug.record(value);
     window.addEventListener('pointerdown',this.activateAudio);
     window.addEventListener('keydown',this.activateAudio);
@@ -100,7 +109,37 @@ export class Game {
     document.addEventListener('visibilitychange', this.visibility);
     this.renderer.domElement.addEventListener('webglcontextlost', this.contextLost);
     this.resize(); this.camera.update(0, this.craft.model, true);
+    this.ready=this.initialize().catch(error=>{if(!this.disposed){this.loading.fail(error);console.error('Game startup failed',error);}throw error;});
+    // Consumers may await ready; also handle rejection when embedded without a host.
+    void this.ready.catch(()=>{});
     this.frameId = requestAnimationFrame(this.frame);
+  }
+  private async initialize(){
+    const wait=async(check:()=>boolean,error:()=>string)=>{
+      const start=performance.now();while(!check()){
+        if(this.disposed)throw Error('启动已取消');const reason=error();if(reason)throw Error(reason);
+        if(performance.now()-start>120000)throw Error('资源加载超时，请检查本地服务后重试');
+        await new Promise(resolve=>setTimeout(resolve,40));
+      }
+    };
+    this.loading.begin('city');await wait(()=>this.citySample.loaded,()=>this.citySample.error||this.citySample.density.error);this.loading.complete('city');
+    this.loading.begin('racers');const racers=[this.craft,...this.aiCraft];await wait(()=>racers.every(c=>c.assetLoaded),()=>racers.map(c=>c.assetError).find(Boolean)??'');this.loading.complete('racers');
+    this.loading.begin('textures');const textures=new Set<THREE.Texture>();
+    this.scene.traverse(o=>{if(o instanceof THREE.Mesh||o instanceof THREE.Points)for(const m of Array.isArray(o.material)?o.material:[o.material]){
+      for(const value of Object.values(m))if(value instanceof THREE.Texture)textures.add(value);
+      if(m instanceof THREE.ShaderMaterial)for(const uniform of Object.values(m.uniforms))if(uniform.value instanceof THREE.Texture)textures.add(uniform.value);
+    }});
+    textures.add(this.citySample.density.glass.atlas);for(const texture of textures)this.renderer.initTexture(texture);this.loading.complete('textures');
+    this.loading.begin('effects');this.water.update(0);racers.forEach(c=>c.sync(0));this.loading.complete('effects');
+    this.loading.begin('reflection');await new Promise(requestAnimationFrame);this.citySample.bakeReflections(this.renderer,this.scene);this.loading.complete('reflection');
+    this.loading.begin('shaders');await new Promise(requestAnimationFrame);
+    if(!this.low){this.heroLighting.update(this.renderer,this.scene,this.craft.visual);this.aiCraft.forEach((c,i)=>this.aiLighting[i].update(this.renderer,this.scene,c.visual));}
+    const jets=[this.jet,...this.aiJets];jets.forEach(j=>j.object.visible=true);
+    let timeout:ReturnType<typeof setTimeout>|undefined;
+    try{await Promise.race([this.renderer.compileAsync(this.scene,this.camera.camera),new Promise<never>((_,reject)=>{timeout=setTimeout(()=>reject(Error('Shader 初始化超时，请确认硬件加速可用后重试')),90000);})]);}finally{clearTimeout(timeout);jets.forEach(j=>j.object.visible=false);}
+    this.renderer.render(this.scene,this.camera.camera);this.loading.complete('shaders');
+    this.loading.begin('scene');if(this.disposed)return;this.camera.obstacles=CameraObstacles.from(this.track,this.citySample.density.sites,this.scene);this.restart();this.initialized=true;this.previous=0;this.accumulator=0;
+    this.hud.update(this.craft.model,this.race,false,this.nitro,this.flight,this.tricks);this.loading.complete('scene');this.loading.finish();
   }
   private restart = () => {
     this.input.clear(); this.track.spawn(this.craft.model); this.ai.forEach(ai => ai.reset());
@@ -138,7 +177,7 @@ export class Game {
   private contextLost = (event: Event) => { event.preventDefault(); cancelAnimationFrame(this.frameId); this.root.insertAdjacentHTML('beforeend', '<div class="error">图形连接中断，请刷新页面重新比赛。</div>'); };
   private frame = (now: number) => {
     this.frameId = requestAnimationFrame(this.frame);
-    if (this.paused) return;
+    if (this.paused||!this.initialized) return;
     const dt = this.previous ? Math.min((now - this.previous) / 1000, 0.1) : 0;
     this.previous = now; this.accumulator += dt;
     const input = this.input.state, step = 1 / 60;
@@ -204,7 +243,7 @@ export class Game {
     this.aiJets.forEach((jet,i)=>jet.update(displayTime,this.ai[i].nitro.active));
     this.audio.update({speed:this.craft.model.speed,throttle:input.throttle,boost:this.nitro.active,grounded:!this.flight.airborne&&Math.abs(this.flight.height-ground)<.3,airborne:this.flight.airborne,running:this.race.phase==='racing'});
     this.audio.updateAI(this.ai.map(ai=>{const dx=ai.model.x-this.craft.model.x,dz=ai.model.z-this.craft.model.z,distance=Math.hypot(dx,dz,ai.flight.height-this.flight.height);return{id:ai.id,speed:ai.model.speed,throttle:1,boost:ai.nitro.active,airborne:ai.flight.airborne,grounded:!ai.flight.airborne&&Math.abs(ai.flight.height-this.track.surface(ai.model).height)<.3,running:this.race.phase==='racing',distance,pan:(dx*Math.cos(this.craft.model.heading)-dz*Math.sin(this.craft.model.heading))/Math.max(10,distance)};}));
-    this.water.update(displayTime);this.citySample.update(displayTime,this.camera.camera); this.camera.update(dt, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active,ground);
+    this.water.update(displayTime);this.camera.update(dt, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active,ground);this.citySample.update(displayTime,this.camera.camera);
     this.trackView.highlight(this.race.nextCheckpoint());
     this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks);
     if(!this.low&&this.craft.assetLoaded)this.heroLighting.update(this.renderer,this.scene,this.craft.visual);
@@ -212,6 +251,8 @@ export class Game {
     this.renderer.render(this.scene, this.camera.camera);
   };
   dispose() {
+    this.disposed=true;
+    this.cameraControls.dispose();
     this.heroLighting.dispose();this.aiLighting.forEach(light=>light.dispose());
     this.citySample.dispose();
     this.craft.dispose();this.aiCraft.forEach(c=>c.dispose());this.reflection?.dispose();

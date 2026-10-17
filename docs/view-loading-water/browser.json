@@ -1,0 +1,597 @@
+{
+  "errors": [],
+  "camera": {
+    "pointerLock": true,
+    "rightMouse": {
+      "before": {
+        "free": true,
+        "yaw": 2.8172418986493457,
+        "pitch": 0.27300870308671066,
+        "zoom": 0
+      },
+      "after": {
+        "free": true,
+        "yaw": -2.715943408530239,
+        "pitch": 0.3230087030867107,
+        "zoom": 0
+      }
+    },
+    "vertical": {
+      "free": true,
+      "yaw": -2.840943408530241,
+      "pitch": 0.7980087030867106,
+      "zoom": 0
+    },
+    "wheel": {
+      "free": true,
+      "yaw": -2.840943408530241,
+      "pitch": 0.7980087030867106,
+      "zoom": 6
+    },
+    "revolution": [
+      -2.290943408530241,
+      -1.740943408530241,
+      -1.190943408530241,
+      -0.640943408530241,
+      -0.09094340853024097,
+      0.4590565914697591,
+      1.0090565914697591,
+      1.5590565914697592,
+      2.109056591469759,
+      2.659056591469759,
+      -3.074128715709828,
+      -2.5241287157098276
+    ],
+    "steeringDoesNotOverwriteYaw": {
+      "yawBefore": -2.5241287157098276,
+      "yawAfter": -2.5241287157098276,
+      "heading": 0.17564924505955148
+    },
+    "cRestores": true,
+    "escapeReleases": true,
+    "hudAfterRelease": true,
+    "wasd": {
+      "speed": 123.34604341488455,
+      "free": true
+    },
+    "nitro": {
+      "energy": 17.99999999999997,
+      "fov": 71.4887692158562,
+      "kmh": 158.0534311273486
+    },
+    "rightDrag": {
+      "free": true,
+      "yaw": 2.8172418986493453,
+      "pitch": 0.26102006777350806,
+      "zoom": 0
+    },
+    "trickLanding": {
+      "height": 0,
+      "airborne": false,
+      "legal": true,
+      "trick": true,
+      "energy": 75,
+      "phase": "racing",
+      "route": null,
+      "geometry": {
+        "geometries": 169,
+        "textures": 173
+      },
+      "waterSize": 256
+    },
+    "noCameraRoll": [
+      0,
+      1,
+      0
+    ],
+    "obstacles": [
+      {
+        "t": 0.45,
+        "route": "tunnel-cut",
+        "position": [
+          681.298766047168,
+          10.295519101933634,
+          -69.72014000269832
+        ],
+        "clear": true
+      },
+      {
+        "t": 0.29,
+        "route": null,
+        "position": [
+          274.9629490710657,
+          10.389813691617531,
+          635.2780060989924
+        ],
+        "clear": true
+      },
+      {
+        "t": 0.34,
+        "route": null,
+        "position": [
+          509.91326890538835,
+          22.389813691617526,
+          604.2146508862351
+        ],
+        "clear": true
+      }
+    ]
+  },
+  "water": [
+    {
+      "id": "flat",
+      "frames": 90,
+      "stat": [
+        {
+          "time": 12,
+          "reflection": 837,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.25,
+          "reflection": 942,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.5,
+          "reflection": 1047,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.75,
+          "reflection": 1152,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13,
+          "reflection": 1257,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13.25,
+          "reflection": 1362,
+          "stencil": 517,
+          "channels": 2
+        }
+      ]
+    },
+    {
+      "id": "slope-A",
+      "frames": 90,
+      "stat": [
+        {
+          "time": 12,
+          "reflection": 1467,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.25,
+          "reflection": 1572,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.5,
+          "reflection": 1677,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.75,
+          "reflection": 1782,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13,
+          "reflection": 1887,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13.25,
+          "reflection": 1992,
+          "stencil": 517,
+          "channels": 2
+        }
+      ]
+    },
+    {
+      "id": "deck-A",
+      "frames": 90,
+      "stat": [
+        {
+          "time": 12,
+          "reflection": 2097,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.25,
+          "reflection": 2202,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.5,
+          "reflection": 2307,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.75,
+          "reflection": 2412,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13,
+          "reflection": 2517,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13.25,
+          "reflection": 2622,
+          "stencil": 517,
+          "channels": 2
+        }
+      ]
+    },
+    {
+      "id": "slope-B",
+      "frames": 90,
+      "stat": [
+        {
+          "time": 12,
+          "reflection": 2727,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.25,
+          "reflection": 2832,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.5,
+          "reflection": 2937,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.75,
+          "reflection": 3042,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13,
+          "reflection": 3147,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13.25,
+          "reflection": 3252,
+          "stencil": 517,
+          "channels": 2
+        }
+      ]
+    },
+    {
+      "id": "slope-C",
+      "frames": 90,
+      "stat": [
+        {
+          "time": 12,
+          "reflection": 3357,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.25,
+          "reflection": 3462,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.5,
+          "reflection": 3567,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.75,
+          "reflection": 3672,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13,
+          "reflection": 3777,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13.25,
+          "reflection": 3882,
+          "stencil": 517,
+          "channels": 2
+        }
+      ]
+    },
+    {
+      "id": "S2-ramp",
+      "frames": 90,
+      "stat": [
+        {
+          "time": 12,
+          "reflection": 3987,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.25,
+          "reflection": 4092,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.5,
+          "reflection": 4197,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 12.75,
+          "reflection": 4302,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13,
+          "reflection": 4407,
+          "stencil": 517,
+          "channels": 2
+        },
+        {
+          "time": 13.25,
+          "reflection": 4512,
+          "stencil": 517,
+          "channels": 2
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "url": "/models/city-sample/waterfront.glb",
+      "status": 200
+    },
+    {
+      "url": "/models/city-sample/city-modules.glb",
+      "status": 200
+    },
+    {
+      "url": "/models/watercraft.glb",
+      "status": 200
+    },
+    {
+      "url": "/models/rider.glb",
+      "status": 200
+    },
+    {
+      "url": "/models/city-sample/city-services.glb",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-stretch-racing-textile-orm-23e02b034b.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-stretch-racing-textile-normal-bb50cddcad.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-blue-leather-panels-orm-d1cf99dabc.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-blue-leather-panels-normal-88f5ef5807.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-woven-protection-basecolor-a810f3d277.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-woven-protection-orm-3f53ad5670.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-woven-protection-normal-65172c9aba.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-glove-and-boot-grip-basecolor-6a8a65e05d.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-glove-and-boot-grip-orm-9494993a3d.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-glove-and-boot-grip-normal-b116d85e8e.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-stretch-racing-textile-basecolor-6ee1e29f4e.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-stretch-racing-textile-orm-a5a7a61174.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-satin-hardware-basecolor-ec0b155ef3.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-satin-hardware-orm-a098c0c818.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-satin-hardware-normal-37adb5e352.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-pearl-helmet-basecolor-fdfb661ab6.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-pearl-helmet-orm-79e4ea6cf2.png",
+      "status": 200
+    },
+    {
+      "url": "/models/rider-r4/textures/Hero-pearl-helmet-normal-6b465234a3.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Molded-traction-rubber-basecolor-fe5bae937b.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Molded-traction-rubber-orm-560595f52b.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Molded-traction-rubber-normal-b116d85e8e.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Brushed-titanium-basecolor-bc1facc8dd.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Brushed-titanium-orm-a740f0bc22.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Brushed-titanium-normal-37adb5e352.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Forged-carbon-composite-basecolor-9a7a94cc03.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Forged-carbon-composite-orm-e7b1ce5b4b.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Forged-carbon-composite-normal-65172c9aba.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Pearl-ceramic-silver-basecolor-3510df3292.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Pearl-ceramic-silver-orm-0330aa7967.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Pearl-ceramic-silver-normal-6b465234a3.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Paint-basecolor-f0c48b4ee3.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Paint-orm-b13b68a813.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Paint-normal-6b465234a3.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Perforated-marine-saddle-basecolor-9ecd1e9bc5.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Perforated-marine-saddle-orm-fcfe459ca8.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Perforated-marine-saddle-normal-88f5ef5807.png",
+      "status": 200
+    },
+    {
+      "url": "/models/pwc-r8/textures/Original-LCD-64a0ee65ef.png",
+      "status": 200
+    }
+  ],
+  "boot": {
+    "log": [
+      {
+        "task": "renderer",
+        "elapsedMs": 115.8999999910593,
+        "percent": 11
+      },
+      {
+        "task": "track",
+        "elapsedMs": 116,
+        "percent": 22
+      },
+      {
+        "task": "city",
+        "elapsedMs": 863.2999999970198,
+        "percent": 33
+      },
+      {
+        "task": "racers",
+        "elapsedMs": 1217.2999999970198,
+        "percent": 44
+      },
+      {
+        "task": "textures",
+        "elapsedMs": 1850.7999999970198,
+        "percent": 55
+      },
+      {
+        "task": "effects",
+        "elapsedMs": 1852.5999999940395,
+        "percent": 66
+      },
+      {
+        "task": "reflection",
+        "elapsedMs": 6464.5999999940395,
+        "percent": 77
+      },
+      {
+        "task": "shaders",
+        "elapsedMs": 9070.79999999702,
+        "percent": 88
+      },
+      {
+        "task": "scene",
+        "elapsedMs": 9078.5,
+        "percent": 100
+      }
+    ],
+    "programs": 127,
+    "countdown": 3,
+    "stencil": true
+  },
+  "finalFallbackValidation": "Primary recording preceded the pointermove fallback fix. Final right-drag and A/D/S plus tunnel/elevated checks are in camera-extra.json; final loading/program counts in boot-smoke.json."
+}

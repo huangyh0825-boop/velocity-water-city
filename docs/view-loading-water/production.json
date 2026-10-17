@@ -1,0 +1,19 @@
+{
+  "failure": {
+    "text": "Error: fetch for \"http://127.0.0.1:5174/models/rider.glb\" responded with 404: Not Found",
+    "retry": true,
+    "raceNotStarted": "00:00.00",
+    "noQA": true
+  },
+  "retrySucceeded": true,
+  "realEscape": true,
+  "hudWorks": true,
+  "speed": "025",
+  "brakedSpeed": "000",
+  "coarse": {
+    "coarse": true,
+    "cameraControlsHidden": true,
+    "touch": true,
+    "quality": "画质 · 低"
+  }
+}

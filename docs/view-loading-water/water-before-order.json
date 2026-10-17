@@ -1,0 +1,89 @@
+{
+  "order": [
+    {
+      "frame": 0,
+      "kind": "base-reflection"
+    },
+    {
+      "frame": 0,
+      "kind": "channel",
+      "reflectionThisFrame": true
+    },
+    {
+      "frame": 1,
+      "kind": "base-reflection"
+    },
+    {
+      "frame": 1,
+      "kind": "channel",
+      "reflectionThisFrame": true
+    },
+    {
+      "frame": 2,
+      "kind": "base-reflection"
+    },
+    {
+      "frame": 2,
+      "kind": "channel",
+      "reflectionThisFrame": true
+    },
+    {
+      "frame": 3,
+      "kind": "base-reflection"
+    },
+    {
+      "frame": 3,
+      "kind": "channel",
+      "reflectionThisFrame": true
+    },
+    {
+      "frame": 4,
+      "kind": "base-reflection"
+    },
+    {
+      "frame": 4,
+      "kind": "channel",
+      "reflectionThisFrame": true
+    },
+    {
+      "frame": 5,
+      "kind": "base-reflection"
+    },
+    {
+      "frame": 5,
+      "kind": "channel",
+      "reflectionThisFrame": true
+    },
+    {
+      "frame": 6,
+      "kind": "base-reflection"
+    },
+    {
+      "frame": 6,
+      "kind": "channel",
+      "reflectionThisFrame": true
+    },
+    {
+      "frame": 7,
+      "kind": "base-reflection"
+    },
+    {
+      "frame": 7,
+      "kind": "channel",
+      "reflectionThisFrame": true
+    }
+  ],
+  "stats": {
+    "sites": 1894,
+    "waterfront": 956,
+    "blocks": 546,
+    "skyline": 392,
+    "lods": [
+      41,
+      167,
+      1686
+    ],
+    "mode": "material-batch",
+    "activeMeshes": 9
+  }
+}
