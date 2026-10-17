@@ -103,6 +103,19 @@ for o in list(bridge.objects):
                 base=m.name.rsplit('.',1)[0]
                 if base in bpy.data.materials:o.data.materials[i]=bpy.data.materials[base]
 roots.append(root)
+for cname,name in [('01_Aster_Curve_Tower','aster_landmark'),('02_Helix_Split_Tower','helix_landmark'),('03_Marina_Atrium','marina_landmark')]:
+    with bpy.data.libraries.load(str(SOURCE/'waterfront-sample.blend'),link=False) as (available,target):target.collections=[cname]
+    collection=target.collections[0];bpy.context.scene.collection.children.link(collection)
+    root=bpy.data.objects.new(name,None);collection.objects.link(root)
+    for o in list(collection.objects):
+        if o==root:continue
+        o.parent=root
+        if o.data and hasattr(o.data,'materials'):
+            for i,m in enumerate(o.data.materials):
+                if m and m.name.rsplit('.',1)[-1].isdigit():
+                    base=m.name.rsplit('.',1)[0]
+                    if base in bpy.data.materials:o.data.materials[i]=bpy.data.materials[base]
+    roots.append(root)
 for img in bpy.data.images:
     if img.source=='FILE' and not img.packed_file:img.pack()
 bpy.ops.wm.save_as_mainfile(filepath=str(SOURCE/'city-services.blend'))

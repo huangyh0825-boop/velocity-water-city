@@ -7,6 +7,9 @@
     "cargo_crane": 1980,
     "utility_exchange": 2972,
     "transit_link": 1672,
-    "waterfront_bridge": 27228
+    "waterfront_bridge": 27228,
+    "aster_landmark": 33276,
+    "helix_landmark": 62516,
+    "marina_landmark": 24000
   }
 }

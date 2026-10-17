@@ -5,6 +5,7 @@ import {Water} from '../effects/Water';
 import {ModelBatch} from '../player/ModelBatch';
 import {readableSign} from '../environment/ReadableSign';
 import {trackClearance} from './TrackClearance';
+import {bankGuidance} from '../environment/RouteGuidance';
 /** Original, visual-only infrastructure. Collision and race paths come from CityTrack. */
 export class VerticalTrackView {
  readonly root=new THREE.Group();
@@ -45,14 +46,12 @@ export class VerticalTrackView {
    }
   }
   const sign=(text:string,angle:number,route:string|null,offset=0,color='#96fff2')=>{
-   const p=track.routePoint(angle,offset,route),group=new THREE.Group();group.position.set(p.x,(p.y??0),p.z);group.rotation.y=track.routeHeading(angle,route);group.name=`vertical-sign-${text}`;
+   const p=bankGuidance(track,angle,route,offset),group=new THREE.Group();group.position.set(p.x,p.floor,p.z);group.rotation.y=p.heading;group.name=`bank-guidance-${text}`;
    const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=256;const c=canvas.getContext('2d')!;c.fillStyle='#102d3f';c.fillRect(0,0,1024,256);c.fillStyle=color;c.fillRect(10,10,1004,8);c.font='bold 49px sans-serif';c.textAlign='center';c.fillText(text,512,109);c.fillStyle='#e6f7ff';c.font='29px sans-serif';c.fillText(route==='tunnel-cut'?'UNDERPASS / KEEP RIGHT AT MERGE':route?'AERIAL CUT / SAFE LANDING AHEAD':'AURORA RACEWAY / KEEP FORWARD',512,185);
-   const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;const panel=readableSign(texture,12,3,`route-panel-${text}`);let panelHeight=9.4;
-   while(clearance.intersects({x:p.x,y:(p.y??0)+panelHeight,z:p.z,width:12,depth:.5,height:3,heading:group.rotation.y}))panelHeight++;
-   panel.position.y=panelHeight;group.add(panel);
-   const heading=group.rotation.y,span=offset===0?track.routeWidth(angle,route)+2:7.2;
-   (this.root.userData.signs??=[]).push({text,angle,route,offset,span,x:p.x,z:p.z,heading});
-   for(const side of [-1,1]){part(new THREE.CylinderGeometry(.18,.3,panelHeight+.6,8),alloy,new THREE.Vector3(p.x+Math.cos(heading)*side*span,(p.y??0)+(panelHeight+.6)/2,p.z-Math.sin(heading)*side*span),heading);part(new THREE.BoxGeometry(.12,panelHeight-1,.14),route==='harbor-cut'?purple:cyan,new THREE.Vector3(p.x+Math.cos(heading)*side*(span-.1)-Math.sin(heading)*.3,(p.y??0)+panelHeight/2,p.z-Math.sin(heading)*side*(span-.1)-Math.cos(heading)*.3),heading);}
+   const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;const panel=readableSign(texture,p.width,p.height,`bank-route-panel-${text}`);panel.position.y=2.9;group.add(panel);
+   const heading=group.rotation.y;
+   (this.root.userData.signs??=[]).push({text,angle,route,offset:p.offset,span:0,x:p.x,z:p.z,heading});
+   part(new THREE.CylinderGeometry(.12,.2,p.floor+3.2,8),alloy,new THREE.Vector3(p.x,(p.floor+3.2)/2,p.z),heading);
    this.root.add(group);
   };
   for(const [index,cut]of track.shortcuts.entries()){

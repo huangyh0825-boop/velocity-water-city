@@ -60,8 +60,6 @@ export class CityDensity {
    let concrete:THREE.MeshStandardMaterial|undefined;library.scene.traverse(o=>{if(o instanceof THREE.Mesh&&/Concrete034/.test((o.material as THREE.Material).name))concrete=o.material as THREE.MeshStandardMaterial;});
    if(concrete){(this.terrain.material as THREE.Material).dispose();const material=concrete.clone();material.color.set('#88989f');material.side=THREE.DoubleSide;this.terrain.material=material;}
    this.library=library;this.createInstances(library);
-   await this.services.load(new Map([...library.parts.values()].flatMap(list=>list.map(p=>[p.material.name,p.material] as const))));
-   if(this.disposed||request!==this.generation)return;
    this.foundation.mesh.visible=!low;this.interiors.setLow(low);this.signs.visible=!low;this.links.visible=!low;this.loaded=true;this.error='';this.previous.fill(-1);this.lastTime=-Infinity;
    const center=this.track.point(.06*Math.PI*2);this.update(new THREE.Vector3(center.x,5,center.z),0,true);
   }catch(e){if(request===this.generation&&!this.disposed){this.error=String(e);this.cache.delete(low);throw e;}}
@@ -98,6 +96,11 @@ export class CityDensity {
   for(const mesh of [...(this.combined?.meshes??[]),...[...this.batches.values()].flatMap(b=>b.meshes)]){const m=mesh.material as THREE.MeshStandardMaterial;if(m instanceof THREE.MeshStandardMaterial){m.envMap=texture;m.envMapIntensity=/glaz|glass/i.test(m.name)?.32:.55;m.needsUpdate=true;}}
  }
  sharedMaterial(name:string){for(const parts of this.library?.parts.values()??[])for(const p of parts)if(p.material.name===name)return p.material;}
+ async loadServices(sample:THREE.Group){
+  const materials=new Map([...this.library!.parts.values()].flatMap(list=>list.map(p=>[p.material.name,p.material] as const)));
+  sample.traverse(o=>{if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(!materials.has(m.name))materials.set(m.name,m);});
+  await this.services.load(materials);
+ }
  stats(){return {sites:this.sites.length,waterfront:this.sites.filter(s=>s.layer==='waterfront').length,blocks:this.sites.filter(s=>s.layer==='blocks').length,skyline:this.sites.filter(s=>s.layer==='skyline').length,lods:[0,1,2].map(t=>this.previous.filter(p=>p===t).length),mode:this.combined?'material-batch':'instanced',activeMeshes:this.combined?.meshes.length??[...this.batches.values()].filter(b=>b.used).reduce((n,b)=>n+b.meshes.length,0)};}
  private makeTerrain(){
   const vertices:number[]=[],uv:number[]=[];
