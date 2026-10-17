@@ -33,27 +33,7 @@ export class TrackView {
       dummy.position.y = height + 2; dummy.scale.y = 0.2; dummy.updateMatrix(); roofs.setMatrixAt(i, dummy.matrix);
     }
     scene.add(city, roofs);
-    for (let i = 0; i < track.checkpointCount; i++) {
-      const group = new THREE.Group(), angle = track.checkpointAngle(i), point = track.point(angle);
-      group.position.set(point.x, 0, point.z); group.rotation.y = track.heading(angle);
-      const glow = new THREE.MeshBasicMaterial({ color: i === 0 ? '#ffe4a0' : '#547d90' }); this.gates.push(glow);
-      for (const side of [-1, 1]) {
-        const pillar = new THREE.Mesh(new THREE.BoxGeometry(1, 14.6, 1.2), new THREE.MeshStandardMaterial({ color: '#345b73' }));
-        pillar.position.set(side * track.halfWidth, 7, 0); group.add(pillar);
-        const light = new THREE.Mesh(new THREE.BoxGeometry(0.15, 11.5, 1.3), glow); light.position.set(side * (track.halfWidth - 0.55), 7, 0); group.add(light);
-      }
-      const beam = new THREE.Mesh(new THREE.BoxGeometry(track.halfWidth * 2 + 1, 0.5, 1.2), glow); beam.position.y = 14.2; group.add(beam);
-      const canvas = document.createElement('canvas'); canvas.width = 512; canvas.height = 96;
-      const ctx = canvas.getContext('2d')!; ctx.fillStyle = '#10364b'; ctx.fillRect(0, 0, 512, 96);
-      ctx.fillStyle = '#ecfcff'; ctx.font = 'bold 42px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(i === 0 ? 'START / FINISH' : `CHECKPOINT 0${i}`, 256, 63);
-      const labelGeometry = new THREE.PlaneGeometry(12, 2.25);
-      const labelMaterial = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(canvas) });
-      for (const side of [-1, 1]) {
-        const label = new THREE.Mesh(labelGeometry, labelMaterial);
-        label.position.set(0, 12.8, side * 0.65); label.rotation.y = side === -1 ? Math.PI : 0; group.add(label);
-      }
-      scene.add(group);
-    }
+    // Checkpoint gates are logical only; never regenerate suspended CP panels.
     // Lightweight arrows show the intended travel direction on the water.
     const arrowGeometry = new THREE.BufferGeometry();
     arrowGeometry.setAttribute('position', new THREE.Float32BufferAttribute([

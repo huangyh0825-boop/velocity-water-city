@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {type CityModule,type CitySite,sampleLocal} from './CityDensityLayout';
 import {CityTrack} from '../track/CityTrack';
+import {districtAt} from './WorldCityLayout';
 
 export const INTERIOR_BAYS:Partial<Record<CityModule,{x:number;back:number;width:number;depth:number;floor:number;height:number}>>={
  harbor_control:{x:-3.8,back:-5,width:1.5,depth:2.1,floor:1,height:3.5},
@@ -10,7 +11,13 @@ export const INTERIOR_BAYS:Partial<Record<CityModule,{x:number;back:number;width
  service_depot:{x:-1.8,back:-4.45,width:2.6,depth:1.8,floor:1,height:3.8},
 };
 /** Only two occupied bays per selected type; no physics, point lights or full interiors. */
-export function interiorSites(sites:CitySite[]){return Object.keys(INTERIOR_BAYS).flatMap(kind=>[-1,1].flatMap(side=>sites.filter(s=>s.kind===kind&&s.side===side&&s.layer!=='skyline').slice(0,1)));}
+export function interiorSites(sites:CitySite[]){
+ const original=Object.keys(INTERIOR_BAYS).flatMap(kind=>[-1,1].flatMap(side=>sites.filter(s=>!s.id.startsWith('world-')&&s.kind===kind&&s.side===side&&s.layer!=='skyline').slice(0,1)));
+ // Match the sample's occupied service bays in every district. All other glass
+ // still uses the same parallax room shader, including at intermediate distances.
+ const groups=new Map<string,CitySite[]>();for(const s of sites)if(s.id.startsWith('world-')&&INTERIOR_BAYS[s.kind]&&s.layer==='waterfront'){const key=`${districtAt(s.angle).id}-${s.kind}-${s.side}`,list=groups.get(key)??[];if(list.length<2)list.push(s);groups.set(key,list);}
+ return [...original,...[...groups.values()].flat()];
+}
 interface Piece {matrix:THREE.Matrix4;site:CitySite}
 interface Pool {mesh:THREE.InstancedMesh;pieces:Piece[]}
 

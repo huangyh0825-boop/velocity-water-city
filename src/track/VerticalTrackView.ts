@@ -46,7 +46,7 @@ export class VerticalTrackView {
   }
   const sign=(text:string,angle:number,route:string|null,offset=0,color='#96fff2')=>{
    const p=track.routePoint(angle,offset,route),group=new THREE.Group();group.position.set(p.x,(p.y??0),p.z);group.rotation.y=track.routeHeading(angle,route);group.name=`vertical-sign-${text}`;
-   const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=256;const c=canvas.getContext('2d')!;c.fillStyle='#102d3f';c.fillRect(0,0,1024,256);c.fillStyle=color;c.fillRect(10,10,1004,8);c.font='bold 49px sans-serif';c.textAlign='center';c.fillText(text,512,109);c.fillStyle='#e6f7ff';c.font='29px sans-serif';c.fillText(route==='tunnel-cut'?'CITY UNDERPASS / CP 12—14':route?'ELEVATED CUT / CP 16—20':'AURORA RACEWAY / KEEP FORWARD',512,185);
+   const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=256;const c=canvas.getContext('2d')!;c.fillStyle='#102d3f';c.fillRect(0,0,1024,256);c.fillStyle=color;c.fillRect(10,10,1004,8);c.font='bold 49px sans-serif';c.textAlign='center';c.fillText(text,512,109);c.fillStyle='#e6f7ff';c.font='29px sans-serif';c.fillText(route==='tunnel-cut'?'UNDERPASS / KEEP RIGHT AT MERGE':route?'AERIAL CUT / SAFE LANDING AHEAD':'AURORA RACEWAY / KEEP FORWARD',512,185);
    const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;const panel=readableSign(texture,12,3,`route-panel-${text}`);let panelHeight=9.4;
    while(clearance.intersects({x:p.x,y:(p.y??0)+panelHeight,z:p.z,width:12,depth:.5,height:3,heading:group.rotation.y}))panelHeight++;
    panel.position.y=panelHeight;group.add(panel);

@@ -16,15 +16,18 @@ export class CitySample {
  private cache=new Map<boolean,Promise<THREE.Group>>();
  private atmosphere?:CityAtmosphere;private reflection?:THREE.WebGLRenderTarget;
  private contacts:SurfaceContacts;private interiorRevision=-1;
+ private shadowAnchor=new THREE.Vector3(Infinity,0,Infinity);
+ private quayMaterial?:THREE.MeshStandardMaterial;
  readonly density:CityDensity;
  constructor(scene:THREE.Scene,private track:CityTrack,private ready:(loaded:boolean)=>void){
   this.root.name='blender-waterfront-sample';const a=CITY_SAMPLE.center*TAU,p=track.point(a);this.root.position.set(p.x,0,p.z);this.root.rotation.y=track.heading(a);scene.add(this.root);
   this.contacts=new SurfaceContacts(track);
   this.density=new CityDensity(track);
   const vertices:number[]=[];
-  for(let i=0;i<56;i++){
-   const points=[i,i+1].flatMap(j=>{const a=(CITY_SAMPLE.center*track.length-140+j*5)/track.radius;return [-1,1].map(side=>track.point(a,side*(track.widthAt(a)-.2)));});
-   for(const k of [0,1,2,1,3,2])vertices.push(points[k].x,.12,points[k].z);
+  for(const samples of [track.samples,...track.shortcuts.map(s=>s.samples)])for(let i=1;i<samples.length;i++){
+   const a=samples[i-1],b=samples[i];if((a.y??0)-(b.y??0)>2)continue;
+   const points=[a,b].flatMap(p=>[-1,1].map(side=>({x:p.x+Math.cos(p.heading)*(p.width-.2)*side,y:(p.y??0)+.12,z:p.z-Math.sin(p.heading)*(p.width-.2)*side})));
+   for(const k of [0,1,2,1,3,2])vertices.push(points[k].x,points[k].y,points[k].z);
   }
   const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.computeVertexNormals();
   this.shadowWater=new THREE.Mesh(geometry,new THREE.ShadowMaterial({opacity:.24,side:THREE.DoubleSide,depthWrite:false}));this.shadowWater.receiveShadow=true;this.shadowWater.visible=false;scene.add(this.shadowWater);
@@ -38,11 +41,27 @@ export class CitySample {
     g.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.receiveShadow=true;const mats=Array.isArray(o.material)?o.material:[o.material];for(const mat of mats)if(mat instanceof THREE.MeshStandardMaterial){mat.envMapIntensity=.55;if(/Graphite joint/.test(mat.name)){mat.color.set('#14212a');mat.envMapIntensity=.2;mat.metalness=.05;}if(/glaz|glass/i.test(mat.name)){mat.metalness=0;if(/Blue laminated/.test(mat.name))mat.color.set('#d4e0e6');if(/Silver blue/.test(mat.name))mat.color.set('#718590');if(/Marina teal/.test(mat.name))mat.color.set('#b3c7ba');mat.envMapIntensity=.4;}if(/Concrete034/.test(mat.name))mat.color.set('#b4bec2');mat.aoMapIntensity=.85;this.density.glass.prepare(mat,low);if(low){mat.normalMap=null;if(mat instanceof THREE.MeshPhysicalMaterial)mat.clearcoat=0;mat.needsUpdate=true;}else{for(const t of [mat.map,mat.normalMap,mat.roughnessMap,mat.metalnessMap,mat.aoMap])if(t)t.anisotropy=4;}}}});return g.scene;
    });this.cache.set(low,asset);}
    const [group]=await Promise.all([asset,this.density.setLow(low)]);if(this.disposed||request!==this.generation)return;
+   const shell=this.root.parent?.getObjectByName('city-engineering-shell'),dispose=new Set<THREE.Material>();
+   shell?.traverse(o=>{if(o instanceof THREE.Mesh&&!Array.isArray(o.material)){
+    const role=o.userData.citySurface??({'world-infrastructure-alloy':'CC0_Metal032','world-quay-concrete':'CC0_Concrete034','world-infrastructure-dark':'Graphite joint seals'} as Record<string,string>)[o.material.name];
+    let material=role&&this.density.sharedMaterial(role);if(material){if(!o.userData.citySurface)dispose.add(o.material);o.userData.citySurface=role;
+     if(o.name==='continuous-quay-ground'){this.quayMaterial?.dispose();this.quayMaterial=(material as THREE.MeshStandardMaterial).clone();this.quayMaterial.side=THREE.DoubleSide;material=this.quayMaterial;}
+     o.material=material;o.receiveShadow=true;o.castShadow=o.name!=='continuous-quay-ground';}
+   }});dispose.forEach(m=>m.dispose());
    this.releaseSigns();this.atmosphere?.dispose();this.root.clear();this.root.add(group,this.contacts.mesh,this.density.root);this.contacts.mesh.visible=!low;this.loaded=true;this.error='';this.shadowWater.visible=!low;this.addSigns();this.atmosphere=new CityAtmosphere(this.track);this.atmosphere.setLow(low);this.root.add(this.atmosphere.root);if(this.sun)this.sun.shadow.needsUpdate=true;this.ready(true);
   }catch(e){if(request!==this.generation||this.disposed)return;this.error=String(e);this.cache.delete(low);console.error('City sample GLB failed; retaining existing district',e);if(!this.loaded)this.ready(false);}
  }
  update(time:number,camera?:THREE.Camera){
   this.atmosphere?.update(time);if(camera)this.density.update(camera.position,time);
+  if(this.sun&&camera){
+   // Keep the approved texel density and lighting direction throughout the map.
+   // The sample retains its original shadow anchor while viewed locally.
+   const p=camera.position,local=Math.hypot(p.x-this.root.position.x,p.z-this.root.position.z)<100;
+   const x=local?this.root.position.x:Math.round(p.x/16)*16,z=local?this.root.position.z:Math.round(p.z/16)*16;
+   if(Math.hypot(x-this.shadowAnchor.x,z-this.shadowAnchor.z)>15){
+    this.shadowAnchor.set(x,0,z);this.sun.position.set(x-155,165,z+90);this.sun.target.position.set(x,0,z);this.sun.target.updateMatrixWorld();this.sun.shadow.needsUpdate=true;
+   }
+  }
   const revision=this.density.interiors.revision;
   if(revision!==this.interiorRevision){this.interiorRevision=revision;if(this.sun)this.sun.shadow.needsUpdate=true;}
  }
@@ -67,7 +86,7 @@ export class CitySample {
    const panel=readableSign(map,8.8,3.2,'original-transit-advert',.85,true);panel.position.set(dx*Math.cos(h)-dz*Math.sin(h),2.9,dx*Math.sin(h)+dz*Math.cos(h));panel.rotation.y=this.track.heading(a)-h;this.root.add(panel);
   }
  }
- /** Shadow frustum is local to this 280m district, never follows or moves physics. */
+ /** Same local shadow resolution follows the viewed district, never physics. */
  configureSun(scene:THREE.Scene){
   const sun=scene.children.find(o=>o instanceof THREE.DirectionalLight) as THREE.DirectionalLight|undefined;
   if(!sun)return;const a=CITY_SAMPLE.center*TAU,p=this.track.point(a);
@@ -79,7 +98,7 @@ export class CitySample {
   sun.shadow.autoUpdate=false;sun.shadow.needsUpdate=true;
  }
  dispose(){
-  this.disposed=true;this.generation++;this.ready(false);this.releaseSigns();this.atmosphere?.dispose();this.contacts.dispose();this.density.dispose();this.reflection?.dispose();this.root.removeFromParent();
+  this.disposed=true;this.generation++;this.ready(false);this.releaseSigns();this.atmosphere?.dispose();this.contacts.dispose();this.density.dispose();this.reflection?.dispose();this.quayMaterial?.dispose();this.root.removeFromParent();
   this.shadowWater.removeFromParent();this.shadowWater.geometry.dispose();(this.shadowWater.material as THREE.Material).dispose();
   for(const asset of this.cache.values())void asset.then(g=>g.traverse(o=>{
    if(o instanceof THREE.Mesh){o.geometry.dispose();for(const m of Array.isArray(o.material)?o.material:[o.material]){for(const value of Object.values(m))if(value instanceof THREE.Texture)value.dispose();m.dispose();}}

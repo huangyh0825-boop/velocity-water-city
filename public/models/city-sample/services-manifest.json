@@ -1,0 +1,12 @@
+{
+  "source": "assets/city-sample/source/city-services.blend",
+  "author": "Original project artwork",
+  "textures": "Existing sample PBR: original + CC0 ambientCG Metal032/Concrete034",
+  "triangles": {
+    "promenade": 2288,
+    "cargo_crane": 1980,
+    "utility_exchange": 2972,
+    "transit_link": 1672,
+    "waterfront_bridge": 27228
+  }
+}
