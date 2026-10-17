@@ -1,5 +1,6 @@
 import {CityTrack} from '../track/CityTrack';
 import {TAU} from '../track/Track';
+import {trackClearance} from '../track/TrackClearance';
 
 export const CITY_MODULES={
  spindle_office:{rx:12,rz:15,height:65},terrace_residence:{rx:13,rz:13,height:52},
@@ -31,6 +32,7 @@ export function sampleLocal(track:CityTrack,p:{x:number;z:number}){
 }
 /** Authored streets along the unchanged sample, with conservative footprint reservations. */
 export function citySites(track:CityTrack):CitySite[]{
+ const clearance=trackClearance(track);
  const sites:CitySite[]=[],reservations:Footprint[]=[{x:62,z:-84,rx:23,rz:20,heading:.1},{x:-68,z:58,rx:30,rz:22,heading:-.18},{x:70,z:68,rx:34,rz:25,heading:.12},{x:-30.5,z:20,rx:3,rz:6,heading:0},{x:30.5,z:20,rx:3,rz:6,heading:0}];
  const reserve=(side:number,index:number,offset:number,rx:number,rz:number)=>{const a=(.06*track.length-140+index*5)/track.radius,p=sampleLocal(track,track.point(a,side*(track.widthAt(a)+offset)));reservations.push({...p,rx,rz,heading:track.heading(a)-track.heading(.06*TAU)});};
  for(const [side,index] of [[-1,8],[1,18],[-1,45]])reserve(side,index,23,12,7);
@@ -38,11 +40,13 @@ export function citySites(track:CityTrack):CitySite[]{
  for(const [side,index] of [[-1,11],[1,6],[-1,37],[1,45],[-1,51],[1,24]])reserve(side,index,13,2.3,5);
  for(const [side,z] of [[1,-65],[-1,85]])reservations.push({x:side*31,z,rx:5.5,rz:15,heading:0});
  const add=(kind:CityModule,layer:CityLayer,along:number,offset:number,side:number,seed:number)=>{
-  const a=(.06*track.length+along)/track.radius,p=track.point(a,side*(track.widthAt(a)+offset)),local=sampleLocal(track,p),m=CITY_MODULES[kind];
+  const a=(.06*track.length+along)/track.radius,p=track.point(a,side*(track.widthAt(a)+offset)),m=CITY_MODULES[kind];
   const scaleXZ=layer==='skyline'?.68+(seed%4)*.055:layer==='blocks'?.8+(seed%3)*.075:.78;
   const scaleY=layer==='skyline'?1.05+(seed%5)*.20:layer==='blocks'?.72+(seed%5)*.14:1;
   const radius=Math.hypot(m.rx,m.rz)*scaleXZ;
   if(Math.abs(along)+radius>(layer==='skyline'?340:140)||track.contains(p,-radius-3))return;
+  let shift=0;while(clearance.intersects({x:p.x,y:m.height*scaleY/2,z:p.z,width:m.rx*scaleXZ*2,depth:m.rz*scaleXZ*2,height:m.height*scaleY+2,heading:track.heading(a)})&&shift<100){shift+=2;Object.assign(p,track.point(a,side*(track.widthAt(a)+offset+shift)));}
+  const local=sampleLocal(track,p);
   const footprint={...local,rx:m.rx*scaleXZ,rz:m.rz*scaleXZ,heading:track.heading(a)-track.heading(.06*TAU)};
   if(reservations.some(r=>footprintsOverlap(footprint,r)))return;
   sites.push({id:`${layer}-${side}-${seed}`,kind,layer,...footprint,scaleXZ,scaleY,radius,angle:a,side,tint:seed%4});reservations.push(footprint);

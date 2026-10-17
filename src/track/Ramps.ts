@@ -4,7 +4,8 @@ import type { DrivingModel } from '../player/DrivingModel';
 import { FlightController } from '../player/FlightController';
 import { BOAT_HULL } from '../physics/BoatCollisions';
 import {SurfaceContact} from './SurfaceContact';
-export interface RampData { id:string;angle:number;heading:number;width:number;length:number;height:number;minSpeed:number;baseHeight?:number;entry:{x:number;z:number};lip:{x:number;z:number};landing:{x:number;z:number} }
+import {CITY_RAMPS} from './JumpLayout';
+export interface RampData { id:string;angle:number;heading:number;width:number;length:number;height:number;minSpeed:number;baseHeight?:number;liftBase?:number;liftFactor?:number;entry:{x:number;z:number};lip:{x:number;z:number};landing:{x:number;z:number} }
 interface Pose { x:number;z:number;heading?:number }
 export interface RampDecision {boatId:string;rampId:string;reason:string;triggered:boolean;position:Pose;path:readonly Pose[];correction:number;speed:number;horizontalVelocity:{x:number;z:number};height:number;verticalSpeed:number;state:string;support:number}
 export const RAMP_ANGLES = [0.38, 2, 4.36] as const;
@@ -18,8 +19,8 @@ export class Ramps {
   private contact:SurfaceContact;
   constructor(private track: Track, scene?: THREE.Scene) {
     this.contact=new SurfaceContact(track);
-    const angles=track.isSpline?[.28,.41,.876].map(t=>t*Math.PI*2):RAMP_ANGLES;
-    this.data=angles.map((angle,i)=>{const medium=track.vertical&&i===1,length=medium?26:this.length;return{id:`ramp-${i+1}`,angle,heading:track.heading(angle),width:medium?14:this.width,length,height:medium?4.2:2,minSpeed:2,baseHeight:track.surface(track.point(angle)).height,entry:track.point(angle-length/track.radius),lip:track.point(angle),landing:track.point(angle+110/track.radius)};});
+    const layout=track.vertical?CITY_RAMPS.map(r=>({...r,angle:r.t*Math.PI*2})):(track.isSpline?[.28,.41,.876].map(t=>t*Math.PI*2):RAMP_ANGLES).map((angle,i)=>({id:`ramp-${i+1}`,angle,width:10,length:12,height:2,minSpeed:2}));
+    this.data=layout.map(r=>({...r,heading:track.heading(r.angle),baseHeight:track.surface(track.point(r.angle)).height,entry:track.point(r.angle-r.length/track.radius),lip:track.point(r.angle),landing:track.point(r.angle+110/track.radius)}));
     if (!scene) return;
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.Float32BufferAttribute([
@@ -72,7 +73,7 @@ export class Ramps {
         else if(lock?.rampId===r.id)reason='ramp-locked';
         else if(!flight.ready)reason='landing-cooldown';
         else if(this.support(path[i-1],r,path[i-1].heading??h)<.6 && a.along>-r.length)reason='side-entry';
-        else {triggered=flight.launch(model.speed);reason=triggered?'launched':'rejected';if(triggered)this.locks.set(flight,{generation:flight.generation,rampId:r.id});}
+        else {triggered=flight.launch(model.speed,r.liftBase===undefined?undefined:r.liftBase+Math.min(model.speed,60)*(r.liftFactor??0),(r.baseHeight??0)+r.height);reason=triggered?'launched':'rejected';if(triggered)this.locks.set(flight,{generation:flight.generation,rampId:r.id});}
         break;
       }
       if(near){const decision: RampDecision={boatId,rampId:r.id,reason,triggered,position:{x:model.x,z:model.z,heading:model.heading},path:path.map(p=>({...p})),correction,speed:model.speed,horizontalVelocity:{x:model.vx,z:model.vz},height:flight.height,verticalSpeed:flight.verticalSpeed,state:flight.state,support};this.decisions.set(boatId,decision);this.onDecision?.(decision);}

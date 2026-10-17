@@ -16,9 +16,9 @@ export class FlightController {
   step=1/60;
   landingHeight=0;
   get remainingTime() { const gap=Math.max(0,this.height-(this.managedSurface?this.landingHeight:0));return this.airborne ? (this.verticalSpeed + Math.sqrt(this.verticalSpeed ** 2 + 2 * this.gravity * gap)) / this.gravity : 0; }
-  launch(speed: number) {
+  launch(speed: number,verticalSpeed=4+Math.min(speed,60)*.14,supportHeight=2) {
     if (this.airborne || this.cooldown > 0 || speed < 2) return false;
-    this.height = Math.max(this.height, 2); this.verticalSpeed = 4 + Math.min(speed, 60) * 0.14;
+    this.height = Math.max(this.height, supportHeight); this.verticalSpeed = verticalSpeed;
     this.airborne = true; this.state='air';this.legalLaunch=true;this.elapsed = 0; this.takeoff = true; return true;
   }
   get ready(){return !this.airborne&&this.cooldown<=0;}

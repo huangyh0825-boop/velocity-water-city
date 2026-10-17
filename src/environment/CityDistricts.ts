@@ -1,8 +1,10 @@
 import * as THREE from 'three';import {CityTrack,DISTRICTS} from '../track/CityTrack';import {ModelBatch} from '../player/ModelBatch';import {glassFacade} from './CityEnvironment';import {inCitySample} from './CitySample';
 import {readableSign} from './ReadableSign';
+import {trackClearance} from '../track/TrackClearance';
 export class CityDistricts {
  readonly root=new THREE.Group();readonly details=new THREE.Group();private legacySample=new THREE.Group();
  constructor(scene:THREE.Scene,readonly track:CityTrack){
+  const clearance=trackClearance(track);this.root.userData.buildings=[];
   this.root.add(this.details,this.legacySample);scene.add(this.root);
   const glass=new THREE.MeshStandardMaterial({color:'#b5dbe8',map:glassFacade(),metalness:.35,roughness:.23}),silver=new THREE.MeshStandardMaterial({color:'#c7d9e2',metalness:.45,roughness:.38}),stone=new THREE.MeshStandardMaterial({color:'#91adbd',roughness:.9}),dark=new THREE.MeshStandardMaterial({color:'#18364b',metalness:.4,roughness:.5}),glow=new THREE.MeshBasicMaterial({color:'#96faff'});
   const base=new ModelBatch(),detail=new ModelBatch();
@@ -23,6 +25,10 @@ export class CityDistricts {
    const angle=(zone+(j+.25)/10)/6*Math.PI*2,side=j%2?1:-1,lane=side*(track.widthAt(angle)+25+(j%3)*20),p=track.point(angle,lane),heading=track.heading(angle),height=35+(j*13%65);
    // Building podiums are deliberately outside all legal water corridors, including cuts.
    if(track.contains(p, -15))continue;
+   const original={x:p.x,z:p.z};let moved=0;
+   while(clearance.intersects({x:p.x,y:Math.max(height+15,55)/2,z:p.z,width:44,depth:44,height:Math.max(height+15,55),heading})&&moved<400){moved+=2;Object.assign(p,track.point(angle,lane+side*moved));}
+   if(moved>=400)throw Error(`No clear building placement for district ${zone}:${j}`);
+   this.root.userData.buildings.push({zone,j,...original,x:p.x,z:p.z,moved,heading,width:44,depth:44,height:Math.max(height+15,55)});
    const sample=inCitySample(track,angle),base=sample?new ModelBatch():mainBase,detail=sample?new ModelBatch():mainDetail;
    part(base,new THREE.CylinderGeometry(17,19,1.8,8),stone,p.x,.7,p.z,heading);
    if(zone===0){
@@ -45,32 +51,35 @@ export class CityDistricts {
   }
   for(const fraction of [.29,.40,.91]){
    const a=fraction*Math.PI*2,p=track.point(a),heading=track.heading(a),width=track.widthAt(a),group=new THREE.Group(),batch=new ModelBatch();group.position.set(p.x,0,p.z);group.rotation.y=heading;
+   const lift=clearance.overhead(p.x,p.z,width*2+12,7,heading,19)-19;
+   group.position.y=lift;
    if(fraction<.35)part(batch,new THREE.TorusGeometry(width+5,.65,8,48,Math.PI),silver,0,19,0);
    else if(fraction<.5){
      for(const side of [-1,1]){part(batch,new THREE.BoxGeometry(.8,32,.8),silver,side*(width+4),23,0);
        const cable=new THREE.LineCurve3(new THREE.Vector3(side*(width+4),39,0),new THREE.Vector3(-side*width,19,0));part(batch,new THREE.TubeGeometry(cable,1,.08,5,false),silver,0,0,0);}
    }else{part(batch,new THREE.BoxGeometry(width*2+12,.8,1),silver,0,23,-2.6);part(batch,new THREE.BoxGeometry(width*2+12,.8,1),silver,0,23,2.6);}
    part(batch,new THREE.BoxGeometry(width*2+12,.8,7),silver,0,19,0);
-   for(const side of [-1,1]){part(batch,new THREE.BoxGeometry(2,19,4),stone,side*(width+5),9.5,0);part(batch,new THREE.BoxGeometry(width*2+12,.15,.2),glow,0,20,side*3.2);}
+   for(const side of [-1,1]){part(batch,new THREE.BoxGeometry(2,19+lift,4),stone,side*(width+5),9.5-lift/2,0);part(batch,new THREE.BoxGeometry(width*2+12,.15,.2),glow,0,20,side*3.2);}
    batch.build(group);this.root.add(group);
   }
   for(let i=Math.floor(track.samples.length*.48);i<track.samples.length*.56;i+=4){const a=track.samples[i],b=track.samples[i+4],heading=Math.atan2(b.x-a.x,b.z-a.z),length=Math.hypot(b.x-a.x,b.z-a.z);
     part(base,new THREE.BoxGeometry(a.width*2+3,.8,length+.6),dark,(a.x+b.x)/2,14.5,(a.z+b.z)/2,heading);
     for(const side of [-1,1]){const original=a.width+1.5;let extent=original;
       // The redesigned underpass must not pass through a legacy roof support.
-      for(let attempt=0;attempt<16;attempt++){const p={x:a.x+Math.cos(heading)*extent*side,z:a.z-Math.sin(heading)*extent*side};if(track.shortcuts.every(c=>track.project(p,c.id).distance>c.width+1.4))break;extent+=2;}
+      for(let attempt=0;attempt<100;attempt++){const p={x:a.x+Math.cos(heading)*extent*side,z:a.z-Math.sin(heading)*extent*side};if(!clearance.intersects({...p,y:7,width:.6,depth:.6,height:13,heading}))break;extent+=2;}
       part(base,new THREE.BoxGeometry(.6,13,.6),silver,a.x+Math.cos(heading)*extent*side,7,a.z-Math.sin(heading)*extent*side,heading);
       if(extent>original)part(base,new THREE.BoxGeometry(extent-original+.6,.8,1.2),silver,a.x+Math.cos(heading)*(extent+original)*.5*side,13.8,a.z-Math.sin(heading)*(extent+original)*.5*side,heading);
       part(detail,new THREE.BoxGeometry(.12,.08,length),glow,(a.x+b.x)/2+Math.cos(heading)*(a.width-1)*side,13.9,(a.z+b.z)/2-Math.sin(heading)*(a.width-1)*side,heading);}
   }
   const cut=track.shortcuts[0];
   for(let i=8;i<cut.samples.length-8;i+=4){const a=cut.samples[i],b=cut.samples[i+4],length=Math.hypot(b.x-a.x,b.z-a.z),heading=Math.atan2(b.x-a.x,b.z-a.z);
-   part(base,new THREE.BoxGeometry(cut.width*2+2,.8,length+.4),dark,(a.x+b.x)/2,11,(a.z+b.z)/2,heading);
-   for(const side of [-1,1])part(detail,new THREE.BoxGeometry(.15,.12,length),glow,(a.x+b.x)/2+Math.cos(heading)*side*(cut.width-.5),10.55,(a.z+b.z)/2-Math.sin(heading)*side*(cut.width-.5),heading);
+   const roof=clearance.overhead((a.x+b.x)/2,(a.z+b.z)/2,a.width*2+2,length+.4,heading,11);
+   part(base,new THREE.BoxGeometry(a.width*2+2,.8,length+.4),dark,(a.x+b.x)/2,roof,(a.z+b.z)/2,heading);
+   for(const side of [-1,1])part(detail,new THREE.BoxGeometry(.15,.12,length),glow,(a.x+b.x)/2+Math.cos(heading)*side*(a.width-.5),roof-.45,(a.z+b.z)/2-Math.sin(heading)*side*(a.width-.5),heading);
   }
   const railA=track.point(.18*Math.PI*2,100),railB=track.point(.28*Math.PI*2,100),railHeading=Math.atan2(railB.x-railA.x,railB.z-railA.z),railLength=Math.hypot(railB.x-railA.x,railB.z-railA.z);
   part(detail,new THREE.BoxGeometry(4,.65,railLength),silver,(railA.x+railB.x)/2,29,(railA.z+railB.z)/2,railHeading);
-  for(let i=0;i<=6;i++){const f=i/6,x=railA.x+(railB.x-railA.x)*f,z=railA.z+(railB.z-railA.z)*f;if(!track.contains({x,z},-4))part(detail,new THREE.BoxGeometry(.9,29,.9),stone,x,14.5,z);}
+  for(let i=0;i<=6;i++){const f=i/6,x=railA.x+(railB.x-railA.x)*f,z=railA.z+(railB.z-railA.z)*f;if(!clearance.intersects({x,y:14.5,z,width:.9,depth:.9,height:29}))part(detail,new THREE.BoxGeometry(.9,29,.9),stone,x,14.5,z);}
   base.build(this.root);detail.build(this.details);
   for(let zone=0;zone<6;zone++){
    const a=(zone+.05)/6*Math.PI*2,p=track.point(a,track.widthAt(a)+7),canvas=document.createElement('canvas');canvas.width=512;canvas.height=160;const ctx=canvas.getContext('2d')!;
