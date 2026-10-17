@@ -1,0 +1,302 @@
+{
+  "drop": {
+    "height": 16.952601151295145,
+    "airborne": true,
+    "legal": true,
+    "trick": false,
+    "energy": 40,
+    "phase": "racing",
+    "route": null,
+    "geometry": {
+      "geometries": 276,
+      "textures": 167
+    },
+    "waterSize": 256
+  },
+  "landing": {
+    "height": 0,
+    "airborne": false,
+    "legal": true,
+    "trick": true,
+    "energy": 75,
+    "phase": "racing",
+    "route": null,
+    "geometry": {
+      "geometries": 276,
+      "textures": 167
+    },
+    "waterSize": 256
+  },
+  "crossover": {
+    "height": 10.830634917733276,
+    "airborne": true,
+    "legal": true,
+    "trick": false,
+    "energy": 40,
+    "phase": "racing",
+    "route": "harbor-cut",
+    "geometry": {
+      "geometries": 276,
+      "textures": 167
+    },
+    "waterSize": 256,
+    "lowerDistance": 0.5152109900526758,
+    "lowerHeight": 0
+  },
+  "ai": [
+    {
+      "id": "ai-1",
+      "height": 12.00117667783445,
+      "airborne": false,
+      "finite": true
+    },
+    {
+      "id": "ai-2",
+      "height": 12,
+      "airborne": false,
+      "finite": true
+    },
+    {
+      "id": "ai-3",
+      "height": 12.00092522976766,
+      "airborne": false,
+      "finite": true
+    },
+    {
+      "id": "ai-4",
+      "height": 12,
+      "airborne": false,
+      "finite": true
+    }
+  ],
+  "recovery": {
+    "height": 12,
+    "route": "harbor-cut",
+    "passed": 17,
+    "time": 120
+  },
+  "reset": {
+    "height": 0,
+    "energy": 40,
+    "route": null
+  },
+  "signClearance": [
+    {
+      "name": "S1 城市隧道 / IN",
+      "clear": true
+    },
+    {
+      "name": "S1 合流 / OUT",
+      "clear": true
+    },
+    {
+      "name": "S1 ↗ / MAIN ↑",
+      "clear": true
+    },
+    {
+      "name": "S2 高架飞跃 / IN",
+      "clear": true
+    },
+    {
+      "name": "S2 合流 / OUT",
+      "clear": true
+    },
+    {
+      "name": "S2 ↗ / MAIN ↑",
+      "clear": true
+    },
+    {
+      "name": "16m 落差 / DROP",
+      "clear": true
+    },
+    {
+      "name": "8m 凸坡 / CREST",
+      "clear": true
+    },
+    {
+      "name": "14m 落差 / DROP",
+      "clear": true
+    }
+  ],
+  "forkDirections": [
+    {
+      "name": "S1 ↗ / MAIN ↑",
+      "screenX": 1.479279798467972,
+      "correct": true
+    },
+    {
+      "name": "S2 ↗ / MAIN ↑",
+      "screenX": 0.8213518885217056,
+      "correct": true
+    }
+  ],
+  "keyboardSteerDelta": -0.06587040948337514,
+  "shots": {
+    "elevated-side": {
+      "camera": [
+        467.56245151352556,
+        15,
+        579.4379961676564
+      ],
+      "target": [
+        503.47640930763805,
+        7,
+        605.5758544495185
+      ],
+      "height": 12,
+      "airborne": false,
+      "kmh": 0
+    },
+    "crest-side": {
+      "camera": [
+        537.4439013884913,
+        25.945445213610892,
+        -511.9873999839215
+      ],
+      "target": [
+        475.4869878348373,
+        5.945445213610891,
+        -468.09730015599854
+      ],
+      "height": 7.945445213610891,
+      "airborne": false,
+      "kmh": 0
+    },
+    "large-drop": {
+      "camera": [
+        585.5614652810328,
+        20.952601151295145,
+        523.9600543443054
+      ],
+      "target": [
+        565.5136575921096,
+        11.952601151295145,
+        568.9387760565545
+      ],
+      "height": 16.952601151295145,
+      "airborne": true,
+      "kmh": 180
+    },
+    "sky-crossover": {
+      "camera": [
+        449.0610030418219,
+        17.830634917733278,
+        -476.78249900732754
+      ],
+      "target": [
+        404.15871937270737,
+        5.830634917733276,
+        -506.92855880456096
+      ],
+      "height": 10.830634917733276,
+      "airborne": true,
+      "kmh": 180
+    },
+    "normal-ramp": {
+      "camera": [
+        226.1076618197124,
+        10.40343405377481,
+        642.3490366982295
+      ],
+      "target": [
+        251.67775484597414,
+        3.4034340537748085,
+        631.4784183796461
+      ],
+      "height": 4.4034340537748085,
+      "airborne": true,
+      "kmh": 180
+    },
+    "tunnel-entry": {
+      "camera": [
+        810.3711598668023,
+        9,
+        65.7540165336888
+      ],
+      "target": [
+        798.6063274300465,
+        3,
+        21.037255495627697
+      ],
+      "height": 0,
+      "airborne": false,
+      "kmh": 0
+    },
+    "tunnel-exit": {
+      "camera": [
+        706.5901640658403,
+        9,
+        -232.73381956436833
+      ],
+      "target": [
+        662.8818943769529,
+        3,
+        -247.81981176917503
+      ],
+      "height": 0,
+      "airborne": false,
+      "kmh": 0
+    },
+    "sky-entry": {
+      "camera": [
+        829.6306108902737,
+        9.006402151185766,
+        -473.22268287904944
+      ],
+      "target": [
+        815.3426960407867,
+        3.0064021511857657,
+        -517.1983066864931
+      ],
+      "height": 0.006402151185765481,
+      "airborne": false,
+      "kmh": 0
+    },
+    "sky-exit": {
+      "camera": [
+        88.26399410383081,
+        9,
+        -594.6930981375783
+      ],
+      "target": [
+        42.35462481005558,
+        3,
+        -589.1858473672058
+      ],
+      "height": 0,
+      "airborne": false,
+      "kmh": 0
+    },
+    "ai-elevated": {
+      "camera": [
+        495.7680230038111,
+        22.00040153294914,
+        633.8270217111573
+      ],
+      "target": [
+        519.6640374700193,
+        12.80040153294914,
+        598.6278669964377
+      ],
+      "height": 12.00040153294914,
+      "airborne": false,
+      "kmh": 138.94550831022207
+    },
+    "driving": {
+      "camera": [
+        391.0262108865314,
+        11.125571766593437,
+        635.4987715695943
+      ],
+      "target": [
+        408.85260821467745,
+        6.425571766593436,
+        633.004867341468
+      ],
+      "height": 5.425571766593436,
+      "airborne": false,
+      "kmh": 180
+    }
+  },
+  "errors": []
+}

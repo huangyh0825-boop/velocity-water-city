@@ -1,0 +1,22 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>极速水城 · 立体赛道验收</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#10212d;color:#e2f0f5;font:16px/1.65 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1500px;margin:auto;padding:32px}h1{font-size:30px;margin-bottom:8px}a{color:#92e3ff}p{max-width:1100px;color:#bdd3de}nav{display:flex;gap:24px;flex-wrap:wrap;margin:20px 0 36px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}figure{margin:0;background:#183240;border:1px solid #375361;border-radius:8px;overflow:hidden}img{display:block;width:100%;height:auto}figcaption{padding:16px}strong{color:#8ff1de}.wide{grid-column:1/-1}@media(max-width:800px){.grid{grid-template-columns:1fr}main{padding:18px}}</style>
+<main><h1>极速水城 · 立体赛道 V2</h1><p>先完成规划再实现：4777.8m闭环主线，24个顺序检查点，六处不同类型的起跳机会。新增16m溢流落差、8m连续凸坡、独立地下隧道和14m跨线高架捷径。下方截图来自生产编译的私有测试入口，使用实际游戏物理与原有资产；定点相机用于展示，不代表人工跑完三圈。</p>
+<nav><a href="http://localhost:5174/">本地试玩</a><a href="design.md">规划说明</a><a href="../vertical-track-validation.md">完整验收报告</a><a href="race-results.json">五艇三圈数据</a><a href="browser-results.json">浏览器状态证据</a></nav>
+<div class="grid">
+<figure><a href="plan.svg"><img src="plan.svg" alt="实现前的初始赛道规划，含高差与跳跃标注"></a><figcaption>01 · <strong>实现前规划</strong>：初始图保留原样；局部跨线修订见下一图。</figcaption></figure>
+<figure><a href="crossover-plan.svg"><img src="crossover-plan.svg" alt="实现前的港湾局部跨线修订"></a><figcaption>02 · <strong>跨线规划修订</strong>：只调整港湾一个控制点及S2分叉，先记录设计，再改代码。</figcaption></figure>
+<figure><a href="final-map.svg"><img src="final-map.svg" alt="最终赛道高度、分支检查点与跳跃位置图"></a><figcaption>03 · <strong>最终实现图</strong>：六处机会、分支门架和对应检查点。点击可放大查看高度。</figcaption></figure>
+<figure><a href="side-profile.svg"><img src="side-profile.svg" alt="两段主线高差和高架捷径的实际纵断面"></a><figcaption>04 · <strong>高度纵断面</strong>：实际承托面高度函数，纵横比例不同。</figcaption></figure>
+<figure class="wide"><a href="track-overhead.png"><img src="track-overhead.png" alt="新赛道实际全景俯视图"></a><figcaption>05 · 新赛道俯视。仅此测试相机临时关闭远雾以展示完整闭环；正常游戏保留远雾。</figcaption></figure>
+<figure><a href="elevated-side.png"><img src="elevated-side.png" alt="12米人工高架水道及支撑侧视图"></a><figcaption>06 · A区12m高架水道，底板、支撑及低层水面的位置关系。</figcaption></figure>
+<figure><a href="crest-side.png"><img src="crest-side.png" alt="8米连续凸坡侧视图"></a><figcaption>07 · B区8m连续凸坡。低速贴坡，高速依承托与重力自然离水。</figcaption></figure>
+<figure><a href="large-drop.png"><img src="large-drop.png" alt="16米溢流落差自然腾空"></a><figcaption>08 · D1大型落差。浏览器记录离水后高度16.95m；自动特技并安全落水后能量40%→75%。</figcaption></figure>
+<figure><a href="normal-ramp.png"><img src="normal-ramp.png" alt="普通跳台驶过后的腾空截图"></a><figcaption>09 · 普通跳台。沿用既有船体支撑比例、扫掠触发与碰撞修正处理。</figcaption></figure>
+<figure><a href="tunnel-entry.png"><img src="tunnel-entry.png" alt="S1城市地下隧道入口门架及内部结构"></a><figcaption>10 · S1入口：独立门架、青色导向箭头与结构下穿水道。门架在主支水道真正分离处。</figcaption></figure>
+<figure><a href="tunnel-exit.png"><img src="tunnel-exit.png" alt="S1城市隧道出口与汇合水道"></a><figcaption>11 · S1出口：明显的OUT标识与汇流缓冲。</figcaption></figure>
+<figure><a href="sky-entry.png"><img src="sky-entry.png" alt="S2高架跳跃捷径入口及上坡"></a><figcaption>12 · S2入口：紫色路线、独立门架、0→12→14m人工水槽。</figcaption></figure>
+<figure><a href="sky-exit.png"><img src="sky-exit.png" alt="S2落地后的出口汇流"></a><figcaption>13 · S2出口：先在独立低层分支落水，再合流，不能从分支中段进入刷检查点。</figcaption></figure>
+<figure><a href="sky-crossover.png"><img src="sky-crossover.png" alt="S2快艇在10.8米高度飞越0米主水道"></a><figcaption>14 · <strong>S2真正飞越主线</strong>：实际艇高10.83m，下方0m水道，距主线中心0.52m；CP18横牌已提高至飞行走廊上方。</figcaption></figure>
+<figure><a href="ai-elevated.png"><img src="ai-elevated.png" alt="玩家和四名AI通过12米高架水道"></a><figcaption>15 · 四名AI处于12m承托面，继续沿三维赛道竞速；碰撞采用实际世界高度区分上下层。</figcaption></figure>
+<figure class="wide"><a href="driving.png"><img src="driving.png" alt="第三人称180公里每小时驶上人工高架水道"></a><figcaption>16 · 正常第三人称驾驶，截图速度180km/h。速度配置、水平驾驶曲线、模型与贴图保持原版。</figcaption></figure>
+</div><p>123项自动化测试、TypeScript及生产构建通过。完整三圈由控制输入驱动的五艇集成模拟验证；浏览器验证真实键盘、腾空/落地/奖励、跨线、高架AI、恢复与重开。尚未重新测量FPS，也没有宣称人工连续跑完三圈。上层水道复用现有反射贴图，反射是轻量近似。捷径风险收益与落地手感仍需用户试玩验收。</p></main></html>

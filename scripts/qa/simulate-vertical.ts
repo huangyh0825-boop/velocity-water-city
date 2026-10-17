@@ -1,0 +1,2 @@
+import{writeFileSync,mkdirSync}from'node:fs';import{simulateVerticalRace}from'../../tests/helpers/vertical-race';import{CityTrack}from'../../src/track/CityTrack';
+mkdirSync('docs/vertical-track',{recursive:true});const result=simulateVerticalRace(),track=new CityTrack();writeFileSync('docs/vertical-track/race-results.json',JSON.stringify({...result,trackLength:track.length,shortcuts:track.shortcuts.map(s=>({id:s.id,length:s.length,mainLength:(s.to-s.from)*track.radius,width:s.width}))},null,2));console.log(JSON.stringify(result));

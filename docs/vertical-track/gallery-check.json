@@ -1,0 +1,87 @@
+{
+  "title": "极速水城 · 立体赛道验收",
+  "images": [
+    {
+      "src": "plan.svg",
+      "width": 1700,
+      "height": 1200
+    },
+    {
+      "src": "crossover-plan.svg",
+      "width": 1500,
+      "height": 1200
+    },
+    {
+      "src": "final-map.svg",
+      "width": 1600,
+      "height": 1200
+    },
+    {
+      "src": "side-profile.svg",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "src": "track-overhead.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "elevated-side.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "crest-side.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "large-drop.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "normal-ramp.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "tunnel-entry.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "tunnel-exit.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "sky-entry.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "sky-exit.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "sky-crossover.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "ai-elevated.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "driving.png",
+      "width": 1600,
+      "height": 1000
+    }
+  ],
+  "brokenLinks": 0,
+  "errors": []
+}
