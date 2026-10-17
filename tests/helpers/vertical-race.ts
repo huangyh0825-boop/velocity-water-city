@@ -4,7 +4,7 @@ export function simulateVerticalRace(){
  const ai=[175,170,165,160].map((s,i)=>new AIController(`ai-${i+1}`,'AI',s/3.6,i%2?7:-7,track,i<2?-.02:-.029));ai.forEach(a=>a.setRamps(ramps));
  const racers=[{id:'player',name:'player',position:player},...ai.map(a=>({id:a.id,name:a.id,position:a.model}))],race=new RaceController(track,racers),bodies:BoatBody[]=[{id:'player',model:player,height:0},...ai.map(a=>({id:a.id,model:a.model,height:0}))],collisions=new BoatCollisions();race.phase='racing';
  const routes=new Set<string>(),jumps:Record<string,number>={},rewards:Record<string,number>={},peaks=[0,0,0,0,0];let contacts=0,steps=0,chosen:string|null=null;
- const classify=(m:DrivingModel)=>m.route==='harbor-cut'?'S2J':track.project(m).angle/TAU>.34&&track.project(m).angle/TAU<.39?'D1':track.project(m).angle/TAU>.72&&track.project(m).angle/TAU<.77?'D2':'ramp';
+ const classify=(m:DrivingModel)=>{const q=track.project(m).angle/TAU;if(m.route==='harbor-cut')return'S2J';if(q>.34&&q<.39)return'D1';if(q>.72&&q<.77)return'D2';if(q>.81&&q<.86)return'D3';return ramps.data.reduce((a,b)=>Math.hypot(a.lip.x-m.x,a.lip.z-m.z)<Math.hypot(b.lip.x-m.x,b.lip.z-m.z)?a:b).id;};
  for(;steps<36000&&race.racers.some(r=>r.finishTime===null);steps++){
   const dt=1/60,before={x:player.x,z:player.z,route:player.route};race.tick(dt);collisions.capture(bodies);flight.beginStep(dt);
   const lap=Math.floor(race.player.passed/24),wanted=track.shortcuts.find(s=>s.id===(lap===1?'tunnel-cut':lap===2?'harbor-cut':null)),a=track.project(player,null).angle,toEntry=wanted?(wanted.from-a)*track.radius:Infinity;

@@ -28,7 +28,7 @@ export class TrackClearance{
   });
  }
  intersects(box:StructureBox){return this.conflicts(box).length>0;}
- overhead(x:number,z:number,width:number,depth:number,heading:number,minimum:number){let y=minimum;for(let i=0;i<40&&this.intersects({x,y,z,width,depth,height:.8,heading});i++)y+=1;return y;}
+ overhead(x:number,z:number,width:number,depth:number,heading:number,minimum:number){let y=minimum;for(let i=0;i<40&&this.intersects({x,y,z,width,depth,height:.8,heading});i++)y+=1;if(this.intersects({x,y,z,width,depth,height:.8,heading}))throw Error('No overhead clearance within structure adjustment limit');return y;}
 }
 const cache=new WeakMap<CityTrack,TrackClearance>();
 export function trackClearance(track:CityTrack){let value=cache.get(track);if(!value){value=new TrackClearance(track);cache.set(track,value);}return value;}
