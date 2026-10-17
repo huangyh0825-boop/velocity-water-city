@@ -1,0 +1,178 @@
+{
+  "base": "http://127.0.0.1:5174/",
+  "speed": 37,
+  "brake": 0,
+  "assets": [
+    {
+      "url": "http://127.0.0.1:5174/models/city-sample/city-modules.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/city-sample/waterfront.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/watercraft.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/city-sample/city-services.glb",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-stretch-racing-textile-normal-bb50cddcad.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-blue-leather-panels-normal-88f5ef5807.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-stretch-racing-textile-orm-23e02b034b.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-blue-leather-panels-orm-d1cf99dabc.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-woven-protection-basecolor-a810f3d277.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-woven-protection-orm-3f53ad5670.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-woven-protection-normal-65172c9aba.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-glove-and-boot-grip-basecolor-6a8a65e05d.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-glove-and-boot-grip-orm-9494993a3d.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-glove-and-boot-grip-normal-b116d85e8e.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-stretch-racing-textile-basecolor-6ee1e29f4e.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-stretch-racing-textile-orm-a5a7a61174.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-satin-hardware-basecolor-ec0b155ef3.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-satin-hardware-orm-a098c0c818.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-satin-hardware-normal-37adb5e352.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-pearl-helmet-basecolor-fdfb661ab6.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-pearl-helmet-normal-6b465234a3.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/rider-r4/textures/Hero-pearl-helmet-orm-79e4ea6cf2.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Molded-traction-rubber-basecolor-fe5bae937b.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Molded-traction-rubber-orm-560595f52b.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Molded-traction-rubber-normal-b116d85e8e.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Brushed-titanium-basecolor-bc1facc8dd.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Brushed-titanium-orm-a740f0bc22.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Brushed-titanium-normal-37adb5e352.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Forged-carbon-composite-basecolor-9a7a94cc03.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Forged-carbon-composite-orm-e7b1ce5b4b.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Forged-carbon-composite-normal-65172c9aba.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Pearl-ceramic-silver-basecolor-3510df3292.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Pearl-ceramic-silver-orm-0330aa7967.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Pearl-ceramic-silver-normal-6b465234a3.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Paint-basecolor-f0c48b4ee3.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Paint-orm-b13b68a813.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Paint-normal-6b465234a3.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Perforated-marine-saddle-basecolor-9ecd1e9bc5.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Perforated-marine-saddle-orm-fcfe459ca8.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Perforated-marine-saddle-normal-88f5ef5807.png",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/models/pwc-r8/textures/Original-LCD-64a0ee65ef.png",
+      "status": 200
+    }
+  ],
+  "errors": [],
+  "reset": true,
+  "testHookAbsent": true
+}

@@ -1,6 +1,7 @@
 import '/src/style.css';import '/src/ui/race.css';import '/src/ui/phase3.css';
 import * as THREE from 'three';import{Game}from'/src/core/Game.ts';
 const game=new Game(document.querySelector('#app'));game.paused=true;cancelAnimationFrame(game.frameId);window.testGame=game;
+window.qaTHREE=THREE;
 let clock=0,boost=false,speedCap=null;
 const ready=async()=>{while(!game.citySample.loaded||![game.craft,...game.aiCraft].every(c=>c.assetLoaded))await new Promise(r=>setTimeout(r,30));};
 function fixture(t,route=null,speed=48,ai=false){

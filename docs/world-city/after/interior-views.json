@@ -1,0 +1,104 @@
+[
+  {
+    "district": "central",
+    "id": "waterfront--1-3047",
+    "kind": "service_depot",
+    "camera": [
+      -246.6096719755627,
+      5.2,
+      -105.49663163597582
+    ],
+    "position": [
+      -251.61687577246386,
+      0,
+      -96.48675316086316
+    ],
+    "distance": 10,
+    "FOV": 52
+  },
+  {
+    "district": "science",
+    "id": "world-main-waterfront--1-10001",
+    "kind": "service_depot",
+    "camera": [
+      -248.0491370280217,
+      5.2,
+      336.9098450456036
+    ],
+    "position": [
+      -256.9479786905854,
+      0,
+      331.70786301327973
+    ],
+    "distance": 10,
+    "FOV": 52
+  },
+  {
+    "district": "transit",
+    "id": "world-main-waterfront--1-20003",
+    "kind": "service_depot",
+    "camera": [
+      416.0327255131222,
+      5.2,
+      662.0748688151593
+    ],
+    "position": [
+      414.8916785281141,
+      0,
+      672.3192825015547
+    ],
+    "distance": 10,
+    "FOV": 52
+  },
+  {
+    "district": "industrial",
+    "id": "world-main-waterfront--1-30001",
+    "kind": "service_depot",
+    "camera": [
+      859.757285099077,
+      5.2,
+      145.94202147028386
+    ],
+    "position": [
+      869.9444315372649,
+      0,
+      144.3697468610265
+    ],
+    "distance": 10,
+    "FOV": 52
+  },
+  {
+    "district": "harbor",
+    "id": "world-main-waterfront--1-40003",
+    "kind": "service_depot",
+    "camera": [
+      799.5788705533464,
+      5.2,
+      -534.4130970228352
+    ],
+    "position": [
+      808.2033928404093,
+      0,
+      -540.0582378820129
+    ],
+    "distance": 10,
+    "FOV": 52
+  },
+  {
+    "district": "leisure",
+    "id": "world-main-waterfront--1-50000",
+    "kind": "service_arcade",
+    "camera": [
+      -79.01712010530211,
+      5.2,
+      -619.5711504328304
+    ],
+    "position": [
+      -78.50096535329139,
+      0,
+      -629.8659833247223
+    ],
+    "distance": 10,
+    "FOV": 52
+  }
+]

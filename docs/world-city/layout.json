@@ -1,0 +1,227 @@
+{
+  "baseline": "5e84e7de7a13571d2d6839736f820d0e397aadca",
+  "samplePreserved": 195,
+  "buildings": 1894,
+  "newBuildings": 1699,
+  "additionalFullSampleLandmarks": 10,
+  "landmarkTypes": 3,
+  "removedLegacyBuildings": 59,
+  "moduleTypes": 26,
+  "newEngineeringTypes": 4,
+  "bridgesReused": 3,
+  "engineeringInstances": 158,
+  "interiorBays": 61,
+  "districts": [
+    {
+      "id": "central",
+      "name": "中央商务区",
+      "from": 0,
+      "to": 0.16,
+      "buildings": 298,
+      "kinds": [
+        "drydock_service",
+        "harbor_control",
+        "service_arcade",
+        "view_pavilion",
+        "energy_node",
+        "data_centre",
+        "transit_station",
+        "ring_spire",
+        "terraced_hotel",
+        "research_campus",
+        "control_centre",
+        "blade_tower",
+        "split_office",
+        "terrace_residence",
+        "expo_hall",
+        "sky_gallery",
+        "retail_hub",
+        "spindle_office",
+        "ferry_terminal",
+        "market_galleria",
+        "bio_lab",
+        "commuter_hub",
+        "sail_office",
+        "lattice_tower",
+        "service_depot",
+        "cooling_exchange"
+      ],
+      "layers": {
+        "waterfront": 66,
+        "blocks": 80,
+        "skyline": 152
+      },
+      "occupiedBays": 21,
+      "services": 6
+    },
+    {
+      "id": "science",
+      "name": "未来科技区",
+      "from": 0.16,
+      "to": 0.3,
+      "buildings": 293,
+      "kinds": [
+        "energy_node",
+        "service_depot",
+        "view_pavilion",
+        "bio_lab",
+        "data_centre",
+        "control_centre",
+        "expo_hall",
+        "research_campus",
+        "lattice_tower",
+        "spindle_office",
+        "blade_tower"
+      ],
+      "layers": {
+        "waterfront": 152,
+        "blocks": 94,
+        "skyline": 47
+      },
+      "occupiedBays": 4,
+      "services": 29
+    },
+    {
+      "id": "transit",
+      "name": "高架交通区",
+      "from": 0.3,
+      "to": 0.46,
+      "buildings": 360,
+      "kinds": [
+        "ferry_terminal",
+        "cooling_exchange",
+        "commuter_hub",
+        "service_depot",
+        "control_centre",
+        "data_centre",
+        "transit_station",
+        "sky_gallery",
+        "blade_tower",
+        "sail_office",
+        "split_office"
+      ],
+      "layers": {
+        "waterfront": 186,
+        "blocks": 119,
+        "skyline": 55
+      },
+      "occupiedBays": 8,
+      "services": 32
+    },
+    {
+      "id": "industrial",
+      "name": "地下水道与工业区",
+      "from": 0.46,
+      "to": 0.65,
+      "buildings": 353,
+      "kinds": [
+        "harbor_control",
+        "service_depot",
+        "drydock_service",
+        "cooling_exchange",
+        "bio_lab",
+        "research_campus",
+        "data_centre",
+        "control_centre",
+        "energy_node",
+        "lattice_tower",
+        "spindle_office",
+        "split_office"
+      ],
+      "layers": {
+        "waterfront": 217,
+        "blocks": 90,
+        "skyline": 46
+      },
+      "occupiedBays": 8,
+      "services": 39
+    },
+    {
+      "id": "harbor",
+      "name": "港湾区",
+      "from": 0.65,
+      "to": 0.86,
+      "buildings": 399,
+      "kinds": [
+        "drydock_service",
+        "ferry_terminal",
+        "harbor_control",
+        "service_depot",
+        "commuter_hub",
+        "control_centre",
+        "market_galleria",
+        "data_centre",
+        "terraced_hotel",
+        "blade_tower",
+        "sail_office"
+      ],
+      "layers": {
+        "waterfront": 228,
+        "blocks": 113,
+        "skyline": 58
+      },
+      "occupiedBays": 12,
+      "services": 38
+    },
+    {
+      "id": "leisure",
+      "name": "城市休闲区",
+      "from": 0.86,
+      "to": 1,
+      "buildings": 191,
+      "kinds": [
+        "terrace_residence",
+        "spindle_office",
+        "blade_tower",
+        "service_arcade",
+        "retail_hub",
+        "market_galleria",
+        "view_pavilion",
+        "expo_hall",
+        "terraced_hotel",
+        "sky_gallery",
+        "sail_office",
+        "ring_spire"
+      ],
+      "layers": {
+        "waterfront": 107,
+        "blocks": 50,
+        "skyline": 34
+      },
+      "occupiedBays": 8,
+      "services": 27
+    }
+  ],
+  "protectedSystems": {
+    "physics": true,
+    "AI": true,
+    "trackRouteAndElevation": true,
+    "race": true,
+    "waterAndEffects": true,
+    "camera": true,
+    "audioInputHUD": true
+  },
+  "existingAssetFilesUnchanged": 103,
+  "signsRemoved": {
+    "mainGates": 24,
+    "sectorSigns": 6,
+    "CPSubtitles": 2,
+    "legacyCircularGenerator": true
+  },
+  "source": "assets/city-sample/source/city-modules.blend and city-services.blend; approved PBR textures unchanged",
+  "engineeredAsset": {
+    "source": "assets/city-sample/source/city-services.blend",
+    "author": "Original project artwork",
+    "textures": "Existing sample PBR: original + CC0 ambientCG Metal032/Concrete034",
+    "triangles": {
+      "promenade": 2288,
+      "cargo_crane": 1980,
+      "utility_exchange": 2972,
+      "transit_link": 1672,
+      "waterfront_bridge": 27228,
+      "aster_landmark": 33276,
+      "helix_landmark": 62516,
+      "marina_landmark": 24000
+    }
+  }
+}

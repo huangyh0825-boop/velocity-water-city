@@ -1,0 +1,26 @@
+{
+  "time": "2026-10-17T21:07:04.2601501+08:00",
+  "method": "Windows GPU Engine 3D utilization, single one-second sample. Includes other applications; not attributable exclusively to the game.",
+  "engines": [
+    {
+      "pid": 104468,
+      "process": "Client-Win64-Shipping.exe",
+      "enginePercent": 71.64
+    }
+  ],
+  "earlierLiveObservation": {
+    "method": "Earlier live Windows GPU Engine counter output during QA; no wall-clock timestamp was captured for that sample. Values are observations, not FPS correction factors.",
+    "engines": [
+      {
+        "pid": 104468,
+        "process": "Client-Win64-Shipping.exe",
+        "enginePercent": 47.93
+      },
+      {
+        "pid": 134088,
+        "process": "msedge.exe",
+        "enginePercent": 33.13
+      }
+    ]
+  }
+}

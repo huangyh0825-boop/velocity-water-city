@@ -1,0 +1,12 @@
+import{readFileSync,writeFileSync}from'node:fs';import assert from'node:assert/strict';import{CityTrack}from'../../src/track/CityTrack';
+import{worldCitySites,siteWorld}from'../../src/environment/WorldCityLayout';import{CITY_MODULES}from'../../src/environment/CityDensityLayout';import{cityServices,SERVICE_MODULES}from'../../src/environment/CityServicesLayout';
+const t=new CityTrack(),sites=worldCitySites(t),services=cityServices(t),drive=JSON.parse(readFileSync('docs/world-city/after/full-drive.json','utf8'));
+interface Box{x:number;z:number;heading:number;y:number;width:number;depth:number;height:number;id:string}
+const boxes:Box[]=sites.map(s=>({...siteWorld(t,s),width:s.rx*2,depth:s.rz*2,height:CITY_MODULES[s.kind].height*s.scaleY,y:CITY_MODULES[s.kind].height*s.scaleY/2,id:s.id}));
+for(const s of services){const m=SERVICE_MODULES[s.kind];if(s.kind!=='waterfront_bridge')boxes.push({x:s.worldX,z:s.worldZ,heading:s.worldHeading,y:m.height/2,...m,id:s.id});else{
+ const sx=s.scaleX!,sy=s.scaleY!;for(const side of [-1,1])boxes.push({x:s.worldX+Math.cos(s.worldHeading)*30.5*sx*side,z:s.worldZ-Math.sin(s.worldHeading)*30.5*sx*side,y:18.9*sy/2,width:8*sx,depth:15,height:18.9*sy,heading:s.worldHeading,id:s.id+'-pier'});
+ boxes.push({x:s.worldX,z:s.worldZ,y:18.6*sy+8*sy,width:70*sx,depth:15,height:16*sy,heading:s.worldHeading,id:s.id+'-deck-and-arch'});
+}}
+const grid=new Map<string,Box[]>();for(const b of boxes){const r=Math.hypot(b.width,b.depth)/2+2;for(let x=Math.floor((b.x-r)/64);x<=Math.floor((b.x+r)/64);x++)for(let z=Math.floor((b.z-r)/64);z<=Math.floor((b.z+r)/64);z++){const key=`${x}:${z}`,a=grid.get(key)??[];a.push(b);grid.set(key,a);}}
+const hits:any[]=[];let tested=0;for(const row of drive.samples)for(const p of row){tested++;for(const b of grid.get(`${Math.floor(p.x/64)}:${Math.floor(p.z/64)}`)??[]){if(p.y+2.4<b.y-b.height/2||p.y>b.y+b.height/2)continue;const x=(p.x-b.x)*Math.cos(b.heading)-(p.z-b.z)*Math.sin(b.heading),z=(p.x-b.x)*Math.sin(b.heading)+(p.z-b.z)*Math.cos(b.heading);if(Math.abs(x)<b.width/2+.6&&Math.abs(z)<b.depth/2+.6)hits.push({...p,building:b.id});}}
+const result={method:'Conservative oriented building/engineering bounds versus 0.4-second sampled trajectories of all five real browser racers; separate full 3D TrackClearance unit audit covers unsampled route segments. Bridge decks and piers checked separately.',boxes:boxes.length,poses:tested,hits};writeFileSync('docs/world-city/path-audit.json',JSON.stringify(result,null,2));assert.deepEqual(hits,[]);console.log(JSON.stringify(result));

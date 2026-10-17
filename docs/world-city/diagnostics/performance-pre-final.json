@@ -1,0 +1,186 @@
+{
+  "mode": "after",
+  "resolution": [
+    1600,
+    1000
+  ],
+  "dpr": 1,
+  "method": "Production build, headless Edge, compileAsync then 120 warm-up + 120 RAF samples, frozen physics and water t=12, identical camera and 5 boats. Short stationary GPU/CPU submission benchmarks, not a full-race FPS guarantee.",
+  "results": [
+    {
+      "id": "central",
+      "t": 0.06,
+      "fps": 34.4461348565885,
+      "low1": 32,
+      "frameMs": 29.030833333358167,
+      "cpuMs": 12.553333333258827,
+      "gpuMs": 28.84096,
+      "gpuSamples": 12,
+      "calls": 720,
+      "triangles": 71392871,
+      "memory": {
+        "geometries": 166,
+        "textures": 167
+      },
+      "city": {
+        "sites": 1909,
+        "waterfront": 968,
+        "blocks": 549,
+        "skyline": 392,
+        "lods": [
+          36,
+          93,
+          1780
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      }
+    },
+    {
+      "id": "science",
+      "t": 0.225,
+      "fps": 34.60706560922855,
+      "low1": 31.496062992125985,
+      "frameMs": 28.895833333333332,
+      "cpuMs": 12.231666666269302,
+      "gpuMs": 28.84138666666667,
+      "gpuSamples": 12,
+      "calls": 645,
+      "triangles": 70979835,
+      "memory": {
+        "geometries": 166,
+        "textures": 167
+      },
+      "city": {
+        "sites": 1909,
+        "waterfront": 968,
+        "blocks": 549,
+        "skyline": 392,
+        "lods": [
+          51,
+          180,
+          1678
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      }
+    },
+    {
+      "id": "transit",
+      "t": 0.37,
+      "fps": 33.57582540570789,
+      "low1": 30.395136779492166,
+      "frameMs": 29.783333333333335,
+      "cpuMs": 12.024999999627472,
+      "gpuMs": 27.205717333333336,
+      "gpuSamples": 12,
+      "calls": 667,
+      "triangles": 70861855,
+      "memory": {
+        "geometries": 166,
+        "textures": 167
+      },
+      "city": {
+        "sites": 1909,
+        "waterfront": 968,
+        "blocks": 549,
+        "skyline": 392,
+        "lods": [
+          55,
+          185,
+          1669
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      }
+    },
+    {
+      "id": "industrial",
+      "t": 0.535,
+      "fps": 24.964114086047804,
+      "low1": 2.8248587571216013,
+      "frameMs": 40.0574999999255,
+      "cpuMs": 15.370833333581686,
+      "gpuMs": 62.68808533333333,
+      "gpuSamples": 12,
+      "calls": 713,
+      "triangles": 71906751,
+      "memory": {
+        "geometries": 166,
+        "textures": 167
+      },
+      "city": {
+        "sites": 1909,
+        "waterfront": 968,
+        "blocks": 549,
+        "skyline": 392,
+        "lods": [
+          51,
+          199,
+          1659
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      }
+    },
+    {
+      "id": "harbor",
+      "t": 0.735,
+      "fps": 29.15026963993086,
+      "low1": 26.737967910177254,
+      "frameMs": 34.30500000007451,
+      "cpuMs": 11.859999999403954,
+      "gpuMs": 34.14434133333333,
+      "gpuSamples": 12,
+      "calls": 634,
+      "triangles": 73957941,
+      "memory": {
+        "geometries": 166,
+        "textures": 167
+      },
+      "city": {
+        "sites": 1909,
+        "waterfront": 968,
+        "blocks": 549,
+        "skyline": 392,
+        "lods": [
+          36,
+          212,
+          1661
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      }
+    },
+    {
+      "id": "leisure",
+      "t": 0.935,
+      "fps": 31.224792485281704,
+      "low1": 22.29654403863763,
+      "frameMs": 32.025833333283664,
+      "cpuMs": 11.457500000298023,
+      "gpuMs": 30.570069333333333,
+      "gpuSamples": 12,
+      "calls": 644,
+      "triangles": 71133052,
+      "memory": {
+        "geometries": 166,
+        "textures": 167
+      },
+      "city": {
+        "sites": 1909,
+        "waterfront": 968,
+        "blocks": 549,
+        "skyline": 392,
+        "lods": [
+          29,
+          115,
+          1765
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      }
+    }
+  ],
+  "errors": []
+}
