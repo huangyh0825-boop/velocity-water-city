@@ -1,0 +1,402 @@
+{
+  "rows": [
+    {
+      "name": "female_v006lowresUV",
+      "vertices": 57256,
+      "ms": 9.5
+    },
+    {
+      "name": "female_v006lowresUV_1",
+      "vertices": 42861,
+      "ms": 3.400000000372529
+    },
+    {
+      "name": "female_v006lowresUV_2",
+      "vertices": 36366,
+      "ms": 3
+    },
+    {
+      "name": "female_v006lowresUV_3",
+      "vertices": 112772,
+      "ms": 9.800000000745058
+    },
+    {
+      "name": "female_v006lowresUV_4",
+      "vertices": 197514,
+      "ms": 15.399999999441206
+    },
+    {
+      "name": "female_v006lowresUV_5",
+      "vertices": 56966,
+      "ms": 4.2999999998137355
+    },
+    {
+      "name": "female_v006lowresUV_6",
+      "vertices": 2046,
+      "ms": 0.20000000018626451
+    },
+    {
+      "name": "female_v006lowresUV_7",
+      "vertices": 1246,
+      "ms": 0.10000000055879354
+    },
+    {
+      "name": "female_v006lowresUV_8",
+      "vertices": 1046,
+      "ms": 0.20000000018626451
+    },
+    {
+      "name": "female_v006lowresUV_9",
+      "vertices": 13201,
+      "ms": 1.900000000372529
+    },
+    {
+      "name": "female_v006lowresUV_10",
+      "vertices": 112520,
+      "ms": 11.099999999627471
+    },
+    {
+      "name": "female_v006lowresUV_11",
+      "vertices": 5425,
+      "ms": 0.39999999944120646
+    },
+    {
+      "name": "female_v006lowresUV_12",
+      "vertices": 99754,
+      "ms": 8.100000000558794
+    },
+    {
+      "name": "female_v006lowresUV_14",
+      "vertices": 5280,
+      "ms": 0.39999999944120646
+    },
+    {
+      "name": "female_v006lowresUV",
+      "vertices": 57256,
+      "ms": 8.900000000372529
+    },
+    {
+      "name": "female_v006lowresUV_1",
+      "vertices": 42861,
+      "ms": 5.400000000372529
+    },
+    {
+      "name": "female_v006lowresUV_2",
+      "vertices": 36366,
+      "ms": 4.599999999627471
+    },
+    {
+      "name": "female_v006lowresUV_3",
+      "vertices": 112772,
+      "ms": 14.799999999813735
+    },
+    {
+      "name": "female_v006lowresUV_4",
+      "vertices": 197514,
+      "ms": 15.200000000186265
+    },
+    {
+      "name": "female_v006lowresUV_5",
+      "vertices": 56966,
+      "ms": 4.400000000372529
+    },
+    {
+      "name": "female_v006lowresUV_6",
+      "vertices": 2046,
+      "ms": 0.09999999962747097
+    },
+    {
+      "name": "female_v006lowresUV_7",
+      "vertices": 1246,
+      "ms": 0.20000000018626451
+    },
+    {
+      "name": "female_v006lowresUV_8",
+      "vertices": 1046,
+      "ms": 0.09999999962747097
+    },
+    {
+      "name": "female_v006lowresUV_9",
+      "vertices": 13201,
+      "ms": 1.2999999998137355
+    },
+    {
+      "name": "female_v006lowresUV_10",
+      "vertices": 112520,
+      "ms": 10.300000000745058
+    },
+    {
+      "name": "female_v006lowresUV_11",
+      "vertices": 5425,
+      "ms": 0.5
+    },
+    {
+      "name": "female_v006lowresUV_12",
+      "vertices": 99754,
+      "ms": 10.299999999813735
+    },
+    {
+      "name": "female_v006lowresUV_14",
+      "vertices": 5280,
+      "ms": 0.599999999627471
+    },
+    {
+      "name": "female_v006lowresUV",
+      "vertices": 57256,
+      "ms": 6.1000000005587935
+    },
+    {
+      "name": "female_v006lowresUV_1",
+      "vertices": 42861,
+      "ms": 3.2000000001862645
+    },
+    {
+      "name": "female_v006lowresUV_2",
+      "vertices": 36366,
+      "ms": 2.7999999998137355
+    },
+    {
+      "name": "female_v006lowresUV_3",
+      "vertices": 112772,
+      "ms": 8.200000000186265
+    },
+    {
+      "name": "female_v006lowresUV_4",
+      "vertices": 197514,
+      "ms": 15.5
+    },
+    {
+      "name": "female_v006lowresUV_5",
+      "vertices": 56966,
+      "ms": 4.099999999627471
+    },
+    {
+      "name": "female_v006lowresUV_6",
+      "vertices": 2046,
+      "ms": 0.20000000018626451
+    },
+    {
+      "name": "female_v006lowresUV_7",
+      "vertices": 1246,
+      "ms": 0
+    },
+    {
+      "name": "female_v006lowresUV_8",
+      "vertices": 1046,
+      "ms": 0.09999999962747097
+    },
+    {
+      "name": "female_v006lowresUV_9",
+      "vertices": 13201,
+      "ms": 1.2999999998137355
+    },
+    {
+      "name": "female_v006lowresUV_10",
+      "vertices": 112520,
+      "ms": 9.800000000745058
+    },
+    {
+      "name": "female_v006lowresUV_11",
+      "vertices": 5425,
+      "ms": 0.5
+    },
+    {
+      "name": "female_v006lowresUV_12",
+      "vertices": 99754,
+      "ms": 7.199999999254942
+    },
+    {
+      "name": "female_v006lowresUV_14",
+      "vertices": 5280,
+      "ms": 0.5
+    },
+    {
+      "name": "female_v006lowresUV",
+      "vertices": 57256,
+      "ms": 6.1000000005587935
+    },
+    {
+      "name": "female_v006lowresUV_1",
+      "vertices": 42861,
+      "ms": 3.2999999998137355
+    },
+    {
+      "name": "female_v006lowresUV_2",
+      "vertices": 36366,
+      "ms": 3
+    },
+    {
+      "name": "female_v006lowresUV_3",
+      "vertices": 112772,
+      "ms": 8.200000000186265
+    },
+    {
+      "name": "female_v006lowresUV_4",
+      "vertices": 197514,
+      "ms": 14.5
+    },
+    {
+      "name": "female_v006lowresUV_5",
+      "vertices": 56966,
+      "ms": 4.099999999627471
+    },
+    {
+      "name": "female_v006lowresUV_6",
+      "vertices": 2046,
+      "ms": 0.20000000018626451
+    },
+    {
+      "name": "female_v006lowresUV_7",
+      "vertices": 1246,
+      "ms": 0.09999999962747097
+    },
+    {
+      "name": "female_v006lowresUV_8",
+      "vertices": 1046,
+      "ms": 0.10000000055879354
+    },
+    {
+      "name": "female_v006lowresUV_9",
+      "vertices": 13201,
+      "ms": 1.199999999254942
+    },
+    {
+      "name": "female_v006lowresUV_10",
+      "vertices": 112520,
+      "ms": 9.700000000186265
+    },
+    {
+      "name": "female_v006lowresUV_11",
+      "vertices": 5425,
+      "ms": 0.6000000005587935
+    },
+    {
+      "name": "female_v006lowresUV_12",
+      "vertices": 99754,
+      "ms": 7.599999999627471
+    },
+    {
+      "name": "female_v006lowresUV_14",
+      "vertices": 5280,
+      "ms": 0.40000000037252903
+    },
+    {
+      "name": "female_v006lowresUV",
+      "vertices": 57256,
+      "ms": 7.2999999998137355
+    },
+    {
+      "name": "female_v006lowresUV_1",
+      "vertices": 42861,
+      "ms": 3.3999999994412065
+    },
+    {
+      "name": "female_v006lowresUV_2",
+      "vertices": 36366,
+      "ms": 3
+    },
+    {
+      "name": "female_v006lowresUV_3",
+      "vertices": 112772,
+      "ms": 8.800000000745058
+    },
+    {
+      "name": "female_v006lowresUV_4",
+      "vertices": 197514,
+      "ms": 14.799999999813735
+    },
+    {
+      "name": "female_v006lowresUV_5",
+      "vertices": 56966,
+      "ms": 4.099999999627471
+    },
+    {
+      "name": "female_v006lowresUV_6",
+      "vertices": 2046,
+      "ms": 0.10000000055879354
+    },
+    {
+      "name": "female_v006lowresUV_7",
+      "vertices": 1246,
+      "ms": 0.19999999925494194
+    },
+    {
+      "name": "female_v006lowresUV_8",
+      "vertices": 1046,
+      "ms": 0
+    },
+    {
+      "name": "female_v006lowresUV_9",
+      "vertices": 13201,
+      "ms": 1.300000000745058
+    },
+    {
+      "name": "female_v006lowresUV_10",
+      "vertices": 112520,
+      "ms": 9.399999999441206
+    },
+    {
+      "name": "female_v006lowresUV_11",
+      "vertices": 5425,
+      "ms": 0.5
+    },
+    {
+      "name": "female_v006lowresUV_12",
+      "vertices": 99754,
+      "ms": 8
+    },
+    {
+      "name": "female_v006lowresUV_14",
+      "vertices": 5280,
+      "ms": 0.40000000037252903
+    },
+    {
+      "name": "female_v006lowresUV_13",
+      "vertices": 31266,
+      "ms": 2.400000000372529
+    },
+    {
+      "name": "female_v006lowresUV_13",
+      "vertices": 31266,
+      "ms": 2.2999999998137355
+    },
+    {
+      "name": "female_v006lowresUV_13",
+      "vertices": 31266,
+      "ms": 2.300000000745058
+    },
+    {
+      "name": "female_v006lowresUV_13",
+      "vertices": 31266,
+      "ms": 2.2000000001862645
+    },
+    {
+      "name": "female_v006lowresUV_13",
+      "vertices": 31266,
+      "ms": 2.2999999998137355
+    }
+  ],
+  "total": 335.9000000022352,
+  "frameTimes": [
+    7460,
+    22.90000000037253,
+    16,
+    17.200000000186265,
+    16,
+    24.899999999441206,
+    24.09999999962747,
+    17.800000000745058,
+    13.700000000186265,
+    17.200000000186265,
+    15.700000000186265,
+    14.699999999254942,
+    15.5,
+    15.599999999627471,
+    15.600000000558794,
+    17.600000000558794,
+    15.599999999627471,
+    15.799999999813735,
+    14.799999999813735,
+    12
+  ]
+}

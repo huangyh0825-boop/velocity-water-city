@@ -1,0 +1,11 @@
+import{createRequire}from'node:module';import{mkdirSync,writeFileSync}from'node:fs';
+const{chromium}=createRequire(import.meta.url)(process.env.PLAYWRIGHT_MODULE??'playwright'),browser=await chromium.launch({channel:'msedge',headless:true}),label=process.argv[2]??'before';
+try{
+ const page=await browser.newPage({viewport:{width:1600,height:1000},deviceScaleFactor:1});await page.goto((process.env.PERF_URL??'http://127.0.0.1:5175')+'/scripts/qa/performance.html');await page.waitForFunction(()=>window.perfQA);await page.evaluate(()=>window.perfQA.ready());
+ await page.evaluate(()=>window.perfQA.run('five',{warmup:90,samples:30}));
+ const cdp=await page.context().newCDPSession(page);await cdp.send('Profiler.enable');await cdp.send('Profiler.setSamplingInterval',{interval:500});await cdp.send('HeapProfiler.enable');await cdp.send('HeapProfiler.startSampling',{samplingInterval:32768});await cdp.send('Performance.enable');
+ const start=await cdp.send('Performance.getMetrics');await cdp.send('Profiler.start');await page.evaluate(()=>window.perfQA.run('five',{warmup:0,samples:120}));const{profile}=await cdp.send('Profiler.stop');const{profile:heap}=await cdp.send('HeapProfiler.stopSampling');const end=await cdp.send('Performance.getMetrics');
+ const top=profile.nodes.map(n=>({function:n.callFrame.functionName,url:n.callFrame.url,line:n.callFrame.lineNumber,hits:n.hitCount??0})).sort((a,b)=>b.hits-a.hits).slice(0,35),metrics=Object.fromEntries(end.metrics.map(m=>[m.name,m.value-(start.metrics.find(n=>n.name===m.name)?.value??0)]));
+ const allocated=[];function visit(n){if(n.selfSize)allocated.push({function:n.callFrame.functionName,url:n.callFrame.url,bytes:n.selfSize});for(const child of n.children??[])visit(child);}visit(heap.head);allocated.sort((a,b)=>b.bytes-a.bytes);
+ mkdirSync(`.qa/performance/${label}`,{recursive:true});writeFileSync(`.qa/performance/${label}/cpu-profile.json`,JSON.stringify(profile));writeFileSync(`.qa/performance/${label}/heap-profile.json`,JSON.stringify(heap));writeFileSync(`.qa/performance/${label}/cpu-summary.json`,JSON.stringify({top,allocated:allocated.slice(0,25),metrics},null,2));console.log(JSON.stringify({top:top.slice(0,12),allocated:allocated.slice(0,7),metrics}));
+}finally{await browser.close();}

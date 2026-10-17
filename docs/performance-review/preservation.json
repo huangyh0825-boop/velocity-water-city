@@ -1,0 +1,51 @@
+{
+  "baseline": "8fc9413bc0e42c1398245b5a4aaf49656e3f8e77",
+  "candidateSource": "ac0a47f2bcc938cb86428efbc8e8e180a211a128",
+  "protectedPaths": [
+    "public",
+    "src/ai",
+    "src/config",
+    "src/race",
+    "src/physics",
+    "src/controls",
+    "src/audio",
+    "src/core",
+    "src/camera",
+    "src/world",
+    "src/ui",
+    "src/player/DrivingModel.ts",
+    "src/player/FlightController.ts",
+    "src/player/TrickController.ts",
+    "src/player/NitroController.ts",
+    "src/player/Rider.ts",
+    "src/player/AnatomicalRider.ts",
+    "src/player/VisualAssets.ts",
+    "src/effects/Spray.ts",
+    "src/effects/Wake.ts",
+    "src/effects/WakePool.ts"
+  ],
+  "changedProtectedPaths": [],
+  "changedSourcePaths": [
+    "src/effects/Water.ts",
+    "src/player/HeroLighting.ts",
+    "src/player/PackedMaterialSampling.ts",
+    "src/player/RacerMaterials.ts",
+    "src/player/Watercraft.ts"
+  ],
+  "models": [
+    {
+      "path": "public/models/watercraft.glb",
+      "bytes": 102633960,
+      "sha256": "79373d98ce397c48f9c198d2116c33c914446d36fad05f155302b6591825e34a",
+      "gitBlob": "c6a374a21dbf0236fd706aeb5ab0814fe25edcb1",
+      "baselineGitBlob": "c6a374a21dbf0236fd706aeb5ab0814fe25edcb1"
+    },
+    {
+      "path": "public/models/rider.glb",
+      "bytes": 71141176,
+      "sha256": "f47188e11ecafb221f3bcdc2334b4dd67218d648476a053730887c93fa29bae9",
+      "gitBlob": "762a25bb004663a4bf75c4883069abb6dfd92e1d",
+      "baselineGitBlob": "762a25bb004663a4bf75c4883069abb6dfd92e1d"
+    }
+  ]
+}

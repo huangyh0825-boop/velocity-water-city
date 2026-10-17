@@ -1,0 +1,62 @@
+{
+  "waterNear": {
+    "width": 1600,
+    "height": 1000,
+    "identical": true,
+    "changedPixels": 0,
+    "over1": 0,
+    "over5": 0,
+    "maxChannelDelta": 0,
+    "meanAbsoluteRGB": 0
+  },
+  "waterFar": {
+    "width": 1600,
+    "height": 1000,
+    "identical": true,
+    "changedPixels": 0,
+    "over1": 0,
+    "over5": 0,
+    "maxChannelDelta": 0,
+    "meanAbsoluteRGB": 0
+  },
+  "wake": {
+    "width": 1600,
+    "height": 1000,
+    "identical": false,
+    "changedPixels": 158,
+    "over1": 0,
+    "over5": 0,
+    "maxChannelDelta": 1,
+    "meanAbsoluteRGB": 0.000033958333333333337
+  },
+  "racer": {
+    "width": 1600,
+    "height": 1000,
+    "identical": true,
+    "changedPixels": 0,
+    "over1": 0,
+    "over5": 0,
+    "maxChannelDelta": 0,
+    "meanAbsoluteRGB": 0
+  },
+  "district": {
+    "width": 1600,
+    "height": 1000,
+    "identical": true,
+    "changedPixels": 0,
+    "over1": 0,
+    "over5": 0,
+    "maxChannelDelta": 0,
+    "meanAbsoluteRGB": 0
+  },
+  "five": {
+    "width": 1600,
+    "height": 1000,
+    "identical": false,
+    "changedPixels": 150,
+    "over1": 0,
+    "over5": 0,
+    "maxChannelDelta": 1,
+    "meanAbsoluteRGB": 0.00003270833333333333
+  }
+}

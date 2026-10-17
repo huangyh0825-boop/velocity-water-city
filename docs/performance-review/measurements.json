@@ -1,0 +1,1062 @@
+{
+  "final-before": {
+    "metadata": {
+      "revision": "performance-baseline",
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "timer": true,
+      "viewport": [
+        1600,
+        1000
+      ],
+      "dpr": 1
+    },
+    "summary": {
+      "idle": {
+        "meanMs": 6.191620111731839,
+        "fps": 161.5086168005054,
+        "onePercentLow": 119.04761904759843,
+        "p99Ms": 8.400000000001455,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 367.28333333333336,
+        "triangles": 15927127.716666667,
+        "cpu": {
+          "riderVisual": 0.2144444445768992,
+          "waterCPU": 0.001111111044883728,
+          "districtCPU": 0.00999999994205104,
+          "racerShadow": 0.2849999996523062,
+          "reflection": 1.91611111085448,
+          "main": 3.892222222727206,
+          "frame": 4.582777778059244
+        },
+        "gpu": {
+          "main": 2.945024,
+          "racerShadow": 1.0630293333333334,
+          "waterSurface": 0.14762666666666668,
+          "reflection": 2.179584
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 255,
+          "textures": 146
+        },
+        "heap": {
+          "used": 433373076,
+          "total": 480474904
+        },
+        "state": {
+          "kmh": 0,
+          "phase": "countdown",
+          "energy": 100
+        }
+      },
+      "normal": {
+        "meanMs": 7.355865921787713,
+        "fps": 135.94592541960955,
+        "onePercentLow": 53.333333333333336,
+        "p99Ms": 12.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 350.1777777777778,
+        "triangles": 15993291.55,
+        "cpu": {
+          "riderVisual": 0.18166666651765506,
+          "waterCPU": 0.007777777810891469,
+          "districtCPU": 0.010000000107619497,
+          "racerShadow": 0.3027777776122093,
+          "reflection": 1.9516666665673257,
+          "main": 3.9955555557376807,
+          "frame": 5.480555555596948,
+          "physicsPlayer": 0.004444444386495485,
+          "ai": 0.4438888886322578,
+          "collisions": 0.23722222223877906
+        },
+        "gpu": {
+          "main": 2.7888640000000002,
+          "racerShadow": 0.996864,
+          "waterSurface": 1.4805333333333335,
+          "reflection": 2.259285333333333
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 255,
+          "textures": 146
+        },
+        "heap": {
+          "used": 241286723,
+          "total": 308354027
+        },
+        "state": {
+          "kmh": 134.86355381460828,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "high": {
+        "meanMs": 7.145251396648045,
+        "fps": 139.95308835027365,
+        "onePercentLow": 80.32128514055755,
+        "p99Ms": 12.400000000001455,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 340.9166666666667,
+        "triangles": 16014072.394444445,
+        "cpu": {
+          "riderVisual": 0.1694444448583656,
+          "waterCPU": 0.012222222280171183,
+          "districtCPU": 0.013888888847496774,
+          "racerShadow": 0.2816666663520866,
+          "reflection": 1.8777777776122093,
+          "main": 3.8461111110531623,
+          "frame": 5.344444444403052,
+          "physicsPlayer": 0.000555555522441864,
+          "ai": 0.44500000004967055,
+          "collisions": 0.30888888869020675
+        },
+        "gpu": {
+          "main": 2.9853013333333336,
+          "racerShadow": 1.0033493333333332,
+          "waterSurface": 1.331712,
+          "reflection": 2.2041600000000003
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 255,
+          "textures": 146
+        },
+        "heap": {
+          "used": 245072350,
+          "total": 306781678
+        },
+        "state": {
+          "kmh": 180,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "five": {
+        "meanMs": 24.67374301675977,
+        "fps": 40.52891364397954,
+        "onePercentLow": 32,
+        "p99Ms": 29.200000000000728,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 793.1444444444444,
+        "triangles": 75993443.73888889,
+        "cpu": {
+          "riderVisual": 0.21833333319260015,
+          "waterCPU": 0.01777777783572674,
+          "districtCPU": 0.016666666708058782,
+          "racerShadow": 1.1849999998178746,
+          "reflection": 3.9772222221311595,
+          "main": 7.963333333490623,
+          "frame": 10.316111111599538,
+          "physicsPlayer": 0.0005555555638339784,
+          "ai": 0.40944444487492243,
+          "collisions": 0.13055555551416345
+        },
+        "gpu": {
+          "main": 10.945023999999998,
+          "waterSurface": 1.394176,
+          "reflection": 8.983552000000001,
+          "racerShadow": 4.835157333333334
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 255,
+          "textures": 158
+        },
+        "heap": {
+          "used": 250639209,
+          "total": 308620893
+        },
+        "state": {
+          "kmh": 180,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "boost": {
+        "meanMs": 7.286033519553056,
+        "fps": 137.24888820733048,
+        "onePercentLow": 60.06006006005481,
+        "p99Ms": 12.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 342.30555555555554,
+        "triangles": 15991112.76111111,
+        "cpu": {
+          "riderVisual": 0.17999999928805563,
+          "waterCPU": 0.012222222238779067,
+          "districtCPU": 0.016666666749450894,
+          "racerShadow": 0.30222222208976746,
+          "reflection": 1.9805555556383398,
+          "main": 4.038888888806104,
+          "frame": 5.618888888590866,
+          "physicsPlayer": 0.0016666666915019354,
+          "ai": 0.44333333381348183,
+          "collisions": 0.3549999998261531
+        },
+        "gpu": {
+          "main": 2.7240106666666666,
+          "racerShadow": 1.015296,
+          "waterSurface": 1.2660053333333332,
+          "reflection": 2.084181333333333
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 257,
+          "textures": 158
+        },
+        "heap": {
+          "used": 241569260,
+          "total": 309669372
+        },
+        "state": {
+          "kmh": 216,
+          "phase": "racing",
+          "energy": 34.733333333333945
+        }
+      },
+      "jump": {
+        "meanMs": 6.145251396648045,
+        "fps": 162.72727272727272,
+        "onePercentLow": 119.04761904759843,
+        "p99Ms": 8.400000000001455,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 212.26666666666668,
+        "triangles": 15216793.388888888,
+        "cpu": {
+          "riderVisual": 0.18111111078825262,
+          "waterCPU": 0.010000000107619497,
+          "districtCPU": 0.007222222247057491,
+          "racerShadow": 0.2816666666418314,
+          "reflection": 1.2738888887895479,
+          "main": 2.591666666459706,
+          "frame": 4.117777777587374,
+          "physicsPlayer": 0.0016666666915019354,
+          "ai": 0.4583333333747254,
+          "collisions": 0.30888888897995154
+        },
+        "gpu": {
+          "main": 1.9196586666666668,
+          "racerShadow": 1.0031786666666667,
+          "waterSurface": 1.1857920000000002,
+          "reflection": 1.9336533333333332
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 257,
+          "textures": 158
+        },
+        "heap": {
+          "used": 240902185,
+          "total": 311504669
+        },
+        "state": {
+          "kmh": 180,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "district": {
+        "meanMs": 6.145251396648045,
+        "fps": 162.72727272727272,
+        "onePercentLow": 117.6470588235294,
+        "p99Ms": 8.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 454.56666666666666,
+        "triangles": 15985436.616666667,
+        "cpu": {
+          "riderVisual": 0.20833333304358853,
+          "waterCPU": 0.0016666666501098208,
+          "districtCPU": 0.008888888938559426,
+          "racerShadow": 0.2877777779681815,
+          "reflection": 2.1816666663106945,
+          "main": 4.4711111110945545,
+          "frame": 5.158888888648814
+        },
+        "gpu": {
+          "main": 3.0129493333333337,
+          "racerShadow": 1.0111999999999999,
+          "waterSurface": 0.144896,
+          "reflection": 2.5384960000000003
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 257,
+          "textures": 158
+        },
+        "heap": {
+          "used": 242228924,
+          "total": 309407224
+        },
+        "state": {
+          "kmh": 0,
+          "phase": "countdown",
+          "energy": 100
+        }
+      },
+      "collision": {
+        "meanMs": 21.694413407821244,
+        "fps": 46.09481626451726,
+        "onePercentLow": 31.94888178913441,
+        "p99Ms": 29.200000000004366,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 713.6111111111111,
+        "triangles": 65400321.016666666,
+        "cpu": {
+          "riderVisual": 0.21611111130979327,
+          "waterCPU": 0.012222222321563296,
+          "districtCPU": 0.01611111102004846,
+          "racerShadow": 1.0805555555141635,
+          "reflection": 3.6894444442871546,
+          "main": 7.395555555365152,
+          "frame": 9.59666666628586,
+          "physicsPlayer": 0.000555555522441864,
+          "ai": 0.44500000009106266,
+          "collisions": 0.0655555554976066
+        },
+        "gpu": {
+          "main": 10.321973333333332,
+          "waterSurface": 1.3805226666666666,
+          "reflection": 7.442602666666667,
+          "racerShadow": 4.223301333333334
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 259,
+          "textures": 158
+        },
+        "heap": {
+          "used": 264299301,
+          "total": 310194541
+        },
+        "state": {
+          "kmh": 180,
+          "phase": "racing",
+          "energy": 100
+        }
+      }
+    },
+    "errors": []
+  },
+  "final-after": {
+    "metadata": {
+      "revision": "working-tree",
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "timer": true,
+      "viewport": [
+        1600,
+        1000
+      ],
+      "dpr": 1
+    },
+    "summary": {
+      "idle": {
+        "meanMs": 6.19162011173185,
+        "fps": 161.5086168005051,
+        "onePercentLow": 95.23809523809524,
+        "p99Ms": 8.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 367.28333333333336,
+        "triangles": 15927127.716666667,
+        "cpu": {
+          "riderVisual": 0.2361111113594638,
+          "waterCPU": 0.0033333333830038708,
+          "districtCPU": 0.009444444502393404,
+          "racerShadow": 0.21944444452722867,
+          "reflection": 2.0366666665507687,
+          "main": 4.11888888888061,
+          "frame": 4.752777777901954
+        },
+        "gpu": {
+          "main": 2.924154666666667,
+          "racerShadow": 1.0060799999999999,
+          "waterSurface": 0.15598933333333334,
+          "reflection": 2.297514666666667
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 255,
+          "textures": 146
+        },
+        "heap": {
+          "used": 254871792,
+          "total": 302327276
+        },
+        "state": {
+          "kmh": 0,
+          "phase": "countdown",
+          "energy": 100
+        }
+      },
+      "normal": {
+        "meanMs": 6.40111731843575,
+        "fps": 156.22272647931587,
+        "onePercentLow": 117.6470588235294,
+        "p99Ms": 8.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 350.1777777777778,
+        "triangles": 15993291.55,
+        "cpu": {
+          "riderVisual": 0.19166666621135342,
+          "waterCPU": 0.011666666633552975,
+          "districtCPU": 0.008888888855775197,
+          "racerShadow": 0.19555555606881778,
+          "reflection": 2.044444444320268,
+          "main": 4.151111110879315,
+          "frame": 5.554999999826153,
+          "physicsPlayer": 0.0016666666501098208,
+          "ai": 0.4533333331760433,
+          "collisions": 0.25500000028146635
+        },
+        "gpu": {
+          "main": 2.807978666666667,
+          "racerShadow": 1.0234880000000002,
+          "waterSurface": 0.5077333333333334,
+          "reflection": 2.411008
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 255,
+          "textures": 146
+        },
+        "heap": {
+          "used": 240798328,
+          "total": 304948816
+        },
+        "state": {
+          "kmh": 134.86355381460828,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "high": {
+        "meanMs": 6.261452513966496,
+        "fps": 159.70735189150565,
+        "onePercentLow": 117.6470588235294,
+        "p99Ms": 8.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 340.9166666666667,
+        "triangles": 16014072.394444445,
+        "cpu": {
+          "riderVisual": 0.184999999569522,
+          "waterCPU": 0.010555555671453476,
+          "districtCPU": 0.015000000016556846,
+          "racerShadow": 0.18555555534031656,
+          "reflection": 1.9633333328283495,
+          "main": 4.126111111417413,
+          "frame": 5.526666666774286,
+          "physicsPlayer": 0.001111111044883728,
+          "ai": 0.42444444418781335,
+          "collisions": 0.3222222223877907
+        },
+        "gpu": {
+          "main": 3.0134613333333333,
+          "racerShadow": 1.0004479999999998,
+          "waterSurface": 0.4589226666666666,
+          "reflection": 2.2439253333333333
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 255,
+          "textures": 146
+        },
+        "heap": {
+          "used": 243878476,
+          "total": 309929464
+        },
+        "state": {
+          "kmh": 180,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "five": {
+        "meanMs": 23.812290502793303,
+        "fps": 41.995120120120106,
+        "onePercentLow": 34.2465753424649,
+        "p99Ms": 29.200000000000728,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 793.1444444444444,
+        "triangles": 75993443.73888889,
+        "cpu": {
+          "riderVisual": 0.2233333331429296,
+          "waterCPU": 0.018333333316776487,
+          "districtCPU": 0.013888888971673117,
+          "racerShadow": 0.7183333333581686,
+          "reflection": 4.220555554909838,
+          "main": 8.551111111086275,
+          "frame": 10.427777777860562,
+          "physicsPlayer": 0.002222222172551685,
+          "ai": 0.4244444446845187,
+          "collisions": 0.13611111102832688
+        },
+        "gpu": {
+          "main": 10.779322666666665,
+          "waterSurface": 0.6026239999999999,
+          "reflection": 8.73728,
+          "racerShadow": 5.077333333333333
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 255,
+          "textures": 158
+        },
+        "heap": {
+          "used": 234170810,
+          "total": 308361262
+        },
+        "state": {
+          "kmh": 180,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "boost": {
+        "meanMs": 6.307821229050271,
+        "fps": 158.53334514214882,
+        "onePercentLow": 117.6470588235294,
+        "p99Ms": 8.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 342.30555555555554,
+        "triangles": 15991112.76111111,
+        "cpu": {
+          "riderVisual": 0.185555555505885,
+          "waterCPU": 0.01000000002483527,
+          "districtCPU": 0.00833333329194122,
+          "racerShadow": 0.18833333315948644,
+          "reflection": 2.0155555554562143,
+          "main": 4.135555555381709,
+          "frame": 5.594444444030524,
+          "physicsPlayer": 0.0016666666087177065,
+          "ai": 0.43111111145052644,
+          "collisions": 0.3644444444527229
+        },
+        "gpu": {
+          "main": 2.9632853333333333,
+          "racerShadow": 0.9983626666666666,
+          "waterSurface": 0.444928,
+          "reflection": 2.2659413333333336
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 257,
+          "textures": 158
+        },
+        "heap": {
+          "used": 237306617,
+          "total": 309147609
+        },
+        "state": {
+          "kmh": 216,
+          "phase": "racing",
+          "energy": 34.733333333333945
+        }
+      },
+      "jump": {
+        "meanMs": 5.28379888268154,
+        "fps": 189.25777119898584,
+        "onePercentLow": 79.68127490040303,
+        "p99Ms": 8.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 212.26666666666668,
+        "triangles": 15216793.388888888,
+        "cpu": {
+          "riderVisual": 0.17777777798473834,
+          "waterCPU": 0.012222222197386954,
+          "districtCPU": 0.010000000066227383,
+          "racerShadow": 0.21500000022351742,
+          "reflection": 1.3905555561184884,
+          "main": 2.8466666660788986,
+          "frame": 4.326666666112012,
+          "physicsPlayer": 0.0011111111276679568,
+          "ai": 0.4522222221725517,
+          "collisions": 0.3216666662858592
+        },
+        "gpu": {
+          "main": 1.8899466666666669,
+          "racerShadow": 1.0434560000000002,
+          "waterSurface": 0.47872000000000003,
+          "reflection": 1.9812693333333329
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 257,
+          "textures": 158
+        },
+        "heap": {
+          "used": 252996068,
+          "total": 310196520
+        },
+        "state": {
+          "kmh": 180,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "district": {
+        "meanMs": 6.19162011173186,
+        "fps": 161.50861680050485,
+        "onePercentLow": 119.04761904759843,
+        "p99Ms": 8.400000000001455,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 454.56666666666666,
+        "triangles": 15985436.616666667,
+        "cpu": {
+          "riderVisual": 0.20333333330021963,
+          "waterCPU": 0.004444444427887598,
+          "districtCPU": 0.00555555559694767,
+          "racerShadow": 0.21166666679912144,
+          "reflection": 2.2822222219573125,
+          "main": 4.668333333482345,
+          "frame": 5.265555555870136
+        },
+        "gpu": {
+          "main": 3.0371840000000003,
+          "racerShadow": 1.0821973333333335,
+          "waterSurface": 0.14557866666666666,
+          "reflection": 2.305536
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 257,
+          "textures": 158
+        },
+        "heap": {
+          "used": 240746252,
+          "total": 310720532
+        },
+        "state": {
+          "kmh": 0,
+          "phase": "countdown",
+          "energy": 100
+        }
+      },
+      "collision": {
+        "meanMs": 20.71620111731846,
+        "fps": 48.271398522194005,
+        "onePercentLow": 34.3642611683823,
+        "p99Ms": 29.099999999998545,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 713.6111111111111,
+        "triangles": 65400321.016666666,
+        "cpu": {
+          "riderVisual": 0.21944444448583655,
+          "waterCPU": 0.014444444411330753,
+          "districtCPU": 0.012777777926789389,
+          "racerShadow": 0.6394444446596834,
+          "reflection": 3.7633333339459365,
+          "main": 7.633333333581686,
+          "frame": 9.365555555704567,
+          "physicsPlayer": 0.0011111111276679568,
+          "ai": 0.44333333356512916,
+          "collisions": 0.06555555524925391
+        },
+        "gpu": {
+          "main": 9.747285333333334,
+          "waterSurface": 0.528896,
+          "reflection": 7.581013333333334,
+          "racerShadow": 4.555776
+        },
+        "gpuSamples": 6,
+        "memory": {
+          "geometries": 259,
+          "textures": 158
+        },
+        "heap": {
+          "used": 247162065,
+          "total": 311245681
+        },
+        "state": {
+          "kmh": 180,
+          "phase": "racing",
+          "energy": 100
+        }
+      }
+    },
+    "errors": []
+  },
+  "repeat-before": {
+    "metadata": {
+      "revision": "performance-baseline",
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "timer": true,
+      "viewport": [
+        1600,
+        1000
+      ],
+      "dpr": 1
+    },
+    "summary": {
+      "normal": {
+        "meanMs": 7.218941504178274,
+        "fps": 138.5244636517981,
+        "onePercentLow": 80,
+        "p99Ms": 12.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 322.55833333333334,
+        "triangles": 15968129.252777778,
+        "cpu": {
+          "riderVisual": 0.18361111090828974,
+          "waterCPU": 0.013888888826800717,
+          "districtCPU": 0.011944444539646307,
+          "racerShadow": 0.30500000021937823,
+          "reflection": 1.8072222222677536,
+          "main": 3.6830555552823676,
+          "frame": 5.142777777670158,
+          "physicsPlayer": 0.0036111111028326883,
+          "ai": 0.439444444514811,
+          "collisions": 0.21666666664597062
+        },
+        "gpu": {
+          "main": 2.656682666666667,
+          "racerShadow": 1.0117973333333332,
+          "waterSurface": 1.394944,
+          "reflection": 2.1682346666666663
+        },
+        "gpuSamples": 12,
+        "memory": {
+          "geometries": 255,
+          "textures": 146
+        },
+        "heap": {
+          "used": 368103462,
+          "total": 413265934
+        },
+        "state": {
+          "kmh": 165.2320922923411,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "high": {
+        "meanMs": 7.045125348189417,
+        "fps": 141.94211608413724,
+        "onePercentLow": 79.52286282306278,
+        "p99Ms": 12.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 298.00555555555553,
+        "triangles": 15901856.291666666,
+        "cpu": {
+          "riderVisual": 0.181388888715042,
+          "waterCPU": 0.012777777761220932,
+          "districtCPU": 0.013611111231148243,
+          "racerShadow": 0.32916666666666666,
+          "reflection": 1.8033333331967394,
+          "main": 3.6477777774963114,
+          "frame": 5.14055555526995,
+          "physicsPlayer": 0.000555555522441864,
+          "ai": 0.4425000000331137,
+          "collisions": 0.24388888902548286
+        },
+        "gpu": {
+          "main": 2.575136,
+          "racerShadow": 1.04404,
+          "waterSurface": 1.3909333333333331,
+          "reflection": 2.079232
+        },
+        "gpuSamples": 12,
+        "memory": {
+          "geometries": 255,
+          "textures": 146
+        },
+        "heap": {
+          "used": 367182995,
+          "total": 428210375
+        },
+        "state": {
+          "kmh": 79.31724149345469,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "five": {
+        "meanMs": 17.142339832869087,
+        "fps": 58.335093677385785,
+        "onePercentLow": 34.2465753424649,
+        "p99Ms": 29.200000000000728,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 555.025,
+        "triangles": 50154681.56388889,
+        "cpu": {
+          "riderVisual": 0.2063888888185223,
+          "waterCPU": 0.015555555601086882,
+          "districtCPU": 0.008333333354029391,
+          "racerShadow": 0.8505555556052261,
+          "reflection": 2.8586111110738583,
+          "main": 5.727777777612209,
+          "frame": 7.656111110953821,
+          "physicsPlayer": 0.001388888909584946,
+          "ai": 0.4272222216551503,
+          "collisions": 0.08527777784814437
+        },
+        "gpu": {
+          "racerShadow": 3.5722186666666658,
+          "main": 7.321023999999998,
+          "waterSurface": 1.4830933333333334,
+          "reflection": 6.038954666666666
+        },
+        "gpuSamples": 12,
+        "memory": {
+          "geometries": 255,
+          "textures": 158
+        },
+        "heap": {
+          "used": 244725339,
+          "total": 310980191
+        },
+        "state": {
+          "kmh": 81.24190618499537,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "collision": {
+        "meanMs": 17.49052924791086,
+        "fps": 57.17379879282064,
+        "onePercentLow": 34.21727972625921,
+        "p99Ms": 29.200000000004366,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 560.7944444444445,
+        "triangles": 51125683.744444445,
+        "cpu": {
+          "riderVisual": 0.20277777798473834,
+          "waterCPU": 0.012222222197386954,
+          "districtCPU": 0.01305555548104975,
+          "racerShadow": 0.9383333335320155,
+          "reflection": 2.976944444411331,
+          "main": 5.981944444485837,
+          "frame": 7.993055555700428,
+          "physicsPlayer": 0.0008333333250549104,
+          "ai": 0.44111111116492085,
+          "collisions": 0.0569444444651405
+        },
+        "gpu": {
+          "racerShadow": 3.5887760000000006,
+          "waterSurface": 1.4229333333333332,
+          "main": 7.279872,
+          "reflection": 5.954560000000001
+        },
+        "gpuSamples": 12,
+        "memory": {
+          "geometries": 257,
+          "textures": 158
+        },
+        "heap": {
+          "used": 234817583,
+          "total": 310980311
+        },
+        "state": {
+          "kmh": 81.24190618499537,
+          "phase": "racing",
+          "energy": 100
+        }
+      }
+    },
+    "errors": []
+  },
+  "repeat-after": {
+    "metadata": {
+      "revision": "working-tree",
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "timer": true,
+      "viewport": [
+        1600,
+        1000
+      ],
+      "dpr": 1
+    },
+    "summary": {
+      "normal": {
+        "meanMs": 6.220891364902505,
+        "fps": 160.7486678905656,
+        "onePercentLow": 105.26315789473684,
+        "p99Ms": 8.5,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 322.55833333333334,
+        "triangles": 15968129.252777778,
+        "cpu": {
+          "riderVisual": 0.18444444485422637,
+          "waterCPU": 0.013055555605226093,
+          "districtCPU": 0.012500000082784228,
+          "racerShadow": 0.18999999939567513,
+          "reflection": 1.867777777566678,
+          "main": 3.808611111467083,
+          "frame": 5.133055555468632,
+          "physicsPlayer": 0.0038888889054457345,
+          "ai": 0.4058333332546883,
+          "collisions": 0.22055555540654395
+        },
+        "gpu": {
+          "main": 2.635178666666666,
+          "racerShadow": 1.0606933333333335,
+          "waterSurface": 0.5223253333333334,
+          "reflection": 2.255786666666667
+        },
+        "gpuSamples": 12,
+        "memory": {
+          "geometries": 255,
+          "textures": 146
+        },
+        "heap": {
+          "used": 240969099,
+          "total": 303638063
+        },
+        "state": {
+          "kmh": 165.2320922923411,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "high": {
+        "meanMs": 6.023398328690812,
+        "fps": 166.01923788383266,
+        "onePercentLow": 105.54089709762128,
+        "p99Ms": 8.400000000001455,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 298.00555555555553,
+        "triangles": 15901856.291666666,
+        "cpu": {
+          "riderVisual": 0.18972222223463986,
+          "waterCPU": 0.014722222296728028,
+          "districtCPU": 0.01083333326710595,
+          "racerShadow": 0.192777777566678,
+          "reflection": 1.762777778195838,
+          "main": 3.607500000194543,
+          "frame": 4.922499999859267,
+          "physicsPlayer": 0.0005555555638339784,
+          "ai": 0.4144444443492426,
+          "collisions": 0.23305555551002424
+        },
+        "gpu": {
+          "main": 2.4996693333333337,
+          "racerShadow": 1.0152106666666667,
+          "waterSurface": 0.5035520000000001,
+          "reflection": 2.092885333333333
+        },
+        "gpuSamples": 12,
+        "memory": {
+          "geometries": 255,
+          "textures": 146
+        },
+        "heap": {
+          "used": 239152188,
+          "total": 307570512
+        },
+        "state": {
+          "kmh": 79.31724149345469,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "five": {
+        "meanMs": 16.02813370473538,
+        "fps": 62.390295615300374,
+        "onePercentLow": 34.2465753424649,
+        "p99Ms": 29.200000000000728,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 555.025,
+        "triangles": 50154681.56388889,
+        "cpu": {
+          "riderVisual": 0.22527777788539727,
+          "waterCPU": 0.01722222212702036,
+          "districtCPU": 0.00999999994205104,
+          "racerShadow": 0.5316666668487919,
+          "reflection": 2.9480555551954444,
+          "main": 5.905277777752943,
+          "frame": 7.518055555452075,
+          "physicsPlayer": 0.0019444444527228673,
+          "ai": 0.41388888893028103,
+          "collisions": 0.0819444444651405
+        },
+        "gpu": {
+          "racerShadow": 3.7114026666666664,
+          "main": 7.064576,
+          "waterSurface": 0.5247146666666666,
+          "reflection": 5.792938666666668
+        },
+        "gpuSamples": 12,
+        "memory": {
+          "geometries": 255,
+          "textures": 158
+        },
+        "heap": {
+          "used": 242414558,
+          "total": 308099150
+        },
+        "state": {
+          "kmh": 81.24190618499537,
+          "phase": "racing",
+          "energy": 100
+        }
+      },
+      "collision": {
+        "meanMs": 16.294986072423402,
+        "fps": 61.36857040291286,
+        "onePercentLow": 36.86635944700708,
+        "p99Ms": 25.099999999998545,
+        "stutters50ms": 0,
+        "stutters100ms": 0,
+        "draws": 560.7944444444445,
+        "triangles": 51125683.744444445,
+        "cpu": {
+          "riderVisual": 0.2250000001448724,
+          "waterCPU": 0.017500000074505806,
+          "districtCPU": 0.012222222238779067,
+          "racerShadow": 0.5391666662775808,
+          "reflection": 2.9766666663189727,
+          "main": 6.00250000036839,
+          "frame": 7.579722222478853,
+          "physicsPlayer": 0.0027777777570817206,
+          "ai": 0.4291666669564115,
+          "collisions": 0.05055555558453004
+        },
+        "gpu": {
+          "racerShadow": 3.501056,
+          "main": 7.316479999999999,
+          "waterSurface": 0.5325653333333333,
+          "reflection": 6.001322666666667
+        },
+        "gpuSamples": 12,
+        "memory": {
+          "geometries": 257,
+          "textures": 158
+        },
+        "heap": {
+          "used": 244629809,
+          "total": 308361645
+        },
+        "state": {
+          "kmh": 81.24190618499537,
+          "phase": "racing",
+          "energy": 100
+        }
+      }
+    },
+    "errors": []
+  }
+}

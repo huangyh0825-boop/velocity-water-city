@@ -1,0 +1,77 @@
+{
+  "boost": {
+    "speed": 200.66461793865386,
+    "energy": 31.19999999999999
+  },
+  "jump": {
+    "completed": true,
+    "message": "特技成功 · 氮气 +35%",
+    "energy": 55
+  },
+  "headingDelta": -0.08015374126395833,
+  "brake": 60.30571361030579,
+  "models": [
+    {
+      "loaded": true,
+      "error": "",
+      "triangles": 4927792,
+      "skeletons": 1
+    },
+    {
+      "loaded": true,
+      "error": "",
+      "triangles": 4927792,
+      "skeletons": 1
+    },
+    {
+      "loaded": true,
+      "error": "",
+      "triangles": 4927792,
+      "skeletons": 1
+    },
+    {
+      "loaded": true,
+      "error": "",
+      "triangles": 4927792,
+      "skeletons": 1
+    },
+    {
+      "loaded": true,
+      "error": "",
+      "triangles": 4927792,
+      "skeletons": 1
+    }
+  ],
+  "audio": {
+    "state": "running",
+    "loops": 7,
+    "voices": 0
+  },
+  "memory": [
+    {
+      "geometries": 265,
+      "textures": 130
+    },
+    {
+      "geometries": 263,
+      "textures": 158
+    },
+    {
+      "geometries": 248,
+      "textures": 127
+    },
+    {
+      "geometries": 263,
+      "textures": 158
+    }
+  ],
+  "reset": {
+    "energy": 40,
+    "wake": 0,
+    "spray": 0,
+    "airborne": false
+  },
+  "recreated": true,
+  "errors": [],
+  "mode": "real RAF + keyboard; fixture relocation only for ramp test"
+}
