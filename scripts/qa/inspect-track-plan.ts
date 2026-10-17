@@ -1,0 +1,5 @@
+import{CityTrack}from'../../src/track/CityTrack';import{signedAngle,TAU}from'../../src/track/Track';import{writeFileSync}from'node:fs';
+const track=new CityTrack(),cut=track.shortcuts[0];
+const curves=cut.samples.slice(1,-1).map((p,i)=>{const a=cut.samples[i],b=cut.samples[i+2],ds=(Math.hypot(p.x-a.x,p.z-a.z)+Math.hypot(b.x-p.x,b.z-p.z))/2,k=Math.abs(signedAngle(b.heading-a.heading))/(ds*2);return{q:(i+1)/128,x:p.x,z:p.z,radius:1/k,heading:p.heading,turnPerSample:Math.abs(signedAngle(b.heading-a.heading))*180/Math.PI};});
+const result={mainLength:track.length,shortcutLength:cut.length,exit:{mainHeading:track.heading(cut.to),lastBranchHeading:cut.samples.at(-2)!.heading,angleDegrees:Math.abs(signedAngle(track.heading(cut.to)-cut.samples.at(-2)!.heading))*180/Math.PI},tightExit:curves.filter(p=>p.q>.65).sort((a,b)=>a.radius-b.radius).slice(0,10),curves};
+writeFileSync('docs/track-repair-plan/current-metrics.json',JSON.stringify(result,null,2));console.log(JSON.stringify({...result,curves:undefined},null,2));

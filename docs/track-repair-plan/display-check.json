@@ -1,0 +1,36 @@
+{
+  "images": [
+    {
+      "src": "overview.svg",
+      "width": 2100,
+      "height": 1560
+    },
+    {
+      "src": "shortcut-merge.svg",
+      "width": 1500,
+      "height": 950
+    },
+    {
+      "src": "profiles.svg",
+      "width": 1800,
+      "height": 1350
+    },
+    {
+      "src": "current-obstacle-context.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "current-obstacle.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "current-shortcut-exit.png",
+      "width": 1600,
+      "height": 1000
+    }
+  ],
+  "gameSourceChanged": false,
+  "note": "Planning display check only; no implementation or driving acceptance claimed."
+}
