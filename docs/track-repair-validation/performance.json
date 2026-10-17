@@ -1,0 +1,85 @@
+{
+  "method": "Production-compiled builds; same headless Edge process, 1600x1000 DPR1; 60 warm-up and 180 sampled real RAF frames; identical fixed-step simulation timestamps for matching camera/world trajectories. CPU includes driver submission; GPU only available non-disjoint timer queries. Short controlled scenes, not a whole-race performance guarantee.",
+  "results": [
+    {
+      "label": "baseline",
+      "scene": "city-stationary",
+      "track": "曙光都市 · 立体六区 V2",
+      "fps": 151.34953333931813,
+      "low1": 68.4931506779409,
+      "frameMs": 6.607222222205666,
+      "cpuSubmitMs": 5.1255555562675,
+      "gpuMs": 6.310627555555554,
+      "gpuSamples": 18,
+      "drawCalls": 364,
+      "triangles": 21142111,
+      "frames": 180,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1600,
+        1000
+      ],
+      "pixelRatio": 1
+    },
+    {
+      "label": "baseline",
+      "scene": "five-boats-elevated",
+      "track": "曙光都市 · 立体六区 V2",
+      "fps": 56.32216277120798,
+      "low1": 24.752475248437726,
+      "frameMs": 17.75499999995033,
+      "cpuSubmitMs": 7.895555555406544,
+      "gpuMs": 17.510855111111113,
+      "gpuSamples": 18,
+      "drawCalls": 747.6111111111111,
+      "triangles": 73303991.86666666,
+      "frames": 180,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1600,
+        1000
+      ],
+      "pixelRatio": 1
+    },
+    {
+      "label": "repaired",
+      "scene": "city-stationary",
+      "track": "曙光都市 · 立体六区 V3",
+      "fps": 157.85319652764224,
+      "low1": 103.09278347348037,
+      "frameMs": 6.334999999983443,
+      "cpuSubmitMs": 5.66222222165929,
+      "gpuMs": 6.202595555555556,
+      "gpuSamples": 18,
+      "drawCalls": 376,
+      "triangles": 21151335,
+      "frames": 180,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1600,
+        1000
+      ],
+      "pixelRatio": 1
+    },
+    {
+      "label": "repaired",
+      "scene": "five-boats-elevated",
+      "track": "曙光都市 · 立体六区 V3",
+      "fps": 56.38744439566191,
+      "low1": 25.1256281378814,
+      "frameMs": 17.734444444461,
+      "cpuSubmitMs": 8.017777778042687,
+      "gpuMs": 17.520127999999996,
+      "gpuSamples": 18,
+      "drawCalls": 742.9222222222222,
+      "triangles": 73312694.26666667,
+      "frames": 180,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "size": [
+        1600,
+        1000
+      ],
+      "pixelRatio": 1
+    }
+  ]
+}

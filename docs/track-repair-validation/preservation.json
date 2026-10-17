@@ -1,0 +1,12 @@
+{
+  "baseline": "256d6de71fed06d00b182e6106f465ad50b06aff",
+  "publicModelsAndTexturesUnchanged": true,
+  "speedAndNitroConfigurationUnchanged": true,
+  "horizontalDrivingUpdateIdentical": true,
+  "hullColliderAndSolverUnchanged": true,
+  "performanceLightingAndPackedSamplingUnchanged": true,
+  "waterAndEffectsUnchanged": true,
+  "cameraUnchanged": true,
+  "aiControllerUnchanged": true,
+  "controlsAndAudioUnchanged": true
+}

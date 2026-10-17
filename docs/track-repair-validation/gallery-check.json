@@ -1,0 +1,109 @@
+{
+  "images": [
+    {
+      "src": "final-map.svg",
+      "width": 1800,
+      "height": 1250
+    },
+    {
+      "src": "profiles.svg",
+      "width": 1800,
+      "height": 1350
+    },
+    {
+      "src": "track-overhead.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "merge-map.svg",
+      "width": 1500,
+      "height": 1050
+    },
+    {
+      "src": "s1-merge-overhead.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "s1-entry.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "s1-exit.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "../track-repair-plan/current-obstacle-context.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "s2-cleared-slope.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "../track-repair-plan/current-obstacle.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "s2-driving.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "N1.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "N2.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "N3.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "C-drop.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "A-drop.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "B-crest.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "S2-cross.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "ai-C-drop.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "shared-merge.png",
+      "width": 1600,
+      "height": 1000
+    },
+    {
+      "src": "C-side.png",
+      "width": 1600,
+      "height": 1000
+    }
+  ]
+}

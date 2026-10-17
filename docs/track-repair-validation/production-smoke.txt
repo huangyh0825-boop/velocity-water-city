@@ -1,0 +1,1 @@
+{"base":"http://127.0.0.1:5174/","speed":36,"brake":0,"assetRequests":41,"errors":[],"reset":true,"testHookAbsent":true}

@@ -1,0 +1,23 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>极速水城 V3 · 赛道修复验收</title><style>*{box-sizing:border-box}body{margin:0;background:#102330;color:#e3f3fa;font:16px/1.65 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1600px;margin:auto;padding:32px}h1{font-size:30px}p{max-width:1150px;color:#bdd4df}nav{display:flex;gap:24px;flex-wrap:wrap;margin:24px 0}a{color:#8fdefa}strong{color:#8ce9c7}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}figure{margin:0;background:#193746;border:1px solid #3e606e;border-radius:7px;overflow:hidden}img{display:block;width:100%;height:auto}figcaption{padding:16px}.wide{grid-column:1/-1}@media(max-width:800px){main{padding:18px}.grid{grid-template-columns:1fr}}</style><main><h1>立体赛道 V3 · 结构修复与跳跃强化</h1><p>S1已取消出口回折并延后至61%平滑加宽汇流；S2坡道建筑侵入已修复；新增N1/N2/N3和10m港湾溢流。全图10处、主线9处有效跳跃，原有模型、水面、速度与水平驾驶参数保持。</p><nav><a href="http://localhost:5174/">本地试玩</a><a href="README.md">完整验收报告</a><a href="driving-results.json">驾驶/飞行/五艇三圈数据</a><a href="performance.json">性能对照</a><a href="../track-repair-plan/index.html">批准的原规划</a></nav><p><strong>130项测试、类型检查与生产构建通过。</strong> S1在120/140/160km/h浏览器回放中均零护栏接触。三圈由输入驱动集成模拟验证；以下截图来自实际游戏的生产编译测试入口，定点相机只用于展示。</p><div class="grid">
+<figure><a href="final-map.svg"><img src="final-map.svg" alt="实施后的全赛道俯视图和十处跳跃点"></a><figcaption>全赛道数据图：真实路线、高度、入口出口及跳跃点。点击放大。</figcaption></figure>
+<figure><a href="profiles.svg"><img src="profiles.svg" alt="A B C S2实际高度与实测飞行轨迹"></a><figcaption>实际高度剖面：绿色虚线为180km/h测试轨迹，不是预设的动画曲线。</figcaption></figure>
+<figure class="wide"><a href="track-overhead.png"><img src="track-overhead.png" alt="新赛道实际俯视截图"></a><figcaption>实际全景俯视，仅展示相机临时关闭远雾；正常游戏保留原雾效。</figcaption></figure>
+<figure><a href="merge-map.svg"><img src="merge-map.svg" alt="S1实施后的汇流方向和旧折返比较"></a><figcaption>S1实际新线与旧回折对照，120/140/160km/h已按现有驾驶模型验证。</figcaption></figure>
+<figure><a href="s1-merge-overhead.png"><img src="s1-merge-overhead.png" alt="S1实际汇流区域上方视角"></a><figcaption>S1加宽合流区域实景；没有重做主线走向。</figcaption></figure>
+<figure><a href="s1-entry.png"><img src="s1-entry.png" alt="S1隧道入口"></a><figcaption>S1独立入口，保留48%位置，隧道结构随新曲线布置。</figcaption></figure>
+<figure><a href="s1-exit.png"><img src="s1-exit.png" alt="S1平滑出口"></a><figcaption>S1出口已后延到61%，末段向主线逐渐加宽。</figcaption></figure>
+<figure><a href="../track-repair-plan/current-obstacle-context.png"><img src="../track-repair-plan/current-obstacle-context.png" alt="修复前S2坡道被建筑挡住"></a><figcaption><strong>修复前</strong>：原S2上坡穿入15m建筑，外部定位视角。</figcaption></figure>
+<figure><a href="s2-cleared-slope.png"><img src="s2-cleared-slope.png" alt="同一位置修复后S2上坡净空"></a><figcaption><strong>修复后，同一位置同一相机偏移</strong>：建筑完整外移，通道清空，未删减建筑资产。</figcaption></figure>
+<figure><a href="../track-repair-plan/current-obstacle.png"><img src="../track-repair-plan/current-obstacle.png" alt="修复前驾驶相机进入灰色建筑"></a><figcaption>修复前正常驾驶相机被建筑吞没，画面变灰。</figcaption></figure>
+<figure><a href="s2-driving.png"><img src="s2-driving.png" alt="修复后S2驾驶视角通行正常"></a><figcaption>修复后相同坡段驾驶视角。建筑、门架与高架结构保持原材质质量。</figcaption></figure>
+<figure><a href="N1.png"><img src="N1.png" alt="新增N1短跳台实际腾空"></a><figcaption>N1：1.4m短跳，120km/h推荐测试，约0.95s滞空；前弯需合理减速对准。</figcaption></figure>
+<figure><a href="N2.png"><img src="N2.png" alt="新增N2跳台实际腾空"></a><figcaption>N2：2.4m普通跳台，较长的短特技窗口。</figcaption></figure>
+<figure><a href="N3.png"><img src="N3.png" alt="新增N3中型跳台实际腾空"></a><figcaption>N3：4.8m中型台，180km/h约2.03s滞空，适合完整特技。</figcaption></figure>
+<figure><a href="C-drop.png"><img src="C-drop.png" alt="C区10米自然落差腾空"></a><figcaption>C区：0→6→10m人工溢流，实际保留坡向动量后自然腾空。</figcaption></figure>
+<figure><a href="A-drop.png"><img src="A-drop.png" alt="A区16米大型落差腾空"></a><figcaption>A区：保留16m大型溢流；216km/h测试在主线38.02%接水，位于旧桥之前。</figcaption></figure>
+<figure><a href="B-crest.png"><img src="B-crest.png" alt="B区8米凸坡高速离水"></a><figcaption>B区：120/140km/h贴坡，160/180km/h短暂离水；不强制每次做特技。</figcaption></figure>
+<figure><a href="S2-cross.png"><img src="S2-cross.png" alt="S2高架捷径飞越低层主线"></a><figcaption>S2：独立爬坡后保留14m跨线跳跃，并在分支内接水。</figcaption></figure>
+<figure><a href="ai-C-drop.png"><img src="ai-C-drop.png" alt="AI通过C区新增落差"></a><figcaption>实际AI通过C区。全部10处均另有AI控制器起落测试，不使用位置瞬移。</figcaption></figure>
+<figure><a href="shared-merge.png"><img src="shared-merge.png" alt="玩家与AI共同汇入主线"></a><figcaption>玩家与AI实体合流。后续S2窄入口可出现碰撞排队；续跑测试确认恢复，无永久卡死。</figcaption></figure>
+<figure><a href="C-side.png"><img src="C-side.png" alt="C区人工水槽高度结构侧视"></a><figcaption>C区侧视：人工坡槽、10m唇口与低层水面关系。未对普通静水施加永久陡坡。</figcaption></figure>
+</div><p>短时同画质生产对照：五艇高架场景56.32→56.39 FPS，未见明显下降；不代表长时稳定60FPS。保留59栋区域建筑和195个精细模块，14栋风险建筑移位。请重点手操验收S1、高差落地及拥挤入口；自动回放不替代人的手感判断。到此停止，不扩建城市、不部署。</p></main></html>

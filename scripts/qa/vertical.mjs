@@ -1,17 +1,17 @@
 import '/src/style.css';import '/src/ui/race.css';import '/src/ui/phase3.css';
 import * as THREE from 'three';import{Game}from'/src/core/Game.ts';
 const game=new Game(document.querySelector('#app'));game.paused=true;cancelAnimationFrame(game.frameId);window.testGame=game;
-let clock=0,boost=false;
+let clock=0,boost=false,speedCap=null;
 const ready=async()=>{while(!game.citySample.loaded||![game.craft,...game.aiCraft].every(c=>c.assetLoaded))await new Promise(r=>setTimeout(r,30));};
 function fixture(t,route=null,speed=48,ai=false){
- const g=game;g.restart();g.race.phase='racing';g.paused=false;g.previous=0;g.accumulator=0;g.time=0;clock=0;boost=false;
+ const g=game;g.restart();g.race.phase='racing';g.paused=false;g.previous=0;g.accumulator=0;g.time=0;clock=0;boost=false;speedCap=null;
  const cut=g.track.shortcuts.find(s=>s.id===route),angle=cut?cut.from+(cut.to-cut.from)*t:t*Math.PI*2;
  const place=(c,f,a,branch,lane=0)=>{const p=g.track.routePoint(a,lane,branch),h=g.track.routeHeading(a,branch);Object.assign(c.model,p,{heading:h,speed,vx:Math.sin(h)*speed,vz:Math.cos(h)*speed,yawRate:0});g.ramps.place(c.model,f);};
  place(g.craft,g.flight,angle,route);g.craftMotion.reset();g.race.syncPosition('player',g.craft.model);g.race.player.route=route;
- if(ai)g.ai.forEach((a,i)=>{place(g.aiCraft[i],a.flight,angle-(i%2)*10/g.track.radius,route,(i<2?-1:1)*2.2);a.route=route;a.model.routeIntent=route;g.aiMotion[i].reset();});
+ if(ai)g.ai.forEach((a,i)=>{place(g.aiCraft[i],a.flight,angle-(i%2)*10/g.track.radius,route,(i<2?-1:1)*2.2);a.route=route;a.model.routeIntent=route;g.aiMotion[i].reset();g.race.syncPosition(a.id,a.model);g.race.racers.find(r=>r.id===a.id).route=route;});
  g.bodies.forEach((b,i)=>b.height=i?g.ai[i-1].flight.height:g.flight.height);
  g.craft.sync(0,g.craft.model,g.flight.height,{pitch:0,yaw:0},g.track.surface(g.craft.model).height,g.ramps.slope(g.craft.model));g.aiCraft.forEach((c,i)=>c.sync(0,c.model,g.ai[i].flight.height,{pitch:0,yaw:0},g.track.surface(c.model).height));
- Object.defineProperty(g.input,'state',{configurable:true,get(){const m=g.craft.model,p=g.track.routeTarget(m,Math.max(18,m.speed*.65),0,m.route??null),desired=Math.atan2(p.x-m.x,p.z-m.z),error=Math.atan2(Math.sin(desired-m.heading),Math.cos(desired-m.heading));return{throttle:1,brake:0,steer:Math.max(-1,Math.min(1,error*2.7/.67))};}});
+ Object.defineProperty(g.input,'state',{configurable:true,get(){const m=g.craft.model,p=g.track.routeTarget(m,Math.max(18,m.speed*.65),0,m.route??null),desired=Math.atan2(p.x-m.x,p.z-m.z),error=Math.atan2(Math.sin(desired-m.heading),Math.cos(desired-m.heading));return{throttle:speedCap===null||m.speed<speedCap/3.6?1:0,brake:speedCap!==null&&m.speed>speedCap/3.6+.3?1:0,steer:Math.max(-1,Math.min(1,error*2.7/.67))};}});
  Object.defineProperty(g.input,'boost',{configurable:true,get:()=>boost});
  g.camera.update(0,g.craft.model,true,g.flight.height,false,g.track.surface(g.craft.model).height);
 }
@@ -20,4 +20,4 @@ async function advance(n,trick=true){game.paused=false;for(let i=0;i<n;i++){step
 function view(offset,target=[0,1,0],hud=false){const g=game,m=g.craft.model,h=m.heading,base=g.flight.height,w=([x,y,z])=>new THREE.Vector3(m.x+Math.cos(h)*x+Math.sin(h)*z,base+y,m.z-Math.sin(h)*x+Math.cos(h)*z);g.camera.camera.fov=52;g.camera.camera.updateProjectionMatrix();g.camera.camera.position.copy(w(offset));g.camera.camera.lookAt(w(target));g.citySample.update(g.time,g.camera.camera);g.water.update(g.time);g.heroLighting.update(g.renderer,g.scene,g.craft.visual);g.aiCraft.forEach((c,i)=>g.aiLighting[i].updateVisible(g.renderer,g.scene,c.visual,g.camera.camera));g.renderer.render(g.scene,g.camera.camera);document.body.classList.toggle('qa-hide-hud',!hud);return{camera:g.camera.camera.position.toArray(),target:w(target).toArray(),height:g.flight.height,airborne:g.flight.airborne,kmh:m.speed*3.6};}
 const style=document.createElement('style');style.textContent='.qa-hide-hud .topbar,.qa-hide-hud .race-hud,.qa-hide-hud .tools,.qa-hide-hud .audio-controls,.qa-hide-hud .countdown,.qa-hide-hud .keyboard,.qa-hide-hud .speedometer,.qa-hide-hud footer,.qa-hide-hud .touch,.qa-hide-hud .trick-toast{visibility:hidden!important}';document.head.append(style);
 function overhead(){const g=game;g.paused=true;const fog=g.scene.fog;g.scene.fog=null;g.camera.camera.fov=68;g.camera.camera.updateProjectionMatrix();g.camera.camera.up.set(0,0,-1);g.camera.camera.position.set(230,1300,-20);g.camera.camera.lookAt(230,0,-20);g.citySample.update(g.time,g.camera.camera);g.renderer.render(g.scene,g.camera.camera);g.scene.fog=fog;g.camera.camera.up.set(0,1,0);document.body.classList.add('qa-hide-hud');}
-window.verticalQA={ready,fixture,step,advance,view,overhead,setBoost(value){boost=value;},state(){return{height:game.flight.height,airborne:game.flight.airborne,legal:game.flight.legalLaunch,trick:game.tricks.completed,energy:game.nitro.energy,phase:game.race.phase,route:game.craft.model.route,geometry:game.renderer.info.memory,waterSize:game.water.mesh.material.uniforms.normalSampler.value.image.width};}};
+window.verticalQA={ready,fixture,step,advance,view,overhead,setSpeedCap(value){speedCap=value;},setBoost(value){boost=value;},state(){return{height:game.flight.height,airborne:game.flight.airborne,legal:game.flight.legalLaunch,trick:game.tricks.completed,energy:game.nitro.energy,phase:game.race.phase,route:game.craft.model.route,geometry:game.renderer.info.memory,waterSize:game.water.mesh.material.uniforms.normalSampler.value.image.width};}};
