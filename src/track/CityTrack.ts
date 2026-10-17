@@ -1,4 +1,4 @@
-import {CatmullRomCurve3,Vector3} from 'three';
+import {CatmullRomCurve3,CubicBezierCurve3,Vector3} from 'three';
 import {Track,TAU,type Point} from './Track';
 import type {DrivingModel} from '../player/DrivingModel';
 import {elevation} from './Elevation';
@@ -8,7 +8,7 @@ export const DISTRICTS=['中央发车直道','摩天楼 S 弯','高架飞跃区'
 /** Arc-length sampled closed spline; legacy circular Track is only a regression fixture. */
 export class CityTrack extends Track {
  override readonly isSpline=true;
- override readonly name='曙光都市 · 立体六区 V2';
+ override readonly name='曙光都市 · 立体六区 V3';
  override readonly vertical=true;
  override readonly checkpointCount=24;
  override readonly halfWidth=24;
@@ -24,7 +24,7 @@ export class CityTrack extends Track {
   const curve=new CatmullRomCurve3(points.map(([x,z])=>new Vector3(x*.72,0,z*.72)),true,'centripetal');curve.arcLengthDivisions=4096;
   this.length=curve.getLength();this.radius=this.length/TAU;
   this.samples=Array.from({length:1025},(_,i)=>{const p=curve.getPointAt(i/1024),t=curve.getTangentAt(i/1024);return{x:p.x,z:p.z,angle:i/1024*TAU,heading:Math.atan2(t.x,t.z),width:this.widthAt(i/1024*TAU),branch:null};});
-  this.shortcuts=[this.makeShortcut('tunnel-cut',.48*TAU,.60*TAU,7),this.makeShortcut('harbor-cut',.65*TAU,.86*TAU,8)];
+  this.shortcuts=[this.makeShortcut('tunnel-cut',.48*TAU,.61*TAU,7),this.makeShortcut('harbor-cut',.65*TAU,.86*TAU,8)];
   for(const s of this.samples)s.y=this.heightAt(s.angle);
   for(const cut of this.shortcuts)for(const s of cut.samples)s.y=this.heightAt(s.angle,cut.id);
   for(const samples of [this.samples,...this.shortcuts.map(s=>s.samples)])for(let i=1;i<samples.length;i++){
@@ -38,14 +38,19 @@ export class CityTrack extends Track {
   for(let i=1;i<6;i++){const blend=.009;if(Math.abs(t-borders[i])<blend){const f=(t-borders[i]+blend)/(2*blend),smooth=f*f*(3-2*f);width=widths[i-1]+(widths[i]-widths[i-1])*smooth;}}
   // Separate the elevated branch's low entrance from the lower harbor canal.
   const edge=Math.min(t-.643,.707-t),blend=Math.max(0,Math.min(1,edge/.012));
-  return width+(12-width)*blend*blend*(3-2*blend);
+  width+=(12-width)*blend*blend*(3-2*blend);
+  const merge=Math.max(0,1-Math.abs(t-.61)/.017);return width+(20-width)*merge*merge*(3-2*merge);
  }
  private makeShortcut(id:string,from:number,to:number,width:number):Shortcut{
   const a=this.point(from),b=this.point(to),ha=this.heading(from),hb=this.heading(to),mid={x:(a.x+b.x)/2,z:(a.z+b.z)/2};
   const local=(p:Point,h:number,forward:number,lateral:number)=>new Vector3(p.x+Math.sin(h)*forward+Math.cos(h)*lateral,0,p.z+Math.cos(h)*forward-Math.sin(h)*lateral);
   const points=id==='harbor-cut'?[new Vector3(a.x,0,a.z),local(a,ha,15,0),local(a,ha,90,-20),new Vector3(mid.x,0,mid.z),local(b,hb,-45,0),new Vector3(b.x,0,b.z)]:[new Vector3(a.x,0,a.z),local(a,ha,45,0),new Vector3(mid.x+12,0,mid.z),local(b,hb,-45,0),new Vector3(b.x,0,b.z)];
-  const curve=new CatmullRomCurve3(points,false,'centripetal');curve.arcLengthDivisions=512;
-  const samples=Array.from({length:129},(_,i)=>{const q=i/128,p=curve.getPointAt(q),h=curve.getTangentAt(q),offset=id==='tunnel-cut'?-40*Math.sin(Math.PI*q):0;return{x:p.x+h.z*offset,z:p.z-h.x*offset,angle:from+(to-from)*q,heading:Math.atan2(h.x,h.z),width:id==='harbor-cut'?6:width,branch:id};});
+  const curve=id==='tunnel-cut'?new CubicBezierCurve3(new Vector3(a.x,0,a.z),local(a,ha,80,0),local(b,hb,-240,0),new Vector3(b.x,0,b.z)):new CatmullRomCurve3(points,false,'centripetal');curve.arcLengthDivisions=2048;
+  const distance=curve.getLength(),samples=Array.from({length:129},(_,i)=>{const q=i/128,p=curve.getPointAt(q),h=curve.getTangentAt(q),u=Math.max(0,(q-.82)/.18),smooth=u*u*u*(10-15*u+6*u*u);
+   // Blend position and its first two derivatives onto the actual main canal.
+   // No post-spline lateral sine offset: it created a cusp at the old exit.
+   if(id==='tunnel-cut'&&u>0){const main=this.point(to-(1-q)*distance/this.radius);p.lerp(new Vector3(main.x,0,main.z),smooth);}
+   return{x:p.x,z:p.z,angle:from+(to-from)*q,heading:Math.atan2(h.x,h.z),width:id==='harbor-cut'?6:width+5*smooth,branch:id};});
   let length=0;for(let i=1;i<samples.length;i++){const a=samples[i-1],b=samples[i];length+=Math.hypot(b.x-a.x,b.z-a.z);a.heading=Math.atan2(b.x-a.x,b.z-a.z);}
   return{id,from,to,length,samples,width:id==='harbor-cut'?6:width};
  }
@@ -61,6 +66,7 @@ export class CityTrack extends Track {
  routePoint(angle:number,lane=0,route:string|null=null){const cut=this.shortcuts?.find(s=>s.id===route),p=this.at(angle,cut?.samples);return{x:p.x+Math.cos(p.heading)*lane,z:p.z-Math.sin(p.heading)*lane,y:this.heightAt(angle,route),route};}
  override heading(angle:number){return this.at(angle).heading;}
  routeHeading(angle:number,route:string|null){return this.at(angle,this.shortcuts.find(s=>s.id===route)?.samples).heading;}
+ routeWidth(angle:number,route:string|null){return this.at(angle,this.shortcuts.find(s=>s.id===route)?.samples).width;}
  project(p:Point,route?:string|null){
   if(route===undefined&&p.route!==undefined)route=p.route;
   const gx=Math.floor(p.x/80),gz=Math.floor(p.z/80),candidates=new Set<{a:Sample;b:Sample}>();
@@ -95,7 +101,7 @@ export class CityTrack extends Track {
  override spawn(model:DrivingModel,angle=-.014,lane=0){super.spawn(model,angle,lane);model.worldLimit=3000;model.route=null;model.y=this.heightAt(angle);}
  override raceRoute(before:Point,after:Point,active:string|null){
   const current=this.shortcuts.find(s=>s.id===active);
-  if(current){const q=this.project(after,current.id);if(q.distance>current.width+4)return null;const end=current.samples.at(-1)!,along=(after.x-end.x)*Math.sin(end.heading)+(after.z-end.z)*Math.cos(end.heading);return q.angle>current.to-.002&&along>=0?null:active;}
+  if(current){const q=this.project(after,current.id);if(q.distance>q.width+4)return null;const end=current.samples.at(-1)!,along=(after.x-end.x)*Math.sin(end.heading)+(after.z-end.z)*Math.cos(end.heading);return q.angle>current.to-.002&&along>=0?null:active;}
   for(const cut of this.shortcuts){if(after.routeIntent!==undefined&&after.routeIntent!==cut.id)continue;const first=cut.samples[0],q=this.project(after,cut.id);if(Math.hypot(before.x-first.x,before.z-first.z)>65||q.distance>cut.width||q.angle>cut.from+(cut.to-cut.from)*.10)continue;
    if(after.routeIntent===undefined&&q.distance+.5>=this.project(after,null).distance)continue;
    const forward=(after.x-before.x)*Math.sin(first.heading)+(after.z-before.z)*Math.cos(first.heading);if(forward>0&&q.angle>cut.from+.00001&&Math.abs((after.y??0)-this.heightAt(q.angle,cut.id))<2)return cut.id;
@@ -111,3 +117,4 @@ export class CityTrack extends Track {
   model.x=p.x+nx*limit;model.z=p.z+nz*limit;const outward=model.vx*nx+model.vz*nz;if(outward>0){model.vx-=outward*nx;model.vz-=outward*nz;}model.speed*=.98;return true;
  }
 }
+
