@@ -83,7 +83,7 @@ export class CityTrack extends Track {
  override offset(p:Point){return this.project(p).offset;}
  override contains(p:Point,margin=0){
   const projection=this.project(p);if(projection.distance<=projection.width-margin+1e-6)return true;
-  if(p.route!==undefined)return false;
+  if(p.route!==undefined){const q=this.containmentProjection(p);return q.distance<=q.width-margin+1e-6;}
   // A nearby narrow branch must not mask a valid point inside the wider main canal.
   return [null,...this.shortcuts.map(s=>s.id)].some(route=>{const q=this.project(p,route);return q.distance<=q.width-margin+1e-6;});
  }
@@ -102,9 +102,12 @@ export class CityTrack extends Track {
  override raceRoute(before:Point,after:Point,active:string|null){
   const current=this.shortcuts.find(s=>s.id===active);
   if(current){const q=this.project(after,current.id);if(q.distance>q.width+4)return null;const end=current.samples.at(-1)!,along=(after.x-end.x)*Math.sin(end.heading)+(after.z-end.z)*Math.cos(end.heading);return q.angle>current.to-.002&&along>=0?null:active;}
-  for(const cut of this.shortcuts){if(after.routeIntent!==undefined&&after.routeIntent!==cut.id)continue;const first=cut.samples[0],q=this.project(after,cut.id);if(Math.hypot(before.x-first.x,before.z-first.z)>65||q.distance>cut.width||q.angle>cut.from+(cut.to-cut.from)*.10)continue;
+  for(const cut of this.shortcuts){if(after.routeIntent!==undefined&&after.routeIntent!==cut.id)continue;const q=this.project(after,cut.id);
+   // The two centre lines can coincide for longer than the old 10%/65m
+   // acquisition window. Keep entry open until the channels really separate.
+   if(q.distance>q.width||q.angle>cut.from+(cut.to-cut.from)*Math.max(.15,cut.entryPortal??.15))continue;
    if(after.routeIntent===undefined&&q.distance+.5>=this.project(after,null).distance)continue;
-   const forward=(after.x-before.x)*Math.sin(first.heading)+(after.z-before.z)*Math.cos(first.heading);if(forward>0&&q.angle>cut.from+.00001&&Math.abs((after.y??0)-this.heightAt(q.angle,cut.id))<2)return cut.id;
+   const forward=(after.x-before.x)*Math.sin(q.heading)+(after.z-before.z)*Math.cos(q.heading);if(forward>0&&q.angle>cut.from+.00001&&Math.abs((after.y??0)-this.heightAt(q.angle,cut.id))<2)return cut.id;
   }return null;
  }
  override raceAngle(p:Point,route:string|null){const a=this.project(p,route).angle;return a>Math.PI?a-TAU:a;}
@@ -112,7 +115,24 @@ export class CityTrack extends Track {
   const angle=this.checkpointAngle(index),poses=[this.at(angle),...this.shortcuts.filter(s=>angle>s.from&&angle<s.to).map(s=>this.at(angle,s.samples))];
   return poses.some(g=>{if(route!==undefined&&g.branch!==route)return false;const tx=Math.sin(g.heading),tz=Math.cos(g.heading),a=(before.x-g.x)*tx+(before.z-g.z)*tz,b=(after.x-g.x)*tx+(after.z-g.z)*tz;if(a>=0||b<0||b-a<1e-8)return false;const t=-a/(b-a),x=before.x+(after.x-before.x)*t,z=before.z+(after.z-before.z)*t,y=before.y===undefined||after.y===undefined?undefined:before.y+(after.y-before.y)*t,floor=this.heightAt(angle,g.branch);return (y===undefined||(y>=floor-.8&&y<=floor+24))&&Math.abs((x-g.x)*tz-(z-g.z)*tx)<=g.width&&this.contains({x,z});});
  }
- override constrain(model:DrivingModel){const p=this.project(model),margin=Math.max(1,.8+1.8*Math.abs(Math.sin(model.heading-p.heading))),limit=p.width-margin;if(p.distance<=limit)return false;
+ private containmentProjection(model:Point){let p=this.project(model);
+  // At a junction the physical water is the union of both corridors. RaceRoute
+  // commits the chosen branch only AFTER this step: clipping to the old route
+  // first could push a fast player back before that choice was ever recorded.
+  // Restrict the union to the actual mouths and compatible surface heights;
+  // crossing an elevated branch elsewhere never opens the lower canal wall.
+  for(const cut of this.shortcuts){
+   if(model.route&&model.route!==cut.id)continue;
+   const q=this.project(model,cut.id),fraction=(q.angle-cut.from)/(cut.to-cut.from);
+   if(fraction>Math.max(.15,cut.entryPortal??.15)&&fraction<Math.min(.85,cut.exitPortal??.85))continue;
+   if(model.route===cut.id&&fraction<Math.min(.85,cut.exitPortal??.85))continue;
+   const other=model.route===cut.id?this.project(model,null):q;
+   if(Math.abs(this.heightAt(other.angle,other.branch)-this.heightAt(p.angle,p.branch))>1)continue;
+   if(other.width-other.distance>p.width-p.distance)p=other;
+  }
+  return p;
+ }
+ override constrain(model:DrivingModel){const p=this.containmentProjection(model),margin=Math.max(1,.8+1.8*Math.abs(Math.sin(model.heading-p.heading))),limit=p.width-margin;if(p.distance<=limit)return false;
   const dx=model.x-p.x,dz=model.z-p.z,length=Math.max(.001,p.distance),nx=dx/length,nz=dz/length;
   model.x=p.x+nx*limit;model.z=p.z+nz*limit;const outward=model.vx*nx+model.vz*nz;if(outward>0){model.vx-=outward*nx;model.vz-=outward*nz;}model.speed*=.98;return true;
  }

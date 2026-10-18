@@ -41,10 +41,12 @@ export class VerticalTrackView {
       for(const v of [p,q,s,q,t,s])underside.push(v.x,(v.y??0)-.55,v.z);
      }
     }
-    if(i%5===0&&(a.y??0)>2)for(const side of [-1,1]){const p=track.routePoint(a.angle,(a.width+2)*side,route.id),height=(a.y??0)-.8;
+    if(i%5===0&&(a.y??0)>2){let supported=false;for(const side of [-1,1]){const p=track.routePoint(a.angle,(a.width+2)*side,route.id),height=(a.y??0)-.8;
       if(clearance.intersects({x:p.x,y:height/2,z:p.z,width:2.2,depth:2.2,height}))continue;
       part(new THREE.CylinderGeometry(.75,1.1,height,8),alloy,new THREE.Vector3(p.x,height/2,p.z));
-      part(new THREE.BoxGeometry(a.width*2+5,.65,1.6),dark,new THREE.Vector3(a.x,(a.y??0)-.85,a.z),a.heading);
+      supported=true;
+    }const beam={x:a.x,y:(a.y??0)-.85,z:a.z,width:a.width*2+5,height:.65,depth:1.6,heading:a.heading};
+     if(supported&&!clearance.intersects(beam))part(new THREE.BoxGeometry(beam.width,beam.height,beam.depth),dark,new THREE.Vector3(beam.x,beam.y,beam.z),beam.heading);
     }
    }
    if(vertices.length){const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.computeBoundingSphere();this.root.add(water.channel(geometry));

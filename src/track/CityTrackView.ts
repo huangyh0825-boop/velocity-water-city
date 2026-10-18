@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {CityTrack} from './CityTrack';
+import {canalBanks} from './CanalBanks';
 
 
 export class CityTrackView {
@@ -7,20 +8,13 @@ export class CityTrackView {
  constructor(scene:THREE.Scene,track:CityTrack){
 
   const dark=new THREE.MeshStandardMaterial({color:'#224459',metalness:.4,roughness:.4}),light=new THREE.MeshBasicMaterial({color:'#6edfea'}),dummy=new THREE.Object3D();
-  const routes=[track.samples,...track.shortcuts.map(s=>s.samples)],count=routes.reduce((n,s)=>n+(s.length-1)*2,0);
-  const banks=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),dark,count),rims=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),light,count);let cursor=0;
-  for(const points of routes)for(let i=1;i<points.length;i++){
-    const a=points[i-1],b=points[i],heading=Math.atan2(b.x-a.x,b.z-a.z),length=Math.hypot(b.x-a.x,b.z-a.z);
-    // Leave the merge mouths clear on shortcut branches; physical containment is union of corridors.
-    for(const side of [-1,1]){
-      const x=(a.x+b.x)/2+Math.cos(heading)*(a.width+1)*side,z=(a.z+b.z)/2-Math.sin(heading)*(a.width+1)*side;
-      const otherRoutes=a.branch?[track.samples]:track.shortcuts.map(s=>s.samples);
-      const mouth=otherRoutes.some(route=>route.some(s=>Math.hypot(s.x-x,s.z-z)<s.width+1));
-      const drop=(a.y??0)-(b.y??0)>2,base=((a.y??0)+(b.y??0))/2,pitch=-Math.atan2((b.y??0)-(a.y??0),length);
-      if(!mouth&&!drop)(scene.userData.cameraSolids??=[]).push({x,y:base+.75,z,width:1.2,height:1.8+Math.abs((b.y??0)-(a.y??0)),depth:length+.4,heading});
-      dummy.position.set(x,base+.75,z);dummy.rotation.set(pitch,heading,0,'YXZ');dummy.scale.set(1.2,mouth||drop?0:1.8,length+.4);dummy.updateMatrix();banks.setMatrixAt(cursor,dummy.matrix);dummy.position.y=base+1.69;dummy.scale.y=mouth||drop?0:.07;dummy.updateMatrix();rims.setMatrixAt(cursor++,dummy.matrix);
-    }
-  }scene.add(banks,rims);
+  const spans=canalBanks(track),banks=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),dark,spans.length),rims=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),light,spans.length);
+  banks.name='canal-bank-spans';rims.name='canal-rim-spans';
+  spans.forEach((p,i)=>{
+   (scene.userData.cameraSolids??=[]).push({x:p.x,y:p.y+.75,z:p.z,width:1.2,height:1.8+Math.abs(p.rise),depth:p.length,heading:p.heading});
+   dummy.position.set(p.x,p.y+.75,p.z);dummy.rotation.set(p.pitch,p.heading,0,'YXZ');dummy.scale.set(1.2,1.8,p.length);dummy.updateMatrix();banks.setMatrixAt(i,dummy.matrix);
+   dummy.position.y=p.y+1.69;dummy.scale.y=.07;dummy.updateMatrix();rims.setMatrixAt(i,dummy.matrix);
+  });scene.add(banks,rims);
   for(let i=0;i<track.checkpointCount;i++){
    // Invisible race gates stay in RaceController. Only water-level branch strips remain.
    const angle=track.checkpointAngle(i),glow=new THREE.MeshBasicMaterial({color:i===0?'#ffe4a0':'#527c91'});this.gates.push(glow);
