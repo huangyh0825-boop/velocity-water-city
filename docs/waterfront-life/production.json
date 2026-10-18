@@ -1,0 +1,13 @@
+{
+  "noQA": true,
+  "accelerated": 103,
+  "braked": 0,
+  "escape": true,
+  "reset": true,
+  "errors": [],
+  "coarse": {
+    "coarse": true,
+    "cameraControlsHidden": true,
+    "touch": true
+  }
+}

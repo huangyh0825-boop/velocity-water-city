@@ -1,0 +1,25 @@
+{
+  "canvasCount": 1,
+  "mode": "idle",
+  "status": "点击画面进入自由观察 · 无需按住鼠标 · C 归位",
+  "mouseTest": {
+    "buttons": 0,
+    "points": [
+      [
+        50,
+        380
+      ],
+      [
+        200,
+        360
+      ],
+      [
+        400,
+        340
+      ]
+    ],
+    "capture": "denied; direct-movement fallback observed"
+  },
+  "escape": "native Escape returns idle",
+  "c": "native C sent after escape"
+}

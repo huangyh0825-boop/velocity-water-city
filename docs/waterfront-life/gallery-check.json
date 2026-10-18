@@ -1,0 +1,110 @@
+[
+  {
+    "src": "before-central-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "after-central-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "driver-central.jpg",
+    "ok": true
+  },
+  {
+    "src": "before-science-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "after-science-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "driver-science.jpg",
+    "ok": true
+  },
+  {
+    "src": "before-transit-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "after-transit-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "driver-transit.jpg",
+    "ok": true
+  },
+  {
+    "src": "before-industrial-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "after-industrial-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "driver-industrial.jpg",
+    "ok": true
+  },
+  {
+    "src": "before-harbor-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "after-harbor-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "driver-harbor.jpg",
+    "ok": true
+  },
+  {
+    "src": "before-leisure-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "after-leisure-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "driver-leisure.jpg",
+    "ok": true
+  },
+  {
+    "src": "before-sample-promenade.jpg",
+    "ok": true
+  },
+  {
+    "src": "after-sample-promenade.jpg",
+    "ok": true
+  },
+  {
+    "src": "after-central-forecourt-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "after-science-forecourt-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "after-leisure-forecourt-quay.jpg",
+    "ok": true
+  },
+  {
+    "src": "mouse-locked.png",
+    "ok": true
+  },
+  {
+    "src": "mouse-fallback.png",
+    "ok": true
+  },
+  {
+    "src": "iab-before-mouse.png",
+    "ok": true
+  },
+  {
+    "src": "iab-after-mouse.png",
+    "ok": true
+  }
+]

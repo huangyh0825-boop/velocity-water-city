@@ -1,5 +1,7 @@
 # 远景、启动、水面与自由视角验收报告
 
+> 历史报告：下文的“按住右键拖动”备用操作已被后续修订替换。当前主方案与兼容方案均无需按住鼠标键，详见 [滨水空间与鼠标操作修订](../waterfront-life/REPORT.md)。本报告其余数据对应当时版本。
+
 基线：Git 标签 `view-loading-baseline`，提交 `c571d2e`。本轮只修改渲染与镜头相关实现；驾驶、AI、碰撞、氮气、特技、赛道数据、比赛和音频源码对该基线无差异，public/assets 资源文件未改动。没有部署。
 
 [对照截图与动态录像](index.html) · [性能原始数据](performance.json) · [资源清单](resources.json) · [浏览器记录](browser.json) · [正式入口与触控回归](production.json) · [备用鼠标与 A/D/S](camera-extra.json)

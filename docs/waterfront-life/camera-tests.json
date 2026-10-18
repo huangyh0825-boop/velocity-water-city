@@ -1,0 +1,104 @@
+{
+  "pointerLock": {
+    "before": {
+      "camera": {
+        "free": true,
+        "yaw": 2.817241898649345,
+        "pitch": 0.2662520491509256,
+        "zoom": 0
+      },
+      "heading": -0.3243507549404485,
+      "mode": "locked"
+    },
+    "after": {
+      "camera": {
+        "free": true,
+        "yaw": -2.965943408530242,
+        "pitch": 0.5662520491509259,
+        "zoom": 0
+      },
+      "heading": -0.3243507549404485,
+      "mode": "locked"
+    },
+    "buttons": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "cAndWheel": true,
+  "escape": true,
+  "deniedCapture": {
+    "before": {
+      "camera": {
+        "free": true,
+        "yaw": 2.8173364702325965,
+        "pitch": 0.26629949413060144,
+        "zoom": 0
+      },
+      "heading": -0.3243507549404485,
+      "mode": "window"
+    },
+    "after": {
+      "camera": {
+        "free": true,
+        "yaw": -2.765848836946991,
+        "pitch": 0.5412994941306015,
+        "zoom": 0
+      },
+      "heading": -0.3243507549404485,
+      "mode": "window"
+    },
+    "hint": "兼容观察已开启 · 直接移动，无需按键 · Esc 退出（窗口边缘受限）"
+  },
+  "reenter": true,
+  "passiveHUDDoesNotBlockLook": true,
+  "keyboard": {
+    "h0": -0.3243507549404485,
+    "h1": -0.1418166451551654,
+    "h2": -0.5309327325606378,
+    "v0": 23.33515623942952,
+    "v1": 5.374559579084143,
+    "v2": 23.20630724423081
+  },
+  "obstacles": [
+    {
+      "t": 0.45,
+      "route": "tunnel-cut",
+      "length": 9.901286597201997,
+      "safe": 9.901286597201997,
+      "clear": true,
+      "aboveWater": true
+    },
+    {
+      "t": 0.29,
+      "route": null,
+      "length": 9.998840687706137,
+      "safe": 9.998840687706137,
+      "clear": true,
+      "aboveWater": true
+    },
+    {
+      "t": 0.34,
+      "route": null,
+      "length": 9.998840687706144,
+      "safe": 9.998840687706144,
+      "clear": true,
+      "aboveWater": true
+    }
+  ],
+  "disabled": true,
+  "missingAPIFallback": true,
+  "silentRequestTimeout": true,
+  "cancelledRequestStaysIdle": true,
+  "errors": []
+}

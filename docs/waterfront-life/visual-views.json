@@ -1,0 +1,159 @@
+{
+  "views": [
+    {
+      "id": "central",
+      "pocket": {
+        "id": "quay-main-0-1",
+        "kind": "viewing",
+        "district": "central",
+        "x": -139.30818637167187,
+        "z": -311.13134486655395,
+        "rx": 3.2,
+        "rz": 7.2,
+        "heading": 0.2927590866173357,
+        "angle": 0.03212992486625925,
+        "side": 1,
+        "route": null,
+        "seed": 1
+      }
+    },
+    {
+      "id": "science",
+      "pocket": {
+        "id": "quay-main-18-1",
+        "kind": "garden",
+        "district": "science",
+        "x": -64.10844903362732,
+        "z": 489.73875892274174,
+        "rx": 3.2,
+        "rz": 7.2,
+        "heading": 0.9019013780489333,
+        "angle": 1.317326919516629,
+        "side": 1,
+        "route": null,
+        "seed": 55
+      }
+    },
+    {
+      "id": "transit",
+      "pocket": {
+        "id": "quay-main-26--1",
+        "kind": "promenade",
+        "district": "transit",
+        "x": 327.61443631107454,
+        "z": 666.6258862691564,
+        "rx": 3.2,
+        "rz": 7.2,
+        "heading": 1.5552877847588549,
+        "angle": 1.8885255838056823,
+        "side": -1,
+        "route": null,
+        "seed": 78
+      }
+    },
+    {
+      "id": "industrial",
+      "pocket": {
+        "id": "quay-main-50-1",
+        "kind": "viewing",
+        "district": "industrial",
+        "x": 550.5607397710443,
+        "z": -238.39365844842092,
+        "rx": 3.2,
+        "rz": 7.2,
+        "heading": 2.5059002111708195,
+        "angle": 3.6021215766728427,
+        "side": 1,
+        "route": null,
+        "seed": 151
+      }
+    },
+    {
+      "id": "harbor",
+      "pocket": {
+        "id": "quay-main-58--1",
+        "kind": "viewing",
+        "district": "harbor",
+        "x": 797.1775522516177,
+        "z": -505.62071625884465,
+        "rx": 3.2,
+        "rz": 7.2,
+        "heading": -2.4839322535018753,
+        "angle": 4.173320240961895,
+        "side": -1,
+        "route": null,
+        "seed": 174
+      }
+    },
+    {
+      "id": "leisure",
+      "pocket": {
+        "id": "quay-main-80--1",
+        "kind": "viewing",
+        "district": "leisure",
+        "x": -333.1194842575334,
+        "z": -568.2637873455923,
+        "rx": 3.2,
+        "rz": 7.2,
+        "heading": -0.9876995994262294,
+        "angle": 5.744116567756792,
+        "side": -1,
+        "route": null,
+        "seed": 240
+      }
+    },
+    {
+      "id": "central-forecourt",
+      "pocket": {
+        "id": "forecourt-waterfront--1-27",
+        "kind": "courtyard",
+        "district": "central",
+        "x": -283.49893763458306,
+        "z": 81.87824027199277,
+        "heading": 0.33386621680735984,
+        "rx": 5.8500000000000005,
+        "rz": 4.3,
+        "angle": 0.5348007582632962,
+        "side": -1,
+        "route": null,
+        "seed": 1015
+      }
+    },
+    {
+      "id": "science-forecourt",
+      "pocket": {
+        "id": "forecourt-world-main-waterfront--1-10010",
+        "kind": "courtyard",
+        "district": "science",
+        "x": -84.677004413813,
+        "z": 534.0986051447127,
+        "heading": -0.6511097187890063,
+        "rx": 6.084,
+        "rz": 4.3,
+        "angle": 1.3317439903286143,
+        "side": -1,
+        "route": null,
+        "seed": 1311
+      }
+    },
+    {
+      "id": "leisure-forecourt",
+      "pocket": {
+        "id": "forecourt-world-main-waterfront--1-50005",
+        "kind": "courtyard",
+        "district": "leisure",
+        "x": -195.10334918684322,
+        "z": -622.2871177651432,
+        "heading": -3.03576042971135,
+        "rx": 7,
+        "rz": 4.3,
+        "angle": 5.572608717794858,
+        "side": -1,
+        "route": null,
+        "seed": 2685
+      }
+    }
+  ],
+  "errors": [],
+  "settings": "1600x1000 DPR1 standard quality, t=12, FOV52; matching camera transforms for before/after; baseline aeb908e"
+}

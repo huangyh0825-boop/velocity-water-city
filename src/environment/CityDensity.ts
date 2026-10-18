@@ -9,6 +9,7 @@ import {CityContactShadows} from './CityContactShadows';
 import {CityGlass} from './CityGlass';
 import {CityInteriors} from './CityInteriors';
 import {CityMaterialBatch} from './CityMaterialBatch';
+import {CityFurnishings} from './CityFurnishings';
 import {readableSign,atlasCellUV} from './ReadableSign';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 
@@ -28,6 +29,7 @@ export class CityDensity {
  private adverts?:CityMaterialBatch;private advertGeometry:THREE.BufferGeometry[]=[];
  private terrain:THREE.Mesh;private links=new THREE.Group();
  readonly services:CityServices;
+ furnishings?:CityFurnishings;
  constructor(private track:CityTrack){
   this.root.name='authored-world-city';this.sites=worldCitySites(track);this.previous=this.sites.map(()=>-1);
   this.poses=this.sites.map(s=>new THREE.Matrix4().compose(new THREE.Vector3(s.x,.265-.25*s.scaleY,s.z),new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),s.heading),new THREE.Vector3(s.scaleXZ,s.scaleY,s.scaleXZ)));
@@ -101,6 +103,7 @@ export class CityDensity {
   const materials=new Map([...this.library!.parts.values()].flatMap(list=>list.map(p=>[p.material.name,p.material] as const)));
   sample.traverse(o=>{if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(!materials.has(m.name))materials.set(m.name,m);});
   await this.services.load(materials);
+  if(!this.furnishings){this.furnishings=new CityFurnishings(this.track,this.sites,name=>materials.get(name),sample);this.root.add(this.furnishings.root);}
  }
  stats(){return {sites:this.sites.length,waterfront:this.sites.filter(s=>s.layer==='waterfront').length,blocks:this.sites.filter(s=>s.layer==='blocks').length,skyline:this.sites.filter(s=>s.layer==='skyline').length,lods:[0,1,2].map(t=>this.previous.filter(p=>p===t).length),mode:this.combined?'material-batch':'instanced',activeMeshes:this.combined?.meshes.length??[...this.batches.values()].filter(b=>b.used).reduce((n,b)=>n+b.meshes.length,0)};}
  private makeTerrain(){
@@ -182,7 +185,7 @@ export class CityDensity {
  }
  private clearInstances(){this.combined?.dispose();this.combined=undefined;for(const b of this.batches.values())for(const mesh of b.meshes){mesh.removeFromParent();mesh.dispose();}this.batches.clear();}
  dispose(){
-  this.disposed=true;this.foundation.dispose();this.interiors.dispose();this.services.dispose();this.glass.dispose();this.generation++;this.clearInstances();this.root.removeFromParent();this.terrain.geometry.dispose();(this.terrain.material as THREE.Material).dispose();this.atlas.dispose();
+  this.disposed=true;this.furnishings?.dispose();this.foundation.dispose();this.interiors.dispose();this.services.dispose();this.glass.dispose();this.generation++;this.clearInstances();this.root.removeFromParent();this.terrain.geometry.dispose();(this.terrain.material as THREE.Material).dispose();this.atlas.dispose();
   this.adverts?.dispose();this.advertGeometry.forEach(g=>g.dispose());
   for(const sign of this.signs.children)if(sign.userData.readableSign){const face=sign.children[0] as THREE.Mesh;face.geometry.dispose();(face.material as THREE.Material).dispose();}
   const linkMaterials=new Set<THREE.Material>();for(const o of this.links.children){const m=o as THREE.Mesh;m.geometry.dispose();linkMaterials.add(m.material as THREE.Material);}linkMaterials.forEach(m=>m.dispose());
