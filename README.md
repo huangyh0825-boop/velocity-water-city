@@ -2,7 +2,9 @@
 
 当前修订：修复两条捷径入口的路线约束/护栏残留面，并在五个城区各增加2栋样板区同档小型建筑；[完整报告](docs/city-quality-repair/README.md)、[前后截图与整圈检查](docs/city-quality-repair/index.html)。镜头只使用经典第三人称跟随，不提供鼠标自由视角或 Pointer Lock 控制。WASD、方向键和触屏驾驶仍可正常使用。
 
-本轮类型检查、155项自动化测试、生产构建及浏览器五艇三圈回归通过；鼠标不会转动镜头，也不会触发 Pointer Lock。桌面生产页与手机触控入口均已检查。当前整城与旧基线的同场景性能比较为 6.6%–14.8% FPS 下降，细节见验收报告；新增的10栋建筑单独增量没有独立基准对照。S2窄弯仍需合理制动。公开仓库已创建：[huangyh0825-boop/velocity-water-city](https://github.com/huangyh0825-boop/velocity-water-city)，Pages 已选择 GitHub Actions，上传及首次部署进行中。
+本轮类型检查、155项自动化测试、生产构建及浏览器五艇三圈回归通过；鼠标不会转动镜头，也不会触发 Pointer Lock。桌面生产页与手机触控入口均已检查。当前整城与旧基线的同场景性能比较为 6.6%–14.8% FPS 下降，细节见验收报告；新增的10栋建筑单独增量没有独立基准对照。S2窄弯仍需合理制动。
+
+在线入口：[电脑与手机试玩](https://huangyh0825-boop.github.io/velocity-water-city/)。公开源码：[huangyh0825-boop/velocity-water-city](https://github.com/huangyh0825-boop/velocity-water-city)。推送 main 后自动测试、构建并发布，最新部署状态见 [GitHub Actions](https://github.com/huangyh0825-boop/velocity-water-city/actions)。
 
 TypeScript + Three.js + Vite 原创网页水上竞速原型。当前试玩版：4.75 km 六区样条水道、两条合法捷径、三处跳台、可编辑GLB水上摩托和骨骼车手、分区未来城市及水面/空中动态混音。保留三圈比赛、4 位 AI、实体碰撞、特技和有限氮气。
 
