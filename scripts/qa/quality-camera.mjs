@@ -1,0 +1,20 @@
+import{loadPlaywright}from'./qa-playwright.mjs';import{writeFileSync}from'node:fs';import assert from'node:assert/strict';
+const{chromium}=loadPlaywright(),b=await chromium.launch({channel:'msedge',headless:true}),result={};
+try{const p=await b.newPage({viewport:{width:1600,height:1000}});p.setDefaultTimeout(180000);await p.goto('http://127.0.0.1:5177/scripts/qa/vertical.html');await p.waitForFunction(()=>window.verticalQA);await p.evaluate(()=>window.verticalQA.ready());
+ await p.evaluate(()=>{const g=window.testGame;window.verticalQA.fixture(.06,null,25);g.paused=true;window.settle=()=>{for(let i=0;i<180;i++)g.camera.update(1/60,g.craft.model,false,g.flight.height,false,g.track.surface(g.craft.model).height);g.renderer.render(g.scene,g.camera.camera)};window.vector=()=>({view:g.camera.camera.getWorldDirection(new window.qaTHREE.Vector3()).toArray(),right:new window.qaTHREE.Vector3().setFromMatrixColumn(g.camera.camera.matrixWorld,0).toArray(),heading:g.craft.model.heading,state:g.camera.state,mode:g.renderer.domElement.dataset.mouseLook});window.buttons=[];window.addEventListener('mousemove',e=>window.buttons.push(e.buttons));});
+ let x=800,y=500;await p.mouse.click(x,y);await p.waitForFunction(()=>!!document.pointerLockElement);await p.evaluate(()=>window.settle());
+ for(const mode of['locked','window']){
+  if(mode==='window'){await p.keyboard.press('Escape');await p.evaluate(()=>window.testGame.renderer.domElement.requestPointerLock=()=>Promise.reject(new Error('QA embedded denial')));await p.mouse.click(x,y);await p.waitForFunction(()=>window.testGame.renderer.domElement.dataset.mouseLook==='window');await p.mouse.move(x+1,y);x++;}
+  const rows=[];
+  for(const[id,dx,dy]of[['left',-60,0],['right',60,0],['up',0,-40],['down',0,40]]){
+   await p.keyboard.press('c');await p.evaluate(()=>{window.testGame.camera.engage();window.settle()});const a=await p.evaluate(()=>window.vector());x+=dx;y+=dy;await p.mouse.move(x,y,{steps:4});await p.evaluate(()=>window.settle());const z=await p.evaluate(()=>window.vector()),horizontal=z.view.reduce((sum,v,i)=>sum+v*a.right[i],0),vertical=z.view[1]-a.view[1];
+   rows.push({id,dx,dy,horizontal,vertical,before:a,after:z});assert.equal(z.heading,a.heading);assert.ok(dx?horizontal*dx>0:vertical*dy>0,`${mode} ${id}`);
+  }result[mode]=rows;
+ }
+ result.noHeldButtons=await p.evaluate(()=>window.buttons.every(v=>v===0));assert.ok(result.noHeldButtons);
+ await p.mouse.wheel(0,120);assert.ok((await p.evaluate(()=>window.vector())).state.zoom>0);await p.keyboard.press('c');const restore=await p.evaluate(()=>{const g=window.testGame,a=g.camera.camera.position.clone();g.camera.update(1/60,g.craft.model,false,g.flight.height);const first=a.distanceTo(g.camera.camera.position);window.settle();return{first,free:g.camera.state.free}});assert.ok(!restore.free&&restore.first<3);result.restore=restore;
+ await p.keyboard.press('Escape');assert.equal((await p.evaluate(()=>window.vector())).mode,'idle');result.escape=true;
+ await p.mouse.click(x,y);await p.evaluate(()=>{const g=window.testGame;delete g.input.state;delete g.input.boost;g.paused=false});await p.keyboard.down('w');await p.keyboard.down('a');await p.mouse.move(x+25,y+15);result.simultaneous=await p.evaluate(()=>{const g=window.testGame,a={speed:g.craft.model.speed,heading:g.craft.model.heading,yaw:g.camera.state.yaw};for(let i=0;i<45;i++)window.verticalQA.step(false);return{a,b:{speed:g.craft.model.speed,heading:g.craft.model.heading,yaw:g.camera.state.yaw}}});await p.keyboard.up('w');await p.keyboard.up('a');assert.ok(result.simultaneous.b.speed>result.simultaneous.a.speed);assert.notEqual(result.simultaneous.a.heading,result.simultaneous.b.heading);assert.equal(result.simultaneous.a.yaw,result.simultaneous.b.yaw);
+ await p.keyboard.press('Escape');await p.screenshot({path:'docs/city-quality-repair/mouse-verified.png'});writeFileSync('docs/city-quality-repair/camera-tests.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+}finally{await b.close()}
+

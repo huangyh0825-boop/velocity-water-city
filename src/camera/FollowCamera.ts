@@ -9,7 +9,10 @@ export class FollowCamera {
  obstacles?:CameraObstacles;
  constructor(){this.camera.position.set(0,5.5,-11);}
  engage(){if(this.free)return;const delta=this.target.subVectors(this.camera.position,this.look);this.yaw=Math.atan2(delta.x,delta.z);this.pitch=THREE.MathUtils.clamp(Math.atan2(delta.y,Math.hypot(delta.x,delta.z)),.045,1.25);this.free=true;}
- orbit(dx:number,dy:number,sensitivity=1){this.engage();this.yaw+=dx*.0025*sensitivity;this.yaw=Math.atan2(Math.sin(this.yaw),Math.cos(this.yaw));this.pitch=THREE.MathUtils.clamp(this.pitch-dy*.0025*sensitivity,.045,1.25);}
+ orbit(dx:number,dy:number,sensitivity=1){this.engage();
+  // Orbit position is opposite the viewing direction. Screen-right must turn
+  // the final look vector right; negative mouse Y deliberately looks DOWN.
+  this.yaw-=dx*.0025*sensitivity;this.yaw=Math.atan2(Math.sin(this.yaw),Math.cos(this.yaw));this.pitch=THREE.MathUtils.clamp(this.pitch-dy*.0025*sensitivity,.045,1.25);}
  wheel(delta:number){this.engage();this.zoom=THREE.MathUtils.clamp(this.zoom+delta*.012,-5,12);}
  restore(){this.free=false;this.zoom=0;}
  get state(){return{free:this.free,yaw:this.yaw,pitch:this.pitch,zoom:this.zoom};}
