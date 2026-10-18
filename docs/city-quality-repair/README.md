@@ -12,7 +12,7 @@
 - 浏览器实跑：玩家和4名AI共5艇完成三圈，各通过72个检查点；玩家两条捷径都实际进入，记录到起跳和落水。
 - 桌面生产入口：W加速、S制动、重赛倒计时通过；鼠标移动后无Pointer Lock。手机尺寸下触控摇杆可见、鼠标镜头面板不存在。
 - [镜头实测记录与截图](../waterfront-life/camera-tests.json)、[三圈实跑记录](../waterfront-life/full-race/full-drive.json)、[性能原始数据](../waterfront-life/performance.json)、[回归日志](test-results.txt)。
-- GitHub 已授权账户识别为 `huangyh0825-boop`，但没有找到项目仓库，且本机未配置可用的 GitHub 命令行授权。代码已含 Pages 工作流和相对路径构建；上传及公开部署需要先确定仓库名。
+- 公开仓库已创建：[huangyh0825-boop/velocity-water-city](https://github.com/huangyh0825-boop/velocity-water-city)，Pages 来源已保存为 GitHub Actions。代码包含 Pages 工作流及相对路径构建；本机上传授权与首次部署正在进行，尚未验证上线网址。
 
 ## 1. 捷径：已确认的原因与局部修复
 
