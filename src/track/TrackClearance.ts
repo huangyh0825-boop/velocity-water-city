@@ -28,6 +28,11 @@ export class TrackClearance{
   });
  }
  intersects(box:StructureBox){return this.conflicts(box).length>0;}
+ /** Deck framing may touch its own conservative submerged-hull buffer, while
+  * remaining below the actual underside. Every other route/flight stays strict. */
+ underDeckClear(box:StructureBox,route:string|null,floor:number){
+  return box.y+box.height/2<=floor-.5&&this.conflicts(box).every(v=>v.kind==='surface'&&v.id===(route??'main')&&v.low>=floor-1.5);
+ }
  overhead(x:number,z:number,width:number,depth:number,heading:number,minimum:number){let y=minimum;for(let i=0;i<40&&this.intersects({x,y,z,width,depth,height:.8,heading});i++)y+=1;if(this.intersects({x,y,z,width,depth,height:.8,heading}))throw Error('No overhead clearance within structure adjustment limit');return y;}
 }
 const cache=new WeakMap<CityTrack,TrackClearance>();

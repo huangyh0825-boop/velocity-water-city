@@ -46,7 +46,7 @@ export class VerticalTrackView {
       part(new THREE.CylinderGeometry(.75,1.1,height,8),alloy,new THREE.Vector3(p.x,height/2,p.z));
       supported=true;
     }const beam={x:a.x,y:(a.y??0)-.85,z:a.z,width:a.width*2+5,height:.65,depth:1.6,heading:a.heading};
-     if(supported&&!clearance.intersects(beam))part(new THREE.BoxGeometry(beam.width,beam.height,beam.depth),dark,new THREE.Vector3(beam.x,beam.y,beam.z),beam.heading);
+     if(supported&&clearance.underDeckClear(beam,route.id,Math.min(a.y??0,b.y??0)))part(new THREE.BoxGeometry(beam.width,beam.height,beam.depth),dark,new THREE.Vector3(beam.x,beam.y,beam.z),beam.heading);
     }
    }
    if(vertices.length){const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.computeBoundingSphere();this.root.add(water.channel(geometry));

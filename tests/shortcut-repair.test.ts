@@ -1,5 +1,6 @@
 import{test}from'node:test';import assert from'node:assert/strict';
 import{CityTrack}from'../src/track/CityTrack';import{DrivingModel}from'../src/player/DrivingModel';import{FlightController}from'../src/player/FlightController';import{Ramps}from'../src/track/Ramps';import{RaceController}from'../src/race/RaceController';import{canalBanks}from'../src/track/CanalBanks';
+import{trackClearance}from'../src/track/TrackClearance';
 test('manual shortcut entry survives delayed centre-line separation, all speeds and approach lanes',()=>{
  const t=new CityTrack();for(const cut of t.shortcuts)for(const kmh of[40,100,160])for(const lane of[-3,0,3]){
   const m=new DrivingModel(),f=new FlightController(),ramps=new Ramps(t),start=cut.from-35/t.radius;t.spawn(m,start,lane);m.speed=kmh/3.6;m.vx=Math.sin(m.heading)*m.speed;m.vz=Math.cos(m.heading)*m.speed;ramps.place(m,f);
@@ -22,4 +23,9 @@ test('bank mouths contain no collapsed geometry and retain rails at separated he
 test('junction union does not open a distant wall or permit crossing vertical decks',()=>{
  const t=new CityTrack(),m=new DrivingModel(),cut=t.shortcuts[1],a=cut.from+(cut.to-cut.from)*.32;t.spawn(m,a);const p=t.routePoint(a,0,cut.id);Object.assign(m,p,{route:null,y:0});assert.equal(t.constrain(m),true);
  t.spawn(m,.2*Math.PI*2,80);assert.equal(t.constrain(m),true);assert.ok(t.contains(m));
+});
+test('real deck framing retains its supports without exempting other routes or flight space',()=>{
+ const t=new CityTrack(),c=trackClearance(t),cut=t.shortcuts[1],a=cut.from+(cut.to-cut.from)*.3,p=t.routePoint(a,0,cut.id),b={...p,y:p.y!-.85,width:17,height:.65,depth:1.6,heading:t.routeHeading(a,cut.id)};
+ assert.ok(c.intersects(b));assert.ok(c.underDeckClear(b,cut.id,p.y!));assert.ok(!c.underDeckClear({...b,y:p.y!+.1},cut.id,p.y!));assert.ok(!c.underDeckClear(b,null,p.y!));
+ const flight=c.volumes.find(v=>v.kind==='flight')!,box={x:(flight.ax+flight.bx)/2,z:(flight.az+flight.bz)/2,y:(flight.low+flight.high)/2,width:1,depth:1,height:1};assert.ok(!c.underDeckClear(box,null,box.y+10));
 });
