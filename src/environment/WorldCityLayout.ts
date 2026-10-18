@@ -27,16 +27,16 @@ export function worldCitySites(track:CityTrack):CitySite[]{
  reserved.forEach(reserve);
  // Preserve the authored waterfront platforms, advertisements and local transit.
  const sampleReserve=(s:CitySite)=>{const t=s.angle/TAU;return(t<.125||t>.995)&&s.layer!=='skyline';};
- function add(kind:CityModule,layer:CityLayer,t:number,offset:number,side:number,seed:number,route:string|null=null){
+ function add(kind:CityModule,layer:CityLayer,t:number,offset:number,side:number,seed:number,route:string|null=null,infill=false){
   const a=t*TAU,m=CITY_MODULES[kind],scaleXZ=layer==='waterfront'?.78:layer==='blocks'?.8+(seed%3)*.075:.68+(seed%4)*.055;
   const scaleY=layer==='skyline'?1.05+(seed%5)*.2:layer==='blocks'?.72+(seed%5)*.14:1;
   const heading=track.routeHeading(a,route),width=track.routeWidth(a,route);
   // Entrances look towards the water; the approved library's front faces local -Z.
   const orientation=heading+side*Math.PI/2;
-  for(let shift=0;shift<=150;shift+=3){
+  for(let shift=0;shift<=(infill?0:150);shift+=3){
    const p=track.routePoint(a,side*(width+offset+shift),route),local=sampleLocal(track,p);
    // Include authored entry canopies, trims, and contact shadows in the reserved box.
-   const s:CitySite={id:`world-${route??'main'}-${layer}-${side}-${seed}`,kind,layer,...local,rx:(m.rx+.3)*scaleXZ,rz:(m.rz+.3)*scaleXZ,heading:orientation-sampleHeading,scaleXZ,scaleY,radius:Math.hypot(m.rx,m.rz)*scaleXZ,angle:a,side,tint:seed%4};
+   const s:CitySite={id:`world-${infill?'infill-':''}${route??'main'}-${layer}-${side}-${seed}`,kind,layer,...local,rx:(m.rx+.3)*scaleXZ,rz:(m.rz+.3)*scaleXZ,heading:orientation-sampleHeading,scaleXZ,scaleY,radius:Math.hypot(m.rx,m.rz)*scaleXZ,angle:a,side,tint:seed%4};
    if(sampleReserve(s))return;
    if(clearance.intersects({x:p.x,z:p.z,y:(m.height*scaleY+2)/2,width:s.rx*2.12,depth:s.rz*2.12,height:m.height*scaleY+2,heading:orientation}))continue;
    if(cells(s).some(key=>(grid.get(key)??[]).some(r=>footprintsOverlap(s,r,2.5))))continue;
@@ -58,6 +58,17 @@ export function worldCitySites(track:CityTrack):CitySite[]{
  for(const [ci,cut]of track.shortcuts.entries())for(const side of [-1,1])for(let i=2;i<Math.floor(cut.length/38)-2;i++){
   const kinds:CityModule[]=ci?['ferry_terminal','commuter_hub','service_depot']:['service_depot','cooling_exchange','harbor_control'];
   add(kinds[i%kinds.length],'waterfront',(cut.from+(cut.to-cut.from)*(i+.3)*38/cut.length)/TAU,20,side,90000+ci*1000+(side+1)*200+i,cut.id);
+ }
+ // Complete selected genuinely empty civic plots with the SAME full-quality
+ // small-building library. No displacement of the approved city, no new towers.
+ for(const[di,d]of CITY_DISTRICTS.entries()){
+  let added=0;
+  const kinds:CityModule[]=d.id==='industrial'||d.id==='harbor'?['service_depot','harbor_control','drydock_service']:d.id==='science'?['service_depot','view_pavilion','energy_node']:d.id==='transit'?['harbor_control','service_depot','view_pavilion']:['service_arcade','view_pavilion','harbor_control'];
+  for(let i=0;i<Math.floor((d.to-d.from)*track.length/18)&&added<8;i++)for(const side of[-1,1])for(const offset of[22,39,57,78,96]){
+   if(added>=8)break;const n=sites.length,t=d.from+(i+.35)*18/track.length;
+   add(kinds[(i+(side>0?1:0))%kinds.length],'waterfront',t,offset,side,200000+di*100000+i*1000+(side>0?100:0)+offset,null,true);
+   if(sites.length>n)added++;
+  }
  }
  return sites;
 }

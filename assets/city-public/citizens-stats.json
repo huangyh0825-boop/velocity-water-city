@@ -1,0 +1,22 @@
+[
+  {
+    "name": "spectator-0",
+    "triangles": 11638,
+    "pose": "standing"
+  },
+  {
+    "name": "spectator-1",
+    "triangles": 11638,
+    "pose": "cheering"
+  },
+  {
+    "name": "spectator-2",
+    "triangles": 11638,
+    "pose": "walking"
+  },
+  {
+    "name": "spectator-3",
+    "triangles": 11638,
+    "pose": "waving"
+  }
+]

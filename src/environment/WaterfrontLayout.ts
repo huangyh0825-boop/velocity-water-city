@@ -4,8 +4,9 @@ import {trackClearance} from '../track/TrackClearance';
 import {footprintsOverlap,type CitySite,type Footprint} from './CityDensityLayout';
 import {siteWorld,districtAt} from './WorldCityLayout';
 import {cityServices} from './CityServicesLayout';
+import {publicGroundCells} from './CityVacancy';
 
-export type PocketKind='promenade'|'viewing'|'garden'|'service'|'courtyard'|'rest-stop';
+export type PocketKind='promenade'|'viewing'|'garden'|'service'|'courtyard'|'rest-stop'|'park'|'market'|'maintenance'|'transit-court'|'race-plaza';
 export interface WaterfrontPocket extends Footprint {id:string;kind:PocketKind;district:string;angle:number;side:number;route:string|null;seed:number}
 /** Designed pockets on existing dry quays and building forecourts. No track mutation. */
 export function waterfrontLayout(track:CityTrack,sites:CitySite[]){
@@ -59,6 +60,17 @@ export function waterfrontLayout(track:CityTrack,sites:CitySite[]){
   const area=districtAt(s.angle),district=area.id,t=s.angle/TAU,bin=Math.max(0,Math.min(5,Math.floor((t-area.from)/(area.to-area.from)*6))),key=`${district}-${bin}`;if((counts.get(key)??0)>=2)continue;
   const p=siteWorld(track,s),shift=s.rz+6.7;
   if(add({id:`forecourt-${s.id}`,kind:'courtyard',district,x:p.x-Math.sin(p.heading)*shift,z:p.z-Math.cos(p.heading)*shift,heading:p.heading,rx:Math.min(7,s.rx),rz:4.3,angle:s.angle,side:s.side,route:null,seed:1000+i}))counts.set(key,(counts.get(key)??0)+1);
+ }
+ // Fill actual vacant land beyond the narrow quay ribbon, including dry ground
+ // beside elevated canals. Larger plots are attempted first, then pocket courts.
+ // Existing authored spaces and all their entrances remain reserved above.
+ const groundCells=publicGroundCells(track,sites),land=new Set(groundCells.map(p=>`${Math.floor(p.x/5)}:${Math.floor(p.z/5)}`));
+ const grounded=(s:Footprint)=>{const c=Math.cos(s.heading),h=Math.sin(s.heading);for(const u of[-1,0,1])for(const v of[-1,0,1]){const x=s.x+c*s.rx*u+h*s.rz*v,z=s.z-h*s.rx*u+c*s.rz*v;if(!land.has(`${Math.floor(x/5)}:${Math.floor(z/5)}`))return false;}return true;};
+ for(const[rx,rz]of[[9,10],[7,8],[5,6],[3.8,4.5]])for(const[i,p]of groundCells.entries()){
+  if(i%2&&rx>7)continue;
+  const kind:PocketKind=p.district==='industrial'||p.district==='harbor'?'maintenance':p.district==='science'?'park':p.district==='transit'?'transit-court':p.district==='central'?(i%3?'market':'race-plaza'):i%3?'park':'race-plaza';
+  const s:WaterfrontPocket={...p,rx,rz,id:`civic-${rx}-${i}`,kind,route:null,seed:5000+i};
+  if(grounded(s))add(s);
  }
  return pockets;
 }

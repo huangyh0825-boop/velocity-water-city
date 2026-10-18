@@ -103,7 +103,8 @@ export class CityDensity {
   const materials=new Map([...this.library!.parts.values()].flatMap(list=>list.map(p=>[p.material.name,p.material] as const)));
   sample.traverse(o=>{if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(!materials.has(m.name))materials.set(m.name,m);});
   await this.services.load(materials);
-  if(!this.furnishings){this.furnishings=new CityFurnishings(this.track,this.sites,name=>materials.get(name),sample);this.root.add(this.furnishings.root);}
+  if(!this.furnishings){const citizens=await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}models/city-sample/public-citizens.glb`);if(this.disposed)return;
+   this.furnishings=new CityFurnishings(this.track,this.sites,name=>materials.get(name),sample,citizens.scene);this.root.add(this.furnishings.root);}
  }
  stats(){return {sites:this.sites.length,waterfront:this.sites.filter(s=>s.layer==='waterfront').length,blocks:this.sites.filter(s=>s.layer==='blocks').length,skyline:this.sites.filter(s=>s.layer==='skyline').length,lods:[0,1,2].map(t=>this.previous.filter(p=>p===t).length),mode:this.combined?'material-batch':'instanced',activeMeshes:this.combined?.meshes.length??[...this.batches.values()].filter(b=>b.used).reduce((n,b)=>n+b.meshes.length,0)};}
  private makeTerrain(){

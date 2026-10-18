@@ -1,0 +1,14 @@
+[
+  {
+    "position": "0.06",
+    "meanAbsoluteRGBByteError": 0.003851666666666667,
+    "pixelFractionAnyChannelDifferenceOver8": 0.000194375,
+    "sameResolution": true
+  },
+  {
+    "position": "0.535",
+    "meanAbsoluteRGBByteError": 0.004108125,
+    "pixelFractionAnyChannelDifferenceOver8": 0.00020625,
+    "sameResolution": true
+  }
+]

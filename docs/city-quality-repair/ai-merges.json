@@ -1,0 +1,54 @@
+[
+  {
+    "route": "tunnel-cut",
+    "merge": false,
+    "ai": "ai-1",
+    "entered": true,
+    "finished": true,
+    "steps": 907,
+    "contacts": 0,
+    "launches": 0,
+    "aiPassed": 15,
+    "playerPassed": 0,
+    "speed": 141.5725180682943
+  },
+  {
+    "route": "tunnel-cut",
+    "merge": true,
+    "ai": "ai-1",
+    "entered": false,
+    "finished": true,
+    "steps": 359,
+    "contacts": 110,
+    "launches": 0,
+    "aiPassed": 15,
+    "playerPassed": 15,
+    "speed": 154.6195729097786
+  },
+  {
+    "route": "harbor-cut",
+    "merge": false,
+    "ai": "ai-2",
+    "entered": true,
+    "finished": true,
+    "steps": 1689,
+    "contacts": 0,
+    "launches": 0,
+    "aiPassed": 21,
+    "playerPassed": 0,
+    "speed": 170
+  },
+  {
+    "route": "harbor-cut",
+    "merge": true,
+    "ai": "ai-2",
+    "entered": false,
+    "finished": true,
+    "steps": 309,
+    "contacts": 87,
+    "launches": 1,
+    "aiPassed": 21,
+    "playerPassed": 21,
+    "speed": 167.32166243520172
+  }
+]

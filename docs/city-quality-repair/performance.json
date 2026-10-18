@@ -1,0 +1,261 @@
+{
+  "method": "One Edge process, single page/context, sequential before/after production-compiled private entry. Baseline city-quality-repair-baseline 6338e0e. Identical 1600x1000 DPR1 standard quality, five racers frozen at t12, same camera transform/FOV52. 120 warmup +360 RAF samples, all retained. CPU is JS submission only, GPU is non-disjoint timer query, 1% low from slowest four frames of 360. renderer.info autoReset=false, one reset before each full frame; counts all depth, reflection and main passes exactly once. No video recording during performance. LoadMs is navigation to assets/ready, both versions await the same asset-ready barrier; load times also include cache and compilation variation.",
+  "results": [
+    {
+      "label": "before",
+      "id": "city-driver",
+      "loadMs": 28210,
+      "fps": 53.22766655819303,
+      "low1": 52.219321173205074,
+      "frameMs": 18.78722222223878,
+      "cpuMs": 12.084444443384806,
+      "gpuMs": 18.68768711111111,
+      "gpuSamples": 36,
+      "calls": 584,
+      "triangles": 58102434,
+      "memory": {
+        "geometries": 180,
+        "textures": 216
+      },
+      "heap": 307060631,
+      "lods": {
+        "sites": 1894,
+        "waterfront": 956,
+        "blocks": 546,
+        "skyline": 392,
+        "lods": [
+          266,
+          861,
+          767
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "label": "before",
+      "id": "city-distance",
+      "loadMs": 28210,
+      "fps": 40.67291071169035,
+      "low1": 40.24144867767458,
+      "frameMs": 24.58638888887233,
+      "cpuMs": 15.633055556068818,
+      "gpuMs": 24.489159111111114,
+      "gpuSamples": 36,
+      "calls": 776,
+      "triangles": 78687324,
+      "memory": {
+        "geometries": 180,
+        "textures": 216
+      },
+      "heap": 334039032,
+      "lods": {
+        "sites": 1894,
+        "waterfront": 956,
+        "blocks": 546,
+        "skyline": 392,
+        "lods": [
+          299,
+          803,
+          792
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "label": "before",
+      "id": "elevated-five",
+      "loadMs": 28210,
+      "fps": 73.02527485884407,
+      "low1": 66.66666666666667,
+      "frameMs": 13.693888888922002,
+      "cpuMs": 8.461944444808696,
+      "gpuMs": 13.561116444444442,
+      "gpuSamples": 36,
+      "calls": 429,
+      "triangles": 42211172,
+      "memory": {
+        "geometries": 180,
+        "textures": 216
+      },
+      "heap": 337270400,
+      "lods": {
+        "sites": 1894,
+        "waterfront": 956,
+        "blocks": 546,
+        "skyline": 392,
+        "lods": [
+          290,
+          646,
+          958
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "label": "before",
+      "id": "tunnel-five",
+      "loadMs": 28210,
+      "fps": 49.93757802746567,
+      "low1": 49.01960784671789,
+      "frameMs": 20.025,
+      "cpuMs": 13.774166667626965,
+      "gpuMs": 19.922204444444443,
+      "gpuSamples": 36,
+      "calls": 574,
+      "triangles": 60397153,
+      "memory": {
+        "geometries": 180,
+        "textures": 216
+      },
+      "heap": 293702615,
+      "lods": {
+        "sites": 1894,
+        "waterfront": 956,
+        "blocks": 546,
+        "skyline": 392,
+        "lods": [
+          334,
+          943,
+          617
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "label": "after",
+      "id": "city-driver",
+      "loadMs": 30947,
+      "fps": 49.29953576262442,
+      "low1": 48.543689281762475,
+      "frameMs": 20.28416666669978,
+      "cpuMs": 14.459166667362053,
+      "gpuMs": 20.165347555555556,
+      "gpuSamples": 36,
+      "calls": 728,
+      "triangles": 64661446,
+      "memory": {
+        "geometries": 330,
+        "textures": 178
+      },
+      "heap": 393774774,
+      "lods": {
+        "sites": 1942,
+        "waterfront": 1004,
+        "blocks": 546,
+        "skyline": 392,
+        "lods": [
+          273,
+          884,
+          785
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "label": "after",
+      "id": "city-distance",
+      "loadMs": 30947,
+      "fps": 38.06140573456115,
+      "low1": 36.23188406579561,
+      "frameMs": 26.27333333334989,
+      "cpuMs": 18.00055555510852,
+      "gpuMs": 26.158592000000002,
+      "gpuSamples": 36,
+      "calls": 920,
+      "triangles": 86398732,
+      "memory": {
+        "geometries": 330,
+        "textures": 178
+      },
+      "heap": 392043659,
+      "lods": {
+        "sites": 1942,
+        "waterfront": 1004,
+        "blocks": 546,
+        "skyline": 392,
+        "lods": [
+          307,
+          825,
+          810
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "label": "after",
+      "id": "elevated-five",
+      "loadMs": 30947,
+      "fps": 65.5618284465489,
+      "low1": 60.42296073595616,
+      "frameMs": 15.252777777777778,
+      "cpuMs": 10.817222221940757,
+      "gpuMs": 15.141802666666669,
+      "gpuSamples": 36,
+      "calls": 595,
+      "triangles": 48794484,
+      "memory": {
+        "geometries": 330,
+        "textures": 178
+      },
+      "heap": 417869107,
+      "lods": {
+        "sites": 1942,
+        "waterfront": 1004,
+        "blocks": 546,
+        "skyline": 392,
+        "lods": [
+          298,
+          669,
+          975
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "label": "after",
+      "id": "tunnel-five",
+      "loadMs": 30947,
+      "fps": 42.148644218669794,
+      "low1": 41.2796697727986,
+      "frameMs": 23.72555555552244,
+      "cpuMs": 16.33138888809416,
+      "gpuMs": 23.665038222222222,
+      "gpuSamples": 36,
+      "calls": 762,
+      "triangles": 75095201,
+      "memory": {
+        "geometries": 330,
+        "textures": 178
+      },
+      "heap": 418469063,
+      "lods": {
+        "sites": 1942,
+        "waterfront": 1004,
+        "blocks": 546,
+        "skyline": 392,
+        "lods": [
+          342,
+          966,
+          634
+        ],
+        "mode": "material-batch",
+        "activeMeshes": 9
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ]
+}

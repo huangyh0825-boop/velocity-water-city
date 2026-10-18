@@ -1,0 +1,290 @@
+[
+  {
+    "route": "tunnel-cut",
+    "kmh": 40,
+    "lane": -3,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 2767,
+    "min": 39.89400819239332,
+    "air": 0,
+    "passed": 14,
+    "routeIntent": "undefined",
+    "visited": [
+      "tunnel-cut"
+    ]
+  },
+  {
+    "route": "tunnel-cut",
+    "kmh": 40,
+    "lane": 0,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 2764,
+    "min": 39.89400819239332,
+    "air": 0,
+    "passed": 14,
+    "routeIntent": "undefined",
+    "visited": [
+      "tunnel-cut"
+    ]
+  },
+  {
+    "route": "tunnel-cut",
+    "kmh": 40,
+    "lane": 3,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 2766,
+    "min": 39.89400819239332,
+    "air": 0,
+    "passed": 14,
+    "routeIntent": "undefined",
+    "visited": [
+      "tunnel-cut"
+    ]
+  },
+  {
+    "route": "tunnel-cut",
+    "kmh": 100,
+    "lane": -3,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 1121,
+    "min": 99.883323335603,
+    "air": 0,
+    "passed": 14,
+    "routeIntent": "undefined",
+    "visited": [
+      "tunnel-cut"
+    ]
+  },
+  {
+    "route": "tunnel-cut",
+    "kmh": 100,
+    "lane": 0,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 1119,
+    "min": 99.883323335603,
+    "air": 0,
+    "passed": 14,
+    "routeIntent": "undefined",
+    "visited": [
+      "tunnel-cut"
+    ]
+  },
+  {
+    "route": "tunnel-cut",
+    "kmh": 100,
+    "lane": 3,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 1121,
+    "min": 99.883323335603,
+    "air": 0,
+    "passed": 14,
+    "routeIntent": "undefined",
+    "visited": [
+      "tunnel-cut"
+    ]
+  },
+  {
+    "route": "tunnel-cut",
+    "kmh": 160,
+    "lane": -3,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 708,
+    "min": 159.8320278582765,
+    "air": 0,
+    "passed": 14,
+    "routeIntent": "undefined",
+    "visited": [
+      "tunnel-cut"
+    ]
+  },
+  {
+    "route": "tunnel-cut",
+    "kmh": 160,
+    "lane": 0,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 706,
+    "min": 159.8320278582765,
+    "air": 0,
+    "passed": 14,
+    "routeIntent": "undefined",
+    "visited": [
+      "tunnel-cut"
+    ]
+  },
+  {
+    "route": "tunnel-cut",
+    "kmh": 160,
+    "lane": 3,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 708,
+    "min": 159.8320278582765,
+    "air": 0,
+    "passed": 14,
+    "routeIntent": "undefined",
+    "visited": [
+      "tunnel-cut"
+    ]
+  },
+  {
+    "route": "harbor-cut",
+    "kmh": 40,
+    "lane": -3,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 5444,
+    "min": 39.893542869194334,
+    "air": 0,
+    "passed": 20,
+    "routeIntent": "undefined",
+    "visited": [
+      "harbor-cut"
+    ]
+  },
+  {
+    "route": "harbor-cut",
+    "kmh": 40,
+    "lane": 0,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 5442,
+    "min": 39.379688918200614,
+    "air": 0,
+    "passed": 20,
+    "routeIntent": "undefined",
+    "visited": [
+      "harbor-cut"
+    ]
+  },
+  {
+    "route": "harbor-cut",
+    "kmh": 40,
+    "lane": 3,
+    "entered": true,
+    "exit": true,
+    "walls": 0,
+    "steps": 5442,
+    "min": 39.37966604430219,
+    "air": 0,
+    "passed": 20,
+    "routeIntent": "undefined",
+    "visited": [
+      "harbor-cut"
+    ]
+  },
+  {
+    "route": "harbor-cut",
+    "kmh": 100,
+    "lane": -3,
+    "entered": true,
+    "exit": true,
+    "walls": 48,
+    "steps": 2232,
+    "min": 79.69454154588217,
+    "air": 2,
+    "passed": 20,
+    "routeIntent": "undefined",
+    "visited": [
+      "harbor-cut"
+    ]
+  },
+  {
+    "route": "harbor-cut",
+    "kmh": 100,
+    "lane": 0,
+    "entered": true,
+    "exit": true,
+    "walls": 39,
+    "steps": 2229,
+    "min": 79.003168724109,
+    "air": 2,
+    "passed": 20,
+    "routeIntent": "undefined",
+    "visited": [
+      "harbor-cut"
+    ]
+  },
+  {
+    "route": "harbor-cut",
+    "kmh": 100,
+    "lane": 3,
+    "entered": true,
+    "exit": true,
+    "walls": 50,
+    "steps": 2232,
+    "min": 76.8879962157542,
+    "air": 2,
+    "passed": 20,
+    "routeIntent": "undefined",
+    "visited": [
+      "harbor-cut"
+    ]
+  },
+  {
+    "route": "harbor-cut",
+    "kmh": 160,
+    "lane": -3,
+    "entered": true,
+    "exit": true,
+    "walls": 82,
+    "steps": 1488,
+    "min": 77.07443454099342,
+    "air": 2,
+    "passed": 20,
+    "routeIntent": "undefined",
+    "visited": [
+      "harbor-cut"
+    ]
+  },
+  {
+    "route": "harbor-cut",
+    "kmh": 160,
+    "lane": 0,
+    "entered": true,
+    "exit": true,
+    "walls": 89,
+    "steps": 1488,
+    "min": 78.31111117733374,
+    "air": 2,
+    "passed": 20,
+    "routeIntent": "undefined",
+    "visited": [
+      "harbor-cut"
+    ]
+  },
+  {
+    "route": "harbor-cut",
+    "kmh": 160,
+    "lane": 3,
+    "entered": true,
+    "exit": true,
+    "walls": 71,
+    "steps": 1476,
+    "min": 79.45702568423897,
+    "air": 1,
+    "passed": 20,
+    "routeIntent": "undefined",
+    "visited": [
+      "harbor-cut"
+    ]
+  }
+]

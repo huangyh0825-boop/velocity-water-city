@@ -16,7 +16,9 @@ export function interiorSites(sites:CitySite[]){
  // Match the sample's occupied service bays in every district. All other glass
  // still uses the same parallax room shader, including at intermediate distances.
  const groups=new Map<string,CitySite[]>();for(const s of sites)if(s.id.startsWith('world-')&&INTERIOR_BAYS[s.kind]&&s.layer==='waterfront'){const key=`${districtAt(s.angle).id}-${s.kind}-${s.side}`,list=groups.get(key)??[];if(list.length<2)list.push(s);groups.set(key,list);}
- return [...original,...[...groups.values()].flat()];
+ const selected=[...original,...[...groups.values()].flat()];
+ for(const s of sites)if(s.id.startsWith('world-infill-')&&INTERIOR_BAYS[s.kind]&&!selected.includes(s))selected.push(s);
+ return selected;
 }
 interface Piece {matrix:THREE.Matrix4;site:CitySite}
 interface Pool {mesh:THREE.InstancedMesh;pieces:Piece[]}

@@ -1,0 +1,16 @@
+import{loadPlaywright}from'./qa-playwright.mjs';import{writeFileSync}from'node:fs';import assert from'node:assert/strict';
+const{chromium}=loadPlaywright(),browser=await chromium.launch({channel:'msedge',headless:true}),rows=[];
+try{const p=await browser.newPage({viewport:{width:1600,height:1000}});p.setDefaultTimeout(180000);await p.goto('http://127.0.0.1:5177/scripts/qa/vertical.html');await p.waitForFunction(()=>window.verticalQA);await p.evaluate(()=>window.verticalQA.ready());
+ for(const route of['tunnel-cut','harbor-cut'])for(const merge of[false,true]){
+  const row=await p.evaluate(({route,merge})=>{
+   const g=window.testGame,Q=window.verticalQA,cut=g.track.shortcuts.find(s=>s.id===route),ai=g.ai[route==='tunnel-cut'?0:1];Q.fixture(merge?.88:(cut.to+180/g.track.radius)/(Math.PI*2),merge?route:null,merge?30:0,false);
+   const m=g.craft.model,start=merge?cut.to-cut.length*.12/g.track.radius:cut.from-90/g.track.radius;g.track.spawn(ai.model,start,0);ai.model.speed=merge?30:40;ai.model.vx=Math.sin(ai.model.heading)*ai.model.speed;ai.model.vz=Math.cos(ai.model.heading)*ai.model.speed;ai.route=null;g.ramps.place(ai.model,ai.flight);g.race.racers.find(r=>r.id===ai.id).passed=Math.floor(start/(Math.PI*2)*24);g.race.syncPosition(ai.id,ai.model);
+   if(merge){g.race.player.passed=Math.floor((cut.from+(cut.to-cut.from)*.88)/(Math.PI*2)*24);g.race.syncPosition('player',m);g.race.player.route=route;m.route=route;}else Object.defineProperty(g.input,'state',{configurable:true,get:()=>({throttle:0,brake:1,steer:0})});
+   const render=g.renderer.render.bind(g.renderer),lights=[g.heroLighting,...g.aiLighting],saved=lights.map(l=>({l,update:l.update,updateVisible:l.updateVisible}));let draw=false;g.renderer.render=(...a)=>{if(draw)return render(...a)};saved.forEach(({l,update,updateVisible})=>{l.update=function(...a){if(draw)return update.apply(this,a)};l.updateVisible=function(...a){if(draw)return updateVisible.apply(this,a)}});
+   let entered=false,finished=false,steps=0,contacts=0,launches=0;for(;steps<7000;steps++){draw=steps%90===0;Q.step(true);if(ai.model.route===route)entered=true;if(ai.flight.takeoff)launches++;contacts+=g.collisions.lastContacts;if((merge||entered)&&g.track.project(ai.model,null).angle>cut.to+90/g.track.radius&&(!merge||g.track.project(m,null).angle>cut.to+90/g.track.radius)){finished=true;break;}}
+   g.renderer.render=render;saved.forEach(({l,update,updateVisible})=>{l.update=update;l.updateVisible=updateVisible});g.paused=true;
+   const h=ai.model.heading,c=g.camera.camera;c.position.set(ai.model.x-Math.sin(h)*14,ai.flight.height+6,ai.model.z-Math.cos(h)*14);c.lookAt(ai.model.x+Math.sin(h)*7,ai.flight.height+1,ai.model.z+Math.cos(h)*7);g.citySample.update(12,c);g.renderer.render(g.scene,c);document.body.classList.add('qa-hide-hud');
+   return{route,merge,ai:ai.id,entered,finished,steps,contacts,launches,aiPassed:g.race.racers.find(r=>r.id===ai.id).passed,playerPassed:g.race.player.passed,speed:ai.model.speed*3.6};
+  },{route,merge});rows.push(row);await p.screenshot({path:`docs/city-quality-repair/${route}-${merge?'simultaneous-merge':'ai-complete'}.jpg`,quality:90});console.log(row);assert.ok(row.finished&&(merge||row.entered));
+ }writeFileSync('docs/city-quality-repair/ai-merges.json',JSON.stringify(rows,null,2));
+}finally{await browser.close()}

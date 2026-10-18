@@ -1,0 +1,7 @@
+{
+  "status": "aborted_not_comparable",
+  "reason": "Final repeat showed the unchanged baseline at 17.58 FPS instead of the earlier 53.23 FPS. GPU utilization was 98 percent, 75 C and approximately 80 W, with another 3D application also running. This does not isolate its contribution, so the contaminated run is not used as a before/after comparison. Only this task's benchmark process tree was stopped; user applications were untouched.",
+  "partialBaselineFPS": {"city-driver":17.58,"city-distance":13.24,"elevated-five":23.77},
+  "retainedPerformanceJSON": "performance.json contains the earlier completed sequential comparison, before the final below-deck support-only adjustment; all current functional tests and the three-lap browser race were repeated after that adjustment.",
+  "limitation": "No reliable exact-final-build FPS claim under isolated GPU load. Earlier measured environment cost was about 6 to 16 percent; actual user play depends on concurrent GPU workload."
+}

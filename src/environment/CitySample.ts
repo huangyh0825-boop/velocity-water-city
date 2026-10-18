@@ -18,8 +18,10 @@ export class CitySample {
  private contacts:SurfaceContacts;private interiorRevision=-1;private geometryRevision=-1;
  private shadowAnchor=new THREE.Vector3(Infinity,0,Infinity);
  private quayMaterial?:THREE.MeshStandardMaterial;
+ private originalRender:THREE.Scene['onBeforeRender'];private renderHook:THREE.Scene['onBeforeRender'];
  readonly density:CityDensity;
- constructor(scene:THREE.Scene,private track:CityTrack,private ready:(loaded:boolean)=>void){
+ constructor(private scene:THREE.Scene,private track:CityTrack,private ready:(loaded:boolean)=>void){
+  this.originalRender=scene.onBeforeRender;this.renderHook=(...args)=>{this.originalRender.apply(scene,args);this.density.furnishings?.prepare(args[2],this.sun,args[0]);};scene.onBeforeRender=this.renderHook;
   this.root.name='blender-waterfront-sample';const a=CITY_SAMPLE.center*TAU,p=track.point(a);this.root.position.set(p.x,0,p.z);this.root.rotation.y=track.heading(a);scene.add(this.root);
   this.contacts=new SurfaceContacts(track);
   this.density=new CityDensity(track);
@@ -99,6 +101,7 @@ export class CitySample {
   sun.shadow.autoUpdate=false;sun.shadow.needsUpdate=true;
  }
  dispose(){
+  if(this.scene.onBeforeRender===this.renderHook)this.scene.onBeforeRender=this.originalRender;
   this.disposed=true;this.generation++;this.ready(false);this.releaseSigns();this.atmosphere?.dispose();this.contacts.dispose();this.density.dispose();this.reflection?.dispose();this.quayMaterial?.dispose();this.root.removeFromParent();
   this.shadowWater.removeFromParent();this.shadowWater.geometry.dispose();(this.shadowWater.material as THREE.Material).dispose();
   for(const asset of this.cache.values())void asset.then(g=>g.traverse(o=>{

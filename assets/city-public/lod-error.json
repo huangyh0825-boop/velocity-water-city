@@ -1,0 +1,58 @@
+[
+  {
+    "pose": 0,
+    "tier": "mid",
+    "triangles": 3490,
+    "maximumMetres": 0.007887260988354683,
+    "rmsMetres": 0.0009824075105632317
+  },
+  {
+    "pose": 0,
+    "tier": "far",
+    "triangles": 1396,
+    "maximumMetres": 0.02364596351981163,
+    "rmsMetres": 0.0022908036895070757
+  },
+  {
+    "pose": 1,
+    "tier": "mid",
+    "triangles": 3490,
+    "maximumMetres": 0.0298136118799448,
+    "rmsMetres": 0.001295343158083614
+  },
+  {
+    "pose": 1,
+    "tier": "far",
+    "triangles": 1396,
+    "maximumMetres": 0.04284112527966499,
+    "rmsMetres": 0.002963898676037077
+  },
+  {
+    "pose": 2,
+    "tier": "mid",
+    "triangles": 3490,
+    "maximumMetres": 0.013173656538128853,
+    "rmsMetres": 0.0010633357418046076
+  },
+  {
+    "pose": 2,
+    "tier": "far",
+    "triangles": 1396,
+    "maximumMetres": 0.022094080224633217,
+    "rmsMetres": 0.002356933402188103
+  },
+  {
+    "pose": 3,
+    "tier": "mid",
+    "triangles": 3490,
+    "maximumMetres": 0.033813152462244034,
+    "rmsMetres": 0.001326100807824242
+  },
+  {
+    "pose": 3,
+    "tier": "far",
+    "triangles": 1396,
+    "maximumMetres": 0.039337996393442154,
+    "rmsMetres": 0.0028353719869206734
+  }
+]
