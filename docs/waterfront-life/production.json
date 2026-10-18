@@ -1,13 +1,17 @@
 {
   "noQA": true,
-  "accelerated": 103,
-  "braked": 0,
-  "escape": true,
-  "reset": true,
+  "mouseControlPanel": 0,
+  "pointerLockAfterMouse": false,
+  "accelerated": 86,
+  "braked": 19,
+  "reset": {
+    "_type": "JSHandle",
+    "_guid": "handle@10ac440426b7e72fb2194ee77266adcb"
+  },
   "errors": [],
-  "coarse": {
+  "mobile": {
     "coarse": true,
-    "cameraControlsHidden": true,
+    "cameraControls": 0,
     "touch": true
   }
 }

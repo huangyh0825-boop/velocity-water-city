@@ -32,7 +32,6 @@ import {distanceGain} from '../audio/AudioMix';
 import {HeroLighting} from '../player/HeroLighting';
 import {VerticalTrackView} from '../track/VerticalTrackView';
 import {LoadingScreen} from '../ui/LoadingScreen';
-import {CameraControls} from '../controls/CameraControls';
 import {CameraObstacles} from '../camera/CameraObstacles';
 export class Game {
   readonly ready:Promise<void>;
@@ -66,7 +65,6 @@ export class Game {
   private bodies: BoatBody[] = [{ id: 'player', model: this.craft.model }, ...this.ai.map(ai => ({ id: ai.id, model: ai.model }))];
   private race!: RaceController;
   private camera = new FollowCamera();
-  private cameraControls:CameraControls;
   private heroLighting=new HeroLighting();
   private aiLighting=this.aiCraft.map((_,i)=>new HeroLighting(3+i));
   private input = new InputController();
@@ -97,7 +95,6 @@ export class Game {
     this.renderer.domElement.className = 'game-canvas';
     this.renderer.domElement.setAttribute('aria-label', '3D 城市水道三圈竞速场景');
     root.append(this.renderer.domElement);
-    this.cameraControls=new CameraControls(this.renderer.domElement,this.camera,root,this.input.clear);
     loading.complete('renderer');loading.complete('track');
     this.ai.forEach(ai=>ai.setRamps(this.ramps));
     this.restart();
@@ -252,7 +249,6 @@ export class Game {
   };
   dispose() {
     this.disposed=true;
-    this.cameraControls.dispose();
     this.heroLighting.dispose();this.aiLighting.forEach(light=>light.dispose());
     this.citySample.dispose();
     this.craft.dispose();this.aiCraft.forEach(c=>c.dispose());this.reflection?.dispose();

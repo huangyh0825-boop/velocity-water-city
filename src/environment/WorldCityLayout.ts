@@ -62,10 +62,10 @@ export function worldCitySites(track:CityTrack):CitySite[]{
  // Complete selected genuinely empty civic plots with the SAME full-quality
  // small-building library. No displacement of the approved city, no new towers.
  for(const[di,d]of CITY_DISTRICTS.entries()){
-  let added=0;
+  let added=0;const target=d.id==='central'?8:10;
   const kinds:CityModule[]=d.id==='industrial'||d.id==='harbor'?['service_depot','harbor_control','drydock_service']:d.id==='science'?['service_depot','view_pavilion','energy_node']:d.id==='transit'?['harbor_control','service_depot','view_pavilion']:['service_arcade','view_pavilion','harbor_control'];
-  for(let i=0;i<Math.floor((d.to-d.from)*track.length/18)&&added<8;i++)for(const side of[-1,1])for(const offset of[22,39,57,78,96]){
-   if(added>=8)break;const n=sites.length,t=d.from+(i+.35)*18/track.length;
+  for(let i=0;i<Math.floor((d.to-d.from)*track.length/18)&&added<target;i++)for(const side of[-1,1])for(const offset of[22,39,57,78,96]){
+   if(added>=target)break;const n=sites.length,t=d.from+(i+.35)*18/track.length;
    add(kinds[(i+(side>0?1:0))%kinds.length],'waterfront',t,offset,side,200000+di*100000+i*1000+(side>0?100:0)+offset,null,true);
    if(sites.length>n)added++;
   }

@@ -1,6 +1,6 @@
-# 滨水公共空间与直接鼠标观察修订
+# 历史记录：滨水公共空间与鼠标自由视角版本
 
-基线：waterfront-life-baseline / aeb908e。保留原有建筑、赛道、水面、赛车资产与玩法。本轮只修改环境布置、鼠标输入及对应说明和测试，没有部署。
+这是已经归档的旧版本验收记录，曾包含鼠标自由视角功能。当前版本已完全移除该功能；请以 [最新镜头与城市验收](../city-quality-repair/README.md) 为准。性能原始数据仍可用于旧基线比较。
 
 [同视角对照与驾驶截图](index.html) · [完整布置坐标](layout.json) · [鼠标测试](camera-tests.json) · [正式入口测试](production.json) · [内置浏览器记录](iab-tests.json) · [性能原始数据](performance.json) · [三圈比赛记录](full-race/full-drive.json) · [145 项自动化测试](test-results.txt)
 

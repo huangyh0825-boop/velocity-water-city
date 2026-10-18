@@ -1,24 +1,28 @@
-import{loadPlaywright}from'./qa-playwright.mjs';import{writeFileSync}from'node:fs';import assert from'node:assert/strict';
-const{chromium}=loadPlaywright(),b=await chromium.launch({channel:'msedge',headless:true}),r={};
-try{const p=await b.newPage({viewport:{width:1600,height:1000}}),errors=[];p.on('pageerror',e=>errors.push(e.message));
-await p.goto('http://127.0.0.1:5177/scripts/qa/vertical.html');await p.waitForFunction(()=>window.verticalQA);await p.evaluate(()=>window.verticalQA.ready());
-await p.evaluate(()=>{const g=window.testGame;window.verticalQA.fixture(.06,null,25,false);g.hud.update(g.craft.model,g.race,false,g.nitro,g.flight,g.tricks);g.paused=true;window.mouseEvents=[];window.addEventListener('mousemove',e=>window.mouseEvents.push({buttons:e.buttons,dx:e.movementX,dy:e.movementY}));window.cstep=()=>{for(let i=0;i<120;i++)g.camera.update(1/60,g.craft.model,false,g.flight.height,false,g.track.surface(g.craft.model).height);g.renderer.render(g.scene,g.camera.camera);};});
-const state=()=>p.evaluate(()=>({camera:window.testGame.camera.state,heading:window.testGame.craft.model.heading,mode:window.testGame.renderer.domElement.dataset.mouseLook}));
-await p.mouse.click(800,500);await p.waitForFunction(()=>!!document.pointerLockElement);const a=await state();await p.mouse.move(1000,380,{steps:12});await p.evaluate(()=>window.cstep());const c=await state();r.pointerLock={before:a,after:c,buttons:await p.evaluate(()=>window.mouseEvents.slice(-12).map(e=>e.buttons))};assert.equal(c.mode,'locked');assert.notEqual(c.camera.yaw,a.camera.yaw);assert.ok(c.camera.pitch>a.camera.pitch);assert.equal(a.heading,c.heading);assert.ok(r.pointerLock.buttons.every(v=>v===0));await p.screenshot({path:'docs/waterfront-life/mouse-locked.png'});
-await p.mouse.wheel(0,120);assert.ok((await state()).camera.zoom>0);await p.keyboard.press('c');await p.evaluate(()=>window.cstep());assert.equal((await state()).camera.free,false);r.cAndWheel=true;
-await p.keyboard.press('Escape');await p.waitForFunction(()=>!document.pointerLockElement);assert.equal((await state()).mode,'idle');r.escape=true;
-// Actual rejected request, matching the observed embedded-browser failure path.
-await p.evaluate(()=>window.testGame.renderer.domElement.requestPointerLock=()=>Promise.reject(new DOMException('QA denied','NotAllowedError')));
-await p.mouse.click(800,500);await p.waitForFunction(()=>window.testGame.renderer.domElement.dataset.mouseLook==='window');await p.mouse.move(700,490);const f=await state();await p.mouse.move(980,380,{steps:12});await p.evaluate(()=>window.cstep());const f2=await state();r.deniedCapture={before:f,after:f2,hint:await p.locator('.camera-controls small').textContent()};assert.notEqual(f.camera.yaw,f2.camera.yaw);assert.ok(f2.camera.pitch>f.camera.pitch);assert.equal(f.heading,f2.heading);await p.screenshot({path:'docs/waterfront-life/mouse-fallback.png'});
-await p.keyboard.press('Escape');const idle=await state();await p.mouse.move(750,600);assert.deepEqual(await state(),idle);await p.mouse.click(750,600);await p.waitForFunction(()=>window.testGame.renderer.domElement.dataset.mouseLook==='window');r.reenter=true;
-const hud=await p.locator('.speedometer').boundingBox();await p.mouse.move(hud.x+30,hud.y+40);const overHUD=await state();await p.mouse.move(hud.x+150,hud.y+70,{steps:10});assert.notEqual((await state()).camera.yaw,overHUD.camera.yaw);r.passiveHUDDoesNotBlockLook=true;
-await p.evaluate(()=>{const g=window.testGame;delete g.input.state;delete g.input.boost;window.gsteps=n=>{g.paused=false;for(let i=0;i<n;i++)window.verticalQA.step(false);g.paused=true;};});
-const h0=(await state()).heading;await p.keyboard.down('a');await p.evaluate(()=>window.gsteps(30));await p.keyboard.up('a');const h1=(await state()).heading;await p.keyboard.down('d');await p.evaluate(()=>window.gsteps(60));await p.keyboard.up('d');const h2=(await state()).heading;const v0=await p.evaluate(()=>window.testGame.craft.model.speed);await p.keyboard.down('s');await p.evaluate(()=>window.gsteps(60));await p.keyboard.up('s');const v1=await p.evaluate(()=>window.testGame.craft.model.speed);await p.keyboard.down('w');await p.evaluate(()=>window.gsteps(90));await p.keyboard.up('w');const v2=await p.evaluate(()=>window.testGame.craft.model.speed);r.keyboard={h0,h1,h2,v0,v1,v2};assert.ok(h1>h0&&h2<h1&&v1<v0&&v2>v1);
-await p.keyboard.press('c');await p.evaluate(()=>window.cstep());assert.equal((await state()).camera.free,false);await p.keyboard.press('Escape');
-r.obstacles=await p.evaluate(()=>{const g=window.testGame,T=window.qaTHREE,rows=[];for(const[t,route]of[[.45,'tunnel-cut'],[.29,null],[.34,null]]){window.verticalQA.fixture(t,route,0);g.camera.orbit(250,-500);window.cstep();const pivot=new T.Vector3(g.craft.model.x,g.flight.height+.9,g.craft.model.z),length=pivot.distanceTo(g.camera.camera.position),safe=g.camera.obstacles.distance(pivot,g.camera.camera.position);rows.push({t,route,length,safe,clear:safe>=length-.05,aboveWater:g.camera.camera.position.y>=g.track.surface(g.craft.model).height+.35});}return rows;});assert.ok(r.obstacles.every(o=>o.clear&&o.aboveWater));
-await p.locator('.camera-controls input[type=checkbox]').uncheck();const off=await state();await p.mouse.click(800,500);await p.mouse.move(1000,400);assert.deepEqual(await state(),off);r.disabled=true;
-await p.locator('.camera-controls input[type=checkbox]').check();await p.evaluate(()=>{const g=window.testGame;g.renderer.domElement.requestPointerLock=undefined;});await p.mouse.click(800,500);assert.equal((await state()).mode,'window');r.missingAPIFallback=true;
-await p.keyboard.press('Escape');await p.evaluate(()=>window.testGame.renderer.domElement.requestPointerLock=()=>undefined);await p.mouse.click(800,500);await p.waitForFunction(()=>window.testGame.renderer.domElement.dataset.mouseLook==='window');r.silentRequestTimeout=true;
-await p.keyboard.press('Escape');await p.evaluate(()=>window.testGame.renderer.domElement.requestPointerLock=()=>new Promise((resolve,reject)=>window.rejectCapture=reject));await p.mouse.click(800,500);await p.keyboard.press('Escape');await p.evaluate(()=>window.rejectCapture(new Error('late denial')));await p.waitForTimeout(1400);assert.equal((await state()).mode,'idle');r.cancelledRequestStaysIdle=true;
-assert.deepEqual(errors,[]);r.errors=errors;writeFileSync('docs/waterfront-life/camera-tests.json',JSON.stringify(r,null,2));console.log(JSON.stringify(r));
-}finally{await b.close()}
+import{loadPlaywright}from'./qa-playwright.mjs';
+import{writeFileSync}from'node:fs';
+import assert from'node:assert/strict';
+const{chromium}=loadPlaywright(),browser=await chromium.launch({channel:'msedge',headless:true});
+try{
+ const page=await browser.newPage({viewport:{width:1600,height:1000}}),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:5177/scripts/qa/vertical.html');
+ await page.waitForFunction(()=>window.verticalQA,null,{timeout:120000});
+ await page.evaluate(()=>window.verticalQA.ready());
+ await page.evaluate(()=>{
+  const g=window.testGame;window.verticalQA.fixture(.06,null,25,false);g.paused=true;
+  window.pointerLockRequests=0;g.renderer.domElement.requestPointerLock=()=>{window.pointerLockRequests++;return Promise.reject(Error('unexpected pointer lock'));};
+ });
+ await page.waitForTimeout(1200);
+ const snapshot=()=>page.evaluate(()=>({position:window.testGame.camera.camera.position.toArray(),direction:window.testGame.camera.camera.getWorldDirection(new window.qaTHREE.Vector3()).toArray(),locked:!!document.pointerLockElement,requests:window.pointerLockRequests,panel:!!document.querySelector('.camera-controls')}));
+ const before=await snapshot();
+ await page.mouse.click(800,500);await page.mouse.move(250,170,{steps:20});await page.mouse.wheel(0,480);
+ await page.waitForTimeout(900);
+ const after=await snapshot(),distance=Math.hypot(...after.position.map((v,i)=>v-before.position[i])),dot=after.direction.reduce((s,v,i)=>s+v*before.direction[i],0);
+ assert.ok(distance<.015,`camera moved ${distance}m without craft motion`);
+ assert.ok(dot>.99999,`camera direction changed (${dot})`);
+ assert.equal(after.locked,false);assert.equal(after.requests,0);assert.equal(after.panel,false);assert.deepEqual(errors,[]);
+ const result={before,after,cameraDisplacementMetres:distance,directionDot:dot,pointerLockRequests:after.requests,mouseControlsPanel:after.panel,pageErrors:errors};
+ await page.screenshot({path:'docs/waterfront-life/camera-follow.png'});
+ writeFileSync('docs/waterfront-life/camera-tests.json',JSON.stringify(result,null,2));
+ console.log(JSON.stringify(result));
+}finally{await browser.close();}

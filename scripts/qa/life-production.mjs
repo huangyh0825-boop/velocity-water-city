@@ -1,6 +1,30 @@
-import{loadPlaywright}from'./qa-playwright.mjs';import{writeFileSync}from'node:fs';import assert from'node:assert/strict';
-const{chromium}=loadPlaywright(),b=await chromium.launch({channel:'msedge',headless:true}),r={};
-try{const p=await b.newPage({viewport:{width:1600,height:1000}}),errors=[];p.on('pageerror',e=>errors.push(e.message));await p.goto('http://127.0.0.1:5174/');await p.waitForSelector('.boot-screen',{state:'detached',timeout:120000});await p.waitForTimeout(3500);
-r.noQA=await p.evaluate(()=>!window.testGame);await p.mouse.click(800,500);await p.waitForFunction(()=>!!document.pointerLockElement);await p.mouse.move(920,450,{steps:10});await p.keyboard.down('w');await p.waitForTimeout(3500);await p.keyboard.up('w');r.accelerated=Number(await p.locator('#speed').textContent());await p.keyboard.press('c');await p.screenshot({path:'docs/waterfront-life/live-driving.jpg',quality:88});await p.keyboard.down('s');await p.waitForTimeout(1000);await p.keyboard.up('s');r.braked=Number(await p.locator('#speed').textContent());assert.ok(r.accelerated>0&&r.braked<r.accelerated);await p.keyboard.press('Escape');await p.waitForFunction(()=>!document.pointerLockElement);r.escape=true;await p.locator('#reset').click();r.reset=true;assert.deepEqual(errors,[]);r.errors=errors;await p.close();
-const c=await b.newContext({viewport:{width:1000,height:600},hasTouch:true,isMobile:true,deviceScaleFactor:1}),m=await c.newPage();await m.goto('http://127.0.0.1:5174/');await m.waitForSelector('.boot-screen',{state:'detached',timeout:120000});r.coarse={coarse:await m.evaluate(()=>matchMedia('(pointer:coarse)').matches),cameraControlsHidden:!(await m.locator('.camera-controls').isVisible()),touch:await m.locator('.touch.steering').isVisible()};assert.ok(r.coarse.coarse&&r.coarse.cameraControlsHidden&&r.coarse.touch);await c.close();writeFileSync('docs/waterfront-life/production.json',JSON.stringify(r,null,2));console.log(r);
-}finally{await b.close()}
+import{loadPlaywright}from'./qa-playwright.mjs';
+import{writeFileSync}from'node:fs';
+import assert from'node:assert/strict';
+const{chromium}=loadPlaywright(),browser=await chromium.launch({channel:'msedge',headless:true}),result={};
+try{
+ const page=await browser.newPage({viewport:{width:1600,height:1000}}),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:5174/');
+ await page.waitForSelector('.boot-screen',{state:'detached',timeout:120000});
+ await page.waitForTimeout(1500);
+ result.noQA=await page.evaluate(()=>!window.testGame);
+ result.mouseControlPanel=await page.locator('.camera-controls').count();
+ await page.mouse.click(800,500);await page.mouse.move(350,260,{steps:12});await page.mouse.wheel(0,360);
+ result.pointerLockAfterMouse=await page.evaluate(()=>!!document.pointerLockElement);
+ await page.keyboard.down('w');await page.waitForTimeout(3000);await page.keyboard.up('w');
+ result.accelerated=Number(await page.locator('#speed').textContent());
+ await page.screenshot({path:'docs/waterfront-life/live-driving.jpg',quality:88});
+ await page.keyboard.down('s');await page.waitForTimeout(1000);await page.keyboard.up('s');
+ result.braked=Number(await page.locator('#speed').textContent());
+ assert.ok(result.accelerated>0&&result.braked<result.accelerated);
+ assert.equal(result.pointerLockAfterMouse,false);assert.equal(result.mouseControlPanel,0);
+ await page.locator('#reset').click();
+ result.reset=await page.waitForFunction(()=>/^[123]$/.test(document.querySelector('#countdown strong')?.textContent??''));
+ assert.deepEqual(errors,[]);result.errors=errors;await page.close();
+ const context=await browser.newContext({viewport:{width:1000,height:600},hasTouch:true,isMobile:true,deviceScaleFactor:1}),mobile=await context.newPage();
+ await mobile.goto('http://127.0.0.1:5174/');await mobile.waitForSelector('.boot-screen',{state:'detached',timeout:120000});
+ result.mobile={coarse:await mobile.evaluate(()=>matchMedia('(pointer:coarse)').matches),cameraControls:await mobile.locator('.camera-controls').count(),touch:await mobile.locator('.touch.steering').isVisible()};
+ assert.ok(result.mobile.coarse&&result.mobile.cameraControls===0&&result.mobile.touch);
+ await context.close();writeFileSync('docs/waterfront-life/production.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+}finally{await browser.close();}

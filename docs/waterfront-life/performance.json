@@ -4,20 +4,20 @@
     {
       "label": "before",
       "id": "city-driver",
-      "loadMs": 26201,
-      "fps": 54.847113670493655,
-      "low1": 50.377833787184855,
-      "frameMs": 18.232500000049672,
-      "cpuMs": 9.577222221924199,
-      "gpuMs": 18.126933333333334,
+      "loadMs": 26615,
+      "fps": 51.632890150937925,
+      "low1": 48.840048818722146,
+      "frameMs": 19.367500000033115,
+      "cpuMs": 9.322777776999606,
+      "gpuMs": 19.329137777777778,
       "gpuSamples": 36,
-      "calls": 558,
-      "triangles": 56847914,
+      "calls": 584,
+      "triangles": 58102434,
       "memory": {
-        "geometries": 167,
-        "textures": 173
+        "geometries": 180,
+        "textures": 216
       },
-      "heap": 309037465,
+      "heap": 418515281,
       "lods": {
         "sites": 1894,
         "waterfront": 956,
@@ -36,20 +36,20 @@
     {
       "label": "before",
       "id": "city-distance",
-      "loadMs": 26201,
-      "fps": 41.74251823345042,
-      "low1": 39.5256916926208,
-      "frameMs": 23.956388888839218,
-      "cpuMs": 12.717499999619193,
-      "gpuMs": 23.85507555555556,
+      "loadMs": 26615,
+      "fps": 39.51874945115434,
+      "low1": 37.77148250730414,
+      "frameMs": 25.304444444427887,
+      "cpuMs": 11.885555555588668,
+      "gpuMs": 25.233379555555562,
       "gpuSamples": 36,
-      "calls": 750,
-      "triangles": 77089720,
+      "calls": 776,
+      "triangles": 78687324,
       "memory": {
-        "geometries": 167,
-        "textures": 173
+        "geometries": 180,
+        "textures": 216
       },
-      "heap": 302378794,
+      "heap": 418595690,
       "lods": {
         "sites": 1894,
         "waterfront": 956,
@@ -68,20 +68,20 @@
     {
       "label": "before",
       "id": "elevated-five",
-      "loadMs": 26201,
-      "fps": 76.29058235125255,
-      "low1": 67.56756761518815,
-      "frameMs": 13.107777777810892,
-      "cpuMs": 6.468888889170355,
-      "gpuMs": 13.010687999999998,
+      "loadMs": 26615,
+      "fps": 70.64780108735643,
+      "low1": 63.29113925244445,
+      "frameMs": 14.15472222218911,
+      "cpuMs": 6.86722222202354,
+      "gpuMs": 13.96471466666667,
       "gpuSamples": 36,
-      "calls": 403,
-      "triangles": 41285836,
+      "calls": 429,
+      "triangles": 42211172,
       "memory": {
-        "geometries": 167,
-        "textures": 173
+        "geometries": 180,
+        "textures": 216
       },
-      "heap": 272300873,
+      "heap": 292912855,
       "lods": {
         "sites": 1894,
         "waterfront": 956,
@@ -100,20 +100,20 @@
     {
       "label": "before",
       "id": "tunnel-five",
-      "loadMs": 26201,
-      "fps": 53.69768204991495,
-      "low1": 49.07975461917412,
-      "frameMs": 18.622777777827448,
-      "cpuMs": 10.522500000976853,
-      "gpuMs": 18.550016000000003,
+      "loadMs": 26615,
+      "fps": 48.297512678019835,
+      "low1": 45.610034213725356,
+      "frameMs": 20.705000000033113,
+      "cpuMs": 10.212777777844005,
+      "gpuMs": 20.58706488888889,
       "gpuSamples": 36,
-      "calls": 548,
-      "triangles": 57627461,
+      "calls": 574,
+      "triangles": 60397153,
       "memory": {
-        "geometries": 167,
-        "textures": 173
+        "geometries": 180,
+        "textures": 216
       },
-      "heap": 296480301,
+      "heap": 282183599,
       "lods": {
         "sites": 1894,
         "waterfront": 956,
@@ -132,29 +132,29 @@
     {
       "label": "after",
       "id": "city-driver",
-      "loadMs": 21427,
-      "fps": 51.71150724666035,
-      "low1": 48.72107186711815,
-      "frameMs": 19.338055555605226,
-      "cpuMs": 12.262777777430085,
-      "gpuMs": 19.190072888888892,
+      "loadMs": 28712,
+      "fps": 47.745991326107166,
+      "low1": 45.19774009777404,
+      "frameMs": 20.944166666683223,
+      "cpuMs": 11.347222222470576,
+      "gpuMs": 20.818488888888886,
       "gpuSamples": 36,
-      "calls": 584,
-      "triangles": 58102434,
+      "calls": 730,
+      "triangles": 64662466,
       "memory": {
-        "geometries": 180,
-        "textures": 216
+        "geometries": 330,
+        "textures": 178
       },
-      "heap": 392641413,
+      "heap": 465314488,
       "lods": {
-        "sites": 1894,
-        "waterfront": 956,
+        "sites": 1952,
+        "waterfront": 1014,
         "blocks": 546,
         "skyline": 392,
         "lods": [
-          266,
-          861,
-          767
+          273,
+          889,
+          790
         ],
         "mode": "material-batch",
         "activeMeshes": 9
@@ -164,29 +164,29 @@
     {
       "label": "after",
       "id": "city-distance",
-      "loadMs": 21427,
-      "fps": 39.6314277222357,
-      "low1": 37.70028274364896,
-      "frameMs": 25.232499999966887,
-      "cpuMs": 15.979722222437461,
-      "gpuMs": 25.05801955555556,
+      "loadMs": 28712,
+      "fps": 36.90490835276582,
+      "low1": 33.81234150976003,
+      "frameMs": 27.09666666669978,
+      "cpuMs": 14.370833333498902,
+      "gpuMs": 26.939790222222225,
       "gpuSamples": 36,
-      "calls": 776,
-      "triangles": 78687324,
+      "calls": 922,
+      "triangles": 86399752,
       "memory": {
-        "geometries": 180,
-        "textures": 216
+        "geometries": 330,
+        "textures": 178
       },
-      "heap": 392566402,
+      "heap": 484341369,
       "lods": {
-        "sites": 1894,
-        "waterfront": 956,
+        "sites": 1952,
+        "waterfront": 1014,
         "blocks": 546,
         "skyline": 392,
         "lods": [
-          299,
-          803,
-          792
+          307,
+          830,
+          815
         ],
         "mode": "material-batch",
         "activeMeshes": 9
@@ -196,29 +196,29 @@
     {
       "label": "after",
       "id": "elevated-five",
-      "loadMs": 21427,
-      "fps": 70.86474675662103,
-      "low1": 64.10256409644101,
-      "frameMs": 14.111388888955116,
-      "cpuMs": 9.083888889683617,
-      "gpuMs": 14.024163555555559,
+      "loadMs": 28712,
+      "fps": 63.98748689152013,
+      "low1": 50.25125626635574,
+      "frameMs": 15.628055555539,
+      "cpuMs": 8.73249999905626,
+      "gpuMs": 15.511722666666673,
       "gpuSamples": 36,
-      "calls": 429,
-      "triangles": 42211172,
+      "calls": 597,
+      "triangles": 48649904,
       "memory": {
-        "geometries": 180,
-        "textures": 216
+        "geometries": 330,
+        "textures": 178
       },
-      "heap": 403091914,
+      "heap": 481955825,
       "lods": {
-        "sites": 1894,
-        "waterfront": 956,
+        "sites": 1952,
+        "waterfront": 1014,
         "blocks": 546,
         "skyline": 392,
         "lods": [
-          290,
-          646,
-          958
+          302,
+          671,
+          979
         ],
         "mode": "material-batch",
         "activeMeshes": 9
@@ -228,29 +228,29 @@
     {
       "label": "after",
       "id": "tunnel-five",
-      "loadMs": 21427,
-      "fps": 48.34550923932529,
-      "low1": 39.840637436007846,
-      "frameMs": 20.684444444461,
-      "cpuMs": 13.925833333366446,
-      "gpuMs": 20.612949333333333,
+      "loadMs": 28712,
+      "fps": 41.135805290521624,
+      "low1": 39.643211074338836,
+      "frameMs": 24.309722222222224,
+      "cpuMs": 12.484166666782565,
+      "gpuMs": 24.165831111111117,
       "gpuSamples": 36,
-      "calls": 574,
-      "triangles": 60397153,
+      "calls": 762,
+      "triangles": 75017185,
       "memory": {
-        "geometries": 180,
-        "textures": 216
+        "geometries": 330,
+        "textures": 178
       },
-      "heap": 285999192,
+      "heap": 512108921,
       "lods": {
-        "sites": 1894,
-        "waterfront": 956,
+        "sites": 1952,
+        "waterfront": 1014,
         "blocks": 546,
         "skyline": 392,
         "lods": [
-          334,
-          943,
-          617
+          344,
+          972,
+          636
         ],
         "mode": "material-batch",
         "activeMeshes": 9

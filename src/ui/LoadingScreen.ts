@@ -5,7 +5,7 @@ export class LoadingScreen {
  private panel:HTMLElement;private stage:HTMLElement;private fill:HTMLElement;private label:HTMLElement;
  constructor(root:HTMLElement){
   this.panel=document.createElement('section');this.panel.className='boot-screen';this.panel.setAttribute('aria-label','游戏加载');
-  this.panel.innerHTML=`<div class="boot-art" aria-hidden="true"></div><div class="boot-card"><small>AURORA RACEWAY / SYSTEM START</small><h1>极速水城<span>未来竞速</span></h1><p class="boot-english">VELOCITY / WATER CITY</p><div class="boot-stage" aria-live="polite">初始化竞速系统</div><div class="boot-track" role="progressbar" aria-label="已完成的启动任务" aria-valuemin="0" aria-valuemax="100"><i></i></div><div class="boot-progress">0% · 0 / 9 项任务</div><p class="boot-tip">正在准备完整城市与五名选手。首次启动需要解码高质量资源。<br>WASD 驾驶 · Shift 氮气 · 空格 特技 · 鼠标观察 · C 恢复镜头</p><button type="button" hidden>重新加载资源</button></div>`;
+  this.panel.innerHTML=`<div class="boot-art" aria-hidden="true"></div><div class="boot-card"><small>AURORA RACEWAY / SYSTEM START</small><h1>极速水城<span>未来竞速</span></h1><p class="boot-english">VELOCITY / WATER CITY</p><div class="boot-stage" aria-live="polite">初始化竞速系统</div><div class="boot-track" role="progressbar" aria-label="已完成的启动任务" aria-valuemin="0" aria-valuemax="100"><i></i></div><div class="boot-progress">0% · 0 / 9 项任务</div><p class="boot-tip">正在准备完整城市与五名选手。首次启动需要解码高质量资源。<br>WASD 驾驶 · Shift 氮气 · 空格 特技</p><button type="button" hidden>重新加载资源</button></div>`;
   root.append(this.panel);this.stage=this.panel.querySelector('.boot-stage')!;this.fill=this.panel.querySelector('.boot-track i')!;this.label=this.panel.querySelector('.boot-progress')!;
   this.panel.querySelector('button')!.onclick=()=>location.reload();
  }

@@ -5,9 +5,9 @@ test('empty-land audit covers every district and large blanks are broken into de
  assert.equal(after.districts.length,6);assert.ok(after.freeArea<before.freeArea*.62);assert.ok(after.plots[0].area<before.plots[0].area*.12);
  for(const d of CITY_DISTRICTS)for(const side of[-1,1])assert.ok(spaces.filter(p=>p.id.startsWith('civic-')&&p.district===d.id&&p.side===side).length>20);
 });
-test('48 infill buildings retain authored sample modules and eligible occupied interiors',()=>{
- const infill=sites.filter(s=>s.id.startsWith('world-infill-')),interiors=interiorSites(sites);assert.equal(infill.length,48);
- for(const d of CITY_DISTRICTS)assert.equal(infill.filter(s=>districtAt(s.angle).id===d.id).length,8);
+test('58 infill buildings retain authored sample modules and eligible occupied interiors',()=>{
+ const infill=sites.filter(s=>s.id.startsWith('world-infill-')),interiors=interiorSites(sites);assert.equal(infill.length,58);
+ for(const d of CITY_DISTRICTS)assert.equal(infill.filter(s=>districtAt(s.angle).id===d.id).length,d.id==='central'?8:10);
  for(const s of infill)if(INTERIOR_BAYS[s.kind])assert.ok(interiors.includes(s));
 });
 test('four anatomical Blender poses and a shared fabric normal are actually exported',()=>{
