@@ -1,0 +1,96 @@
+{
+  "method": "Actual production-compiled Game.frame, default live grid, four AI plus player, all collision/ramp/race rules. GPU rendering skipped only during accelerated functional timing; restored for screenshots. Times are in-game race seconds, not browser processing time. Separate FPS test retains full rendering.",
+  "results": [
+    {
+      "mode": "parked-player",
+      "steps": 20506,
+      "computeMs": 7679.79999999702,
+      "elapsed": 341.75000000001785,
+      "playerPassed": 0,
+      "racers": [
+        {
+          "id": "ai-1",
+          "name": "霓虹 / NEON",
+          "passed": 72,
+          "finish": 269.98333333341645,
+          "maxKmh": 225,
+          "authorizedPeak": 270,
+          "energy": 13.099999999999746
+        },
+        {
+          "id": "ai-2",
+          "name": "脉冲 / PULSE",
+          "passed": 72,
+          "finish": 303.6500000000525,
+          "maxKmh": 200,
+          "authorizedPeak": 240.00000000000003,
+          "energy": 16.433333333333174
+        },
+        {
+          "id": "ai-3",
+          "name": "极光 / AURORA",
+          "passed": 72,
+          "finish": 325.38333333336607,
+          "maxKmh": 180,
+          "authorizedPeak": 216,
+          "energy": 3.4333333333332128
+        },
+        {
+          "id": "ai-4",
+          "name": "回声 / ECHO",
+          "passed": 72,
+          "finish": 341.75000000001785,
+          "maxKmh": 160,
+          "authorizedPeak": 192,
+          "energy": 16.299999999999976
+        }
+      ]
+    },
+    {
+      "mode": "racing-player",
+      "steps": 20467,
+      "computeMs": 7365.79999999702,
+      "elapsed": 341.10000000001844,
+      "playerPassed": 71,
+      "racers": [
+        {
+          "id": "ai-1",
+          "name": "霓虹 / NEON",
+          "passed": 72,
+          "finish": 269.9666666667498,
+          "maxKmh": 225,
+          "authorizedPeak": 270,
+          "energy": 12.733333333333078
+        },
+        {
+          "id": "ai-2",
+          "name": "脉冲 / PULSE",
+          "passed": 72,
+          "finish": 303.21666666671956,
+          "maxKmh": 200,
+          "authorizedPeak": 240.00000000000003,
+          "energy": 16.066666666666507
+        },
+        {
+          "id": "ai-3",
+          "name": "极光 / AURORA",
+          "passed": 72,
+          "finish": 326.86666666669805,
+          "maxKmh": 180,
+          "authorizedPeak": 216,
+          "energy": 3.066666666666546
+        },
+        {
+          "id": "ai-4",
+          "name": "回声 / ECHO",
+          "passed": 72,
+          "finish": 341.10000000001844,
+          "maxKmh": 160,
+          "authorizedPeak": 192,
+          "energy": 0
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

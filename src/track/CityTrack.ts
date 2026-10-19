@@ -152,7 +152,12 @@ export class CityTrack extends Track {
  override raceAngle(p:Point,route:string|null){const a=this.project(p,route).angle;return a>Math.PI?a-TAU:a;}
  override crossesGate(before:Point,after:Point,index:number,route?:string|null){
   const angle=this.checkpointAngle(index),poses=[this.at(angle),...this.shortcuts.filter(s=>angle>s.from&&angle<s.to).map(s=>this.at(angle,s.samples))];
-  return poses.some(g=>{if(route!==undefined&&g.branch!==route)return false;const tx=Math.sin(g.heading),tz=Math.cos(g.heading),a=(before.x-g.x)*tx+(before.z-g.z)*tz,b=(after.x-g.x)*tx+(after.z-g.z)*tz;if(a>=0||b<0||b-a<1e-8)return false;const t=-a/(b-a),x=before.x+(after.x-before.x)*t,z=before.z+(after.z-before.z)*t,y=before.y===undefined||after.y===undefined?undefined:before.y+(after.y-before.y)*t,floor=this.heightAt(angle,g.branch);return (y===undefined||(y>=floor-.8&&y<=floor+24))&&Math.abs((x-g.x)*tz-(z-g.z)*tx)<=g.width&&this.contains({x,z});});
+  // A shortcut tag can be acquired while its mouth still overlaps the main
+  // canal. Always accept an actual forward crossing of the main-road gate;
+  // otherwise a player who stays on that road can get stuck at CP12 forever.
+  // Shortcut-only gates still require a legally acquired branch, so spawning
+  // into an unentered shortcut cannot grant checkpoint credit.
+  return poses.some(g=>{if(g.branch!==null&&route!==undefined&&g.branch!==route)return false;const tx=Math.sin(g.heading),tz=Math.cos(g.heading),a=(before.x-g.x)*tx+(before.z-g.z)*tz,b=(after.x-g.x)*tx+(after.z-g.z)*tz;if(a>=0||b<0||b-a<1e-8)return false;const t=-a/(b-a),x=before.x+(after.x-before.x)*t,z=before.z+(after.z-before.z)*t,y=before.y===undefined||after.y===undefined?undefined:before.y+(after.y-before.y)*t,floor=this.heightAt(angle,g.branch);return (y===undefined||(y>=floor-.8&&y<=floor+24))&&Math.abs((x-g.x)*tz-(z-g.z)*tx)<=g.width&&this.contains({x,z});});
  }
  private physicalProjection(model:Point,preferred=this.project(model)){
   if(model.y===undefined)return preferred;
