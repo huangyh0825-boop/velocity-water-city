@@ -1,0 +1,17 @@
+import{test}from'node:test';import assert from'node:assert/strict';import{gzipSync}from'node:zlib';import{LoadingManager}from'three';import{readWithActivity}from'../src/player/readWithActivity';import{fetchRuntimeModel}from'../src/player/ModelTransport';import{assetWaitExpired,assetProgress,watchAssetActivity}from'../src/core/AssetActivity';
+test('download activity tracking preserves every streamed byte, including gzip input',async()=>{
+ const raw=Buffer.from(Array.from({length:15000},(_,i)=>(i*31)%256)),packed=gzipSync(raw),chunks=[packed.subarray(0,13),packed.subarray(13,80),packed.subarray(80)],stream=new ReadableStream<Uint8Array>({start(c){chunks.forEach(b=>c.enqueue(b));c.close();}});let updates=0;
+ const actual=await readWithActivity(new Response(stream),()=>updates++);assert.deepEqual(Buffer.from(actual),packed);assert.ok(updates>=1);assert.equal((await readWithActivity(new Response(null),()=>{})).byteLength,0);
+});
+test('model downloads remain valid beyond two minutes while bytes arrive, but idle downloads still fail and clean up',async t=>{
+ class FakeWorker{static current:FakeWorker;onmessage?:(e:MessageEvent)=>void;onerror?:(e:ErrorEvent)=>void;terminated=0;constructor(){FakeWorker.current=this;}postMessage(){}terminate(){this.terminated++;}}
+ const original=globalThis.Worker;Object.defineProperty(globalThis,'Worker',{configurable:true,writable:true,value:FakeWorker});t.after(()=>{if(original)globalThis.Worker=original;else delete(globalThis as{Worker?:typeof Worker}).Worker;});let clock=0,id=0;const tasks=new Map<number,{at:number;call:()=>void}>();
+ t.mock.method(globalThis,'setTimeout',((call:()=>void,delay:number)=>{const token=++id;tasks.set(token,{at:clock+delay,call});return token;}) as unknown as typeof setTimeout);t.mock.method(globalThis,'clearTimeout',((token:number)=>tasks.delete(Number(token))) as unknown as typeof clearTimeout);
+ const advance=(ms:number)=>{clock+=ms;for(const[token,task]of[...tasks])if(task.at<=clock){tasks.delete(token);task.call();}};
+ const pending=fetchRuntimeModel('https://game.test/model.glb.gz'),active=FakeWorker.current;advance(119000);active.onmessage!({data:{progress:true}}as MessageEvent);advance(119000);assert.equal(active.terminated,0);assert.equal(tasks.size,1);const data=new Uint8Array([1,2,3]).buffer;active.onmessage!({data:{data,transportBytes:3}}as MessageEvent);assert.equal(await pending,data);assert.equal(active.terminated,1);assert.equal(tasks.size,0);
+ const idle=fetchRuntimeModel('https://game.test/model.glb.gz'),stalled=FakeWorker.current;advance(120001);await assert.rejects(idle,/没有进展/);assert.equal(stalled.terminated,1);assert.equal(tasks.size,0);
+});
+test('city loading progress resets inactivity checks without removing the finite overall startup limit',t=>{
+ let now=0;t.mock.method(performance,'now',()=>now);assetProgress();const manager=new LoadingManager();let previousCalls=0;const previous=()=>previousCalls++;manager.onProgress=previous;const release=watchAssetActivity(manager);assert.equal(assetWaitExpired(0,119999),false);assert.equal(assetWaitExpired(0,120001),true);
+ now=119000;manager.itemStart('texture');manager.itemEnd('texture');assert.equal(previousCalls,1);assert.equal(assetWaitExpired(0,238999),false);assert.equal(assetWaitExpired(0,239001),true);now=590000;assetProgress();assert.equal(assetWaitExpired(0,600001),true);release();assert.equal(manager.onProgress,previous);
+});

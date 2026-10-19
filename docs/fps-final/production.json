@@ -1,7 +1,7 @@
 {
   "desktop": {
     "quality": "画质 · 标准",
-    "speed": 82,
+    "speed": 81,
     "reset": true,
     "overflow": false,
     "qaHooks": false,
@@ -11,7 +11,7 @@
   },
   "touch": {
     "quality": "画质 · 低",
-    "speed": 81,
+    "speed": 82,
     "reset": true,
     "overflow": false,
     "qaHooks": false,

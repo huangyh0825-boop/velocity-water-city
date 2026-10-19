@@ -2,7 +2,7 @@
 self.onmessage=async(event:MessageEvent<string>)=>{
  try{
   const response=await fetch(event.data);if(!response.ok)throw Error(`模型下载失败 (${response.status})`);
-  let data=await response.arrayBuffer();const bodyBytes=data.byteLength;
+  let data=await readWithActivity(response,()=>self.postMessage({progress:true}));const bodyBytes=data.byteLength;
   // A server may set Content-Encoding:gzip and let fetch decompress for us.
   // Decoded body size must not be reported as compressed network transfer.
   const timing=performance.getEntriesByName(event.data).at(-1) as PerformanceResourceTiming|undefined;
@@ -11,3 +11,4 @@ self.onmessage=async(event:MessageEvent<string>)=>{
   self.postMessage({data,transportBytes,bodyBytes},{transfer:[data]});
  }catch(error){self.postMessage({error:String(error)});}
 };
+import{readWithActivity}from'./readWithActivity';

@@ -4,7 +4,7 @@ try{
  for(const mobile of [false,true]){
   const p=await browser.newPage({viewport:mobile?{width:844,height:390}:{width:1280,height:720},deviceScaleFactor:1,isMobile:mobile,hasTouch:mobile}),errors=[],failed=[];
   p.on('pageerror',e=>errors.push(String(e)));p.on('response',r=>{if(r.status()>=400)failed.push({url:r.url(),status:r.status()})});
-  await p.goto(entry,{waitUntil:'commit'});await p.waitForFunction(()=>!!document.querySelector('#status')&&!document.querySelector('.boot-screen'),null,{timeout:180000});await p.waitForFunction(()=>document.querySelector('#status')?.textContent.includes('下一检查点'),null,{timeout:20000});
+  await p.goto(entry,{waitUntil:'commit'});await p.waitForFunction(()=>!!document.querySelector('.boot-failed')||!!document.querySelector('#status')&&!document.querySelector('.boot-screen'),null,{timeout:600000});assert.equal(await p.locator('.boot-failed').count(),0,'Game startup failed');await p.waitForFunction(()=>document.querySelector('#status')?.textContent.includes('下一检查点'),null,{timeout:20000});
   const quality=await p.locator('#quality').innerText();assert.equal(quality,mobile?'画质 · 低':'画质 · 标准');
   if(mobile){const box=await p.locator('[data-action=throttle]').boundingBox(),cdp=await p.context().newCDPSession(p);await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:box.x+box.width/2,y:box.y+box.height/2}]});await p.waitForTimeout(1800);await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
   else{await p.keyboard.down('w');await p.waitForTimeout(1800);await p.keyboard.up('w');}

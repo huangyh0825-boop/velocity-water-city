@@ -34,9 +34,11 @@ import {LoadingScreen} from '../ui/LoadingScreen';
 import {CameraObstacles} from '../camera/CameraObstacles';
 import {yieldToBrowser} from './yieldToBrowser';
 import {RenderPassMaterials} from './RenderPassMaterials';
+import {watchAssetActivity,assetWaitExpired} from './AssetActivity';
 export class Game {
   readonly ready:Promise<void>;
   private initialized=false;private disposed=false;
+  private releaseAssetActivity=watchAssetActivity();
   private renderer: THREE.WebGLRenderer;
   private renderPassMaterials:RenderPassMaterials;
   private scene = createScene();
@@ -110,15 +112,16 @@ export class Game {
     this.frameId = requestAnimationFrame(this.frame);
   }
   private async initialize(){
+    const startupStarted=performance.now(),racers=[this.craft,...this.aiCraft];
     const wait=async(check:()=>boolean,error:()=>string)=>{
-      const start=performance.now();while(!check()){
-        if(this.disposed)throw Error('启动已取消');const reason=error();if(reason)throw Error(reason);
-        if(performance.now()-start>120000)throw Error('资源加载超时，请检查本地服务后重试');
+      while(!check()){
+        if(this.disposed)throw Error('启动已取消');const reason=error()||racers.find(c=>c.assetError)?.assetError;if(reason)throw Error(reason);
+        if(assetWaitExpired(startupStarted))throw Error('资源下载长时间没有进展，请检查网络后重试');
         await new Promise(resolve=>setTimeout(resolve,40));
       }
     };
     this.loading.begin('city');await wait(()=>this.citySample.loaded,()=>this.citySample.error||this.citySample.density.error);this.loading.complete('city');
-    this.loading.begin('racers');const racers=[this.craft,...this.aiCraft];await wait(()=>racers.every(c=>c.assetLoaded),()=>racers.map(c=>c.assetError).find(Boolean)??'');this.loading.complete('racers');
+    this.loading.begin('racers');await wait(()=>racers.every(c=>c.assetLoaded),()=>racers.map(c=>c.assetError).find(Boolean)??'');this.loading.complete('racers');
     this.loading.begin('textures');const textures=new Set<THREE.Texture>();
     this.scene.traverse(o=>{if(o instanceof THREE.Mesh||o instanceof THREE.Points)for(const m of Array.isArray(o.material)?o.material:[o.material]){
       for(const value of Object.values(m))if(value instanceof THREE.Texture)textures.add(value);
@@ -250,6 +253,7 @@ export class Game {
   };
   dispose() {
     this.disposed=true;
+    this.releaseAssetActivity();
     this.renderPassMaterials.dispose();
     this.heroLighting.dispose();this.aiLighting.forEach(light=>light.dispose());
     this.citySample.dispose();
