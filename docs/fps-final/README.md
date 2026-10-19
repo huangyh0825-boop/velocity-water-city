@@ -31,7 +31,7 @@
 
 ## 功能验证
 
-- 170 项自动化测试、TypeScript 检查和最终生产构建通过。
+- 173 项自动化测试、TypeScript 检查和最终生产构建通过。
 - 默认与拥挤发车的 AI 三圈测试通过。实际 Game.frame 浏览器复测中，四艘 AI 均通过 72 次合法检查点：最快 4:29.97–4:29.98，第二艘 5:03.22–5:03.65，第三艘 5:25.38–5:26.87，最慢 5:41.10–5:41.75。
 - 两条捷径的主路/捷径四条完整路径及 24 组低速改道、折返通过；合法水面没有误触边界或位置纠正。
 - 生产页面的电脑键盘与手机触屏、重开倒计时、加载失败重试，以及无私有 QA 入口、无脚本错误/404 检查通过。
@@ -54,3 +54,5 @@ node scripts/qa/fps-final-production.mjs
 ```
 
 GitHub Pages 入口：[电脑与手机试玩](https://huangyh0825-boop.github.io/velocity-water-city/)。源码、验收报告与运行资源一并提交到原仓库；部署状态见 [GitHub Actions](https://github.com/huangyh0825-boop/velocity-water-city/actions)，线上实测结果另存于本地验收输出。
+
+线上模型下载还捕获到 net::ERR_CONNECTION_CLOSED。模型传输现使用 4 MiB HTTP Range 分段，每片最多三次尝试，已完成片段不重复下载；不支持 Range 的服务器仍可返回完整响应。新增测试核对重试后的全部字节、截断响应重试及编码响应兼容性。原始模型和纹理没有改动。

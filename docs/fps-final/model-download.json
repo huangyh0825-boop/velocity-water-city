@@ -1,0 +1,23 @@
+{
+  "method": "Actual Edge worker code and public GitHub Pages model responses; byte hash compared to the verified full packed GLB. No replaced/mocked asset bytes.",
+  "results": [
+    {
+      "name": "rider",
+      "elapsedMs": 11724.89999999106,
+      "hash": "341b43b779cda0341d017bf4bd4b759b160824c11e31c8769da71a2a049098d2",
+      "progress": 42,
+      "sourceBytes": 17362994,
+      "requests": 5,
+      "ranged": true
+    },
+    {
+      "name": "watercraft",
+      "elapsedMs": 22744.39999999106,
+      "hash": "95147f92d436070f2f45b51d575bd373b8c8d834fe2b00dbb32a6536aeb09ad0",
+      "progress": 88,
+      "sourceBytes": 32005716,
+      "requests": 8,
+      "ranged": true
+    }
+  ]
+}

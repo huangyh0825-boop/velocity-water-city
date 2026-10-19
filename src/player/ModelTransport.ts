@@ -1,9 +1,8 @@
 import{assetProgress}from'../core/AssetActivity';
-import{readWithActivity}from'./readWithActivity';
+import{downloadModel}from'./downloadModel';
 export async function fetchRuntimeModel(url:string):Promise<ArrayBuffer>{
  if(typeof Worker==='undefined'){
-  const response=await fetch(url);if(!response.ok)throw Error(`模型下载失败 (${response.status})`);
-  const data=await readWithActivity(response,assetProgress),bytes=new Uint8Array(data);
+  const {data}=await downloadModel(url,assetProgress),bytes=new Uint8Array(data);
   return bytes[0]===0x1f&&bytes[1]===0x8b?new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer():data;
  }
  return new Promise((resolve,reject)=>{
