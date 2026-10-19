@@ -2,7 +2,7 @@ import{loadPlaywright}from'./qa-playwright.mjs';
 import{mkdirSync,writeFileSync}from'node:fs';
 import assert from'node:assert/strict';
 const{chromium}=loadPlaywright(),browser=await chromium.launch({channel:'msedge',headless:true});
-const folder='docs/lap-fix';mkdirSync(folder,{recursive:true});
+const folder=process.env.QA_OUTPUT??'docs/lap-fix';mkdirSync(folder,{recursive:true});
 try{
  const p=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1}),errors=[];
  p.on('pageerror',e=>errors.push(String(e)));
@@ -22,7 +22,7 @@ try{
     const route=mode==='both-shortcuts'?(g.race.player.route??chosen):null;
     // Human input does not supply AI routeIntent. This is essential to reproduce
     // early shortcut acquisition while the boat physically stays on the main road.
-    m.routeIntent=mode==='both-shortcuts'?route:undefined;
+    m.routeIntent=undefined;
     const target=t.routeTarget(m,Math.max(18,m.speed*.65),lane,route),desired=Math.atan2(target.x-m.x,target.z-m.z),next=t.routeTarget(m,50,lane,route),direction=Math.atan2(next.x-target.x,next.z-target.z),curve=Math.abs(Math.atan2(Math.sin(direction-desired),Math.cos(direction-desired)))/30,cap=Math.min(50,.45/Math.max(.0001,curve)),error=Math.atan2(Math.sin(desired-m.heading),Math.cos(desired-m.heading));
     q.setBoost(!g.flight.airborne&&curve<.002&&g.nitro.energy>15);return{throttle:m.speed<cap?1:0,brake:m.speed>cap+1?1:0,steer:Math.max(-1,Math.min(1,error*2.7/.67))};
    }});

@@ -1,0 +1,513 @@
+{
+  "method": "Production-compiled Game.frame. Drive from the normal start through three complete laps, taking S2 and deliberately steering 8m sideways in flight on each lap. No AI routeIntent, position teleport, injected checkpoint progress, or CP71 pause. Normal solid AI, collision, ramp, nitro and scoring logic retained. GPU drawing skipped only for accelerated functional simulation and restored for screenshots; no FPS claim.",
+  "result": {
+    "steps": 20412,
+    "phase": "finished",
+    "passed": 72,
+    "finish": 340.16666666668596,
+    "lap": "3 / 3",
+    "status": "三圈完成",
+    "resultVisible": true,
+    "resultRows": 5,
+    "losses": [
+      {
+        "passed": 18,
+        "elapsed": 88.21666666666295,
+        "fraction": 0.5206259485290283,
+        "distance": 10.089723681014158,
+        "height": 2.135395091364102,
+        "entered": true
+      },
+      {
+        "passed": 42,
+        "elapsed": 200.61666666671846,
+        "fraction": 0.5198863560236592,
+        "distance": 10.035991326471958,
+        "height": 2.449251182163903,
+        "entered": true
+      },
+      {
+        "passed": 66,
+        "elapsed": 313.0666666667106,
+        "fraction": 0.5201944864288794,
+        "distance": 10.050963205106397,
+        "height": 2.504252005559013,
+        "entered": true
+      }
+    ],
+    "returns": [
+      {
+        "passed": 18,
+        "elapsed": 88.69999999999625,
+        "fraction": 0.5364316914110756
+      },
+      {
+        "passed": 42,
+        "elapsed": 201.11666666671886,
+        "fraction": 0.5364483365536692
+      },
+      {
+        "passed": 66,
+        "elapsed": 313.5500000000435,
+        "fraction": 0.5361773576739484
+      }
+    ],
+    "gates": [
+      {
+        "passed": 1,
+        "lap": "1 / 3",
+        "elapsed": 6.849999999999981,
+        "route": null
+      },
+      {
+        "passed": 2,
+        "lap": "1 / 3",
+        "elapsed": 11.316666666666809,
+        "route": null
+      },
+      {
+        "passed": 3,
+        "lap": "1 / 3",
+        "elapsed": 15.916666666667037,
+        "route": null
+      },
+      {
+        "passed": 4,
+        "lap": "1 / 3",
+        "elapsed": 21.70000000000005,
+        "route": null
+      },
+      {
+        "passed": 5,
+        "lap": "1 / 3",
+        "elapsed": 26.649999999999768,
+        "route": null
+      },
+      {
+        "passed": 6,
+        "lap": "1 / 3",
+        "elapsed": 31.099999999999515,
+        "route": null
+      },
+      {
+        "passed": 7,
+        "lap": "1 / 3",
+        "elapsed": 35.5333333333326,
+        "route": null
+      },
+      {
+        "passed": 8,
+        "lap": "1 / 3",
+        "elapsed": 40.46666666666565,
+        "route": null
+      },
+      {
+        "passed": 9,
+        "lap": "1 / 3",
+        "elapsed": 44.9166666666654,
+        "route": null
+      },
+      {
+        "passed": 10,
+        "lap": "1 / 3",
+        "elapsed": 49.31666666666515,
+        "route": null
+      },
+      {
+        "passed": 11,
+        "lap": "1 / 3",
+        "elapsed": 53.816666666664894,
+        "route": null
+      },
+      {
+        "passed": 12,
+        "lap": "1 / 3",
+        "elapsed": 57.76666666666467,
+        "route": "tunnel-cut"
+      },
+      {
+        "passed": 13,
+        "lap": "1 / 3",
+        "elapsed": 62.71666666666439,
+        "route": null
+      },
+      {
+        "passed": 14,
+        "lap": "1 / 3",
+        "elapsed": 67.41666666666413,
+        "route": null
+      },
+      {
+        "passed": 15,
+        "lap": "1 / 3",
+        "elapsed": 72.14999999999719,
+        "route": null
+      },
+      {
+        "passed": 16,
+        "lap": "1 / 3",
+        "elapsed": 76.69999999999693,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 17,
+        "lap": "1 / 3",
+        "elapsed": 82.89999999999658,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 18,
+        "lap": "1 / 3",
+        "elapsed": 87.24999999999633,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 19,
+        "lap": "1 / 3",
+        "elapsed": 92.01666666666273,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 20,
+        "lap": "1 / 3",
+        "elapsed": 96.34999999999582,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 21,
+        "lap": "1 / 3",
+        "elapsed": 100.74999999999557,
+        "route": null
+      },
+      {
+        "passed": 22,
+        "lap": "1 / 3",
+        "elapsed": 105.19999999999531,
+        "route": null
+      },
+      {
+        "passed": 23,
+        "lap": "1 / 3",
+        "elapsed": 110.649999999995,
+        "route": null
+      },
+      {
+        "passed": 24,
+        "lap": "2 / 3",
+        "elapsed": 115.3166666666614,
+        "route": null
+      },
+      {
+        "passed": 25,
+        "lap": "2 / 3",
+        "elapsed": 119.91666666666114,
+        "route": null
+      },
+      {
+        "passed": 26,
+        "lap": "2 / 3",
+        "elapsed": 124.36666666666089,
+        "route": null
+      },
+      {
+        "passed": 27,
+        "lap": "2 / 3",
+        "elapsed": 128.96666666666144,
+        "route": null
+      },
+      {
+        "passed": 28,
+        "lap": "2 / 3",
+        "elapsed": 134.83333333333277,
+        "route": null
+      },
+      {
+        "passed": 29,
+        "lap": "2 / 3",
+        "elapsed": 139.76666666667003,
+        "route": null
+      },
+      {
+        "passed": 30,
+        "lap": "2 / 3",
+        "elapsed": 144.18333333334022,
+        "route": null
+      },
+      {
+        "passed": 31,
+        "lap": "2 / 3",
+        "elapsed": 148.61666666667708,
+        "route": null
+      },
+      {
+        "passed": 32,
+        "lap": "2 / 3",
+        "elapsed": 153.01666666668058,
+        "route": null
+      },
+      {
+        "passed": 33,
+        "lap": "2 / 3",
+        "elapsed": 157.46666666668412,
+        "route": null
+      },
+      {
+        "passed": 34,
+        "lap": "2 / 3",
+        "elapsed": 161.86666666668762,
+        "route": null
+      },
+      {
+        "passed": 35,
+        "lap": "2 / 3",
+        "elapsed": 166.3666666666912,
+        "route": null
+      },
+      {
+        "passed": 36,
+        "lap": "2 / 3",
+        "elapsed": 170.31666666669435,
+        "route": "tunnel-cut"
+      },
+      {
+        "passed": 37,
+        "lap": "2 / 3",
+        "elapsed": 175.26666666669828,
+        "route": null
+      },
+      {
+        "passed": 38,
+        "lap": "2 / 3",
+        "elapsed": 179.96666666670203,
+        "route": null
+      },
+      {
+        "passed": 39,
+        "lap": "2 / 3",
+        "elapsed": 184.68333333337245,
+        "route": null
+      },
+      {
+        "passed": 40,
+        "lap": "2 / 3",
+        "elapsed": 189.23333333337607,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 41,
+        "lap": "2 / 3",
+        "elapsed": 195.31666666671424,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 42,
+        "lap": "2 / 3",
+        "elapsed": 199.6666666667177,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 43,
+        "lap": "2 / 3",
+        "elapsed": 204.43333333338816,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 44,
+        "lap": "2 / 3",
+        "elapsed": 208.76666666672494,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 45,
+        "lap": "2 / 3",
+        "elapsed": 213.16666666672845,
+        "route": null
+      },
+      {
+        "passed": 46,
+        "lap": "2 / 3",
+        "elapsed": 217.616666666732,
+        "route": null
+      },
+      {
+        "passed": 47,
+        "lap": "2 / 3",
+        "elapsed": 223.06666666673632,
+        "route": null
+      },
+      {
+        "passed": 48,
+        "lap": "3 / 3",
+        "elapsed": 227.7333333334067,
+        "route": null
+      },
+      {
+        "passed": 49,
+        "lap": "3 / 3",
+        "elapsed": 232.33333333341037,
+        "route": null
+      },
+      {
+        "passed": 50,
+        "lap": "3 / 3",
+        "elapsed": 236.7833333334139,
+        "route": null
+      },
+      {
+        "passed": 51,
+        "lap": "3 / 3",
+        "elapsed": 241.38333333341757,
+        "route": null
+      },
+      {
+        "passed": 52,
+        "lap": "3 / 3",
+        "elapsed": 247.31666666675562,
+        "route": null
+      },
+      {
+        "passed": 53,
+        "lap": "3 / 3",
+        "elapsed": 252.26666666675956,
+        "route": null
+      },
+      {
+        "passed": 54,
+        "lap": "3 / 3",
+        "elapsed": 256.6666666667619,
+        "route": null
+      },
+      {
+        "passed": 55,
+        "lap": "3 / 3",
+        "elapsed": 261.08333333342455,
+        "route": null
+      },
+      {
+        "passed": 56,
+        "lap": "3 / 3",
+        "elapsed": 265.5000000000872,
+        "route": null
+      },
+      {
+        "passed": 57,
+        "lap": "3 / 3",
+        "elapsed": 269.95000000008315,
+        "route": null
+      },
+      {
+        "passed": 58,
+        "lap": "3 / 3",
+        "elapsed": 274.35000000007915,
+        "route": null
+      },
+      {
+        "passed": 59,
+        "lap": "3 / 3",
+        "elapsed": 278.85000000007506,
+        "route": null
+      },
+      {
+        "passed": 60,
+        "lap": "3 / 3",
+        "elapsed": 282.80000000007146,
+        "route": "tunnel-cut"
+      },
+      {
+        "passed": 61,
+        "lap": "3 / 3",
+        "elapsed": 287.75000000006696,
+        "route": null
+      },
+      {
+        "passed": 62,
+        "lap": "3 / 3",
+        "elapsed": 292.4500000000627,
+        "route": null
+      },
+      {
+        "passed": 63,
+        "lap": "3 / 3",
+        "elapsed": 297.16666666672506,
+        "route": null
+      },
+      {
+        "passed": 64,
+        "lap": "3 / 3",
+        "elapsed": 301.75000000005423,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 65,
+        "lap": "3 / 3",
+        "elapsed": 307.7666666667154,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 66,
+        "lap": "3 / 3",
+        "elapsed": 312.1000000000448,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 67,
+        "lap": "3 / 3",
+        "elapsed": 316.86666666670715,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 68,
+        "lap": "3 / 3",
+        "elapsed": 321.20000000003654,
+        "route": "harbor-cut"
+      },
+      {
+        "passed": 69,
+        "lap": "3 / 3",
+        "elapsed": 325.60000000003254,
+        "route": null
+      },
+      {
+        "passed": 70,
+        "lap": "3 / 3",
+        "elapsed": 330.0500000000285,
+        "route": null
+      },
+      {
+        "passed": 71,
+        "lap": "3 / 3",
+        "elapsed": 335.50000000002353,
+        "route": null
+      },
+      {
+        "passed": 72,
+        "lap": "3 / 3",
+        "elapsed": 340.16666666668596,
+        "route": null
+      }
+    ],
+    "ai": [
+      {
+        "id": "ai-1",
+        "passed": 72,
+        "finish": 269.98333333341645
+      },
+      {
+        "id": "ai-2",
+        "passed": 72,
+        "finish": 303.2333333333862
+      },
+      {
+        "id": "ai-3",
+        "passed": 72,
+        "finish": 323.1000000000348
+      },
+      {
+        "id": "ai-4",
+        "passed": 71,
+        "finish": null
+      }
+    ]
+  },
+  "errors": []
+}

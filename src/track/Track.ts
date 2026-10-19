@@ -12,7 +12,7 @@ export class Track {
   readonly length = TAU * this.radius;
   readonly vertical=false as boolean;
   surface(p:Point){return{height:0,slope:0,heading:this.heading(this.angle(p)),branch:null as string|null};}
-  raceRoute(before:Point,after:Point,active:string|null){return active;}
+  raceRoute(before:Point,after:Point,active:string|null,entered?:ReadonlySet<string>){return active;}
   raceAngle(p:Point,route:string|null){return this.angle(p);}
   point(angle: number, lane = 0): Point {
     return { x: Math.cos(angle) * (this.radius + lane), z: Math.sin(angle) * (this.radius + lane) };

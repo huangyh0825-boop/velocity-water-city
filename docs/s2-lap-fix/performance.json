@@ -1,0 +1,437 @@
+{
+  "method": "Same Edge process, before/after/after/before order; 1600x1000 DPR1 standard, same 5-boat replay, 60 warmup +240 measured RAF steps. Compute-only replay skips GPU drawing/shadows, 180 warmup+1800 measured actual Game.frame steps; no FPS claim for compute-only values. All loaded geometry/textures/shaders, quality controls, reflections and shadows kept for RAF samples.",
+  "results": [
+    {
+      "pass": 1,
+      "label": "before",
+      "scenario": "five-compute",
+      "elapsedMs": 464.59999999403954,
+      "msPerStep": 0.2581111111077997,
+      "queries": 196336,
+      "queriesPerStep": 109.07555555555555,
+      "end": [
+        {
+          "x": 561.8323891751409,
+          "z": 571.6493023659555,
+          "y": 15.06865811447839,
+          "route": null
+        },
+        {
+          "x": 605.3954500314009,
+          "z": 546.4903746458191,
+          "y": 17.654122416618407,
+          "route": null
+        },
+        {
+          "x": 533.5795361658752,
+          "z": 585.7592495572782,
+          "y": 12.658376234605056,
+          "route": null
+        },
+        {
+          "x": 421.42055457858226,
+          "z": 640.8316734276392,
+          "y": 7.237387946229532,
+          "route": null
+        },
+        {
+          "x": 303.1106663781673,
+          "z": 635.2783188455979,
+          "y": 0,
+          "route": null
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 1,
+      "label": "before",
+      "scenario": "city-five",
+      "fps": 36.48854961832061,
+      "frameMs": 27.405857740585773,
+      "p95Ms": 35.5,
+      "p99Ms": 42.900000005960464,
+      "cpuMs": 16.85439330576354,
+      "calls": 800.6025104602511,
+      "triangles": 80176265.48117155,
+      "low": false,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "waterNormals": 256,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": -201.85873449093228,
+        "z": 104.25115987803729,
+        "y": 0,
+        "route": null
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 1,
+      "label": "before",
+      "scenario": "harbor-five",
+      "fps": 34.78792466011125,
+      "frameMs": 28.74560669457314,
+      "p95Ms": 35.400000005960464,
+      "p99Ms": 43.29999999701977,
+      "cpuMs": 18.304184100804967,
+      "calls": 948.1882845188285,
+      "triangles": 87208002.69874477,
+      "low": false,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "waterNormals": 256,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": 574.4022908642712,
+        "z": -520.0949544193021,
+        "y": 12,
+        "route": "harbor-cut"
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 1,
+      "label": "after",
+      "scenario": "five-compute",
+      "elapsedMs": 483.40000000596046,
+      "msPerStep": 0.2685555555588669,
+      "queries": 196336,
+      "queriesPerStep": 109.07555555555555,
+      "end": [
+        {
+          "x": 561.8323891751409,
+          "z": 571.6493023659555,
+          "y": 15.06865811447839,
+          "route": null
+        },
+        {
+          "x": 605.3954500314009,
+          "z": 546.4903746458191,
+          "y": 17.654122416618407,
+          "route": null
+        },
+        {
+          "x": 533.5795361658752,
+          "z": 585.7592495572782,
+          "y": 12.658376234605056,
+          "route": null
+        },
+        {
+          "x": 421.42055457858226,
+          "z": 640.8316734276392,
+          "y": 7.237387946229532,
+          "route": null
+        },
+        {
+          "x": 303.1106663781673,
+          "z": 635.2783188455979,
+          "y": 0,
+          "route": null
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 1,
+      "label": "after",
+      "scenario": "city-five",
+      "fps": 36.595822870025685,
+      "frameMs": 27.32552301260218,
+      "p95Ms": 34.79999999701977,
+      "p99Ms": 42.19999998807907,
+      "cpuMs": 16.861924686317163,
+      "calls": 800.6025104602511,
+      "triangles": 80176265.48117155,
+      "low": false,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "waterNormals": 256,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": -201.85873449093228,
+        "z": 104.25115987803729,
+        "y": 0,
+        "route": null
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 1,
+      "label": "after",
+      "scenario": "harbor-five",
+      "fps": 34.9599204260009,
+      "frameMs": 28.604184100381,
+      "p95Ms": 36.400000005960464,
+      "p99Ms": 41.29999999701977,
+      "cpuMs": 18.558577405670697,
+      "calls": 948.1882845188285,
+      "triangles": 87208002.69874477,
+      "low": false,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "waterNormals": 256,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": 574.4022908642712,
+        "z": -520.0949544193021,
+        "y": 12,
+        "route": "harbor-cut"
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 2,
+      "label": "after",
+      "scenario": "five-compute",
+      "elapsedMs": 501.29999999701977,
+      "msPerStep": 0.2784999999983443,
+      "queries": 196336,
+      "queriesPerStep": 109.07555555555555,
+      "end": [
+        {
+          "x": 561.8323891751409,
+          "z": 571.6493023659555,
+          "y": 15.06865811447839,
+          "route": null
+        },
+        {
+          "x": 605.3954500314009,
+          "z": 546.4903746458191,
+          "y": 17.654122416618407,
+          "route": null
+        },
+        {
+          "x": 533.5795361658752,
+          "z": 585.7592495572782,
+          "y": 12.658376234605056,
+          "route": null
+        },
+        {
+          "x": 421.42055457858226,
+          "z": 640.8316734276392,
+          "y": 7.237387946229532,
+          "route": null
+        },
+        {
+          "x": 303.1106663781673,
+          "z": 635.2783188455979,
+          "y": 0,
+          "route": null
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 2,
+      "label": "after",
+      "scenario": "city-five",
+      "fps": 36.58797954745583,
+      "frameMs": 27.331380753150544,
+      "p95Ms": 34.900000005960464,
+      "p99Ms": 40.6000000089407,
+      "cpuMs": 16.561506275664314,
+      "calls": 800.6025104602511,
+      "triangles": 80176265.48117155,
+      "low": false,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "waterNormals": 256,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": -201.85873449093228,
+        "z": 104.25115987803729,
+        "y": 0,
+        "route": null
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 2,
+      "label": "after",
+      "scenario": "harbor-five",
+      "fps": 34.89407676698407,
+      "frameMs": 28.65815899580343,
+      "p95Ms": 35.5,
+      "p99Ms": 39.8999999910593,
+      "cpuMs": 18.264853555911756,
+      "calls": 948.1882845188285,
+      "triangles": 87208002.69874477,
+      "low": false,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "waterNormals": 256,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": 574.4022908642712,
+        "z": -520.0949544193021,
+        "y": 12,
+        "route": "harbor-cut"
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 2,
+      "label": "before",
+      "scenario": "five-compute",
+      "elapsedMs": 478.79999999701977,
+      "msPerStep": 0.26599999999834434,
+      "queries": 196336,
+      "queriesPerStep": 109.07555555555555,
+      "end": [
+        {
+          "x": 561.8323891751409,
+          "z": 571.6493023659555,
+          "y": 15.06865811447839,
+          "route": null
+        },
+        {
+          "x": 605.3954500314009,
+          "z": 546.4903746458191,
+          "y": 17.654122416618407,
+          "route": null
+        },
+        {
+          "x": 533.5795361658752,
+          "z": 585.7592495572782,
+          "y": 12.658376234605056,
+          "route": null
+        },
+        {
+          "x": 421.42055457858226,
+          "z": 640.8316734276392,
+          "y": 7.237387946229532,
+          "route": null
+        },
+        {
+          "x": 303.1106663781673,
+          "z": 635.2783188455979,
+          "y": 0,
+          "route": null
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 2,
+      "label": "before",
+      "scenario": "city-five",
+      "fps": 36.45682383267864,
+      "frameMs": 27.42970711298318,
+      "p95Ms": 34.900000005960464,
+      "p99Ms": 45.70000000298023,
+      "cpuMs": 17.593305439692163,
+      "calls": 800.6025104602511,
+      "triangles": 80176265.48117155,
+      "low": false,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "waterNormals": 256,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": -201.85873449093228,
+        "z": 104.25115987803729,
+        "y": 0,
+        "route": null
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 2,
+      "label": "before",
+      "scenario": "harbor-five",
+      "fps": 34.709111504851066,
+      "frameMs": 28.810878661075396,
+      "p95Ms": 36.5,
+      "p99Ms": 42.099999994039536,
+      "cpuMs": 18.99874477038573,
+      "calls": 948.1882845188285,
+      "triangles": 87208002.69874477,
+      "low": false,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "waterNormals": 256,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": 574.4022908642712,
+        "z": -520.0949544193021,
+        "y": 12,
+        "route": "harbor-cut"
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

@@ -6,6 +6,8 @@ export interface Racer {
   id: string; name: string; passed: number; position: Point; previous: Point;
   finishTime: number | null; progress: number;
   route:string|null;
+  /** Legal shortcut entrances crossed during this lap, retained across a drift. */
+  enteredRoutes:Set<string>;
   maxSpeed?:number;
 }
 export interface Entrant { id: string; name: string; position: Point;maxSpeed?:number }
@@ -18,7 +20,7 @@ export class RaceController {
   bestTime:number|null;
   constructor(readonly track: Track, entrants: Entrant[], readonly playerId = 'player') {
     this.bestTime=readBest(track.name);
-    this.racers = entrants.map(e => ({ ...e, position: { ...e.position }, previous: { ...e.position }, passed: 0, finishTime: null,route:null, progress: track.angle(e.position) * track.radius }));
+    this.racers = entrants.map(e => ({ ...e, position: { ...e.position }, previous: { ...e.position }, passed: 0, finishTime: null,route:null, enteredRoutes:new Set<string>(), progress: track.angle(e.position) * track.radius }));
   }
   get player() { return this.racers.find(r => r.id === this.playerId)!; }
   nextCheckpoint(racer = this.player) { return (racer.passed + 1) % this.track.checkpointCount; }
@@ -37,10 +39,14 @@ export class RaceController {
     // A tuned AI may legitimately exceed the player's peak speed. Use only its
     // configured limit; the player and unconfigured racers retain the old guard.
     const continuous=movement <= (racer.maxSpeed??(MAX_SPEED+10)) * dt + 0.1 + Math.max(0, collisionCorrection);
-    if(continuous)racer.route=this.track.raceRoute(racer.previous,position,racer.route);
+    if(continuous){
+      racer.route=this.track.raceRoute(racer.previous,position,racer.route,racer.enteredRoutes);
+      if(racer.route!==null)racer.enteredRoutes.add(racer.route);
+    }
     position.route=racer.route;
     if (continuous && this.track.crossesGate(racer.previous, position, this.nextCheckpoint(racer),racer.route)) {
       racer.passed++;
+      if(racer.passed % this.track.checkpointCount === 0)racer.enteredRoutes.clear();
       if (racer.passed === this.laps * this.track.checkpointCount) racer.finishTime = this.elapsed;
     }
     racer.previous = { ...position }; racer.position = { ...position };

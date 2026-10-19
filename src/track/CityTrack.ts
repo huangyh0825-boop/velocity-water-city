@@ -138,13 +138,16 @@ export class CityTrack extends Track {
   return angle<cut.to?this.routePoint(angle,lane,cut.id):this.point(cut.to+(angle-cut.to)/(cut.to-cut.from)*cut.length/this.radius,lane);
  }
  override spawn(model:DrivingModel,angle=-.014,lane=0){super.spawn(model,angle,lane);model.worldLimit=3000;model.route=null;model.y=this.heightAt(angle);}
- override raceRoute(before:Point,after:Point,active:string|null){
+ override raceRoute(before:Point,after:Point,active:string|null,entered?:ReadonlySet<string>){
   const current=this.shortcuts.find(s=>s.id===active);
   if(current){const q=this.project(after,current.id);if(q.distance>q.width+4)return null;const end=current.samples.at(-1)!,along=(after.x-end.x)*Math.sin(end.heading)+(after.z-end.z)*Math.cos(end.heading);return q.angle>current.to-.002&&along>=0?null:active;}
   for(const cut of this.shortcuts){if(after.routeIntent!==undefined&&after.routeIntent!==cut.id)continue;const q=this.project(after,cut.id);
    // The two centre lines can coincide for longer than the old 10%/65m
    // acquisition window. Keep entry open until the channels really separate.
-   if(q.distance>q.width||q.angle>cut.from+(cut.to-cut.from)*Math.max(.15,cut.entryPortal??.15))continue;
+   // A real jump/drift may temporarily leave this narrow corridor. Remember a
+   // legal entrance for this lap so returning downstream can reacquire it;
+   // boats that never entered still have to use the original entrance window.
+   if(q.distance>q.width||(!entered?.has(cut.id)&&q.angle>cut.from+(cut.to-cut.from)*Math.max(.15,cut.entryPortal??.15)))continue;
    if(after.routeIntent===undefined&&q.distance+.5>=this.project(after,null).distance)continue;
    const forward=(after.x-before.x)*Math.sin(q.heading)+(after.z-before.z)*Math.cos(q.heading);if(forward>0&&q.angle>cut.from+.00001&&Math.abs((after.y??0)-this.heightAt(q.angle,cut.id))<2)return cut.id;
   }return null;
