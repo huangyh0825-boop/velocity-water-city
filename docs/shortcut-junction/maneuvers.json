@@ -1,0 +1,438 @@
+{
+  "method": "Private production build, actual fixed-step Game.frame; start at 5km/h with opposite route tag, drive 20m forward or reversed. Rendering skipped during simulation and restored for screenshots. No FPS claim.",
+  "results": [
+    {
+      "id": "tunnel-cut",
+      "physical": null,
+      "location": "entry",
+      "direction": 1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": "tunnel-cut",
+      "height": 0,
+      "position": {
+        "x": 780.7301288013274,
+        "z": 65.84190312929086
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": null,
+      "location": "entry",
+      "direction": -1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": "tunnel-cut",
+      "height": 0,
+      "position": {
+        "x": 805.0370995698627,
+        "z": 98.38102868215158
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": null,
+      "location": "beyond-old-cap",
+      "direction": 1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": null,
+      "height": 0,
+      "position": {
+        "x": 670.7348333727867,
+        "z": -3.0234423832077986
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": null,
+      "location": "beyond-old-cap",
+      "direction": -1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": null,
+      "height": 0,
+      "position": {
+        "x": 706.7660929423005,
+        "z": 15.867287893496338
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": null,
+      "location": "exit",
+      "direction": 1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": "tunnel-cut",
+      "height": 0,
+      "position": {
+        "x": 729.2885576050194,
+        "z": -275.8188536507059
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": null,
+      "location": "exit",
+      "direction": -1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": "tunnel-cut",
+      "height": 0,
+      "position": {
+        "x": 689.5236863118623,
+        "z": -267.25031350088193
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": "tunnel-cut",
+      "location": "entry",
+      "direction": 1,
+      "complete": true,
+      "steps": 141,
+      "samples": 140,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 39.98253923812776,
+      "route": "tunnel-cut",
+      "height": 0,
+      "position": {
+        "x": 780.5653380435119,
+        "z": 66.42165209419063
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": "tunnel-cut",
+      "location": "entry",
+      "direction": -1,
+      "complete": true,
+      "steps": 141,
+      "samples": 140,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 39.98253923812776,
+      "route": null,
+      "height": 0,
+      "position": {
+        "x": 804.7995617823028,
+        "z": 98.15368670709057
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": "tunnel-cut",
+      "location": "beyond-old-cap",
+      "direction": 1,
+      "complete": true,
+      "steps": 141,
+      "samples": 140,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 39.98253923812776,
+      "route": "tunnel-cut",
+      "height": 0,
+      "position": {
+        "x": 721.3244675319511,
+        "z": -8.083041673824724
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": "tunnel-cut",
+      "location": "beyond-old-cap",
+      "direction": -1,
+      "complete": true,
+      "steps": 141,
+      "samples": 140,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 39.98253923812776,
+      "route": null,
+      "height": 0,
+      "position": {
+        "x": 745.8163588922395,
+        "z": 23.460865448559296
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": "tunnel-cut",
+      "location": "exit",
+      "direction": 1,
+      "complete": true,
+      "steps": 141,
+      "samples": 140,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 39.98253923812776,
+      "route": null,
+      "height": 0,
+      "position": {
+        "x": 728.9890011689439,
+        "z": -275.75776932780184
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "physical": "tunnel-cut",
+      "location": "exit",
+      "direction": -1,
+      "complete": true,
+      "steps": 141,
+      "samples": 140,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 39.98253923812776,
+      "route": null,
+      "height": 0,
+      "position": {
+        "x": 690.8909350711084,
+        "z": -264.1028635936855
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": null,
+      "location": "entry",
+      "direction": 1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": null,
+      "height": 0,
+      "position": {
+        "x": 791.8090575844249,
+        "z": -473.3904278503036
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": null,
+      "location": "entry",
+      "direction": -1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": "harbor-cut",
+      "height": 0,
+      "position": {
+        "x": 803.1993149445415,
+        "z": -434.40845800075647
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": null,
+      "location": "beyond-old-cap",
+      "direction": 1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": null,
+      "height": 3.262662768347422,
+      "position": {
+        "x": 590.4089814168783,
+        "z": -467.86947632976853
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": null,
+      "location": "beyond-old-cap",
+      "direction": -1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": null,
+      "height": 0.8933274655839791,
+      "position": {
+        "x": 629.2648333823807,
+        "z": -479.9050954680963
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": null,
+      "location": "exit",
+      "direction": 1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": "harbor-cut",
+      "height": 0,
+      "position": {
+        "x": -57.871072186086906,
+        "z": -590.3102914559066
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": null,
+      "location": "exit",
+      "direction": -1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": "harbor-cut",
+      "height": 0,
+      "position": {
+        "x": -18.9481851394522,
+        "z": -602.0799746105763
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": "harbor-cut",
+      "location": "entry",
+      "direction": 1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": "harbor-cut",
+      "height": 0,
+      "position": {
+        "x": 808.6964687217932,
+        "z": -473.9650345244708
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": "harbor-cut",
+      "location": "entry",
+      "direction": -1,
+      "complete": true,
+      "steps": 141,
+      "samples": 140,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 39.98253923812776,
+      "route": null,
+      "height": 0,
+      "position": {
+        "x": 802.6723283798568,
+        "z": -434.6402900927308
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": "harbor-cut",
+      "location": "beyond-old-cap",
+      "direction": 1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": null,
+      "height": 12,
+      "position": {
+        "x": 641.3039608507804,
+        "z": -527.702022496145
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": "harbor-cut",
+      "location": "beyond-old-cap",
+      "direction": -1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": null,
+      "height": 11.883255548596704,
+      "position": {
+        "x": 681.7663533566313,
+        "z": -531.9292118438248
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": "harbor-cut",
+      "location": "exit",
+      "direction": 1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": null,
+      "height": 0,
+      "position": {
+        "x": -57.9152637484339,
+        "z": -590.4935216588996
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "physical": "harbor-cut",
+      "location": "exit",
+      "direction": -1,
+      "complete": true,
+      "steps": 142,
+      "samples": 142,
+      "falseContacts": 0,
+      "maxCorrection": 0,
+      "kmh": 41.44673287447956,
+      "route": null,
+      "height": 0,
+      "position": {
+        "x": -18.405251992641727,
+        "z": -599.167374528202
+      }
+    }
+  ],
+  "errors": []
+}

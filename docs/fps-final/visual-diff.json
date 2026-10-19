@@ -1,0 +1,38 @@
+[
+  {
+    "scene": "city",
+    "different_pixels": 43,
+    "mean_absolute_error": 0.0003365885416666667,
+    "max_error": 20
+  },
+  {
+    "scene": "distant",
+    "different_pixels": 624,
+    "mean_absolute_error": 0.006513346354166667,
+    "max_error": 49
+  },
+  {
+    "scene": "elevated",
+    "different_pixels": 21,
+    "mean_absolute_error": 0.00013671875,
+    "max_error": 16
+  },
+  {
+    "scene": "tunnel",
+    "different_pixels": 1,
+    "mean_absolute_error": 5.859375e-06,
+    "max_error": 8
+  },
+  {
+    "scene": "harbor",
+    "different_pixels": 1,
+    "mean_absolute_error": 1.6276041666666668e-06,
+    "max_error": 2
+  },
+  {
+    "scene": "rear",
+    "different_pixels": 2,
+    "mean_absolute_error": 8.138020833333333e-06,
+    "max_error": 6
+  }
+]

@@ -7,6 +7,7 @@ export class AnatomicalRider {
  private hero=false;private neck?:THREE.Object3D;private neckRest=new THREE.Quaternion();
  private chest?:THREE.Object3D;private chestRest=new THREE.Quaternion();
  private clavicles:{bone:THREE.Object3D;rest:THREE.Quaternion;side:number}[]=[];
+ private rootRotation=new THREE.Quaternion();private parentRotation=new THREE.Quaternion();private scratchPosition=new THREE.Vector3();private scratchScale=new THREE.Vector3();
  constructor(private root:THREE.Group,private torso:THREE.Object3D,private grips:THREE.Vector3[]){
   root.updateWorldMatrix(true,true);const inverse=root.getWorldQuaternion(new THREE.Quaternion()).invert();
   this.torsoRest=inverse.clone().multiply(torso.getWorldQuaternion(new THREE.Quaternion()));
@@ -23,11 +24,14 @@ export class AnatomicalRider {
   }
  }
  private orient(bone:THREE.Object3D,localWorld:THREE.Quaternion){
-  const rootRotation=this.root.getWorldQuaternion(new THREE.Quaternion()),parentRotation=bone.parent!.getWorldQuaternion(new THREE.Quaternion());
-  bone.quaternion.copy(parentRotation.invert().multiply(rootRotation).multiply(localWorld));bone.updateWorldMatrix(false,true);
+  // The initial root update and each preceding orient already refreshed these
+  // matrices. Avoid walking and decomposing the same ancestry for every joint.
+  bone.parent!.matrixWorld.decompose(this.scratchPosition,this.parentRotation,this.scratchScale);
+  bone.quaternion.copy(this.parentRotation.invert().multiply(this.rootRotation).multiply(localWorld));bone.updateWorldMatrix(false,true);
  }
  update(lean:number,bank:number,airborne=0){
   this.root.updateWorldMatrix(true,true);
+  this.root.matrixWorld.decompose(this.scratchPosition,this.rootRotation,this.scratchScale);
   const flex=lean-.15;
   this.orient(this.torso,new THREE.Quaternion().setFromEuler(new THREE.Euler(this.chest ? .12+flex*.4 : flex,0,this.chest ? bank*.55 : bank)).multiply(this.torsoRest));
   if(this.chest){

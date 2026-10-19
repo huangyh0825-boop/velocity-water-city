@@ -6,8 +6,9 @@ export interface Racer {
   id: string; name: string; passed: number; position: Point; previous: Point;
   finishTime: number | null; progress: number;
   route:string|null;
+  maxSpeed?:number;
 }
-export interface Entrant { id: string; name: string; position: Point }
+export interface Entrant { id: string; name: string; position: Point;maxSpeed?:number }
 export class RaceController {
   readonly laps = 3;
   phase: RacePhase = 'countdown';
@@ -33,7 +34,9 @@ export class RaceController {
     if (!racer || this.phase !== 'racing' || racer.finishTime !== null) return;
     const movement = Math.hypot(position.x - racer.previous.x, position.z - racer.previous.z);
     // Ignore checkpoint credit for discontinuities (e.g. external respawn/teleport).
-    const continuous=movement <= (MAX_SPEED + 10) * dt + 0.1 + Math.max(0, collisionCorrection);
+    // A tuned AI may legitimately exceed the player's peak speed. Use only its
+    // configured limit; the player and unconfigured racers retain the old guard.
+    const continuous=movement <= (racer.maxSpeed??(MAX_SPEED+10)) * dt + 0.1 + Math.max(0, collisionCorrection);
     if(continuous)racer.route=this.track.raceRoute(racer.previous,position,racer.route);
     position.route=racer.route;
     if (continuous && this.track.crossesGate(racer.previous, position, this.nextCheckpoint(racer),racer.route)) {

@@ -9,7 +9,7 @@
 | watercraft-low.glb | 787,168 B | 21,611 | 10 |
 | rider-low.glb | 470,132 B | 9,929 | 6 |
 
-高精度GLB需要保留相邻的相对路径贴图目录：pwc-r8/textures（19张）、rider-r4/textures（18张）；不依赖外部CDN。船体贴图以2048²为主，LCD为1024²；车手为2048²。只复制GLB会丢失贴图。
+上述 GLB 是保留的原始运行资产。当前标准画质实际加载 `watercraft-packed.glb.gz` 与 `rider-packed.glb.gz`：先在 Worker 解压 gzip，再以 EXT_meshopt_compression 还原。所有顶点、索引、法线、UV、骨骼及权重逐字节相同，不简化网格或量化。37个原始PNG引用合并为31张相同像素的无损WebP，位于 runtime-textures/；原始PNG和GLB保留在本地。船体贴图以2048²为主，LCD为1024²；车手为2048²，不依赖外部CDN。发布构建自动复制实际依赖的完整资源集合。
 
 可编辑源：assets/racecraft/source/hero-pwc-r8.blend、hero-rider-r4.blend。构建脚本scripts/build-racecraft.mjs依次运行rebuild-hero-pwc.py和rebuild-rider-r4.py，需要Blender 4.5+；正常运行、测试和生产构建直接使用提交的资产。
 

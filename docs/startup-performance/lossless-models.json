@@ -1,0 +1,24 @@
+[
+  {
+    "name": "watercraft",
+    "sourceBytes": 102633960,
+    "packedBytes": 53060016,
+    "transportBytes": 32005716,
+    "bufferViews": 89,
+    "uniqueBuffers": 88,
+    "verified": "Every decoded buffer byte equals the source; indices use INDICES to preserve triangle order exactly.",
+    "sourceSHA256": "79373d98ce397c48f9c198d2116c33c914446d36fad05f155302b6591825e34a",
+    "packedSHA256": "95147f92d436070f2f45b51d575bd373b8c8d834fe2b00dbb32a6536aeb09ad0"
+  },
+  {
+    "name": "rider",
+    "sourceBytes": 71141176,
+    "packedBytes": 26168892,
+    "transportBytes": 17362994,
+    "bufferViews": 121,
+    "uniqueBuffers": 121,
+    "verified": "Every decoded buffer byte equals the source; indices use INDICES to preserve triangle order exactly.",
+    "sourceSHA256": "f47188e11ecafb221f3bcdc2334b4dd67218d648476a053730887c93fa29bae9",
+    "packedSHA256": "341b43b779cda0341d017bf4bd4b759b160824c11e31c8769da71a2a049098d2"
+  }
+]

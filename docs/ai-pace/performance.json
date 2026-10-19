@@ -1,0 +1,109 @@
+{
+  "method": "Same Edge process, A/B/B/A; 1600x1000 DPR1 standard, fixed identical five-boat camera/poses at t12, 60 warmup +180 full-rendered RAF frames. Separate 300 warmup+3000 actual Game.frame simulation steps with current AI tuning and parked player, GPU drawing skipped for CPU measurement; simulation cost is not FPS.",
+  "results": [
+    {
+      "label": "before",
+      "fps": 49.836646547366186,
+      "frameMs": 20.065555555580392,
+      "cpuMs": 13.617777777504589,
+      "calls": 730,
+      "triangles": 64662466,
+      "computeMsPerStep": 0.28273333333432676,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "targets": [
+        175,
+        170,
+        165,
+        160
+      ]
+    },
+    {
+      "label": "after",
+      "fps": 49.961141334558924,
+      "frameMs": 20.015555555539,
+      "cpuMs": 13.587777778382103,
+      "calls": 730,
+      "triangles": 64662466,
+      "computeMsPerStep": 0.29053333333383,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "targets": [
+        225,
+        200,
+        180,
+        160
+      ]
+    },
+    {
+      "label": "after",
+      "fps": 49.920958482361605,
+      "frameMs": 20.031666666683222,
+      "cpuMs": 13.710555555091965,
+      "calls": 730,
+      "triangles": 64662466,
+      "computeMsPerStep": 0.29183333333333333,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "targets": [
+        225,
+        200,
+        180,
+        160
+      ]
+    },
+    {
+      "label": "before",
+      "fps": 49.70865206703099,
+      "frameMs": 20.117222222230502,
+      "cpuMs": 13.77833333309326,
+      "calls": 730,
+      "triangles": 64662466,
+      "computeMsPerStep": 0.28983333333333333,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "targets": [
+        175,
+        170,
+        165,
+        160
+      ]
+    }
+  ]
+}

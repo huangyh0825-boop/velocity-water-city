@@ -1,5 +1,6 @@
 import {CityTrack} from './CityTrack';
 
+export const CANAL_BANK={offset:1,thickness:1.2,top:1.65,bottom:-.45,rim:1.69} as const;
 export interface CanalBank {x:number;y:number;z:number;heading:number;pitch:number;length:number;rise:number;route:string|null;side:number}
 /** Clip continuous rail spans against the other channel, not just a midpoint.
  * Removed spans produce no triangles (a zero-height box still has two faces).
@@ -13,7 +14,7 @@ export function canalBanks(track:CityTrack):CanalBank[]{
   const heading=Math.atan2(b.x-a.x,b.z-a.z),n=Math.ceil(length/.5),others=a.branch?[null]:track.shortcuts.map(s=>s.id);
   for(const side of [-1,1]){
    let start=-1;
-   const pose=(u:number)=>({x:a.x+(b.x-a.x)*u+Math.cos(heading)*(a.width+1)*side,z:a.z+(b.z-a.z)*u-Math.sin(heading)*(a.width+1)*side,y:(a.y??0)+rise*u});
+   const pose=(u:number)=>({x:a.x+(b.x-a.x)*u+Math.cos(heading)*(a.width+CANAL_BANK.offset)*side,z:a.z+(b.z-a.z)*u-Math.sin(heading)*(a.width+CANAL_BANK.offset)*side,y:(a.y??0)+rise*u});
    const flush=(end:number)=>{if(start<0)return;const p=pose((start+end)/2);result.push({...p,heading,pitch:-Math.atan2(rise,length),length:(end-start)*length,rise:(end-start)*rise,route:a.branch,side});start=-1;};
    for(let j=0;j<n;j++){
     const p=pose((j+.5)/n),blocked=others.some(route=>{const q=track.project(p,route);return Math.abs(track.heightAt(q.angle,route)-p.y)<2&&q.distance<q.width+1.05;});

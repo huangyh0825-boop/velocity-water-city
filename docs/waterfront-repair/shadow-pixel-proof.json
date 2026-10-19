@@ -1,0 +1,126 @@
+{
+  "method": "Same pose, same 2048 target/camera: compare every output RGBA byte of current and stock depth rendering; enable colour output only for this diagnostic. Five racers, three poses. Production samples depth only and clears depth once.",
+  "results": [
+    {
+      "scene": "city",
+      "racer": 0,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "city",
+      "racer": 1,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "city",
+      "racer": 2,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "city",
+      "racer": 3,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "city",
+      "racer": 4,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "turn",
+      "racer": 0,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "turn",
+      "racer": 1,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "turn",
+      "racer": 2,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "turn",
+      "racer": 3,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "turn",
+      "racer": 4,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "air-pose",
+      "racer": 0,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "air-pose",
+      "racer": 1,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "air-pose",
+      "racer": 2,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "air-pose",
+      "racer": 3,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    },
+    {
+      "scene": "air-pose",
+      "racer": 4,
+      "draws": 34,
+      "differentBytes": 0,
+      "maxDifference": 0,
+      "resolution": 2048
+    }
+  ],
+  "errors": []
+}

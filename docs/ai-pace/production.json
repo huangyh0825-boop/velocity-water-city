@@ -1,0 +1,8 @@
+{
+  "url": "http://127.0.0.1:5183/",
+  "build": "./assets/index-B2j_E21B.js",
+  "privateQA": false,
+  "accelerated": 84,
+  "braked": 17,
+  "errors": []
+}

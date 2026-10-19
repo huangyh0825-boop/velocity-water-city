@@ -68,13 +68,22 @@ export class CitySample {
   const revision=this.density.interiors.revision;
   if(revision!==this.interiorRevision||this.geometryRevision!==this.density.revision){this.interiorRevision=revision;this.geometryRevision=this.density.revision;if(this.sun)this.sun.shadow.needsUpdate=true;}
  }
- bakeReflections(renderer:THREE.WebGLRenderer,scene:THREE.Scene){
+ async bakeReflections(renderer:THREE.WebGLRenderer,scene:THREE.Scene){
   if(!this.loaded||!renderer.shadowMap.enabled)return;
   this.density.enableBatches(renderer);
   if(!this.reflection){
-   const cube=new THREE.WebGLCubeRenderTarget(256,{type:THREE.HalfFloatType}),camera=new THREE.CubeCamera(1,1200,cube);camera.position.set(this.root.position.x,22,this.root.position.z);camera.update(renderer,scene);
-   const generator=new THREE.PMREMGenerator(renderer);this.reflection=generator.fromCubemap(cube.texture);generator.dispose();cube.dispose();
+   const cube=new THREE.WebGLCubeRenderTarget(256,{type:THREE.HalfFloatType}),camera=new THREE.CubeCamera(1,1200,cube);camera.position.set(this.root.position.x,22,this.root.position.z);
+   // Render-target color space is part of a shader's program key. Warming only
+   // the screen programs left all six HDR probe faces compiling synchronously.
+   const previous=renderer.getRenderTarget(),face=renderer.getActiveCubeFace(),mip=renderer.getActiveMipmapLevel();let warmup:Promise<unknown>;
+   try{renderer.setRenderTarget(cube);warmup=renderer.compileAsync(scene,camera.children[0] as THREE.Camera);}finally{renderer.setRenderTarget(previous,face,mip);}
+   try{
+    await warmup;if(this.disposed||!renderer.shadowMap.enabled)return;
+    camera.update(renderer,scene);
+    const generator=new THREE.PMREMGenerator(renderer);this.reflection=generator.fromCubemap(cube.texture);generator.dispose();
+   }finally{cube.dispose();}
   }
+  if(!this.reflection)return;
   this.root.traverse(o=>{if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(m instanceof THREE.MeshStandardMaterial&&/glaz|glass|alloy|Metal032/i.test(m.name)){m.envMap=this.reflection!.texture;m.envMapIntensity=/alloy|Metal032/i.test(m.name)?.55:.32;m.needsUpdate=true;}});
   this.density.reflect(this.reflection.texture);
  }

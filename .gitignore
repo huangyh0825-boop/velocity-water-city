@@ -2,5 +2,6 @@ node_modules/
 dist/
 *.log
 .qa/
+work/
 assets/**/*.blend1
 __pycache__/

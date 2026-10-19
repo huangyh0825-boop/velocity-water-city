@@ -6,6 +6,7 @@ import {ModelBatch} from '../player/ModelBatch';
 import {readableSign} from '../environment/ReadableSign';
 import {trackClearance} from './TrackClearance';
 import {bankGuidance} from '../environment/RouteGuidance';
+import {CANAL_BANK} from './CanalBanks';
 /** Original, visual-only infrastructure. Collision and race paths come from CityTrack. */
 export class VerticalTrackView {
  readonly root=new THREE.Group();
@@ -30,7 +31,10 @@ export class VerticalTrackView {
    const vertices:number[]=[],underside:number[]=[];
    for(let i=1;i<points.length;i++){
     const a=points[i-1],b=points[i];if(Math.max(a.y??0,b.y??0)<.05||(a.y??0)-(b.y??0)>2)continue;
-    const count=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.z-a.z))),width=a.width-.15;
+    // Banks are centred one metre outside the driving half-width and are 1.2m
+    // thick. Carry the water/deck to their centre, overlapping the inner face;
+    // the old width-.15 left a .55m slot open to the supports below every ramp.
+    const count=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.z-a.z))),width=a.width+CANAL_BANK.offset;
     for(let j=0;j<count;j++){
      const aa=a.angle+(b.angle-a.angle)*j/count,bb=a.angle+(b.angle-a.angle)*(j+1)/count;
      for(let k=0;k<12;k++){

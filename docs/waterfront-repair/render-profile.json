@@ -1,0 +1,291 @@
+{
+  "info": {
+    "frame": 102,
+    "calls": 2291,
+    "triangles": 217677298,
+    "points": 2160,
+    "lines": 0
+  },
+  "top": [
+    [
+      "R8_Paint | Paint | persp",
+      {
+        "triangles": 18873600,
+        "calls": 25
+      }
+    ],
+    [
+      "R8_Pearl_ceramic_silver | Pearl ceramic silver | persp",
+      {
+        "triangles": 17335032,
+        "calls": 26
+      }
+    ],
+    [
+      "R8_R7_satin_engineering_polymer | R7 satin engineering polymer | persp",
+      {
+        "triangles": 14303900,
+        "calls": 26
+      }
+    ],
+    [
+      "R8_Paint |  | ortho",
+      {
+        "triangles": 11324160,
+        "calls": 15
+      }
+    ],
+    [
+      "R8_Pearl_ceramic_silver |  | ortho",
+      {
+        "triangles": 10000980,
+        "calls": 15
+      }
+    ],
+    [
+      "R8_R8_graphite_ceramic_coating | R8 graphite ceramic coating | persp",
+      {
+        "triangles": 9821600,
+        "calls": 20
+      }
+    ],
+    [
+      "R8_R7_satin_engineering_polymer |  | ortho",
+      {
+        "triangles": 8252250,
+        "calls": 15
+      }
+    ],
+    [
+      "female_v006lowresUV_4 | Hero stretch racing textile | persp",
+      {
+        "triangles": 7784520,
+        "calls": 20
+      }
+    ],
+    [
+      "R8_R8_graphite_ceramic_coating |  | ortho",
+      {
+        "triangles": 7366200,
+        "calls": 15
+      }
+    ],
+    [
+      "female_v006lowresUV_4 |  | ortho",
+      {
+        "triangles": 5838390,
+        "calls": 15
+      }
+    ],
+    [
+      "R7_SeatDriver | Perforated marine saddle | persp",
+      {
+        "triangles": 4631040,
+        "calls": 18
+      }
+    ],
+    [
+      "female_v006lowresUV_3 | Hero glove and boot grip | persp",
+      {
+        "triangles": 4403840,
+        "calls": 20
+      }
+    ],
+    [
+      "R8_R8_stitched_saddle_side_leather | R8 stitched saddle side leather | persp",
+      {
+        "triangles": 4078080,
+        "calls": 18
+      }
+    ],
+    [
+      "public-instanced-bench-view |  | persp",
+      {
+        "triangles": 4054480,
+        "calls": 6
+      }
+    ],
+    [
+      "female_v006lowresUV_10 | Team woven flotation panels | persp",
+      {
+        "triangles": 4050432,
+        "calls": 18
+      }
+    ],
+    [
+      "female_v006lowresUV_12 | Hero pearl helmet | persp",
+      {
+        "triangles": 3990240,
+        "calls": 20
+      }
+    ],
+    [
+      "R7_SeatDriver |  | ortho",
+      {
+        "triangles": 3859200,
+        "calls": 15
+      }
+    ],
+    [
+      "public-instanced-tree-view |  | persp",
+      {
+        "triangles": 3841488,
+        "calls": 36
+      }
+    ],
+    [
+      "R8_R8_stitched_saddle_side_leather |  | ortho",
+      {
+        "triangles": 3398400,
+        "calls": 15
+      }
+    ],
+    [
+      "female_v006lowresUV_10 |  | ortho",
+      {
+        "triangles": 3375360,
+        "calls": 15
+      }
+    ],
+    [
+      "female_v006lowresUV_3 |  | ortho",
+      {
+        "triangles": 3302880,
+        "calls": 15
+      }
+    ],
+    [
+      "public-instanced-tree-2-view |  | persp",
+      {
+        "triangles": 3095568,
+        "calls": 36
+      }
+    ],
+    [
+      "R8_Molded_traction_rubber | Molded traction rubber | persp",
+      {
+        "triangles": 3016104,
+        "calls": 26
+      }
+    ],
+    [
+      "female_v006lowresUV_12 |  | ortho",
+      {
+        "triangles": 2992680,
+        "calls": 15
+      }
+    ],
+    [
+      "female_v006lowresUV_13 | Racer neutral smoke optical visor | persp",
+      {
+        "triangles": 2501120,
+        "calls": 20
+      }
+    ],
+    [
+      "female_v006lowresUV_5 | Warm facial skin | persp",
+      {
+        "triangles": 2232960,
+        "calls": 20
+      }
+    ],
+    [
+      "female_v006lowresUV | R4 articulated technical race suit | persp",
+      {
+        "triangles": 2183680,
+        "calls": 20
+      }
+    ],
+    [
+      "R8_Brushed_titanium | Brushed titanium | persp",
+      {
+        "triangles": 2163408,
+        "calls": 26
+      }
+    ],
+    [
+      "R7_ReverseBucket | R7 satin engineering polymer | persp",
+      {
+        "triangles": 2090880,
+        "calls": 18
+      }
+    ],
+    [
+      "city-material-batch-Coated architectural alloy | Coated architectural alloy | persp",
+      {
+        "triangles": 1878284,
+        "calls": 12
+      }
+    ],
+    [
+      "public-instanced-tree-1-view |  | persp",
+      {
+        "triangles": 1864800,
+        "calls": 36
+      }
+    ],
+    [
+      "R7_ReverseBucket |  | ortho",
+      {
+        "triangles": 1742400,
+        "calls": 15
+      }
+    ],
+    [
+      "R8_Molded_traction_rubber |  | ortho",
+      {
+        "triangles": 1740060,
+        "calls": 15
+      }
+    ],
+    [
+      "female_v006lowresUV_5 |  | ortho",
+      {
+        "triangles": 1674720,
+        "calls": 15
+      }
+    ],
+    [
+      "female_v006lowresUV_1 | Hero blue leather panels | persp",
+      {
+        "triangles": 1670840,
+        "calls": 20
+      }
+    ],
+    [
+      "female_v006lowresUV |  | ortho",
+      {
+        "triangles": 1637760,
+        "calls": 15
+      }
+    ],
+    [
+      "female_v006lowresUV_2 | Hero woven protection | persp",
+      {
+        "triangles": 1415000,
+        "calls": 20
+      }
+    ],
+    [
+      "R8_Forged_carbon_composite | Forged carbon composite | persp",
+      {
+        "triangles": 1313136,
+        "calls": 22
+      }
+    ],
+    [
+      "female_v006lowresUV_1 |  | ortho",
+      {
+        "triangles": 1253130,
+        "calls": 15
+      }
+    ],
+    [
+      "R8_Brushed_titanium |  | ortho",
+      {
+        "triangles": 1248120,
+        "calls": 15
+      }
+    ]
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "method": "Private production build, standard quality, actual Game.frame at fixed 60Hz; rendering/shadow passes skipped during simulation and restored for screenshots. No FPS claim.",
+  "results": [
+    {
+      "id": "tunnel-cut",
+      "choice": "main",
+      "complete": true,
+      "steps": 217,
+      "safeMainSamples": 217,
+      "falseMainContacts": 0,
+      "route": null,
+      "passed": 12,
+      "kmh": 101.23654420402592,
+      "height": 0,
+      "position": {
+        "x": 710.7899017036185,
+        "z": 18.09727955156133
+      }
+    },
+    {
+      "id": "tunnel-cut",
+      "choice": "shortcut",
+      "complete": true,
+      "steps": 979,
+      "safeMainSamples": 147,
+      "falseMainContacts": 0,
+      "route": null,
+      "passed": 14,
+      "kmh": 100.24347238991875,
+      "height": 0,
+      "position": {
+        "x": 734.0411608546359,
+        "z": -277.2573705281962
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "choice": "main",
+      "complete": true,
+      "steps": 226,
+      "safeMainSamples": 112,
+      "falseMainContacts": 0,
+      "route": null,
+      "passed": 16,
+      "kmh": 99.96023973184039,
+      "height": 0,
+      "position": {
+        "x": 731.8131962320066,
+        "z": -515.7725999276292
+      }
+    },
+    {
+      "id": "harbor-cut",
+      "choice": "shortcut",
+      "complete": true,
+      "steps": 2092,
+      "safeMainSamples": 23,
+      "falseMainContacts": 0,
+      "route": null,
+      "passed": 20,
+      "kmh": 100.48436092390756,
+      "height": 0,
+      "position": {
+        "x": -62.591240599712044,
+        "z": -590.0604703293316
+      }
+    }
+  ],
+  "errors": []
+}

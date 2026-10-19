@@ -1,0 +1,365 @@
+{
+  "label": "release",
+  "conditions": "Edge, production build, 1600x1000 DPR1, standard quality, seeded RNG, all five racers frozen t12; 60 warmup +180 RAF frames per view, no GPU queries; fresh browser cache, unthrottled localhost startup.",
+  "boot": {
+    "readyMs": 10888.899999999441,
+    "longTasks": [
+      {
+        "start": 54.299999999813735,
+        "duration": 1510
+      },
+      {
+        "start": 1704.2999999998137,
+        "duration": 50
+      },
+      {
+        "start": 2572.5999999996275,
+        "duration": 2308
+      },
+      {
+        "start": 4958.5,
+        "duration": 185
+      },
+      {
+        "start": 5753.0999999996275,
+        "duration": 244
+      },
+      {
+        "start": 6474.199999999255,
+        "duration": 106
+      },
+      {
+        "start": 7033.0999999996275,
+        "duration": 1231
+      },
+      {
+        "start": 8510.299999999814,
+        "duration": 2376
+      }
+    ],
+    "stages": [
+      {
+        "stage": "city",
+        "time": 1564.699999999255
+      },
+      {
+        "stage": "racers",
+        "time": 4884.799999999814
+      },
+      {
+        "stage": "textures",
+        "time": 4898.899999999441
+      },
+      {
+        "stage": "shaders",
+        "time": 5748.799999999814
+      },
+      {
+        "stage": "reflection",
+        "time": 6469.899999999441
+      }
+    ],
+    "workerDownloads": [
+      {
+        "url": "http://127.0.0.1:5182/models/watercraft-packed.glb.gz",
+        "transportBytes": 53060016
+      },
+      {
+        "url": "http://127.0.0.1:5182/models/rider-packed.glb.gz",
+        "transportBytes": 26168892
+      }
+    ],
+    "resources": [
+      {
+        "name": "assets/vertical-k9Laqoiq.js",
+        "bytes": 75463,
+        "duration": 13.700000000186265
+      },
+      {
+        "name": "assets/three-dbP4eVd7.js",
+        "bytes": 192614,
+        "duration": 26
+      },
+      {
+        "name": "assets/vertical-CH3Q4hZL.css",
+        "bytes": 3124,
+        "duration": 9.700000000186265
+      },
+      {
+        "name": "assets/model-loaders-BXr9TtCk.js",
+        "bytes": 12877,
+        "duration": 10.5
+      },
+      {
+        "name": "models/city-sample/waterfront.glb",
+        "bytes": 15709780,
+        "duration": 509.70000000018626
+      },
+      {
+        "name": "models/city-sample/city-modules.glb",
+        "bytes": 10528652,
+        "duration": 503.79999999981374
+      },
+      {
+        "name": "assets/ModelTransport.worker-D8v6-m4Z.js",
+        "bytes": 468,
+        "duration": -286.3999999994412
+      },
+      {
+        "name": "assets/ModelTransport.worker-D8v6-m4Z.js",
+        "bytes": 468,
+        "duration": -288.6000000005588
+      },
+      {
+        "name": "models/runtime-textures/23e02b034b8d28c3d9fb.webp",
+        "bytes": 3705854,
+        "duration": 134.5
+      },
+      {
+        "name": "models/runtime-textures/bb50cddcad3d7d44e2d8.webp",
+        "bytes": 51358,
+        "duration": 22.700000000186265
+      },
+      {
+        "name": "models/runtime-textures/d1cf99dabca561f7faad.webp",
+        "bytes": 3407994,
+        "duration": 136.20000000018626
+      },
+      {
+        "name": "models/runtime-textures/88f5ef580707967548d0.webp",
+        "bytes": 3360768,
+        "duration": 142.70000000018626
+      },
+      {
+        "name": "models/runtime-textures/a810f3d277877a08123e.webp",
+        "bytes": 10232,
+        "duration": 29.899999999441206
+      },
+      {
+        "name": "models/runtime-textures/3f53ad56702cb88b589c.webp",
+        "bytes": 2912504,
+        "duration": 137.20000000018626
+      },
+      {
+        "name": "models/runtime-textures/65172c9abac5eca46625.webp",
+        "bytes": 59852,
+        "duration": 50.200000000186265
+      },
+      {
+        "name": "models/runtime-textures/6a8a65e05d5fd1a7eae8.webp",
+        "bytes": 1399346,
+        "duration": 69.20000000018626
+      },
+      {
+        "name": "models/runtime-textures/b116d85e8e62abe1fc2f.webp",
+        "bytes": 104482,
+        "duration": 86.40000000037253
+      },
+      {
+        "name": "models/runtime-textures/9494993a3d012f41744f.webp",
+        "bytes": 3014952,
+        "duration": 139.90000000037253
+      },
+      {
+        "name": "models/runtime-textures/6ee1e29f4e3eeb2761e8.webp",
+        "bytes": 1734,
+        "duration": 91.09999999962747
+      },
+      {
+        "name": "models/runtime-textures/a5a7a6117474fc7015cc.webp",
+        "bytes": 3706452,
+        "duration": 220.40000000037253
+      },
+      {
+        "name": "models/runtime-textures/ec0b155ef3681079aebe.webp",
+        "bytes": 2504230,
+        "duration": 260.40000000037253
+      },
+      {
+        "name": "models/runtime-textures/37adb5e352224afdbd7a.webp",
+        "bytes": 1202050,
+        "duration": 179.79999999981374
+      },
+      {
+        "name": "models/runtime-textures/a098c0c818a83756a6b3.webp",
+        "bytes": 2522534,
+        "duration": 250.5
+      },
+      {
+        "name": "models/runtime-textures/79e4ea6cf2e75941d4c6.webp",
+        "bytes": 1647282,
+        "duration": 179
+      },
+      {
+        "name": "models/runtime-textures/fdfb661ab6df4c534801.webp",
+        "bytes": 2175982,
+        "duration": 258.70000000018626
+      },
+      {
+        "name": "models/runtime-textures/6b465234a3a520d779df.webp",
+        "bytes": 1033506,
+        "duration": 219.5
+      },
+      {
+        "name": "models/city-sample/city-services.glb",
+        "bytes": 9350676,
+        "duration": 352.29999999981374
+      },
+      {
+        "name": "models/runtime-textures/fe5bae937b9c22e9ffaa.webp",
+        "bytes": 1219020,
+        "duration": 106.79999999981374
+      },
+      {
+        "name": "models/runtime-textures/560595f52bc946120945.webp",
+        "bytes": 3014856,
+        "duration": 153.1000000005588
+      },
+      {
+        "name": "models/runtime-textures/b116d85e8e62abe1fc2f.webp",
+        "bytes": 104482,
+        "duration": 115.8999999994412
+      },
+      {
+        "name": "models/runtime-textures/bc1facc8ddffc28b00dc.webp",
+        "bytes": 2524568,
+        "duration": 180.70000000018626
+      },
+      {
+        "name": "models/runtime-textures/a740f0bc2240186e9237.webp",
+        "bytes": 2514728,
+        "duration": 188.90000000037253
+      },
+      {
+        "name": "models/runtime-textures/37adb5e352224afdbd7a.webp",
+        "bytes": 1202050,
+        "duration": 171.59999999962747
+      },
+      {
+        "name": "models/runtime-textures/9a7a94cc03bf1bc15367.webp",
+        "bytes": 10872,
+        "duration": 133.20000000018626
+      },
+      {
+        "name": "models/runtime-textures/e7b1ce5b4bc2ece5ed9e.webp",
+        "bytes": 2912416,
+        "duration": 230
+      },
+      {
+        "name": "models/runtime-textures/65172c9abac5eca46625.webp",
+        "bytes": 59852,
+        "duration": 165.70000000018626
+      },
+      {
+        "name": "models/runtime-textures/3510df3292199a428ea7.webp",
+        "bytes": 2072388,
+        "duration": 159.5
+      },
+      {
+        "name": "models/runtime-textures/0330aa7967182acbb1c8.webp",
+        "bytes": 1655102,
+        "duration": 175.29999999981374
+      },
+      {
+        "name": "models/runtime-textures/6b465234a3a520d779df.webp",
+        "bytes": 1033506,
+        "duration": 238.8999999994412
+      },
+      {
+        "name": "models/runtime-textures/f0c48b4ee3e12ffd33c0.webp",
+        "bytes": 2271890,
+        "duration": 303.40000000037253
+      },
+      {
+        "name": "models/runtime-textures/b13b68a813320992ea62.webp",
+        "bytes": 1647034,
+        "duration": 208.79999999981374
+      },
+      {
+        "name": "models/runtime-textures/9ecd1e9bc5b81ac62ff5.webp",
+        "bytes": 403184,
+        "duration": 193.5
+      },
+      {
+        "name": "models/runtime-textures/fcfe459ca867733ea6f0.webp",
+        "bytes": 3407888,
+        "duration": 307.09999999962747
+      },
+      {
+        "name": "models/runtime-textures/88f5ef580707967548d0.webp",
+        "bytes": 3360768,
+        "duration": 310.3999999994412
+      },
+      {
+        "name": "models/runtime-textures/64a0ee65ef3cfa6f2438.webp",
+        "bytes": 1536,
+        "duration": 224
+      },
+      {
+        "name": "models/city-sample/public-citizens.glb",
+        "bytes": 2166236,
+        "duration": 21.40000000037253
+      }
+    ],
+    "heap": 363275541
+  },
+  "errors": [],
+  "results": [
+    {
+      "id": "city-driver",
+      "fps": 19.883131372266632,
+      "frameMs": 50.29388888889096,
+      "low1": 19.361084220925825,
+      "cpuMs": 14.671111111141121,
+      "calls": 730,
+      "triangles": 64662466,
+      "memory": {
+        "geometries": 330,
+        "textures": 177
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "id": "city-distance",
+      "fps": 15.380803048816471,
+      "frameMs": 65.01611111111318,
+      "low1": 14.925373134328359,
+      "cpuMs": 16.627222222193247,
+      "calls": 922,
+      "triangles": 86399752,
+      "memory": {
+        "geometries": 330,
+        "textures": 177
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "id": "elevated-five",
+      "fps": 26.588280476815033,
+      "frameMs": 37.610555555557625,
+      "low1": 25.44529262098574,
+      "cpuMs": 12.03666666662838,
+      "calls": 597,
+      "triangles": 48649904,
+      "memory": {
+        "geometries": 330,
+        "textures": 177
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "id": "tunnel-five",
+      "fps": 17.026911980324456,
+      "frameMs": 58.730555555555554,
+      "low1": 16.65278934213734,
+      "cpuMs": 15.587222222218083,
+      "calls": 762,
+      "triangles": 75017185,
+      "memory": {
+        "geometries": 330,
+        "textures": 177
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ]
+}

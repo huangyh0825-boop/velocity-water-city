@@ -1,0 +1,26 @@
+[
+  {
+    "view": "city-driver",
+    "meanAbsoluteRGBError": 9.833333333333333e-05,
+    "maxChannelError": 15,
+    "fractionAnyChannelOver8": 3.125e-06
+  },
+  {
+    "view": "city-distance",
+    "meanAbsoluteRGBError": 0.0008016666666666667,
+    "maxChannelError": 46,
+    "fractionAnyChannelOver8": 3.1875e-05
+  },
+  {
+    "view": "elevated-five",
+    "meanAbsoluteRGBError": 0.0004754166666666667,
+    "maxChannelError": 19,
+    "fractionAnyChannelOver8": 1.6875e-05
+  },
+  {
+    "view": "tunnel-five",
+    "meanAbsoluteRGBError": 0.00020520833333333334,
+    "maxChannelError": 13,
+    "fractionAnyChannelOver8": 2.5e-06
+  }
+]

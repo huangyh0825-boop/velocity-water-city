@@ -1,0 +1,26 @@
+{
+  "desktop": {
+    "quality": "画质 · 标准",
+    "speed": 83,
+    "reset": true,
+    "overflow": false,
+    "qaHooks": false,
+    "canvas": true,
+    "errors": [],
+    "failed": []
+  },
+  "touch": {
+    "quality": "画质 · 低",
+    "speed": 82,
+    "reset": true,
+    "overflow": false,
+    "qaHooks": false,
+    "canvas": true,
+    "errors": [],
+    "failed": []
+  },
+  "failure": {
+    "message": "Error: TypeError: Failed to fetch",
+    "retry": true
+  }
+}

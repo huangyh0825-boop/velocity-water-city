@@ -1,0 +1,282 @@
+[
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 2591
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 2499
+  },
+  {
+    "functionName": "onFirstUse",
+    "scriptId": "107",
+    "url": "http://127.0.0.1:5177/node_modules/.vite/deps/chunk-IT3TP6RZ.js?v=02c53906",
+    "lineNumber": 35312,
+    "columnNumber": 21,
+    "hits": 1434
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 789
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 780
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 762
+  },
+  {
+    "functionName": "onFirstUse",
+    "scriptId": "107",
+    "url": "http://127.0.0.1:5177/node_modules/.vite/deps/chunk-IT3TP6RZ.js?v=02c53906",
+    "lineNumber": 35312,
+    "columnNumber": 21,
+    "hits": 757
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 568
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 511
+  },
+  {
+    "functionName": "onFirstUse",
+    "scriptId": "107",
+    "url": "http://127.0.0.1:5177/node_modules/.vite/deps/chunk-IT3TP6RZ.js?v=02c53906",
+    "lineNumber": 35312,
+    "columnNumber": 21,
+    "hits": 428
+  },
+  {
+    "functionName": "(idle)",
+    "scriptId": "0",
+    "url": "",
+    "lineNumber": -1,
+    "columnNumber": -1,
+    "hits": 332
+  },
+  {
+    "functionName": "(program)",
+    "scriptId": "0",
+    "url": "",
+    "lineNumber": -1,
+    "columnNumber": -1,
+    "hits": 302
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 297
+  },
+  {
+    "functionName": "texSubImage2D",
+    "scriptId": "107",
+    "url": "http://127.0.0.1:5177/node_modules/.vite/deps/chunk-IT3TP6RZ.js?v=02c53906",
+    "lineNumber": 37318,
+    "columnNumber": 24,
+    "hits": 244
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 193
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 187
+  },
+  {
+    "functionName": "(garbage collector)",
+    "scriptId": "0",
+    "url": "",
+    "lineNumber": -1,
+    "columnNumber": -1,
+    "hits": 147
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 143
+  },
+  {
+    "functionName": "onFirstUse",
+    "scriptId": "107",
+    "url": "http://127.0.0.1:5177/node_modules/.vite/deps/chunk-IT3TP6RZ.js?v=02c53906",
+    "lineNumber": 35312,
+    "columnNumber": 21,
+    "hits": 140
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 104
+  },
+  {
+    "functionName": "",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 168,
+    "columnNumber": 59,
+    "hits": 65
+  },
+  {
+    "functionName": "",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 168,
+    "columnNumber": 59,
+    "hits": 64
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 61
+  },
+  {
+    "functionName": "mergeVertices",
+    "scriptId": "95",
+    "url": "http://127.0.0.1:5177/node_modules/.vite/deps/chunk-KF3ZM4MI.js?v=02c53906",
+    "lineNumber": 305,
+    "columnNumber": 22,
+    "hits": 58
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 55
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 55
+  },
+  {
+    "functionName": "mergeVertices",
+    "scriptId": "95",
+    "url": "http://127.0.0.1:5177/node_modules/.vite/deps/chunk-KF3ZM4MI.js?v=02c53906",
+    "lineNumber": 305,
+    "columnNumber": 22,
+    "hits": 54
+  },
+  {
+    "functionName": "publicGroundCells",
+    "scriptId": "106",
+    "url": "http://127.0.0.1:5177/src/environment/CityVacancy.ts",
+    "lineNumber": 4,
+    "columnNumber": 33,
+    "hits": 52
+  },
+  {
+    "functionName": "",
+    "scriptId": "107",
+    "url": "http://127.0.0.1:5177/node_modules/.vite/deps/chunk-IT3TP6RZ.js?v=02c53906",
+    "lineNumber": 23481,
+    "columnNumber": 33,
+    "hits": 50
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 47
+  },
+  {
+    "functionName": "enableBatches",
+    "scriptId": "97",
+    "url": "http://127.0.0.1:5177/src/environment/CityServices.ts",
+    "lineNumber": 57,
+    "columnNumber": 15,
+    "hits": 44
+  },
+  {
+    "functionName": "axes",
+    "scriptId": "86",
+    "url": "http://127.0.0.1:5177/src/environment/CityDensityLayout.ts",
+    "lineNumber": 31,
+    "columnNumber": 15,
+    "hits": 38
+  },
+  {
+    "functionName": "grounded",
+    "scriptId": "104",
+    "url": "http://127.0.0.1:5177/src/environment/WaterfrontLayout.ts",
+    "lineNumber": 70,
+    "columnNumber": 19,
+    "hits": 37
+  },
+  {
+    "functionName": "applyMatrix4",
+    "scriptId": "107",
+    "url": "http://127.0.0.1:5177/node_modules/.vite/deps/chunk-IT3TP6RZ.js?v=02c53906",
+    "lineNumber": 2224,
+    "columnNumber": 14,
+    "hits": 37
+  },
+  {
+    "functionName": "project",
+    "scriptId": "32",
+    "url": "http://127.0.0.1:5177/src/track/CityTrack.ts",
+    "lineNumber": 128,
+    "columnNumber": 9,
+    "hits": 35
+  }
+]

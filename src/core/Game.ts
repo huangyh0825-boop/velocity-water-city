@@ -10,8 +10,7 @@ import { Track } from '../track/Track';
 import { CityTrack } from '../track/CityTrack';
 import { TrackView } from '../track/TrackView';
 import { RaceController } from '../race/RaceController';
-import { AIController } from '../ai/AIController';
-import { SPEED_TUNING, kmhToMps } from '../config/speed';
+import {createCityOpponents,cityEntrants} from '../ai/CityOpponents';
 import { MotionInterpolation } from '../player/MotionInterpolation';
 import { BoatCollisions, type BoatBody } from '../physics/BoatCollisions';
 import { FlightController } from '../player/FlightController';
@@ -33,10 +32,13 @@ import {HeroLighting} from '../player/HeroLighting';
 import {VerticalTrackView} from '../track/VerticalTrackView';
 import {LoadingScreen} from '../ui/LoadingScreen';
 import {CameraObstacles} from '../camera/CameraObstacles';
+import {yieldToBrowser} from './yieldToBrowser';
+import {RenderPassMaterials} from './RenderPassMaterials';
 export class Game {
   readonly ready:Promise<void>;
   private initialized=false;private disposed=false;
   private renderer: THREE.WebGLRenderer;
+  private renderPassMaterials:RenderPassMaterials;
   private scene = createScene();
   private track = new CityTrack();
   private city=new CityDistricts(this.scene,this.track);
@@ -49,12 +51,7 @@ export class Game {
   private jet = new BoosterJet(this.craft.visual);
   private ramps = new Ramps(this.track, this.scene);
   private craftMotion = new MotionInterpolation(this.craft.model);
-  private ai = [
-    new AIController('ai-1', '霓虹 / NEON', kmhToMps(SPEED_TUNING.normalAI.maxKmh[0]), -7, this.track, -0.02),
-    new AIController('ai-2', '脉冲 / PULSE', kmhToMps(SPEED_TUNING.normalAI.maxKmh[1]), 7, this.track, -0.02),
-    new AIController('ai-3', '极光 / AURORA', kmhToMps(SPEED_TUNING.normalAI.maxKmh[2]), -7, this.track, -0.029),
-    new AIController('ai-4', '回声 / ECHO', kmhToMps(SPEED_TUNING.normalAI.maxKmh[3]), 7, this.track, -0.029),
-  ];
+  private ai = createCityOpponents(this.track);
   private aiCraft = this.ai.map((ai, i) => {
     const craft=new Watercraft(this.scene, ['#ee7953', '#a583ed', '#f6cc61', '#55c8a2'][i], ai.model);
     craft.rider.root.name='ai-rider';return craft;
@@ -86,6 +83,7 @@ export class Game {
     loading.begin('renderer');
     this.water.bindWake(this.wake.pool);this.wake.setSurfaceIntegrated(true);
     this.renderer = new THREE.WebGLRenderer({ antialias: !matchMedia('(pointer: coarse)').matches, stencil:true, powerPreference: 'high-performance', preserveDrawingBuffer: false });
+    this.renderPassMaterials=new RenderPassMaterials(this.renderer);
     this.renderer.autoClear = true; // Clear every frame; no history accumulation or motion blur.
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;this.citySample.configureSun(this.scene);
@@ -126,15 +124,18 @@ export class Game {
       for(const value of Object.values(m))if(value instanceof THREE.Texture)textures.add(value);
       if(m instanceof THREE.ShaderMaterial)for(const uniform of Object.values(m.uniforms))if(uniform.value instanceof THREE.Texture)textures.add(uniform.value);
     }});
-    textures.add(this.citySample.density.glass.atlas);for(const texture of textures)this.renderer.initTexture(texture);this.loading.complete('textures');
+    textures.add(this.citySample.density.glass.atlas);let uploadStart=performance.now();
+    for(const texture of textures){this.renderer.initTexture(texture);if(performance.now()-uploadStart>8){await yieldToBrowser();if(this.disposed)return;uploadStart=performance.now();}}this.loading.complete('textures');
     this.loading.begin('effects');this.water.update(0);racers.forEach(c=>c.sync(0));this.loading.complete('effects');
-    this.loading.begin('reflection');await new Promise(requestAnimationFrame);this.citySample.bakeReflections(this.renderer,this.scene);this.loading.complete('reflection');
-    this.loading.begin('shaders');await new Promise(requestAnimationFrame);
-    if(!this.low){this.heroLighting.update(this.renderer,this.scene,this.craft.visual);this.aiCraft.forEach((c,i)=>this.aiLighting[i].update(this.renderer,this.scene,c.visual));}
+    this.loading.begin('shaders');await yieldToBrowser();
+    this.citySample.density.enableBatches(this.renderer);
     const jets=[this.jet,...this.aiJets];jets.forEach(j=>j.object.visible=true);
     let timeout:ReturnType<typeof setTimeout>|undefined;
     try{await Promise.race([this.renderer.compileAsync(this.scene,this.camera.camera),new Promise<never>((_,reject)=>{timeout=setTimeout(()=>reject(Error('Shader 初始化超时，请确认硬件加速可用后重试')),90000);})]);}finally{clearTimeout(timeout);jets.forEach(j=>j.object.visible=false);}
-    this.renderer.render(this.scene,this.camera.camera);this.loading.complete('shaders');
+    this.loading.complete('shaders');
+    this.loading.begin('reflection');await yieldToBrowser();await this.citySample.bakeReflections(this.renderer,this.scene);this.loading.complete('reflection');
+    if(!this.low){this.heroLighting.update(this.renderer,this.scene,this.craft.visual);this.aiCraft.forEach((c,i)=>this.aiLighting[i].update(this.renderer,this.scene,c.visual));}
+    await this.renderer.compileAsync(this.scene,this.camera.camera);await yieldToBrowser();this.renderer.render(this.scene,this.camera.camera);
     this.loading.begin('scene');if(this.disposed)return;this.camera.obstacles=CameraObstacles.from(this.track,this.citySample.density.sites,this.scene);this.restart();this.initialized=true;this.previous=0;this.accumulator=0;
     this.hud.update(this.craft.model,this.race,false,this.nitro,this.flight,this.tricks);this.loading.complete('scene');this.loading.finish();
   }
@@ -148,7 +149,7 @@ export class Game {
     this.countdownCue.reset();
     this.debug?.reset();
     this.craftMotion.reset(); this.aiMotion.forEach(motion => motion.reset());
-    this.race = new RaceController(this.track, [{ id: 'player', name: '你 / PLAYER', position: this.craft.model }, ...this.ai.map(ai => ({ id: ai.id, name: ai.name, position: ai.model }))]);
+    this.race = new RaceController(this.track, [{ id: 'player', name: '你 / PLAYER', position: this.craft.model }, ...cityEntrants(this.ai)]);
     this.wake.reset(); this.wallContact = false; this.accumulator = 0; this.previous = 0;
     this.camera.update(0, this.craft.model, true);
   };
@@ -249,6 +250,7 @@ export class Game {
   };
   dispose() {
     this.disposed=true;
+    this.renderPassMaterials.dispose();
     this.heroLighting.dispose();this.aiLighting.forEach(light=>light.dispose());
     this.citySample.dispose();
     this.craft.dispose();this.aiCraft.forEach(c=>c.dispose());this.reflection?.dispose();

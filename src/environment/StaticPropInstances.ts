@@ -27,8 +27,9 @@ export class StaticPropInstances{
  }
  private compact(pool:Pool,shadow:boolean,view?:View){
   const previous=shadow?pool.shadowIds:view!.ids,mesh=shadow?pool.shadow:view!.mesh;let count=0,changed=false;
-  for(let i=0;i<pool.bounds.length;i++)if(this.level(pool,i)===pool.tier&&this.frustum.intersectsSphere(pool.bounds[i])){if(previous[count]!==i)changed=true;previous[count++]=i;}
-  if(previous.length!==count)changed=true;previous.length=count;if(changed){for(let n=0;n<count;n++)mesh.setMatrixAt(n,pool.matrices[previous[n]]);mesh.instanceMatrix.needsUpdate=true;mesh.count=count;mesh.computeBoundingSphere()}
+  // LOD is irrelevant for an instance already outside this exact camera frustum.
+  for(let i=0;i<pool.bounds.length;i++)if(this.frustum.intersectsSphere(pool.bounds[i])&&this.level(pool,i)===pool.tier){if(previous[count]!==i)changed=true;previous[count++]=i;}
+  if(previous.length!==count)changed=true;previous.length=count;if(changed){for(let n=0;n<count;n++)mesh.setMatrixAt(n,pool.matrices[previous[n]]);mesh.instanceMatrix.needsUpdate=true;mesh.count=count;}
   mesh.count=count;if(shadow)pool.shadowCount=count;
  }
  prepare(root:THREE.Object3D,camera:THREE.Camera,sun:THREE.DirectionalLight|undefined,renderer:THREE.WebGLRenderer){

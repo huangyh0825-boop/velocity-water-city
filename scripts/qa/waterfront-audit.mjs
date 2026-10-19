@@ -1,0 +1,22 @@
+import{loadPlaywright}from'./qa-playwright.mjs';import{mkdirSync,writeFileSync}from'node:fs';import assert from'node:assert/strict';
+const{chromium}=loadPlaywright(),browser=await chromium.launch({channel:'msedge',headless:true}),results=[];mkdirSync('docs/waterfront-repair',{recursive:true});
+try{for(const[label,port]of[['before',5184],['after',5182]]){
+ const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1}),errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto(`http://127.0.0.1:${port}/scripts/qa/vertical.html`,{waitUntil:'commit'});await page.waitForFunction(()=>window.verticalQA,null,{timeout:180000});await page.evaluate(()=>window.verticalQA.ready());
+ const audit=await page.evaluate(()=>{
+  const g=window.testGame,T=window.qaTHREE,cells=new Map(),cellSize=16;let channelTriangles=0;const key=(x,z)=>`${Math.floor(x/cellSize)}:${Math.floor(z/cellSize)}`;
+  g.scene.updateMatrixWorld(true);g.scene.traverse(o=>{if(o.name!=='elevated-water-surface')return;const a=o.geometry.attributes.position,indices=o.geometry.index;for(let i=0;i<(indices?.count??a.count);i+=3){const ps=[0,1,2].map(k=>new T.Vector3().fromBufferAttribute(a,indices?indices.getX(i+k):i+k).applyMatrix4(o.matrixWorld)),tri=ps.map(p=>[p.x,p.y,p.z]);channelTriangles++;
+   for(let x=Math.floor(Math.min(...ps.map(p=>p.x))/cellSize);x<=Math.floor(Math.max(...ps.map(p=>p.x))/cellSize);x++)for(let z=Math.floor(Math.min(...ps.map(p=>p.z))/cellSize);z<=Math.floor(Math.max(...ps.map(p=>p.z))/cellSize);z++){const k=`${x}:${z}`,list=cells.get(k)??[];list.push(tri);cells.set(k,list);}
+  }});
+  const waterAt=(x,z,floor)=>{for(const[a,b,c]of cells.get(key(x,z))??[]){const denom=(b[2]-c[2])*(a[0]-c[0])+(c[0]-b[0])*(a[2]-c[2]);if(Math.abs(denom)<1e-9)continue;const u=((b[2]-c[2])*(x-c[0])+(c[0]-b[0])*(z-c[2]))/denom,v=((c[2]-a[2])*(x-c[0])+(a[0]-c[0])*(z-c[2]))/denom,w=1-u-v;if(Math.min(u,v,w)<-1e-5)continue;const y=u*a[1]+v*b[1]+w*c[1];if(Math.abs(y-floor)<.25)return y;}return null;};
+  const banks=g.scene.getObjectByName('canal-bank-spans'),rims=g.scene.getObjectByName('canal-rim-spans'),rim=new T.Matrix4(),mat=new T.Matrix4(),failures=[];let raisedSamples=0,covered=0,minWaveCover=Infinity;
+  for(let i=0;i<banks.count;i++){banks.getMatrixAt(i,mat);rims.getMatrixAt(i,rim);for(const along of[-.35,0,.35]){const middle=new T.Vector3(0,0,along).applyMatrix4(mat),floor=middle.y-mat.elements[13]+rim.elements[13]-1.69;if(floor<.2)continue;raisedSamples++;let found=false;
+   for(const side of[-1,1]){const p=new T.Vector3(side*.55,-.5,along).applyMatrix4(mat),y=waterAt(p.x,p.z,floor);if(y!==null){found=true;minWaveCover=Math.min(minWaveCover,y-p.y);}}
+   if(found)covered++;else failures.push({instance:i,along,x:middle.x,z:middle.z,floor});
+  }}
+  return{channelTriangles,raisedSamples,covered,uncovered:failures.length,minWaveCover,examples:failures.slice(0,15),startStripe:!!g.scene.getObjectByName('start-waterline')};
+ });
+ const shots=[['start-line',.999,null,0,[0,7,-18],[0,0,18]],['harbor-rise',.16,'harbor-cut',3.6,[0,4,-10],[0,1,16]],['harbor-deck',.30,'harbor-cut',3.6,[0,4,-10],[0,1,16]],['main-sky',.322,null,10,[0,4,-10],[0,1,16]],['main-crest',.715,null,18,[0,4,-10],[0,1,16]],['main-port',.798,null,16,[0,4,-10],[0,1,16]],['city-control',.06,null,0,[0,5.7,-13],[0,1,12]]];
+ for(const[id,t,route,lane,offset,target]of shots){await page.evaluate(({t,route,lane,offset,target})=>{const q=window.verticalQA,g=window.testGame;q.fixture(t,route,0,false);if(lane){const cut=g.track.shortcuts.find(c=>c.id===route),angle=cut?cut.from+(cut.to-cut.from)*t:t*Math.PI*2;Object.assign(g.craft.model,g.track.routePoint(angle,lane,route));g.ramps.place(g.craft.model,g.flight);g.craftMotion.reset();g.craft.sync(0,g.craft.model,g.flight.height,{pitch:0,yaw:0},g.track.surface(g.craft.model).height);}g.paused=true;g.time=12;g.hud.update(g.craft.model,g.race,false,g.nitro,g.flight,g.tricks);q.view(offset,target,false);},{t,route,lane,offset,target});await page.screenshot({path:`docs/waterfront-repair/${label}-${id}.png`});}
+ results.push({label,...audit,errors});console.log(JSON.stringify({label,...audit,errors}));assert.deepEqual(errors,[]);if(label==='after'){assert.equal(audit.uncovered,0);assert.ok(audit.minWaveCover>.081);assert.equal(audit.startStripe,false);}await page.close();
+}writeFileSync('docs/waterfront-repair/water-coverage.json',JSON.stringify(results,null,2));}finally{await browser.close()}

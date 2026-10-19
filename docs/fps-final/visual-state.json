@@ -1,0 +1,281 @@
+{
+  "method": "Seeded RNG, identical six frozen poses/cameras, all main/reflection instance IDs in order, off-screen sun casters, draw counts and quality parameters must match exactly. PNG comparison is separate. Stored ID digests retain count and SHA256 after exact in-memory comparison.",
+  "results": [
+    {
+      "label": "before",
+      "id": "city",
+      "calls": 730,
+      "triangles": 64662466,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 2082,
+        "cameraInstances": 69432,
+        "sha256": "54b8211f6c0f639b602dfc3cd853b2fb104859db6b97dc025143664f1f4379c4"
+      }
+    },
+    {
+      "label": "before",
+      "id": "distant",
+      "calls": 922,
+      "triangles": 86399752,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 2539,
+        "cameraInstances": 72626,
+        "sha256": "51a2d8223b3462fc4ca22964d98d28da5047d37b517371177148e2c69fa58eb4"
+      }
+    },
+    {
+      "label": "before",
+      "id": "elevated",
+      "calls": 595,
+      "triangles": 48649880,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 5871,
+        "cameraInstances": 70282,
+        "sha256": "57ca07fce8181a55f29327ce02c5a77dec6f7c291481ebf8eafe9e089966b2a1"
+      }
+    },
+    {
+      "label": "before",
+      "id": "tunnel",
+      "calls": 833,
+      "triangles": 79364099,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 4719,
+        "cameraInstances": 79486,
+        "sha256": "fec5a9e26770ba9ca1c2262e010e48fc786dee8f6078180412221eb770bf55de"
+      }
+    },
+    {
+      "label": "before",
+      "id": "harbor",
+      "calls": 770,
+      "triangles": 60902446,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 5277,
+        "cameraInstances": 94209,
+        "sha256": "040042306d7f786124b1b0a8afdfdc4726758194b8035c0326233e17da89fb44"
+      }
+    },
+    {
+      "label": "before",
+      "id": "rear",
+      "calls": 754,
+      "triangles": 71845549,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 4815,
+        "cameraInstances": 79591,
+        "sha256": "107c879435baac314ee241fff6626eefbb3a81bcee7a66556bc8567414711e26"
+      }
+    },
+    {
+      "label": "after",
+      "id": "city",
+      "calls": 730,
+      "triangles": 64662466,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 2082,
+        "cameraInstances": 69432,
+        "sha256": "54b8211f6c0f639b602dfc3cd853b2fb104859db6b97dc025143664f1f4379c4"
+      }
+    },
+    {
+      "label": "after",
+      "id": "distant",
+      "calls": 922,
+      "triangles": 86399752,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 2539,
+        "cameraInstances": 72626,
+        "sha256": "51a2d8223b3462fc4ca22964d98d28da5047d37b517371177148e2c69fa58eb4"
+      }
+    },
+    {
+      "label": "after",
+      "id": "elevated",
+      "calls": 595,
+      "triangles": 48649880,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 5871,
+        "cameraInstances": 70282,
+        "sha256": "57ca07fce8181a55f29327ce02c5a77dec6f7c291481ebf8eafe9e089966b2a1"
+      }
+    },
+    {
+      "label": "after",
+      "id": "tunnel",
+      "calls": 833,
+      "triangles": 79364099,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 4719,
+        "cameraInstances": 79486,
+        "sha256": "fec5a9e26770ba9ca1c2262e010e48fc786dee8f6078180412221eb770bf55de"
+      }
+    },
+    {
+      "label": "after",
+      "id": "harbor",
+      "calls": 770,
+      "triangles": 60902446,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 5277,
+        "cameraInstances": 94209,
+        "sha256": "040042306d7f786124b1b0a8afdfdc4726758194b8035c0326233e17da89fb44"
+      }
+    },
+    {
+      "label": "after",
+      "id": "rear",
+      "calls": 754,
+      "triangles": 71845549,
+      "low": false,
+      "dpr": 1,
+      "waterSegments": 320,
+      "reflectionWidth": 1024,
+      "shadowWidths": [
+        2048,
+        2048,
+        2048,
+        2048,
+        2048
+      ],
+      "instanceDigest": {
+        "pools": 163,
+        "sunInstances": 4815,
+        "cameraInstances": 79591,
+        "sha256": "107c879435baac314ee241fff6626eefbb3a81bcee7a66556bc8567414711e26"
+      }
+    }
+  ]
+}

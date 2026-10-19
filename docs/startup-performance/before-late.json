@@ -1,0 +1,307 @@
+{
+  "label": "before-late",
+  "conditions": "Edge, production build, 1600x1000 DPR1, standard quality, seeded RNG, all five racers frozen t12; 60 warmup +180 RAF frames per view, no GPU queries; fresh browser cache, unthrottled localhost startup.",
+  "boot": {
+    "readyMs": 36233.799999999814,
+    "longTasks": [
+      {
+        "start": 48.59999999962747,
+        "duration": 18596
+      },
+      {
+        "start": 19550.699999999255,
+        "duration": 6854
+      },
+      {
+        "start": 26700,
+        "duration": 761
+      },
+      {
+        "start": 27461.199999999255,
+        "duration": 5763
+      },
+      {
+        "start": 33226,
+        "duration": 191
+      },
+      {
+        "start": 33843.39999999944,
+        "duration": 2387
+      }
+    ],
+    "stages": [
+      {
+        "stage": "city",
+        "time": 18645
+      },
+      {
+        "stage": "racers",
+        "time": 26436.5
+      },
+      {
+        "stage": "reflection",
+        "time": 27461.199999999255
+      },
+      {
+        "stage": "shaders",
+        "time": 33223.5
+      }
+    ],
+    "workerDownloads": [],
+    "resources": [
+      {
+        "name": "assets/vertical-DpWXNDKA.js",
+        "bytes": 74094,
+        "duration": 15.099999999627471
+      },
+      {
+        "name": "assets/three-Dz8tHIaU.js",
+        "bytes": 186502,
+        "duration": 27.299999999813735
+      },
+      {
+        "name": "assets/model-loaders-Cgujrs1I.js",
+        "bytes": 12877,
+        "duration": 14.400000000372529
+      },
+      {
+        "name": "assets/vertical-CH3Q4hZL.css",
+        "bytes": 3124,
+        "duration": 11
+      },
+      {
+        "name": "models/city-sample/waterfront.glb",
+        "bytes": 15709780,
+        "duration": 1069.9000000003725
+      },
+      {
+        "name": "models/city-sample/city-modules.glb",
+        "bytes": 10528652,
+        "duration": 1048.3999999994412
+      },
+      {
+        "name": "models/watercraft.glb",
+        "bytes": 102633960,
+        "duration": 1069.5
+      },
+      {
+        "name": "models/rider.glb",
+        "bytes": 71141176,
+        "duration": 695.5
+      },
+      {
+        "name": "models/city-sample/city-services.glb",
+        "bytes": 9350676,
+        "duration": 61.799999999813735
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-stretch-racing-textile-orm-23e02b034b.png",
+        "bytes": 5540190,
+        "duration": 57.60000000055879
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-stretch-racing-textile-normal-bb50cddcad.png",
+        "bytes": 346947,
+        "duration": 13.299999999813735
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-blue-leather-panels-normal-88f5ef5807.png",
+        "bytes": 5369987,
+        "duration": 66.69999999925494
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-blue-leather-panels-orm-d1cf99dabc.png",
+        "bytes": 5904892,
+        "duration": 68.3999999994412
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-woven-protection-basecolor-a810f3d277.png",
+        "bytes": 1464260,
+        "duration": 28.700000000186265
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-woven-protection-normal-65172c9aba.png",
+        "bytes": 391662,
+        "duration": 35.5
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-woven-protection-orm-3f53ad5670.png",
+        "bytes": 4377827,
+        "duration": 118.09999999962747
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-glove-and-boot-grip-basecolor-6a8a65e05d.png",
+        "bytes": 3836536,
+        "duration": 106.1000000005588
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-glove-and-boot-grip-normal-b116d85e8e.png",
+        "bytes": 584816,
+        "duration": 78.79999999981374
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-glove-and-boot-grip-orm-9494993a3d.png",
+        "bytes": 5006133,
+        "duration": 144.09999999962747
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-stretch-racing-textile-basecolor-6ee1e29f4e.png",
+        "bytes": 334889,
+        "duration": 79.90000000037253
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-stretch-racing-textile-orm-a5a7a61174.png",
+        "bytes": 5554213,
+        "duration": 195.5
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-satin-hardware-normal-37adb5e352.png",
+        "bytes": 3303162,
+        "duration": 180.8999999994412
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-satin-hardware-orm-a098c0c818.png",
+        "bytes": 4140586,
+        "duration": 186.09999999962747
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-satin-hardware-basecolor-ec0b155ef3.png",
+        "bytes": 5024660,
+        "duration": 229.79999999981374
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-pearl-helmet-basecolor-fdfb661ab6.png",
+        "bytes": 5020403,
+        "duration": 248.20000000018626
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-pearl-helmet-orm-79e4ea6cf2.png",
+        "bytes": 3377722,
+        "duration": 263.5
+      },
+      {
+        "name": "models/rider-r4/textures/Hero-pearl-helmet-normal-6b465234a3.png",
+        "bytes": 3189856,
+        "duration": 259.59999999962747
+      },
+      {
+        "name": "models/city-sample/public-citizens.glb",
+        "bytes": 2166236,
+        "duration": 100.90000000037253
+      },
+      {
+        "name": "models/pwc-r8/textures/Molded-traction-rubber-basecolor-fe5bae937b.png",
+        "bytes": 3527403,
+        "duration": 6903.5
+      },
+      {
+        "name": "models/pwc-r8/textures/Molded-traction-rubber-normal-b116d85e8e.png",
+        "bytes": 584816,
+        "duration": 17.90000000037253
+      },
+      {
+        "name": "models/pwc-r8/textures/Molded-traction-rubber-orm-560595f52b.png",
+        "bytes": 5006440,
+        "duration": 6950.9000000003725
+      },
+      {
+        "name": "models/pwc-r8/textures/Brushed-titanium-basecolor-bc1facc8dd.png",
+        "bytes": 5009187,
+        "duration": 6954.9000000003725
+      },
+      {
+        "name": "models/pwc-r8/textures/Brushed-titanium-orm-a740f0bc22.png",
+        "bytes": 4140029,
+        "duration": 6928.899999999441
+      },
+      {
+        "name": "models/pwc-r8/textures/Brushed-titanium-normal-37adb5e352.png",
+        "bytes": 3303162,
+        "duration": 6922.299999999814
+      },
+      {
+        "name": "models/pwc-r8/textures/Forged-carbon-composite-basecolor-9a7a94cc03.png",
+        "bytes": 1008604,
+        "duration": 39
+      },
+      {
+        "name": "models/pwc-r8/textures/Forged-carbon-composite-normal-65172c9aba.png",
+        "bytes": 391662,
+        "duration": 6910.5
+      },
+      {
+        "name": "models/pwc-r8/textures/Forged-carbon-composite-orm-e7b1ce5b4b.png",
+        "bytes": 4377752,
+        "duration": 6952.299999999814
+      },
+      {
+        "name": "models/pwc-r8/textures/Pearl-ceramic-silver-basecolor-3510df3292.png",
+        "bytes": 4832240,
+        "duration": 6998.699999999255
+      },
+      {
+        "name": "models/pwc-r8/textures/Pearl-ceramic-silver-orm-0330aa7967.png",
+        "bytes": 3378471,
+        "duration": 6994.4000000003725
+      },
+      {
+        "name": "models/pwc-r8/textures/Pearl-ceramic-silver-normal-6b465234a3.png",
+        "bytes": 3189856,
+        "duration": 6997.5
+      },
+      {
+        "name": "models/pwc-r8/textures/Paint-basecolor-f0c48b4ee3.png",
+        "bytes": 5059889,
+        "duration": 7057.399999999441
+      },
+      {
+        "name": "models/pwc-r8/textures/Paint-orm-b13b68a813.png",
+        "bytes": 3377500,
+        "duration": 7023.5999999996275
+      },
+      {
+        "name": "models/pwc-r8/textures/Paint-normal-6b465234a3.png",
+        "bytes": 3189856,
+        "duration": 7031.9000000003725
+      },
+      {
+        "name": "models/pwc-r8/textures/Perforated-marine-saddle-basecolor-9ecd1e9bc5.png",
+        "bytes": 1593945,
+        "duration": 7025.4000000003725
+      },
+      {
+        "name": "models/pwc-r8/textures/Perforated-marine-saddle-normal-88f5ef5807.png",
+        "bytes": 5369987,
+        "duration": 7068
+      },
+      {
+        "name": "models/pwc-r8/textures/Perforated-marine-saddle-orm-fcfe459ca8.png",
+        "bytes": 5904923,
+        "duration": 7076.899999999441
+      },
+      {
+        "name": "models/pwc-r8/textures/Original-LCD-64a0ee65ef.png",
+        "bytes": 20842,
+        "duration": 7019.700000000186
+      }
+    ],
+    "heap": 490476526
+  },
+  "errors": [],
+  "results": [
+    {
+      "id": "city-driver",
+      "fps": 20.027370740010934,
+      "frameMs": 49.9316666666677,
+      "low1": 19.43634596706376,
+      "cpuMs": 14.915000000026906,
+      "calls": 730,
+      "triangles": 64662466,
+      "memory": {
+        "geometries": 330,
+        "textures": 178
+      },
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ]
+}

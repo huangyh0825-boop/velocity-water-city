@@ -1,0 +1,28 @@
+[
+  {
+    "server": "Vite Content-Encoding:gzip; fetch decompresses",
+    "transports": [
+      {
+        "url": "http://127.0.0.1:5183/models/watercraft-packed.glb.gz",
+        "transportBytes": 32005716
+      },
+      {
+        "url": "http://127.0.0.1:5183/models/rider-packed.glb.gz",
+        "transportBytes": 17362994
+      }
+    ]
+  },
+  {
+    "server": "gzip file without Content-Encoding; Worker decompresses",
+    "transports": [
+      {
+        "url": "http://127.0.0.1:5183/models/watercraft-packed.glb.gz",
+        "transportBytes": 32005716
+      },
+      {
+        "url": "http://127.0.0.1:5183/models/rider-packed.glb.gz",
+        "transportBytes": 17362994
+      }
+    ]
+  }
+]
