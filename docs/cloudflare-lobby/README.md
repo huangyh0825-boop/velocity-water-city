@@ -14,6 +14,10 @@ Wrangler 4.151.3 部署版本 `e27caaeb-c320-4473-b4eb-5ecbe997f66f`，SQLite Du
 
 `worker-public.json` 为实际 GitHub Pages 来源发出的 HTTPS 跨域健康检查（200），不是本机代理结果。
 
-正式游戏页面的公网房间验收将在配置并发布前端后记录到 `online-browser.json`；两台真实设备仍需用户验证，两个浏览器不能替代真实设备测试。
+正式游戏页面的公网房间验收已记录到 `online-browser.json`：Edge 和 Chrome 从 GitHub Pages 连接实际 Worker 的 WSS，入房、准备、改名、刷新、离线恢复、重复页面替换、主动退出、房主转移和房间隔离均通过；无 HTTP 状态轮询、无脚本异常。手机视口布局正常，但两台真实设备仍需用户验证，两个浏览器不能替代真实设备测试。
+
+首次公网联调构建（提交 `834833d`）的 GitHub Pages 发布运行 `39438104988` 成功。当时公开入口 `index-Bk9o_rWA.js` 和游戏模块 `Game-BcvYkOeR.js` 与对应本机构建完整 SHA256 一致；游戏模块 SHA256 为 `e39d23ce9131068518a53d0ac2ff7d5a1de5a0dc65978a4a94ccf238c1859ab5`。后续文档及首页生命周期提示修正不涉及游戏核心。
+
+`single-training-online.json` 验证正式网页的单人触屏启动、1 圈/简单配置、加速至 84 km/h、返回首页、刷新和未完成记录保存；无脚本异常。首页销毁后忽略旧房间请求的提示回调，避免异步操作更新已离开的页面。
 
 运行维护、免费额度、重新发布、回滚及未来竞速的资源估算见 `cloudflare/README.md`。当前实现为公网大厅，未实现玩家实时竞速。

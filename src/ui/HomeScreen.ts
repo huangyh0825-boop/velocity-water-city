@@ -29,7 +29,7 @@ export class HomeScreen {
   window.addEventListener('pagehide',this.pageHide);this.renderProfile();if(!profile.data.playerId)this.editProfile();
  }
  private el<T extends HTMLElement=HTMLElement>(selector:string){return this.root.querySelector<T>(selector)!;}
- private message(selector:string,message:string){this.el(selector).textContent=message;}
+ private message(selector:string,message:string){if(!this.closed)this.el(selector).textContent=message;}
  private editProfile(){this.el<HTMLInputElement>('#profile-id').value=this.profile.data.playerId;this.el('#profile-title').textContent=this.profile.data.playerId?'修改游戏 ID':'先取一个游戏 ID';this.el('#cancel-profile').hidden=!this.profile.data.playerId;this.message('#profile-message','');this.dialog.showModal();}
  private async saveName(){try{const name=validatePlayerId(this.el<HTMLInputElement>('#profile-id').value);if(this.connection)await this.lobby.rename(name);if(this.closed)return;this.profile.rename(name);this.renderProfile();this.dialog.close();}catch(error){this.message('#profile-message',(error as Error).message);}}
  private renderProfile(){const p=this.profile.data;this.el('#player-name').textContent=p.playerId||'设置游戏 ID';for(const[k,v]of Object.entries({started:p.stats.started,completed:p.stats.completed,laps:p.stats.completedLaps,time:Math.floor(p.stats.seconds/60)}))this.el('#stat-'+k).textContent=String(v);this.el('#storage-note').textContent=this.profile.persisted?'仅保存在本机浏览器 · 最近 30 次训练':'当前浏览器未允许保存，档案暂存于本次页面';
