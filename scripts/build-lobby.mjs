@@ -1,0 +1,2 @@
+import ts from'typescript';import{readFileSync,mkdirSync,writeFileSync}from'node:fs';
+const source=readFileSync('server/lobby.ts','utf8'),result=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}});mkdirSync('dist-lobby',{recursive:true});writeFileSync('dist-lobby/lobby.mjs',result.outputText);console.log('Standalone lobby server: dist-lobby/lobby.mjs (Node.js 22+, no runtime packages or game models required)');

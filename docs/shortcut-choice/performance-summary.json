@@ -1,0 +1,16 @@
+[
+  {
+    "scenario": "city-five",
+    "beforeFPS": 36.76615163616134,
+    "afterFPS": 36.7995200953058,
+    "changePercent": 0.09075863983447618,
+    "identicalRenderCountsAndEndPose": true
+  },
+  {
+    "scenario": "harbor-five",
+    "beforeFPS": 35.26192073914417,
+    "afterFPS": 35.237229840990565,
+    "changePercent": -0.07002142151093516,
+    "identicalRenderCountsAndEndPose": true
+  }
+]

@@ -1,5 +1,8 @@
 node_modules/
 dist/
+dist-lobby/
+.env.local
+.env.*.local
 *.log
 .qa/
 work/

@@ -153,6 +153,14 @@ export class CityTrack extends Track {
   }return null;
  }
  override raceAngle(p:Point,route:string|null){const a=this.project(p,route).angle;return a>Math.PI?a-TAU:a;}
+ override checkpointRequired(index:number){
+  const angle=this.checkpointAngle(index);
+  // The whole connected fork-to-merge area is free choice, including the
+  // lower S2 crossing. Its branches reach the old sector planes at different
+  // places, so requiring those planes strands boats that switch waterways.
+  // The gates before each fork and after each merge remain mandatory.
+  return !this.shortcuts.some(cut=>angle>cut.from&&angle<cut.to);
+ }
  override crossesGate(before:Point,after:Point,index:number,route?:string|null){
   const angle=this.checkpointAngle(index),poses=[this.at(angle),...this.shortcuts.filter(s=>angle>s.from&&angle<s.to).map(s=>this.at(angle,s.samples))];
   // A shortcut tag can be acquired while its mouth still overlaps the main

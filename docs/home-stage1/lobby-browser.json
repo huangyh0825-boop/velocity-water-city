@@ -1,0 +1,19 @@
+{
+  "independentDevices": true,
+  "sameCode": "0042",
+  "leadingZeroPreserved": true,
+  "sharedReady": true,
+  "liveRename": true,
+  "persistedIdentity": true,
+  "rejoinWithoutDuplicate": true,
+  "reconnect": true,
+  "hostMigration": true,
+  "differentRoomIsolated": true,
+  "homepageModels": 0,
+  "mobile": {
+    "overflow": false,
+    "canvas": false,
+    "qaHooks": false
+  },
+  "errors": []
+}

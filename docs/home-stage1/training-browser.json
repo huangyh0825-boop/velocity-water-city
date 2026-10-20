@@ -1,0 +1,172 @@
+{
+  "method": "Actual application, profile and mode lifecycle via private production build. Normal start and selected lap count, complete Game.frame simulation and four solid AI; GPU drawing skipped only during accelerated functional simulation and restored for result screenshots. No injected checkpoint counts or player position teleports.",
+  "results": [
+    {
+      "laps": 1,
+      "difficulty": "easy",
+      "steps": 7503,
+      "phase": "finished",
+      "passed": 24,
+      "lap": "1 / 1",
+      "status": "1 圈完成",
+      "summary": "第 2 名 / 5 位选手 · 02:02.01 · 本赛道最佳 02:02.01",
+      "visible": true,
+      "rows": 5,
+      "gates": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
+      ],
+      "lost": [],
+      "restored": [
+        20
+      ],
+      "profile": {
+        "stats": {
+          "started": 1,
+          "completed": 1,
+          "completedLaps": 1,
+          "seconds": 122.01666666666102
+        },
+        "history": [
+          {
+            "laps": 1,
+            "difficulty": "easy",
+            "elapsed": 122.01666666666102,
+            "completedLaps": 1,
+            "rank": 2,
+            "completed": true,
+            "at": 1792479741510
+          }
+        ]
+      }
+    },
+    {
+      "laps": 2,
+      "difficulty": "hard",
+      "steps": 14752,
+      "phase": "finished",
+      "passed": 48,
+      "lap": "2 / 2",
+      "status": "2 圈完成",
+      "summary": "第 5 名 / 5 位选手 · 04:02.83 · 本赛道最佳 04:02.83",
+      "visible": true,
+      "rows": 5,
+      "gates": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "lost": [
+        18,
+        42
+      ],
+      "restored": [
+        18,
+        42
+      ],
+      "profile": {
+        "stats": {
+          "started": 2,
+          "completed": 2,
+          "completedLaps": 3,
+          "seconds": 364.8500000000797
+        },
+        "history": [
+          {
+            "laps": 2,
+            "difficulty": "hard",
+            "elapsed": 242.83333333341872,
+            "completedLaps": 2,
+            "rank": 5,
+            "completed": true,
+            "at": 1792479760984
+          },
+          {
+            "laps": 1,
+            "difficulty": "easy",
+            "elapsed": 122.01666666666102,
+            "completedLaps": 1,
+            "rank": 2,
+            "completed": true,
+            "at": 1792479741510
+          }
+        ]
+      }
+    }
+  ],
+  "reloadDuringTraining": {
+    "saved": true,
+    "started": 3,
+    "completed": 2,
+    "laps": 37,
+    "elapsed": 3.9666666666666575
+  },
+  "errors": []
+}

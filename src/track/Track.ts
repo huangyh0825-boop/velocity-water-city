@@ -24,6 +24,8 @@ export class Track {
   curvature(angle:number,distance=35){return signedAngle(this.heading(angle+distance/this.radius)-this.heading(angle))/distance;}
   target(p:Point,distance:number,lane=0){return this.point(this.angle(p)+distance/this.radius,lane);}
   checkpointAngle(index: number) { return index * TAU / this.checkpointCount; }
+  /** Optional markers may measure progress but never block a legal route choice. */
+  checkpointRequired(index:number) { return true; }
   contains(point: Point, margin = 0) { return Math.abs(Math.hypot(point.x, point.z) - this.radius) <= this.halfWidth - margin; }
   spawn(model: DrivingModel, angle = -0.14, lane = 0) {
     model.reset(); Object.assign(model, this.point(angle, lane)); model.heading = this.heading(angle);

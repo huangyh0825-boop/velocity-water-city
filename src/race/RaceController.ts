@@ -11,19 +11,30 @@ export interface Racer {
   maxSpeed?:number;
 }
 export interface Entrant { id: string; name: string; position: Point;maxSpeed?:number }
+export interface RaceOptions {laps?:number;bestKey?:string}
 export class RaceController {
-  readonly laps = 3;
+  readonly laps:number;
+  private readonly bestKey:string;
+  private readonly requiredAdvance:number[];
   phase: RacePhase = 'countdown';
   countdown = 3;
   elapsed = 0;
   readonly racers: Racer[];
   bestTime:number|null;
-  constructor(readonly track: Track, entrants: Entrant[], readonly playerId = 'player') {
-    this.bestTime=readBest(track.name);
+  constructor(readonly track: Track, entrants: Entrant[], readonly playerId = 'player',options:RaceOptions={}) {
+    this.laps=options.laps??3;
+    if(!Number.isSafeInteger(this.laps)||this.laps<1||!Number.isSafeInteger(this.laps*track.checkpointCount))throw Error('圈数必须为正整数');
+    this.bestKey=options.bestKey??(this.laps===3?track.name:`${track.name}:laps:${this.laps}`);
+    this.requiredAdvance=Array.from({length:track.checkpointCount},(_,last)=>{
+      let advance=1;
+      while(advance<track.checkpointCount&&!track.checkpointRequired((last+advance)%track.checkpointCount))advance++;
+      return advance;
+    });
+    this.bestTime=readBest(this.bestKey);
     this.racers = entrants.map(e => ({ ...e, position: { ...e.position }, previous: { ...e.position }, passed: 0, finishTime: null,route:null, enteredRoutes:new Set<string>(), progress: track.angle(e.position) * track.radius }));
   }
   get player() { return this.racers.find(r => r.id === this.playerId)!; }
-  nextCheckpoint(racer = this.player) { return (racer.passed + 1) % this.track.checkpointCount; }
+  nextCheckpoint(racer = this.player) { return (racer.passed + this.requiredAdvance[racer.passed%this.track.checkpointCount]) % this.track.checkpointCount; }
   lap(racer = this.player) { return Math.min(this.laps, Math.floor(racer.passed / this.track.checkpointCount) + 1); }
   tick(dt: number) {
     if (this.phase === 'countdown') {
@@ -44,8 +55,17 @@ export class RaceController {
       if(racer.route!==null)racer.enteredRoutes.add(racer.route);
     }
     position.route=racer.route;
-    if (continuous && this.track.crossesGate(racer.previous, position, this.nextCheckpoint(racer),racer.route)) {
-      racer.passed++;
+    const advance=this.requiredAdvance[racer.passed%this.track.checkpointCount];
+    let credit=0;
+    if(continuous){
+      // Keep optional markers for smooth standings on either complete route.
+      // A route switch may bypass them: only the next common, mandatory gate
+      // is required, and its real forward sweep validates that whole section.
+      if(this.track.crossesGate(racer.previous,position,(racer.passed+1)%this.track.checkpointCount,racer.route))credit=1;
+      else if(advance>1&&this.track.crossesGate(racer.previous,position,this.nextCheckpoint(racer),racer.route))credit=advance;
+    }
+    if (credit) {
+      racer.passed+=credit;
       if(racer.passed % this.track.checkpointCount === 0)racer.enteredRoutes.clear();
       if (racer.passed === this.laps * this.track.checkpointCount) racer.finishTime = this.elapsed;
     }
@@ -53,17 +73,17 @@ export class RaceController {
     const sector = this.track.length / this.track.checkpointCount;
     const lastGateAngle = this.track.checkpointAngle(racer.passed % this.track.checkpointCount);
     const offset = signedAngle(this.track.raceAngle(position,racer.route) - lastGateAngle) * this.track.radius;
-    racer.progress = racer.passed * sector + Math.max(racer.passed === 0 ? -sector : 0, Math.min(sector - 0.001, offset));
+    racer.progress = racer.passed * sector + Math.max(racer.passed === 0 ? -sector : 0, Math.min(this.requiredAdvance[racer.passed%this.track.checkpointCount]*sector - 0.001, offset));
   }
   /** Called after all racers have been recorded so finish order is independent of update order. */
-  completeStep() { if (this.player.finishTime !== null&&this.phase!=='finished') {this.bestTime=saveBest(this.track.name,this.player.finishTime);this.phase = 'finished';} }
+  completeStep() { if (this.player.finishTime !== null&&this.phase!=='finished') {this.bestTime=saveBest(this.bestKey,this.player.finishTime);this.phase = 'finished';} }
   syncPosition(id: string, position: Point) {
     const racer = this.racers.find(r => r.id === id)!;
     racer.route=null;
     racer.position = { ...position }; racer.previous = { ...position };
     const sector = this.track.length / this.track.checkpointCount;
     const offset = signedAngle(this.track.angle(position) - this.track.checkpointAngle(racer.passed % this.track.checkpointCount)) * this.track.radius;
-    racer.progress = racer.passed * sector + Math.max(racer.passed === 0 ? -sector : 0, Math.min(sector - 0.001, offset));
+    racer.progress = racer.passed * sector + Math.max(racer.passed === 0 ? -sector : 0, Math.min(this.requiredAdvance[racer.passed%this.track.checkpointCount]*sector - 0.001, offset));
   }
   standings(): Racer[] {
     return [...this.racers].sort((a, b) => {

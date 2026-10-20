@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
+    "dev:all": "node scripts/dev-with-lobby.mjs",
+    "lobby": "tsx server/lobby.ts",
+    "build:lobby": "tsc --noEmit && node scripts/build-lobby.mjs",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0",
     "assets:build": "node scripts/build-models.mjs",
