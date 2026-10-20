@@ -1,0 +1,18 @@
+{
+  "speed": 84,
+  "selectedLaps": 1,
+  "difficulty": "easy",
+  "returnedHome": true,
+  "persistedAfterReload": true,
+  "profile": {
+    "stats": {
+      "started": 1,
+      "completed": 0,
+      "completedLaps": 0,
+      "seconds": 2.199999999999997
+    },
+    "last": false,
+    "qaHooks": false
+  },
+  "errors": []
+}

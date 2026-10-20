@@ -1,0 +1,19 @@
+{
+ "$schema":"../node_modules/wrangler/config-schema.json",
+ "name":"velocity-water-city-lobby",
+ "main":"src/index.ts",
+ "compatibility_date":"2026-10-19",
+ "workers_dev":true,
+ "durable_objects":{"bindings":[{"name":"ROOMS","class_name":"LobbyRoom"}]},
+ "migrations":[{"tag":"v1","new_sqlite_classes":["LobbyRoom"]}],
+ "ratelimits":[{"name":"JOIN_LIMIT","namespace_id":"260102001","simple":{"limit":20,"period":60}}],
+ "vars":{"ALLOWED_ORIGINS":"https://huangyh0825-boop.github.io"},
+ "observability":{"enabled":true,"head_sampling_rate":0.1},
+ "dev":{"ip":"127.0.0.1","port":8789},
+ "env":{"local":{
+  "name":"velocity-water-city-lobby-local",
+  "durable_objects":{"bindings":[{"name":"ROOMS","class_name":"LobbyRoom"}]},
+  "ratelimits":[{"name":"JOIN_LIMIT","namespace_id":"260102002","simple":{"limit":1000,"period":60}}],
+  "vars":{"ALLOWED_ORIGINS":"http://127.0.0.1:5183,http://localhost:5183,http://127.0.0.1:5185,http://localhost:5185,http://127.0.0.1:5187"}
+ }}
+}

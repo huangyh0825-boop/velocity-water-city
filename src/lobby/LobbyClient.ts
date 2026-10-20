@@ -1,29 +1,29 @@
-import type{LobbyConnection,LobbyIdentity,LobbySnapshot}from'./types';
-class LobbyError extends Error{constructor(message:string,readonly status:number){super(message);}}
+import {HttpLobbyClient} from './HttpLobbyClient';
+import {WebSocketLobbyClient} from './WebSocketLobbyClient';
+import {roomCode} from './protocol';
+import type {LobbyConnection,LobbyIdentity} from './types';
+
+/** Keep the old Node API available; Cloudflare advertises its push transport. */
 export class LobbyClient {
- private token='';private memberId='';private timer?:ReturnType<typeof setTimeout>;private active=false;private code='';
+ private backend?:HttpLobbyClient|WebSocketLobbyClient;
+ private generation=0;
  private base=(import.meta.env.VITE_LOBBY_URL?.trim()||'/api/lobby').replace(/\/$/,'');
- private identity?:LobbyIdentity;private generation=0;
- constructor(private update:(value:LobbyConnection)=>void,private problem:(message:string)=>void){}
- private async api(path:string,data?:unknown){
-  let response:Response;try{response=await fetch(this.base+'/'+path,{method:data===undefined?'GET':'POST',headers:{...(data===undefined?{}:{'Content-Type':'application/json'}),...(this.token?{Authorization:'Bearer '+this.token}:{})},body:data===undefined?undefined:JSON.stringify(data),signal:AbortSignal.timeout(6000)});}catch{throw new LobbyError('无法连接大厅，请确认大厅服务已启动后重试',0);}
-  const b=await response.json().catch(()=>({error:'大厅服务暂时不可用'}));if(!response.ok)throw new LobbyError(b.error??'大厅连接失败',response.status);return b;
+ constructor(private update:(value:LobbyConnection)=>void,private problem:(message:string,retrying?:boolean)=>void) {}
+ async join(code:string,identity:LobbyIdentity) {
+  roomCode(code);const gen=++this.generation;
+  if(location.protocol==='https:'&&new URL(this.base,location.href).protocol!=='https:')throw Error('大厅必须使用 HTTPS 安全地址');
+  let health:Response;
+  try{health=await fetch(this.base+'/health',{signal:AbortSignal.timeout(6000)});}catch{throw Error('无法连接大厅，请稍后重试');}
+  const data=await health.json().catch(()=>({}));
+  if(!health.ok)throw Error(data.error??'大厅服务暂时不可用');
+  if(gen!==this.generation)return;
+  await this.backend?.leave();if(gen!==this.generation)return;
+  this.backend=data.transport==='websocket'
+   ?new WebSocketLobbyClient(this.update,this.problem,this.base)
+   :new HttpLobbyClient(this.update,this.problem,this.base);
+  await this.backend.join(code,identity);
  }
- private publish(room:LobbySnapshot,status:'connected'|'reconnecting'='connected'){this.update({room,memberId:this.memberId,status});}
- async join(code:string,identity:LobbyIdentity){
-  if(!/^\d{4}$/.test(code))throw Error('房间号必须是四位数字');
-  this.code=code;this.identity=identity;const gen=++this.generation;this.active=true;
-  try{const b=await this.api('join',{code,...identity});if(gen!==this.generation){void fetch(this.base+'/leave',{method:'POST',headers:{Authorization:'Bearer '+b.token},keepalive:true}).catch(()=>{});return;}this.token=b.token;this.memberId=b.memberId;this.publish(b.room);this.poll(gen);}catch(e){if(gen===this.generation)this.active=false;throw e;}
- }
- private poll(gen:number){clearTimeout(this.timer);this.timer=setTimeout(async()=>{if(!this.active||gen!==this.generation)return;
-  try{const b=await this.api('state');if(this.active&&gen===this.generation){this.publish(b.room);this.poll(gen);}}
-  catch(e){if(!this.active||gen!==this.generation)return;
-   if(e instanceof LobbyError&&e.status===409){this.active=false;this.problem(e.message);return;}
-   this.problem('大厅连接中断，正在重连…');
-   if(e instanceof LobbyError&&e.status===401){try{await this.join(this.code,this.identity!);}catch{this.active=true;this.poll(this.generation);}}else this.poll(gen);
-  }
- },1000);}
- async ready(ready:boolean){const gen=this.generation,b=await this.api('ready',{ready});if(this.active&&gen===this.generation)this.publish(b.room);}
- async rename(playerId:string){const gen=this.generation,b=await this.api('rename',{playerId});if(this.identity)this.identity.playerId=playerId;if(this.active&&gen===this.generation)this.publish(b.room);}
- async leave(){const token=this.token;this.active=false;this.generation++;clearTimeout(this.timer);this.token='';if(token)try{await fetch(this.base+'/leave',{method:'POST',headers:{Authorization:'Bearer '+token},keepalive:true,signal:AbortSignal.timeout(2000)});}catch{/* TTL removes disconnected devices. */}}
+ async ready(value:boolean) {if(!this.backend)throw Error('请先进入房间');await this.backend.ready(value);}
+ async rename(value:string) {if(!this.backend)throw Error('请先进入房间');await this.backend.rename(value);}
+ async leave() {this.generation++;const backend=this.backend;this.backend=undefined;await backend?.leave();}
 }

@@ -1,0 +1,24 @@
+import{loadPlaywright}from'./qa-playwright.mjs';
+import{mkdirSync,writeFileSync,existsSync}from'node:fs';
+import assert from'node:assert/strict';
+const{chromium}=loadPlaywright(),edge=await chromium.launch({channel:'msedge',headless:true}),secondChannel=existsSync('C:/Program Files/Google/Chrome/Application/chrome.exe')?'chrome':'msedge',second=await chromium.launch({channel:secondChannel,headless:true});
+const url=process.env.QA_URL??'http://127.0.0.1:5187/',folder='docs/cloudflare-lobby',label=process.env.QA_URL?'online':'local';mkdirSync(folder,{recursive:true});
+const errors=[],models=[],sockets=[],polls=[];
+function watch(p){p.on('pageerror',e=>errors.push(String(e)));p.on('request',r=>{if(/\/models\/|\/Game-[\w-]+\.js/.test(r.url()))models.push(r.url());if(/\/api\/lobby\/state/.test(r.url()))polls.push(r.url());});p.on('websocket',ws=>sockets.push(new URL(ws.url()).protocol));}
+async function open(p,name){watch(p);await p.goto(url);await p.getByLabel('游戏 ID',{exact:true}).fill(name);await p.getByRole('button',{name:'保存 ID'}).click();await p.locator('#profile-dialog').waitFor({state:'hidden'});}
+async function join(p,code){await p.locator('#room-code').fill(code);await p.locator('#join-room').click();await p.waitForFunction(code=>document.querySelector('#room-title')?.textContent===`房间 ${code}`&&document.querySelector('#room-connection')?.textContent.includes('已连接'),code);}
+const count=(p,n)=>p.waitForFunction(n=>document.querySelectorAll('#room-members li').length===n,n);
+try{
+ const a=await edge.newContext({viewport:{width:1440,height:950}}),b=await second.newContext({viewport:{width:1280,height:850}}),mobile=await edge.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+ const p=await a.newPage(),q=await b.newPage(),m=await mobile.newPage();await open(p,'水城云端一号');await open(q,'水城云端二号');
+ await join(p,'7730');await join(q,'7730');await count(p,2);await count(q,2);await q.locator('#room-ready').click();await p.waitForFunction(()=>[...document.querySelectorAll('#room-members li')].some(x=>x.textContent.includes('二号')&&x.textContent.includes('已准备')));
+ await q.locator('#edit-profile').click();await q.getByLabel('游戏 ID',{exact:true}).fill('云端二号改名');await q.getByRole('button',{name:'保存 ID'}).click();await p.getByText('云端二号改名',{exact:true}).waitFor();
+ const identity=await q.evaluate(()=>JSON.parse(localStorage.getItem('velocity-water-city:device:v1')).deviceId);await q.reload();await q.locator('#start-training').waitFor();assert.equal(await q.locator('#player-name').innerText(),'云端二号改名');assert.equal(await q.evaluate(()=>JSON.parse(localStorage.getItem('velocity-water-city:device:v1')).deviceId),identity);await join(q,'7730');await count(p,2);
+ await q.locator('#room-ready').click();await b.setOffline(true);await q.waitForFunction(()=>/断开|中断/.test(document.querySelector('#room-connection')?.textContent??''));assert.equal(await q.locator('#room-ready').isDisabled(),true);await b.setOffline(false);await q.waitForFunction(()=>document.querySelector('#room-connection')?.textContent.includes('已连接'));await count(p,2);
+ const duplicate=await b.newPage();watch(duplicate);await duplicate.goto(url);await duplicate.locator('#start-training').waitFor();await join(duplicate,'7730');await q.waitForFunction(()=>document.querySelector('#room-connection')?.textContent.includes('另一个页面'));await q.close();await count(p,2);
+ await open(m,'口袋云端玩家');await join(m,'7731');await count(m,1);await count(p,2);const layout=await m.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth,canvas:!!document.querySelector('canvas'),qaHooks:!!(window.appQA||window.testGame||window.verticalQA)}));assert.equal(layout.overflow,false);assert.equal(layout.canvas,false);assert.equal(layout.qaHooks,false);
+ await p.screenshot({path:`${folder}/${label}-room-desktop.png`});await m.screenshot({path:`${folder}/${label}-room-mobile.png`});
+ await p.locator('#leave-room').click();await count(duplicate,1);await duplicate.waitForFunction(()=>document.querySelector('#room-members li')?.textContent.includes('房主'));await duplicate.locator('#leave-room').click();await m.locator('#leave-room').click();
+ assert.equal(models.length,0);assert.equal(polls.length,0);assert.ok(sockets.filter(p=>p===(url.startsWith('https:')?'wss:':'ws:')).length>=5);assert.deepEqual(errors,[]);
+ const result={url,browsers:['Edge',secondChannel==='chrome'?'Chrome':'second independent Edge profile'],realTwoDevices:'pending user verification',webSocket:true,httpStatePolls:polls.length,sameRoom:true,ready:true,rename:true,reloadIdentity:true,offlineReconnect:true,duplicateTabReplaced:true,hostMigration:true,differentRoomIsolated:true,mobile:layout,heavyAssetsLoaded:models.length,errors};writeFileSync(`${folder}/${label}-browser.json`,JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+}finally{await edge.close();await second.close();}

@@ -1,0 +1,25 @@
+{
+  "url": "http://127.0.0.1:5187/",
+  "browsers": [
+    "Edge",
+    "Chrome"
+  ],
+  "realTwoDevices": "pending user verification",
+  "webSocket": true,
+  "httpStatePolls": 0,
+  "sameRoom": true,
+  "ready": true,
+  "rename": true,
+  "reloadIdentity": true,
+  "offlineReconnect": true,
+  "duplicateTabReplaced": true,
+  "hostMigration": true,
+  "differentRoomIsolated": true,
+  "mobile": {
+    "overflow": false,
+    "canvas": false,
+    "qaHooks": false
+  },
+  "heavyAssetsLoaded": 0,
+  "errors": []
+}

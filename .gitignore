@@ -3,6 +3,10 @@ dist/
 dist-lobby/
 .env.local
 .env.*.local
+.dev.vars
+.dev.vars.*
+.wrangler/
+cloudflare/.wrangler/
 *.log
 .qa/
 work/

@@ -1,0 +1,14 @@
+{
+  "url": "https://velocity-water-city-lobby.huangyh0825.workers.dev/api/lobby",
+  "status": 200,
+  "health": {
+    "ok": true,
+    "service": "velocity-water-city-lobby",
+    "transport": "websocket",
+    "protocol": 1,
+    "capacity": 5
+  },
+  "corsAccepted": true,
+  "origin": "https://huangyh0825-boop.github.io",
+  "version": "e27caaeb-c320-4473-b4eb-5ecbe997f66f"
+}
