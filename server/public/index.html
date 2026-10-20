@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>极速水城 · 国内多人大厅连通性测试</title>
+<style>
+ :root{color-scheme:dark;font:16px/1.6 system-ui,sans-serif;background:#081c29;color:#e8f7fa}body{max-width:840px;padding:24px;margin:auto}h1{font-size:1.7rem}h2{font-size:1.1rem}section{background:#122d3c;border:1px solid #345665;padding:18px;border-radius:12px;margin:18px 0}label{display:block;margin:10px 0}input,select,button{font:inherit;padding:10px;border-radius:6px;border:1px solid #638492;background:#0b2330;color:inherit;max-width:100%;box-sizing:border-box}input{width:100%}button{cursor:pointer;background:#14616b;margin:5px 8px 5px 0}button:disabled{opacity:.5;cursor:default}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}#status{color:#95f5df;white-space:pre-wrap}#log{max-height:230px;overflow:auto;white-space:pre-wrap;font:13px/1.6 monospace}li{margin:6px 0}small,.muted{color:#acc9d4}.wide{width:auto}#members{padding-left:22px}@media(max-width:550px){.grid{grid-template-columns:1fr}body{padding:12px}}
+</style>
+<h1>极速水城 · 多人大厅网络测试</h1>
+<p>独立测试大厅，不会切换正式游戏服务器，也没有联机竞速。请两位玩家分别打开本页，输入相同的四位房间号。</p>
+<section>
+ <h2>1. 记录真实测试网络</h2>
+ <div class="grid"><label>测试地区（省 / 市）<input id="region" maxlength="60" placeholder="例如：广东深圳" required></label><label>运营商 / 网络类型<input id="network" maxlength="80" placeholder="例如：中国移动 5G / 电信宽带 Wi-Fi" required></label></div>
+ <label><input class="wide" id="noVpn" type="checkbox">本次已关闭 VPN、代理和网络加速器（请自行确认）</label>
+ <p class="muted">测试结果只代表这台设备的真实网络。未勾选也可以技术测试，但报告不会标记为“国内无 VPN”。</p>
+</section>
+<section>
+ <h2>2. 连接和房间同步</h2>
+ <div class="grid"><label>测试玩家 ID<input id="player" maxlength="16" value="测试玩家"></label><label>四位房间号<input id="code" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" value="7730"></label></div>
+ <button id="connect">唤醒服务器并进入房间</button><button id="leave" disabled>退出 / 取消重试</button>
+ <p id="status" role="status">尚未开始。免费服务休眠后首次打开可能等待约一分钟；连接最长等待三分钟。</p>
+ <ul id="members"></ul>
+ <button id="ready" disabled>切换准备状态</button><button id="rename" disabled>应用新的玩家 ID</button>
+ <p class="muted">核对两边人数、准备和改名是否一致；房主退出后应自动移交。断网后保留位置约 30 秒，再次联网会自动重连。服务器重启会清空房间，客户端会重新加入；请重新核对房号和准备状态。</p>
+</section>
+<section>
+ <h2>3. 连续稳定性记录</h2>
+ <label>观察时长 <select id="duration"><option value="300">5 分钟</option><option value="600" selected>10 分钟</option></select></label>
+ <button id="stability" disabled>开始稳定性测试</button><p id="stabilityStatus">尚未测试。请保持页面在前台、设备不休眠，期间可操作房间。</p>
+ <p>测试完成后导出报告，发送给游戏开发者。请同时说明是否换过网络，以及另一位玩家所在地区。</p>
+ <button id="download">下载测试报告</button><button id="copy">复制测试报告</button>
+</section>
+<section><h2>连接日志</h2><pre id="log" aria-live="polite"></pre></section>
+<p class="muted">Render Free 可能休眠、重启或达到免费限额；本页不使用第三方持续探活。没有玩家测试时，请退出房间并关闭页面。报告不包含设备密钥或登录凭据。</p>
+<script type="module" src="/test.js"></script>
+</html>

@@ -1,0 +1,117 @@
+{
+  "url": "http://127.0.0.1:52774",
+  "code": "6322",
+  "checkedAt": "2026-10-20T16:11:44.548Z",
+  "testNetwork": "本机自动化浏览器；不代表中国大陆无 VPN 网络",
+  "checks": {
+    "wake503AndLoadingHtmlRetry": true,
+    "joinAndSync": true,
+    "readyAndRename": true,
+    "offlineAndRejoin": true,
+    "restartClearsRoomAndAutoRejoins": true,
+    "hostMigration": true,
+    "mobileLayout": true,
+    "noPageErrors": true
+  },
+  "mainlandNoVpn": "pending-real-user-test",
+  "wakeReport": {
+    "test": "Render Singapore lobby connectivity",
+    "createdAt": "2026-10-20T16:11:50.807Z",
+    "url": "http://127.0.0.1:52774",
+    "region": "本机自动化测试（非国内实测）",
+    "network": "开发电脑浏览器；VPN 情况未判定",
+    "vpnOffSelfConfirmed": false,
+    "mainlandVerification": "待测试者及开发者核实，页面不会自动判定地区或 VPN",
+    "room": "6322",
+    "memberCount": 2,
+    "metrics": {
+      "http": "成功",
+      "wss": "成功",
+      "httpMs": 6027,
+      "wssMs": 4,
+      "firstConnectionMs": 6032,
+      "instance": "9316755a12b47a8b",
+      "revision": null,
+      "rejoins": 0,
+      "disconnects": 0,
+      "pageResponseMs": 7.4000000059604645
+    },
+    "stability": null,
+    "log": [
+      {
+        "at": "2026-10-20T16:11:44.760Z",
+        "message": "第 1 次连接未完成：HTTP 503"
+      },
+      {
+        "at": "2026-10-20T16:11:46.766Z",
+        "message": "第 2 次连接未完成：Unexpected token '<', \"<!doctype \"... is not valid JSON"
+      },
+      {
+        "at": "2026-10-20T16:11:50.772Z",
+        "message": "HTTP 健康检查成功，累计 6027 ms"
+      },
+      {
+        "at": "2026-10-20T16:11:50.776Z",
+        "message": "WSS 已连接；房间 6322，1 人"
+      }
+    ]
+  },
+  "report": {
+    "test": "Render Singapore lobby connectivity",
+    "createdAt": "2026-10-20T16:11:52.241Z",
+    "url": "http://127.0.0.1:52774",
+    "region": "本机自动化测试（非国内实测）",
+    "network": "开发电脑浏览器；VPN 情况未判定",
+    "vpnOffSelfConfirmed": false,
+    "mainlandVerification": "待测试者及开发者核实，页面不会自动判定地区或 VPN",
+    "room": "6322",
+    "memberCount": 1,
+    "metrics": {
+      "http": "成功",
+      "wss": "成功",
+      "httpMs": 2,
+      "wssMs": 2,
+      "firstConnectionMs": 5,
+      "instance": "9316755a12b47a8b",
+      "revision": null,
+      "rejoins": 2,
+      "disconnects": 2,
+      "pageResponseMs": 3.300000011920929
+    },
+    "stability": null,
+    "log": [
+      {
+        "at": "2026-10-20T16:11:50.785Z",
+        "message": "HTTP 健康检查成功，累计 2 ms"
+      },
+      {
+        "at": "2026-10-20T16:11:50.788Z",
+        "message": "WSS 已连接；房间 6322，2 人"
+      },
+      {
+        "at": "2026-10-20T16:11:50.988Z",
+        "message": "网络已断开，恢复网络后自动重连…"
+      },
+      {
+        "at": "2026-10-20T16:11:50.990Z",
+        "message": "大厅连接中断，正在重连…"
+      },
+      {
+        "at": "2026-10-20T16:11:50.994Z",
+        "message": "WSS 已连接；房间 6322，2 人"
+      },
+      {
+        "at": "2026-10-20T16:11:51.014Z",
+        "message": "大厅连接中断，正在重连…"
+      },
+      {
+        "at": "2026-10-20T16:11:52.204Z",
+        "message": "WSS 已连接；房间 6322，2 人"
+      },
+      {
+        "at": "2026-10-20T16:11:52.204Z",
+        "message": "原房间席位已失效（可能服务器重启或离线超过保留时间），已重新加入。请重新准备并确认房主。"
+      }
+    ]
+  }
+}

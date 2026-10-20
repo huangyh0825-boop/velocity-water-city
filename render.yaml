@@ -1,0 +1,18 @@
+# Test service only. Keep GitHub Pages VITE_LOBBY_URL pointing at Cloudflare.
+services:
+  - type: web
+    name: velocity-water-city-lobby-test
+    runtime: node
+    plan: free
+    region: singapore
+    repo: https://github.com/huangyh0825-boop/velocity-water-city
+    branch: test/render-singapore-lobby
+    autoDeployTrigger: off
+    buildCommand: npm ci --include=dev && npm run build:lobby
+    startCommand: node dist-lobby/lobby.mjs
+    healthCheckPath: /api/lobby/health
+    envVars:
+      - key: NODE_VERSION
+        value: "22.x"
+      - key: LOBBY_ALLOWED_ORIGINS
+        value: https://huangyh0825-boop.github.io
