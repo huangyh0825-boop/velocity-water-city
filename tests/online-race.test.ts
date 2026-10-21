@@ -34,6 +34,11 @@ test('server rejects fabricated motion/time, ignores stale sequences, and recove
  r.accept(ids[0],{...initial,seq:3,t:.2,x:initial.x+1,correction:0},8200);r.tick(8200);assert.ok(Math.abs(r.players.get(ids[0])!.model.x-initial.x)<.001);
  r.recover(ids[0],8300);assert.equal(r.rules.player.passed,0);assert.equal(r.players.get(ids[0])!.correction,2);
 });
+test('fast refresh before the previous socket closes invalidates its loaded flag and cancels the old countdown',()=>{
+ const r=room();r.loaded(ids[0],1000);r.loaded(ids[1],1000);assert.equal(r.view.phase,'countdown');
+ r.resume(ids[1],2000);assert.equal(r.view.phase,'loading');assert.equal(r.view.startAt,null);assert.equal(r.view.participants[1].connected,true);assert.equal(r.view.participants[1].loaded,false);
+ r.tick(12000);assert.equal(r.view.phase,'loading');r.loaded(ids[1],13000);assert.equal(r.view.startAt,20000);
+});
 test('network samples complete three ordered laps using shared track rules and finalize remaining DNF racers',()=>{
  const r=room(),t=new CityTrack();r.loaded(ids[0],1000);r.loaded(ids[1],1000);const start=r.view.startAt!;r.tick(start);r.leave(ids[1]);
  let angle=-.014,elapsed=0,seq=0;

@@ -110,7 +110,9 @@ test('real race sockets enforce host/all-ready/loading barrier, reconnect countd
   const c=await f.peer();assert.equal((await c.join(3)).code,409);
   await a.ack('race.loaded',{raceId});room=await a.state();assert.equal(room.race.phase,'loading');
   await b.ack('race.loaded',{raceId});room=await a.state();assert.equal(room.race.startAt-room.race.countdownAt,5000);
-  b.socket.terminate();await b.closed;await a.event(e=>e.type==='room'&&e.room.race?.phase==='loading');
+  const refresh=await f.peer(),refreshId=refresh.command('join',{identity:identity(2),features:['race-v1']});await refresh.event(e=>e.id===refreshId);assert.equal(await b.closed,4009);
+  room=await a.state();assert.equal(room.race.phase,'loading');assert.equal(room.race.participants[1].loaded,false);await refresh.ack('race.loaded',{raceId});
+  refresh.socket.terminate();await refresh.closed;await a.event(e=>e.type==='room'&&e.room.race?.phase==='loading');
   const resumed=await f.peer();const joinId=resumed.command('join',{identity:identity(2),features:['race-v1']});await resumed.event(e=>e.id===joinId);
   assert.equal((await a.state()).race.phase,'loading');await resumed.ack('race.loaded',{raceId});room=await a.state();clock=room.race.startAt+1000;
   const first=await a.event(e=>e.type==='race.frame'&&e.frame.phase==='racing'),pose=first.frame.states.find((p:any)=>p.id===room.members[0].id);
