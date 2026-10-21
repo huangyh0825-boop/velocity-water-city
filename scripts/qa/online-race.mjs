@@ -29,7 +29,7 @@ try{
   await p.goto(base,{waitUntil:'domcontentloaded'});await p.getByLabel('游戏 ID',{exact:true}).fill('联机验收'+(i+1));await p.getByRole('button',{name:'保存 ID'}).click();
  }
  const code=String(1000+Math.floor(Math.random()*9000));
- for(const p of pages){await p.locator('#room-code').fill(code);await p.locator('#join-room').click();await p.waitForFunction(()=>document.querySelector('#room-connection')?.textContent.includes('已连接'),undefined,{timeout:190000});}
+ for(const p of pages){await p.locator('#room-code').fill(code);await p.locator('#join-room').click();await p.waitForFunction(code=>document.querySelector('#room-panel')?.hidden===false&&document.querySelector('#room-title')?.textContent===`房间 ${code}`&&document.querySelector('#room-connection')?.textContent.includes('已连接'),code,{timeout:190000});}
  await pages[0].waitForFunction(()=>document.querySelectorAll('#room-members li').length===2);
  assert.equal(await pages[0].locator('#start-online-race').isDisabled(),true);assert.equal(await pages[1].locator('#start-online-race').isVisible(),false);
  for(const p of pages)await p.locator('#room-ready').click();await pages[0].waitForFunction(()=>!document.querySelector('#start-online-race').disabled);
