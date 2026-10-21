@@ -20,7 +20,7 @@ export class Hud {
       <div class="countdown" id="countdown" aria-live="polite"></div>
       <div class="trick-toast" id="trick-toast" hidden aria-live="polite"></div>
       <div class="speedometer"><div class="speed-label">VELOCITY</div><div><strong id="speed">000</strong><span>KM/H</span></div><div class="speed-track"><i id="speed-bar"></i></div><small id="status">准备起航</small><div class="nitro-label">NITRO <b id="nitro-label">40%</b></div><div class="nitro-track" role="meter" aria-label="氮气能量" aria-valuemin="0" aria-valuemax="100"><i id="nitro-bar"></i></div></div>
-      <div class="keyboard"><span><kbd>W</kbd> 加速</span><span><kbd>S</kbd> 减速</span><span><kbd>A</kbd><kbd>D</kbd> 转向</span><span><kbd>␣</kbd> 空中特技</span><span><kbd>⇧</kbd> 氮气</span></div>
+      <div class="keyboard"><span><kbd>W</kbd> 加速</span><span><kbd>S</kbd> 减速</span><span><kbd>A</kbd><kbd>D</kbd> 转向</span><span><kbd>␣</kbd> 空中特技</span><span><kbd class="wide-key">左Shift</kbd> 氮气</span></div>
       <div class="touch steering"><button data-action="left" aria-label="左转">‹</button><button data-action="right" aria-label="右转">›</button></div>
       <div class="touch pedals"><button data-action="brake" aria-label="减速" class="brake">减速</button><button data-action="throttle" aria-label="加速" class="throttle">⌃<span>加速</span></button></div>
       <div class="touch abilities"><button data-action="trick" aria-label="空中特技">特技</button><button data-action="nitro" aria-label="氮气加速">氮气</button></div>

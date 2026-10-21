@@ -3,11 +3,12 @@ import{parseLaps,DIFFICULTY_LABEL,type TrainingOptions}from'../modes/TrainingOpt
 import{LobbyClient}from'../lobby/LobbyClient';
 import type{LobbyConnection}from'../lobby/types';
 import{formatTime}from'./formatTime';
+import{DrivingTutorial}from'./DrivingTutorial';
 import'./home.css';
 const skyline=`<svg viewBox="0 0 900 330" aria-hidden="true"><defs><linearGradient id="canal" x2="1" y2="1"><stop stop-color="#173749"/><stop offset="1" stop-color="#35c7bf" stop-opacity=".35"/></linearGradient></defs><g fill="#173a4d" stroke="#6ae6e5" stroke-opacity=".25"><path d="M10 230V115h65v115m20 0V55h54v175m20 0V90h84v140m20 0V20h50v210m20 0V65h65v165m40 0V110h70v120m30 0V45h42v185m30 0V0h60v230m25 0V70h80v160m30 0V95h85v135"/><path d="M0 245h900"/></g><path d="M90 330 420 218h106L410 330" fill="url(#canal)" stroke="#76e9dd" stroke-opacity=".6"/><g stroke="#60babc" stroke-opacity=".22"><path d="M0 260h900M0 285h900M0 315h900M110 0v230M195 90v140M300 20v210M376 65v165M544 45v185M620 0v230M730 70v160M840 95v135"/></g><path d="m302 300 25-8-12-10z" fill="#befff2"/></svg>`;
 export class HomeScreen {
  private lobby:LobbyClient;private connection?:LobbyConnection;private closed=false;private joinAttempt=0;private roomNotice='';
- private dialog:HTMLDialogElement;private pageHide=()=>{void this.lobby.leave();};
+ private dialog:HTMLDialogElement;private tutorial:DrivingTutorial;private pageHide=()=>{void this.lobby.leave();};
  constructor(private root:HTMLElement,private profile:ProfileStore,private start:(options:TrainingOptions)=>void,private startOnline?:(lobby:LobbyClient,connection:LobbyConnection)=>void){
   root.innerHTML=`<div class="home-shell"><header class="home-header"><a class="home-brand" href="#" aria-label="极速水城首页"><span>≋</span><div>极速水城<small>VELOCITY / WATER CITY</small></div></a><button class="player-chip" id="edit-profile"><i></i><span id="player-name">设置游戏 ID</span><small>修改 ↗</small></button></header>
    <main class="home-main"><section class="home-hero"><div class="hero-copy"><div class="home-eyebrow">曙光都市 · 城市水道竞速</div><h1>下一次加速，<br><em>由你决定。</em></h1><p>穿越六大街区，驾驭每一道弯。<br>独自磨炼圈速，或与朋友相约同一间房。</p><div class="hero-tags"><span>4.75 KM 水道</span><span>六大街区</span><span>高架飞跃 · 城市捷径</span></div></div><div class="hero-skyline">${skyline}<span>AURORA / 01</span></div></section>
@@ -17,6 +18,8 @@ export class HomeScreen {
    <section class="home-records"><div class="records-heading"><div><small>YOUR LOGBOOK</small><h2>本机航行记录</h2></div><p id="storage-note"></p></div><div class="profile-stats"><div><strong id="stat-started">0</strong><span>开始训练</span></div><div><strong id="stat-completed">0</strong><span>完成训练</span></div><div><strong id="stat-laps">0</strong><span>累计完成圈数</span></div><div><strong id="stat-time">0</strong><span>驾驶分钟</span></div></div><div id="recent-history"></div></section><div class="home-bottom"><span>VELOCITY / WATER CITY</span><span>你的下一圈，从这里开始。</span></div></main>
    <dialog class="profile-dialog" id="profile-dialog"><form id="profile-form" novalidate><small>WELCOME, RIDER</small><h2 id="profile-title">先取一个游戏 ID</h2><p>以后回到这个浏览器，ID、训练设置和游玩记录都会保留。</p><label>游戏 ID<input id="profile-id" aria-label="游戏 ID" maxlength="32" placeholder="你的水上代号" autocomplete="nickname"></label><p class="form-message" id="profile-message" role="status"></p><button class="primary-button" type="submit">保存 ID <span>→</span></button><button class="quiet-button" id="cancel-profile" type="button">取消</button><small class="profile-footnote">档案保存在本机浏览器。更换浏览器或清除网站数据后，需要重新建立档案。</small></form></dialog></div>`;
   this.dialog=this.el<HTMLDialogElement>('#profile-dialog');
+  this.el('.hero-copy').insertAdjacentHTML('beforeend','<button class="quiet-button hero-tutorial" id="show-tutorial" type="button">玩法教程 <span>跳台 · 特技 · 氮气 ↗</span></button>');
+  this.tutorial=new DrivingTutorial(root);this.el('#show-tutorial').onclick=()=>this.tutorial.open();
   this.el<HTMLInputElement>('#training-laps').value=String(profile.data.settings.laps);this.el<HTMLSelectElement>('#training-difficulty').value=profile.data.settings.difficulty;this.el<HTMLInputElement>('#room-code').value=profile.data.lastRoom;
   this.lobby=new LobbyClient(value=>{if(!this.closed)this.showRoom(value);},(message,retrying=true)=>{if(this.closed)return;this.message('#lobby-message',message);if(this.connection){this.connection.status=retrying?'reconnecting':'disconnected';this.el('#room-connection').textContent=message;this.el<HTMLButtonElement>('#room-ready').disabled=true;}});
   this.el('#edit-profile').onclick=()=>this.editProfile();this.el('#cancel-profile').onclick=()=>{if(profile.data.playerId)this.dialog.close();};
@@ -28,12 +31,12 @@ export class HomeScreen {
   this.el('#leave-room').onclick=()=>{this.joinAttempt++;this.roomNotice='';void this.lobby.leave();this.connection=undefined;this.el('#room-panel').hidden=true;this.el<HTMLButtonElement>('#join-room').disabled=false;this.message('#lobby-message','已离开房间');};
   this.el('#room-ready').onclick=()=>{this.roomNotice='';const me=this.connection?.room.members.find(m=>m.id===this.connection?.memberId);if(me)void this.lobby.ready(!me.ready).catch(e=>this.message('#lobby-message',e.message));};
   this.el('#start-online-race').onclick=()=>{this.el<HTMLButtonElement>('#start-online-race').disabled=true;void this.lobby.startRace().catch(e=>{if(!this.closed){this.message('#lobby-message',e.message);this.el<HTMLButtonElement>('#start-online-race').disabled=false;}});};
-  window.addEventListener('pagehide',this.pageHide);this.renderProfile();if(!profile.data.playerId)this.editProfile();
+  window.addEventListener('pagehide',this.pageHide);this.renderProfile();if(!profile.data.playerId)this.editProfile();else this.tutorial.showIfNeeded();
  }
  private el<T extends HTMLElement=HTMLElement>(selector:string){return this.root.querySelector<T>(selector)!;}
  private message(selector:string,message:string){if(!this.closed)this.el(selector).textContent=message;}
  private editProfile(){this.el<HTMLInputElement>('#profile-id').value=this.profile.data.playerId;this.el('#profile-title').textContent=this.profile.data.playerId?'修改游戏 ID':'先取一个游戏 ID';this.el('#cancel-profile').hidden=!this.profile.data.playerId;this.message('#profile-message','');this.dialog.showModal();}
- private async saveName(){try{const name=validatePlayerId(this.el<HTMLInputElement>('#profile-id').value);if(this.connection)await this.lobby.rename(name);if(this.closed)return;this.profile.rename(name);this.renderProfile();this.dialog.close();}catch(error){this.message('#profile-message',(error as Error).message);}}
+ private async saveName(){try{const name=validatePlayerId(this.el<HTMLInputElement>('#profile-id').value);if(this.connection)await this.lobby.rename(name);if(this.closed)return;this.profile.rename(name);this.renderProfile();this.dialog.close();this.tutorial.showIfNeeded();}catch(error){this.message('#profile-message',(error as Error).message);}}
  private renderProfile(){const p=this.profile.data;this.el('#player-name').textContent=p.playerId||'设置游戏 ID';for(const[k,v]of Object.entries({started:p.stats.started,completed:p.stats.completed,laps:p.stats.completedLaps,time:Math.floor(p.stats.seconds/60)}))this.el('#stat-'+k).textContent=String(v);this.el('#storage-note').textContent=this.profile.persisted?'仅保存在本机浏览器 · 最近 30 次训练':'当前浏览器未允许保存，档案暂存于本次页面';
   const list=this.el('#recent-history');list.replaceChildren();if(!p.history.length){const empty=document.createElement('p');empty.className='empty-records';empty.textContent='第一份航行记录，等你写下。';list.append(empty);return;}
   for(const r of p.history.slice(0,5)){const row=document.createElement('div');row.className='history-row';for(const text of[`${DIFFICULTY_LABEL[r.difficulty]} · ${r.laps} 圈`,r.completed?`第 ${r.rank} 名`:`已跑 ${r.completedLaps} 圈 · 中途结束`,formatTime(r.elapsed),new Date(r.at).toLocaleDateString('zh-CN')]){const span=document.createElement('span');span.textContent=text;row.append(span);}list.append(row);}
@@ -46,5 +49,5 @@ export class HomeScreen {
   const start=this.el<HTMLButtonElement>('#start-online-race');start.hidden=!me?.host;start.disabled=!value.room.canRace||value.room.members.length<2||!value.room.members.every(m=>m.ready&&m.connected!==false&&m.raceCapable);start.textContent=value.room.members.some(m=>!m.raceCapable)?'有玩家需要刷新网页':start.disabled?'等待全员准备':'开始比赛 →';
   const race=value.room.race;if(race&&['loading','countdown','racing'].includes(race.phase)&&race.participants.some(p=>p.id===value.memberId&&!p.dnf))this.startOnline?.(this.lobby,value);
  }
- dispose(preserveLobby=false){this.closed=true;window.removeEventListener('pagehide',this.pageHide);if(!preserveLobby)void this.lobby.leave();if(this.dialog.open)this.dialog.close();}
+ dispose(preserveLobby=false){this.closed=true;window.removeEventListener('pagehide',this.pageHide);if(!preserveLobby)void this.lobby.leave();if(this.dialog.open)this.dialog.close();this.tutorial.dispose();}
 }

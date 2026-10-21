@@ -197,12 +197,13 @@ export class CityTrack extends Track {
   for(const route of [null,...this.shortcuts.map(s=>s.id)]){
    const other=this.project(model,route);
    if(Math.abs(this.heightAt(other.angle,other.branch)-height)>1)continue;
-   // Prefer any corridor that really fits the current hull orientation. When
-   // neither fits, retain the current route as the collision-recovery side;
-   // selecting a wider but still blocked corridor can push a racer into the
-   // solid wedge between the two diverging channels.
+   // Keep the current side for ordinary scrapes (at most the widest hull
+   // margin, 2.6m). Beyond that, a stale tag must not pull the boat across a
+   // divider: recover at the nearer compatible bank even if its hull clips it.
+   // Scripted AI already supplies an explicit route intent; keep its existing
+   // recovery side rather than changing the tuned AI's cornering trajectory.
    const otherClearance=clearance(other);
-   if(otherClearance>clearance(p)&&(heading===undefined||otherClearance>=0))p=other;
+   if(otherClearance>clearance(p)&&(heading===undefined||otherClearance>=0||model.routeIntent===undefined&&clearance(p)<-2.6))p=other;
   }
   return p;
  }

@@ -9,7 +9,7 @@ const output=process.env.QA_OUTPUT??'work/online-race-browser';await mkdir(outpu
 const remote=process.env.QA_URL,base=remote??'http://127.0.0.1:5291/';
 let server,web,browser;const report={url:base,localBuild:process.env.QA_LOCAL_BUILD==='1',checks:{},errors:[]},events=[[],[]],sent=[[],[]];
 try{
- if(!remote){server=createLobbyServer({allowedOrigins:['http://127.0.0.1:5291']});server.listen(0,'127.0.0.1');await once(server,'listening');web=await preview({preview:{host:'127.0.0.1',port:5291,strictPort:true,proxy:{'/api/lobby':{target:`http://127.0.0.1:${server.address().port}`,ws:true}}}});}
+ if(!remote){server=createLobbyServer({allowedOrigins:['http://127.0.0.1:5291']});server.listen(0,'127.0.0.1');await once(server,'listening');web=await preview({build:{outDir:process.env.QA_BUILD_DIR??'dist'},preview:{host:'127.0.0.1',port:5291,strictPort:true,proxy:{'/api/lobby':{target:`http://127.0.0.1:${server.address().port}`,ws:true}}}});}
  const {chromium}=loadPlaywright();browser=await chromium.launch({channel:'msedge',headless:true});
  const contexts=await Promise.all([0,1].map(()=>browser.newContext({viewport:{width:1280,height:720}})));
  if(process.env.QA_LOCAL_BUILD==='1')for(const context of contexts)await context.route('https://huangyh0825-boop.github.io/velocity-water-city/**',async route=>{
@@ -26,7 +26,7 @@ try{
    w.on('framereceived',e=>{try{const d=JSON.parse(e.payload);if(['room','race.frame','error'].includes(d.type))events[i].push({at:Date.now(),...d});}catch{}});
    w.on('framesent',e=>{try{const d=JSON.parse(e.payload);if(d.type?.startsWith('race.'))sent[i].push({at:Date.now(),...d});}catch{}});
   });
-  await p.goto(base,{waitUntil:'domcontentloaded'});await p.getByLabel('游戏 ID',{exact:true}).fill('联机验收'+(i+1));await p.getByRole('button',{name:'保存 ID'}).click();
+  await p.goto(base,{waitUntil:'domcontentloaded'});await p.getByLabel('游戏 ID',{exact:true}).fill('联机验收'+(i+1));await p.getByRole('button',{name:'保存 ID'}).click();await p.locator('.tutorial-done').click();
  }
  const code=String(1000+Math.floor(Math.random()*9000));
  for(const p of pages){await p.locator('#room-code').fill(code);await p.locator('#join-room').click();await p.waitForFunction(code=>document.querySelector('#room-panel')?.hidden===false&&document.querySelector('#room-title')?.textContent===`房间 ${code}`&&document.querySelector('#room-connection')?.textContent.includes('已连接'),code,{timeout:190000});}
