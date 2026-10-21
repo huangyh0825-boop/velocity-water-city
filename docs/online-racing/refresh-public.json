@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-10-21T07:33:46.775Z",
+  "health": {
+    "ok": true,
+    "service": "velocity-water-city-lobby",
+    "transport": "websocket",
+    "protocol": 1,
+    "multiplayer": true,
+    "capacity": 5,
+    "rooms": 0,
+    "instance": "59edc009b4a2468a",
+    "revision": "d1759076c66d314c414e551e3d158556e6bd2ea3",
+    "storage": "memory",
+    "reconnectGraceMs": 30000
+  },
+  "fastRefreshCancelsCountdown": true,
+  "waitsForNewLoadedSignal": true,
+  "newFiveSecondCountdown": true
+}
