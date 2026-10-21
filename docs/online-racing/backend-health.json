@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "service": "velocity-water-city-lobby",
+  "transport": "websocket",
+  "protocol": 1,
+  "multiplayer": true,
+  "capacity": 5,
+  "rooms": 0,
+  "instance": "222becea0a4893bb",
+  "revision": "504ba30be34190b84a2774806f9dc49d41506ae4",
+  "storage": "memory",
+  "reconnectGraceMs": 30000
+}

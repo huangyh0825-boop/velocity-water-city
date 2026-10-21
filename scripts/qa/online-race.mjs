@@ -2,15 +2,21 @@ import {loadPlaywright} from './qa-playwright.mjs';
 import {createLobbyServer} from '../../dist-lobby/lobby.mjs';
 import {preview} from 'vite';
 import {once} from 'node:events';
-import {mkdir,writeFile} from 'node:fs/promises';
+import {mkdir,writeFile,readFile} from 'node:fs/promises';
+import {resolve,sep} from 'node:path';
 import assert from 'node:assert/strict';
 const output=process.env.QA_OUTPUT??'work/online-race-browser';await mkdir(output,{recursive:true});
 const remote=process.env.QA_URL,base=remote??'http://127.0.0.1:5291/';
-let server,web,browser;const report={url:base,checks:{},errors:[]},events=[[],[]],sent=[[],[]];
+let server,web,browser;const report={url:base,localBuild:process.env.QA_LOCAL_BUILD==='1',checks:{},errors:[]},events=[[],[]],sent=[[],[]];
 try{
  if(!remote){server=createLobbyServer({allowedOrigins:['http://127.0.0.1:5291']});server.listen(0,'127.0.0.1');await once(server,'listening');web=await preview({preview:{host:'127.0.0.1',port:5291,strictPort:true,proxy:{'/api/lobby':{target:`http://127.0.0.1:${server.address().port}`,ws:true}}}});}
  const {chromium}=loadPlaywright();browser=await chromium.launch({channel:'msedge',headless:true});
  const contexts=await Promise.all([0,1].map(()=>browser.newContext({viewport:{width:1280,height:720}})));
+ if(process.env.QA_LOCAL_BUILD==='1')for(const context of contexts)await context.route('https://huangyh0825-boop.github.io/velocity-water-city/**',async route=>{
+  const root=resolve('dist'),path=decodeURIComponent(new URL(route.request().url()).pathname.slice('/velocity-water-city/'.length))||'index.html',file=resolve(root,path);
+  if(!file.startsWith(root+sep)){await route.abort();return;}
+  try{await route.fulfill({status:200,contentType:file.endsWith('.js')?'application/javascript':file.endsWith('.css')?'text/css':file.endsWith('.html')?'text/html':'application/octet-stream',body:await readFile(file)});}catch{await route.abort();}
+ });
  const pages=await Promise.all(contexts.map(c=>c.newPage()));
  let release,blocked=false;const hold=new Promise(r=>release=r);
  if(!remote)await pages[1].route('**/assets/Game-*.js',async route=>{blocked=true;await hold;await route.continue();});

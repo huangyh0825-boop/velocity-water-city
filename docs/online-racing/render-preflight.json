@@ -1,0 +1,15 @@
+{
+  "url": "https://huangyh0825-boop.github.io/velocity-water-city/",
+  "checks": {
+    "hostAndAllReady": true,
+    "allAssetsLoadedAndSharedFiveSecondCountdown": true,
+    "realDrivingAndOpponentBroadcast": true,
+    "offlineReconnectRestoresAuthoritativePose": true,
+    "oneMinuteNoRateLimitDisconnect": true,
+    "exitToHome": true
+  },
+  "errors": [],
+  "player1Packets": 700,
+  "player2Packets": 688,
+  "localBuild": true
+}
