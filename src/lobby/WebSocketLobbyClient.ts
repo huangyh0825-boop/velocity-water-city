@@ -1,7 +1,8 @@
 import {isLobbySnapshot,LobbyFault,LOBBY_PROTOCOL,MAX_MESSAGE_BYTES,roomCode,type LobbyCommand,type LobbyEvent} from './protocol';
 import type {LobbyConnection,LobbyIdentity} from './types';
+import {RACE_FEATURE,isOnlineFrame,type OnlineFrame,type OnlinePose} from './racing';
 
-type Pending={resolve:()=>void;reject:(e:Error)=>void;timer:ReturnType<typeof setTimeout>};
+type Pending={resolve:()=>void;reject:(e:Error)=>void;timer:ReturnType<typeof setTimeout>;sent:number};
 /** No simulation state, assets, or 3D imports. Only room events cross this socket. */
 export class WebSocketLobbyClient {
  private socket?:WebSocket;private code='';private who?:LobbyIdentity;private memberId='';
@@ -11,7 +12,11 @@ export class WebSocketLobbyClient {
  private offline=()=>{if(!this.active)return;this.connected=false;clearTimeout(this.heartbeat);clearTimeout(this.pong);this.rejectPending(Error('网络已断开'));this.problem('网络已断开，恢复网络后自动重连…');this.socket?.close(4000,'offline');};
  private online=()=>{if(this.active&&!this.connected){clearTimeout(this.retry);void this.reconnect();}};
  private visible=()=>{if(this.active&&this.connected&&document.visibilityState==='visible')this.ping();};
- constructor(private update:(value:LobbyConnection)=>void,private problem:(message:string,retrying?:boolean)=>void,private base:string) {}
+ private offset=0;private clock?:ReturnType<typeof setTimeout>;private bestRTT=Infinity;
+ constructor(private update:(value:LobbyConnection)=>void,private problem:(message:string,retrying?:boolean)=>void,private base:string,private raceFrame?: (frame:OnlineFrame)=>void) {}
+ now(){return Date.now()+this.offset;}
+ private sample(server:number,sent:number){const received=Date.now(),rtt=received-sent;if(Number.isFinite(server)&&rtt<this.bestRTT+50){this.offset=server-(sent+received)/2;this.bestRTT=rtt;}}
+ private syncClock(){clearTimeout(this.clock);if(!this.raceFrame||!this.connected)return;void this.command({type:'clock'}).catch(()=>{});this.clock=setTimeout(()=>this.syncClock(),10000);}
  async join(code:string,who:LobbyIdentity) {
   this.code=roomCode(code);this.who={...who};this.active=true;
   window.addEventListener('offline',this.offline);window.addEventListener('online',this.online);document.addEventListener('visibilitychange',this.visible);
@@ -21,9 +26,9 @@ export class WebSocketLobbyClient {
   const gen=++this.generation,url=new URL(`${this.base}/rooms/${this.code}/socket`,location.href);url.protocol=url.protocol==='https:'?'wss:':'ws:';
   const ws=new WebSocket(url);this.socket=ws;
   return new Promise((resolve,reject)=>{
-   let welcomed=false;
+   let welcomed=false,joinSent=Date.now();
    const timeout=setTimeout(()=>{reject(Error('大厅连接超时，请稍后重试'));ws.close(4000,'timeout');},8000);
-   ws.onopen=()=>{if(gen!==this.generation||!this.active){ws.close();return;}ws.send(JSON.stringify({v:LOBBY_PROTOCOL,type:'join',id:this.id(),identity:this.who}));};
+   ws.onopen=()=>{if(gen!==this.generation||!this.active){ws.close();return;}joinSent=Date.now();ws.send(JSON.stringify({v:LOBBY_PROTOCOL,type:'join',id:this.id(),identity:this.who,...(this.raceFrame?{features:[RACE_FEATURE]}:{})}));};
    ws.onmessage=event=>{
     if(gen!==this.generation||!this.active)return;
     if(event.data==='pong'){clearTimeout(this.pong);return;}
@@ -33,10 +38,12 @@ export class WebSocketLobbyClient {
     if((data.type==='welcome'||data.type==='room')&&(!isLobbySnapshot(data.room)||data.room.code!==this.code)){ws.close(1002,'invalid room');return;}
     if(data.type==='welcome'&&(typeof data.memberId!=='string'||!data.room.members.some(m=>m.id===data.memberId))){ws.close(1002,'invalid member');return;}
     if(data.type==='welcome') {
+     this.bestRTT=Infinity;this.sample((data as typeof data&{serverNow:number}).serverNow,joinSent);
      welcomed=true;clearTimeout(timeout);this.connected=true;this.failures=0;this.memberId=data.memberId;
-     this.update({room:data.room,memberId:this.memberId,status:'connected'});this.scheduleHeartbeat();resolve();
+     this.update({room:data.room,memberId:this.memberId,status:'connected'});this.scheduleHeartbeat();this.syncClock();resolve();
     } else if(data.type==='room')this.update({room:data.room,memberId:this.memberId,status:'connected'});
-    else if(data.type==='ack')this.complete(data.id);
+    else if(data.type==='ack'){const pending=this.pending.get(data.id);if(pending)this.sample(data.serverNow!,pending.sent);this.complete(data.id);}
+    else if(data.type==='race.frame'){if(!isOnlineFrame(data.frame)){ws.close(1002,'invalid race frame');return;}this.raceFrame?.(data.frame);}
     else if(data.type==='error') {
      if(typeof data.message!=='string'||typeof data.code!=='number'){ws.close(1002,'invalid error');return;}
      if(!welcomed){clearTimeout(timeout);reject(new LobbyFault(data.code,data.message));}
@@ -47,7 +54,7 @@ export class WebSocketLobbyClient {
    ws.onclose=event=>{
     clearTimeout(timeout);if(!welcomed)reject(Error('大厅连接已关闭，请重新进入'));
     if(gen!==this.generation)return;
-    this.connected=false;clearTimeout(this.heartbeat);clearTimeout(this.pong);this.rejectPending(Error('大厅连接中断，请重试操作'));
+    this.connected=false;clearTimeout(this.clock);clearTimeout(this.heartbeat);clearTimeout(this.pong);this.rejectPending(Error('大厅连接中断，请重试操作'));
     if(!this.active)return;
     if(event.code===4009||event.code===4003||event.code===4029){this.active=false;this.problem(event.code===4009?'此档案已在另一个页面进入大厅，请关闭重复页面':event.code===4029?'操作较频繁，请稍后重新进入':'无法重新加入房间，请再次进入',false);return;}
     this.problem('大厅连接中断，正在重连…');this.scheduleReconnect();
@@ -75,15 +82,18 @@ export class WebSocketLobbyClient {
   if(!this.connected||this.socket?.readyState!==WebSocket.OPEN)return;
   clearTimeout(this.pong);this.socket.send('ping');this.pong=setTimeout(()=>this.socket?.close(4000,'connection timeout'),8000);
  }
- private command(command:Omit<Extract<LobbyCommand,{type:'ready'}>,'v'|'id'>|Omit<Extract<LobbyCommand,{type:'rename'}>,'v'|'id'>|{type:'leave'}) {
+ private command(command:{type:'ready';ready:boolean}|{type:'rename';playerId:string}|{type:'leave'|'start'|'clock'}|{type:'race.loaded'|'race.failed'|'race.recover';raceId:string}) {
   if(!this.connected||this.socket?.readyState!==WebSocket.OPEN)return Promise.reject(Error('大厅正在重连，请稍后重试'));
   const id=this.id(),text=JSON.stringify({v:LOBBY_PROTOCOL,...command,id});if(new TextEncoder().encode(text).byteLength>MAX_MESSAGE_BYTES)return Promise.reject(Error('消息过大'));
-  return new Promise<void>((resolve,reject)=>{const timer=setTimeout(()=>{this.complete(id,Error('大厅响应超时，正在重连…'));this.socket?.close(4000,'request timeout');},8000);this.pending.set(id,{resolve,reject,timer});this.socket!.send(text);});
+  return new Promise<void>((resolve,reject)=>{const timer=setTimeout(()=>{this.complete(id,Error('大厅响应超时，正在重连…'));this.socket?.close(4000,'request timeout');},8000);this.pending.set(id,{resolve,reject,timer,sent:Date.now()});this.socket!.send(text);});
  }
+ async startRace(){await this.command({type:'start'});}
+ async raceCommand(type:'race.loaded'|'race.failed'|'race.recover',raceId:string){await this.command({type,raceId});}
+ sendRaceState(raceId:string,state:OnlinePose){if(this.connected&&this.socket?.readyState===WebSocket.OPEN&&this.socket.bufferedAmount<16384)this.socket.send(JSON.stringify({v:1,type:'race.state',raceId,state}));}
  async ready(value:boolean) {await this.command({type:'ready',ready:value});}
  async rename(value:string) {await this.command({type:'rename',playerId:value});if(this.who)this.who.playerId=value;}
  async leave() {
-  const ws=this.socket;this.active=false;this.generation++;clearTimeout(this.retry);clearTimeout(this.heartbeat);clearTimeout(this.pong);
+  const ws=this.socket;this.active=false;this.generation++;clearTimeout(this.clock);clearTimeout(this.retry);clearTimeout(this.heartbeat);clearTimeout(this.pong);
   window.removeEventListener('offline',this.offline);window.removeEventListener('online',this.online);document.removeEventListener('visibilitychange',this.visible);
   this.rejectPending(Error('已离开房间'));
   if(ws?.readyState===WebSocket.OPEN){ws.send(JSON.stringify({v:LOBBY_PROTOCOL,type:'leave',id:this.id()}));ws.close(1000,'leave');}

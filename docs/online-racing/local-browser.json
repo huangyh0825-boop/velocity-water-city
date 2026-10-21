@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:5291/",
+  "checks": {
+    "hostAndAllReady": true,
+    "slowPlayerHoldsStart": true,
+    "allAssetsLoadedAndSharedFiveSecondCountdown": true,
+    "realDrivingAndOpponentBroadcast": true,
+    "offlineReconnectRestoresAuthoritativePose": true,
+    "oneMinuteNoRateLimitDisconnect": true,
+    "exitToHome": true
+  },
+  "errors": [],
+  "player1Packets": 743,
+  "player2Packets": 735
+}

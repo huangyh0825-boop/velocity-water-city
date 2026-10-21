@@ -1,4 +1,5 @@
 import type {LobbyIdentity, LobbySnapshot} from './types';
+import {isOnlineRace,type OnlineFrame,type OnlinePose} from './racing';
 
 export const LOBBY_PROTOCOL = 1;
 export const ROOM_CAPACITY = 5;
@@ -31,14 +32,17 @@ export function joinMode(value:unknown):JoinMode {
  return value;
 }
 export type LobbyCommand =
- | {v:1;type:'join';id:string;identity:LobbyIdentity;mode?:JoinMode}
+ | {v:1;type:'join';id:string;identity:LobbyIdentity;mode?:JoinMode;features?:string[]}
  | {v:1;type:'ready';id:string;ready:boolean}
  | {v:1;type:'rename';id:string;playerId:string}
- | {v:1;type:'state'|'leave'|'start';id:string};
+ | {v:1;type:'state'|'leave'|'start'|'clock';id:string}
+ | {v:1;type:'race.loaded'|'race.failed'|'race.recover';id:string;raceId:string}
+ | {v:1;type:'race.state';raceId:string;state:OnlinePose};
 export type LobbyEvent =
  | {v:1;type:'welcome';id:string;memberId:string;room:LobbySnapshot}
  | {v:1;type:'room';room:LobbySnapshot}
- | {v:1;type:'ack';id:string}
+ | {v:1;type:'ack';id:string;serverNow?:number}
+ | {v:1;type:'race.frame';frame:OnlineFrame}
  | {v:1;type:'error';id?:string;code:number;message:string};
 
 export function isLobbySnapshot(value:unknown):value is LobbySnapshot {
@@ -46,7 +50,8 @@ export function isLobbySnapshot(value:unknown):value is LobbySnapshot {
  const room=value as LobbySnapshot;
  return typeof room.code==='string'&&/^\d{4}$/.test(room.code)&&room.capacity===ROOM_CAPACITY&&Array.isArray(room.members)&&room.members.length<=ROOM_CAPACITY
   &&room.members.every(m=>m&&typeof m.id==='string'&&/^[a-f0-9]{24}$/.test(m.id)&&typeof m.playerId==='string'&&[...m.playerId].length<=16&&typeof m.ready==='boolean'&&typeof m.host==='boolean'&&(m.connected===undefined||typeof m.connected==='boolean'))
-  &&new Set(room.members.map(m=>m.id)).size===room.members.length&&room.members.filter(m=>m.host).length===(room.members.length?1:0);
+  &&new Set(room.members.map(m=>m.id)).size===room.members.length&&room.members.filter(m=>m.host).length===(room.members.length?1:0)
+  &&(room.race===undefined||isOnlineRace(room.race));
 }
 
 /** Versioned extension points only. No racing state is accepted or broadcast yet. */

@@ -11,6 +11,7 @@ import { CityTrack } from '../track/CityTrack';
 import { TrackView } from '../track/TrackView';
 import {createCityOpponents} from '../ai/CityOpponents';
 import type{AIController}from'../ai/AIController';
+import{NetworkRaceSession,onlinePeers,type OnlineGameOptions}from'../gameplay/NetworkRaceSession';
 import{LocalRaceSession,IDLE_COMMAND}from'../gameplay/LocalRaceSession';
 import{LocalRaceControls}from'../controls/LocalRaceControls';
 import{trainingOptions,type TrainingOptions,type TrainingRun}from'../modes/TrainingOptions';
@@ -38,7 +39,7 @@ import {CameraObstacles} from '../camera/CameraObstacles';
 import {yieldToBrowser} from './yieldToBrowser';
 import {RenderPassMaterials} from './RenderPassMaterials';
 import {watchAssetActivity,assetWaitExpired} from './AssetActivity';
-export interface GameOptions extends Partial<TrainingOptions>{playerId?:string;onHome?:()=>void;onRunStart?:()=>void;onRunEnd?:(run:TrainingRun)=>void}
+export interface GameOptions extends Partial<TrainingOptions>{online?:OnlineGameOptions;playerId?:string;onHome?:()=>void;onRunStart?:()=>void;onRunEnd?:(run:TrainingRun)=>void}
 export class Game {
   readonly ready:Promise<void>;
   private initialized=false;private disposed=false;
@@ -63,7 +64,8 @@ export class Game {
   private aiMotion:MotionInterpolation[];
   private collisions = new BoatCollisions();
   private bodies:BoatBody[];
-  private session:LocalRaceSession;
+  private session:LocalRaceSession|NetworkRaceSession;
+  markOnlineLoaded(){if(this.session instanceof NetworkRaceSession)this.session.markLoaded();}
   private get race(){return this.session.race;}
   private runStarted=false;private runRecorded=false;
   private camera = new FollowCamera();
@@ -86,11 +88,12 @@ export class Game {
   private frameId = 0;
   private reflection?:THREE.WebGLRenderTarget;
   constructor(private root: HTMLElement,private loading=new LoadingScreen(root),private options:GameOptions={}) {
-    const config=trainingOptions(options);this.ai=createCityOpponents(this.track,config.difficulty);
+    const config=trainingOptions(options);this.ai=options.online?onlinePeers(this.track,options.online):createCityOpponents(this.track,config.difficulty);
     this.aiCraft=this.ai.map((ai,i)=>{const craft=new Watercraft(this.scene,['#ee7953','#a583ed','#f6cc61','#55c8a2'][i],ai.model);craft.rider.root.name='ai-rider';return craft;});
     this.aiJets=this.aiCraft.map(c=>new BoosterJet(c.visual));this.aiMotion=this.ai.map(a=>new MotionInterpolation(a.model));this.aiLighting=this.aiCraft.map((_,i)=>new HeroLighting(3+i));
     this.bodies=[{id:'player',model:this.craft.model},...this.ai.map(a=>({id:a.id,model:a.model}))];
-    this.session=new LocalRaceSession({track:this.track,player:this.craft.model,flight:this.flight,tricks:this.tricks,nitro:this.nitro,ai:this.ai,ramps:this.ramps,collisions:this.collisions,bodies:this.bodies},config,options.playerId??'你 / PLAYER');
+    const state={track:this.track,player:this.craft.model,flight:this.flight,tricks:this.tricks,nitro:this.nitro,ai:this.ai,ramps:this.ramps,collisions:this.collisions,bodies:this.bodies};
+    this.session=options.online?new NetworkRaceSession({...state,ai:[],bodies:[state.bodies[0]]},this.ai,options.online):new LocalRaceSession(state,config,options.playerId??'你 / PLAYER');
     loading.begin('renderer');
     this.water.bindWake(this.wake.pool);this.wake.setSurfaceIntegrated(true);
     this.renderer = new THREE.WebGLRenderer({ antialias: !matchMedia('(pointer: coarse)').matches, stencil:true, powerPreference: 'high-performance', preserveDrawingBuffer: false });
@@ -107,7 +110,7 @@ export class Game {
     loading.complete('renderer');loading.complete('track');
     this.ai.forEach(ai=>ai.setRamps(this.ramps));
     this.restart();
-    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { if(this.low===low)return;this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low);void this.citySample.setLow(low).then(()=>this.citySample.bakeReflections(this.renderer,this.scene));this.renderer.shadowMap.enabled=!low;void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(low)); this.resize(); },this.audio,options.onHome);
+    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { if(this.low===low)return;this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low);void this.citySample.setLow(low).then(()=>this.citySample.bakeReflections(this.renderer,this.scene));this.renderer.shadowMap.enabled=!low;void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(low)); this.resize(); },this.audio,options.onHome,!!options.online);
     this.debug=new RampDebug(root);this.ramps.onDecision=value=>this.debug.record(value);
     window.addEventListener('pointerdown',this.activateAudio);
     window.addEventListener('keydown',this.activateAudio);
@@ -189,7 +192,8 @@ export class Game {
       const result=this.session.step(step,canDrive?this.controls.sample(input):IDLE_COMMAND);
       if(result.started&&!this.runStarted){this.runStarted=true;this.options.onRunStart?.();}
       this.wallContact=result.wallContact;
-      const cue=this.countdownCue.update(this.race.phase,this.race.countdown);if(cue!==null)this.audio.countdown(cue);
+      if(this.session instanceof NetworkRaceSession&&this.session.consumeCorrection())this.craftMotion.reset();
+      const cue=this.session instanceof NetworkRaceSession&&this.session.message?null:this.countdownCue.update(this.race.phase,this.race.countdown);if(cue!==null)this.audio.countdown(cue);
       if (canDrive) {
         this.ai.forEach(ai=>{
           const volume=distanceGain(Math.hypot(ai.model.x-this.craft.model.x,ai.model.z-this.craft.model.z,ai.flight.height-this.flight.height))*.55;
@@ -217,21 +221,21 @@ export class Game {
     const displayModel = this.craftMotion.sample(this.accumulator / step);
     const ground=this.track.surface(this.craft.model).height;
     this.craft.sync(displayTime, displayModel, this.flight.displayHeight(this.accumulator / step), this.tricks.rotation,ground,this.flight.airborne?0:this.ramps.slope(this.craft.model));
-    this.aiCraft.forEach((craft, i) => craft.sync(displayTime, this.aiMotion[i].sample(this.accumulator / step),this.ai[i].flight.displayHeight(this.accumulator/step),this.ai[i].tricks.rotation,this.track.surface(this.ai[i].model).height,this.ai[i].flight.airborne?0:this.ramps.slope(this.ai[i].model)));
+    this.aiCraft.forEach((craft, i) => craft.sync(displayTime, this.aiMotion[i].sample(this.accumulator / step),this.ai[i].flight.displayHeight(this.accumulator/step),this.session instanceof NetworkRaceSession?this.session.rotation(this.ai[i].id):this.ai[i].tricks.rotation,this.track.surface(this.ai[i].model).height,this.ai[i].flight.airborne?0:this.ramps.slope(this.ai[i].model)));
     this.jet.update(displayTime,this.nitro.active);
     this.aiJets.forEach((jet,i)=>jet.update(displayTime,this.ai[i].nitro.active));
     this.audio.update({speed:this.craft.model.speed,throttle:input.throttle,boost:this.nitro.active,grounded:!this.flight.airborne&&Math.abs(this.flight.height-ground)<.3,airborne:this.flight.airborne,running:this.race.phase==='racing'});
     this.audio.updateAI(this.ai.map(ai=>{const dx=ai.model.x-this.craft.model.x,dz=ai.model.z-this.craft.model.z,distance=Math.hypot(dx,dz,ai.flight.height-this.flight.height);return{id:ai.id,speed:ai.model.speed,throttle:1,boost:ai.nitro.active,airborne:ai.flight.airborne,grounded:!ai.flight.airborne&&Math.abs(ai.flight.height-this.track.surface(ai.model).height)<.3,running:this.race.phase==='racing',distance,pan:(dx*Math.cos(this.craft.model.heading)-dz*Math.sin(this.craft.model.heading))/Math.max(10,distance)};}));
     this.water.update(displayTime);this.camera.update(dt, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active,ground);this.citySample.update(displayTime,this.camera.camera);
     this.trackView.highlight(this.race.nextCheckpoint());
-    this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks);
+    this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks,this.session instanceof NetworkRaceSession?this.session.message:undefined);
     if(!this.low&&this.craft.assetLoaded)this.heroLighting.update(this.renderer,this.scene,this.craft.visual);
     if(!this.low)this.aiCraft.forEach((craft,i)=>{if(craft.assetLoaded)this.aiLighting[i].updateVisible(this.renderer,this.scene,craft.visual,this.camera.camera);});
     this.renderer.render(this.scene, this.camera.camera);
   };
   dispose() {
     this.recordRun();
-    this.disposed=true;
+    this.disposed=true;if(this.session instanceof NetworkRaceSession)this.session.dispose();
     this.releaseAssetActivity();
     this.renderPassMaterials.dispose();
     this.heroLighting.dispose();this.aiLighting.forEach(light=>light.dispose());

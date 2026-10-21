@@ -6,12 +6,14 @@ import {fileURLToPath} from 'node:url';
 import {WebSocket, WebSocketServer} from 'ws';
 import {identity, joinMode, playerName, record, roomCode, LobbyFault, LOBBY_PROTOCOL, MAX_MESSAGE_BYTES, RECONNECT_GRACE_MS} from '../src/lobby/protocol';
 import type {LobbyIdentity, LobbySnapshot} from '../src/lobby/types';
+import {RACE_FEATURE} from '../src/lobby/racing';
+import {RoomRace} from './RoomRace';
 
 interface Member {
  id:string; deviceId:string; keyHash:string; playerId:string; ready:boolean;
- token:string; seen:number; socket?:WebSocket; transport:'http'|'websocket';
+ token:string; seen:number; socket?:WebSocket; transport:'http'|'websocket'; raceCapable:boolean;
 }
-interface Room {code:string; members:Map<string,Member>}
+interface Room {code:string; members:Map<string,Member>;race?:RoomRace}
 interface Options {ttlMs?:number; capacity?:number; allowedOrigins?:string[]; now?:()=>number; publicDir?:string}
 const digest=(s:string)=>createHash('sha256').update(s).digest('hex');
 
@@ -27,26 +29,30 @@ export function createLobbyServer(options:Options={}) {
  let closing=false;
  const snapshot=(room:Room):LobbySnapshot=>({code:room.code,capacity,members:[...room.members.values()].map((m,i)=>({
   id:m.id,playerId:m.playerId,ready:m.ready,host:i===0,
-  connected:m.transport==='http'||m.socket?.readyState===WebSocket.OPEN,
- }))});
- const emit=(ws:WebSocket,value:unknown)=>{if(ws.readyState===WebSocket.OPEN)ws.send(JSON.stringify({v:LOBBY_PROTOCOL,...value as object}));};
+  raceCapable:m.raceCapable,connected:m.transport==='http'||m.socket?.readyState===WebSocket.OPEN,
+ })),canRace:true,...(room.race?{race:room.race.view}:{})});
+ const emit=(ws:WebSocket,value:unknown)=>{if(ws.readyState===WebSocket.OPEN)ws.send(JSON.stringify({v:LOBBY_PROTOCOL,serverNow:now(),...value as object}));};
  const broadcast=(room:Room)=>{const data={type:'room',room:snapshot(room)};for(const m of room.members.values())if(m.socket)emit(m.socket,data);};
  const remove=(room:Room,m:Member)=>{
   if(room.members.get(m.deviceId)!==m)return;
-  room.members.delete(m.deviceId);tokens.delete(m.token);
+  room.race?.leave(m.id);room.members.delete(m.deviceId);tokens.delete(m.token);
   if(!room.members.size)rooms.delete(room.code);
   broadcast(room);
  };
  const prune=()=>{
   for(const room of rooms.values())for(const m of room.members.values()) {
    // Active sockets are kept by application ping. Broken links retain their seat briefly.
-   if(m.socket&&now()-m.seen>150_000){m.socket.terminate();m.socket=undefined;m.seen=now();broadcast(room);}
+   if(m.socket&&now()-m.seen>150_000){m.socket.terminate();m.socket=undefined;m.seen=now();room.race?.connected(m.id,false,now());broadcast(room);}
    if(!m.socket&&now()-m.seen>ttl)remove(room,m);
   }
   for(const [k,r]of rates)if(r.until<now())rates.delete(k);
   for(const [k,until]of replaced)if(until<now())replaced.delete(k);
  };
  const timer=setInterval(prune,Math.min(ttl,5000));timer.unref();
+ const racing=setInterval(()=>{for(const room of rooms.values())if(room.race?.active){
+  const phase=room.race.view.phase;room.race.tick(now());if(phase!==room.race.view.phase){if(!room.race.active)for(const m of room.members.values())m.ready=false;broadcast(room);}
+  const frame={type:'race.frame',frame:room.race.frame(now())};for(const m of room.members.values())if(m.socket&&m.socket.bufferedAmount<65536)emit(m.socket,frame);
+ }},200);racing.unref();
  const originAllowed=(req:IncomingMessage)=>{
   const origin=req.headers.origin;if(!origin)return true;
   if(options.allowedOrigins?.includes(origin))return true;
@@ -60,12 +66,13 @@ export function createLobbyServer(options:Options={}) {
   for await(const c of req){bytes+=c.length;if(bytes>MAX_MESSAGE_BYTES)throw new LobbyFault(413,'请求内容过大');chunks.push(c);}
   try{return record(JSON.parse(Buffer.concat(chunks).toString()));}catch(e){if(e instanceof LobbyFault)throw e;throw new LobbyFault(400,'请求格式无效');}
  };
- const enter=(code:string,who:LobbyIdentity,mode:ReturnType<typeof joinMode>,socket?:WebSocket)=>{
+ const enter=(code:string,who:LobbyIdentity,mode:ReturnType<typeof joinMode>,socket?:WebSocket,raceCapable=false)=>{
   prune();let room=rooms.get(code);
   if(!room&&mode==='join')throw new LobbyFault(404,'房间不存在或服务器已重启，请重新创建房间');
   if(room&&mode==='create')throw new LobbyFault(409,'房间号已被使用');
   if(!room){if(rooms.size>=1000)throw new LobbyFault(503,'大厅暂时繁忙，请稍后再试');room={code,members:new Map()};}
   let member=room.members.get(who.deviceId);
+  if(room.race?.active&&!member)throw new LobbyFault(409,'房间正在比赛，请等待结束');
   if(member&&member.keyHash!==digest(who.resumeKey))throw new LobbyFault(403,'设备验证失败');
   if(!member&&room.members.size>=capacity)throw new LobbyFault(409,'这个房间已满，请换一个房间号');
   if(member){
@@ -73,8 +80,8 @@ export function createLobbyServer(options:Options={}) {
    const previous=member.socket;member.socket=undefined;previous?.close(4009,'session replaced');
   }
   member={id:member?.id??randomBytes(12).toString('hex'),deviceId:who.deviceId,keyHash:digest(who.resumeKey),playerId:who.playerId,
-   ready:member?.ready??false,token:randomBytes(24).toString('hex'),seen:now(),socket,transport:socket?'websocket':'http'};
-  room.members.set(who.deviceId,member);rooms.set(code,room);tokens.set(member.token,{room,member});
+   ready:member?.ready??false,token:randomBytes(24).toString('hex'),seen:now(),socket,transport:socket?'websocket':'http',raceCapable};
+  room.members.set(who.deviceId,member);rooms.set(code,room);tokens.set(member.token,{room,member});if(room.race?.active)room.race.resume(member.id,now());
   return {room,member};
  };
  const server=createServer(async(req,res)=>{
@@ -84,7 +91,7 @@ export function createLobbyServer(options:Options={}) {
    if(req.method==='OPTIONS'){res.writeHead(204);res.end();return;}
    prune();const path=new URL(req.url??'/','http://lobby.local').pathname;
    if(path==='/api/lobby/health'&&req.method==='GET'){
-    send(res,200,{ok:true,service:'velocity-water-city-lobby',transport:'websocket',protocol:1,capacity,rooms:rooms.size,instance,
+    send(res,200,{ok:true,service:'velocity-water-city-lobby',transport:'websocket',protocol:1,multiplayer:true,capacity,rooms:rooms.size,instance,
      revision:process.env.RENDER_GIT_COMMIT??null,storage:'memory',reconnectGraceMs:ttl});return;
    }
    const files:Record<string,[string,string]>={'/':['index.html','text/html; charset=utf-8'],'/test':['index.html','text/html; charset=utf-8'],'/test.js':['test.js','text/javascript; charset=utf-8']};
@@ -133,7 +140,7 @@ export function createLobbyServer(options:Options={}) {
  });
  const connectionRooms=new Map<WebSocket,string>();
  wss.on('connection',(ws:WebSocket,code:string)=>{
-  let session:{room:Room;member:Member}|undefined,windowStart=now(),count=0;
+  let session:{room:Room;member:Member}|undefined,windowStart=now(),count=0,stateWindow=now(),stateCount=0;
   const login=setTimeout(()=>ws.close(4008,'join timeout'),10_000);login.unref();
   ws.on('error',()=>{/* ws emits an error for oversized frames; close handler releases the seat. */});
   ws.on('message',(raw,binary)=>{
@@ -141,26 +148,47 @@ export function createLobbyServer(options:Options={}) {
    try{
     if(binary){ws.close(1003,'text only');return;}
     if(now()-windowStart>=60_000){count=0;windowStart=now();}
-    if(++count>40){emit(ws,{type:'error',code:429,message:'操作较频繁，请稍后重新进入'});ws.close(4029,'rate limit');return;}
     const text=raw.toString();
     if(text==='ping'){if(session){session.member.seen=now();ws.send('pong');return;}throw new LobbyFault(401,'请先加入房间');}
     let data:Record<string,unknown>;try{data=record(JSON.parse(text));}catch{throw new LobbyFault(400,'请求格式无效');}
+    if(data.type==='race.state'){
+     if(data.v!==LOBBY_PROTOCOL)throw new LobbyFault(400,'通信协议无效');
+     if(!session||session.member.socket!==ws)throw new LobbyFault(401,'请先加入房间');
+     if(now()-stateWindow>=1000){stateWindow=now();stateCount=0;}
+     if(++stateCount>30){ws.close(4029,'race rate limit');return;}
+     session.member.seen=now();const match=session.room.race;
+     if(!match||data.raceId!==match.view.id)throw new LobbyFault(409,'比赛已失效');match.accept(session.member.id,data.state,now());return;
+    }
+    if(++count>40){emit(ws,{type:'error',code:429,message:'操作较频繁，请稍后重新进入'});ws.close(4029,'rate limit');return;}
     if(typeof data.id==='string'&&/^[\w-]{1,80}$/.test(data.id))id=data.id;
     if(data.v!==LOBBY_PROTOCOL||!id)throw new LobbyFault(400,'通信协议或请求编号无效');
     if(data.type==='join'){
      if(session)throw new LobbyFault(409,'已经进入房间');
-     session=enter(code,identity(data.identity),joinMode(data.mode),ws);clearTimeout(login);
-     emit(ws,{type:'welcome',id,memberId:session.member.id,room:snapshot(session.room)});broadcast(session.room);return;
+     session=enter(code,identity(data.identity),joinMode(data.mode),ws,Array.isArray(data.features)&&data.features.includes(RACE_FEATURE));clearTimeout(login);
+     emit(ws,{type:'welcome',id,memberId:session.member.id,room:snapshot(session.room)});broadcast(session.room);if(session.room.race)emit(ws,{type:'race.frame',frame:session.room.race.frame(now())});return;
     }
     if(!session||session.member.socket!==ws||session.room.members.get(session.member.deviceId)!==session.member)throw new LobbyFault(401,'房间连接已失效');
     const {room,member}=session;member.seen=now();
+    if(data.type==='clock'){emit(ws,{type:'ack',id});return;}
+    if(['race.loaded','race.failed','race.recover'].includes(String(data.type))){
+     if(!room.race||data.raceId!==room.race.view.id)throw new LobbyFault(409,'比赛已失效');
+     if(data.type==='race.loaded')room.race.loaded(member.id,now());
+     else if(data.type==='race.failed')room.race.abort('玩家资源加载失败，请返回大厅重试');
+     else room.race.recover(member.id,now());
+     broadcast(room);emit(ws,{type:'race.frame',frame:room.race.frame(now())});emit(ws,{type:'ack',id});return;
+    }
+    if(data.type==='ready'&&room.race?.active)throw new LobbyFault(409,'比赛期间不能修改准备状态');
     if(data.type==='ready'){if(typeof data.ready!=='boolean')throw new LobbyFault(400,'准备状态无效');member.ready=data.ready;}
     else if(data.type==='rename')member.playerId=playerName(data.playerId);
     else if(data.type==='state'){emit(ws,{type:'room',room:snapshot(room)});emit(ws,{type:'ack',id});return;}
     else if(data.type==='leave'){member.socket=undefined;remove(room,member);session=undefined;emit(ws,{type:'ack',id});ws.close(1000,'leave');return;}
     else if(data.type==='start'){
      if(room.members.values().next().value!==member)throw new LobbyFault(403,'只有房主可以操作');
-     throw new LobbyFault(501,'当前为大厅阶段，联机竞速尚未开放');
+     if(!member.raceCapable)throw new LobbyFault(501,'请刷新网页以使用多人竞速');
+     if(room.race?.active)throw new LobbyFault(409,'比赛已经开始');
+     if(room.members.size<2)throw new LobbyFault(409,'至少两名玩家才能开始比赛');
+     if(![...room.members.values()].every(m=>m.raceCapable&&m.ready&&m.socket?.readyState===WebSocket.OPEN))throw new LobbyFault(409,'请等待所有玩家更新网页、连接并准备');
+     room.race=new RoomRace([...room.members.values()],now());
     }else throw new LobbyFault(400,'大厅操作不存在');
     broadcast(room);emit(ws,{type:'ack',id});
    }catch(e){
@@ -170,17 +198,17 @@ export function createLobbyServer(options:Options={}) {
   });
   ws.on('close',()=>{
    clearTimeout(login);connectionRooms.delete(ws);
-   if(session&&session.member.socket===ws){session.member.socket=undefined;session.member.seen=now();broadcast(session.room);}
+   if(session&&session.member.socket===ws){session.member.socket=undefined;session.member.seen=now();session.room.race?.connected(session.member.id,false,now());broadcast(session.room);}
   });
  });
  // HTTP close alone does not close upgraded sockets. Bound shutdown and test teardown.
  const closeHttp=server.close.bind(server);
  server.close=(callback?:Parameters<typeof server.close>[0])=>{
-  closing=true;clearInterval(timer);
+  closing=true;clearInterval(timer);clearInterval(racing);
   for(const ws of wss.clients){ws.close(1012,'server restart');const deadline=setTimeout(()=>ws.terminate(),1000);deadline.unref();}
   return closeHttp(callback);
  };
- server.on('close',()=>{clearInterval(timer);wss.close();});
+ server.on('close',()=>{clearInterval(timer);clearInterval(racing);wss.close();});
  return server;
 }
 

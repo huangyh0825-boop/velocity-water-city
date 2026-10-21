@@ -99,3 +99,25 @@ test('HTTP and WebSocket users share rooms, and server restart clears rooms with
 test('graceful shutdown closes upgraded sockets with restart code',async()=>{
  const f=await fixture();try{const p=await f.peer();await p.join(1);const close=new Promise<void>(resolve=>f.server.close(()=>resolve()));assert.equal(await p.closed,1012);await close;}finally{await f.close();}
 });
+
+test('real race sockets enforce host/all-ready/loading barrier, reconnect countdown, locked roster and independent state rate',async()=>{
+ let clock=1000;const f=await fixture({now:()=>clock});try{
+  const a=await f.peer(),b=await f.peer();
+  for(const [p,n]of [[a,1],[b,2]]as const){const id=p.command('join',{identity:identity(n),features:['race-v1']});assert.equal((await p.event(e=>e.id===id)).type,'welcome');}
+  assert.equal((await b.ack('start')).code,403);assert.equal((await a.ack('start')).code,409);
+  await a.ack('ready',{ready:true});assert.equal((await a.ack('start')).code,409);await b.ack('ready',{ready:true});assert.equal((await a.ack('start')).type,'ack');
+  let room=await a.state();const raceId=room.race.id;assert.equal(room.race.phase,'loading');
+  const c=await f.peer();assert.equal((await c.join(3)).code,409);
+  await a.ack('race.loaded',{raceId});room=await a.state();assert.equal(room.race.phase,'loading');
+  await b.ack('race.loaded',{raceId});room=await a.state();assert.equal(room.race.startAt-room.race.countdownAt,5000);
+  b.socket.terminate();await b.closed;await a.event(e=>e.type==='room'&&e.room.race?.phase==='loading');
+  const resumed=await f.peer();const joinId=resumed.command('join',{identity:identity(2),features:['race-v1']});await resumed.event(e=>e.id===joinId);
+  assert.equal((await a.state()).race.phase,'loading');await resumed.ack('race.loaded',{raceId});room=await a.state();clock=room.race.startAt+1000;
+  const first=await a.event(e=>e.type==='race.frame'&&e.frame.phase==='racing'),pose=first.frame.states.find((p:any)=>p.id===room.members[0].id);
+  // 60 updates within one minute exceed the lobby command budget, but remain valid at 10 Hz.
+  for(let n=1;n<=60;n++){clock+=100;a.socket.send(JSON.stringify({v:1,type:'race.state',raceId,state:{...pose,seq:n,t:(clock-room.race.startAt)/1000}}));await new Promise(r=>setTimeout(r,2));}
+  assert.equal((await a.ack('clock')).type,'ack');assert.equal(a.socket.readyState,WebSocket.OPEN);
+  assert.equal((await resumed.ack('race.recover',{raceId:'f'.repeat(24)})).code,409);
+  await resumed.leave();room=await a.state();assert.equal(room.race.participants[1].dnf,true);
+ }finally{await f.close();}
+});

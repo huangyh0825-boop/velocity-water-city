@@ -21,7 +21,7 @@ export class LocalRaceSession implements RaceSession {
  readonly mode='training' as const;
  race!:RaceController;
  private stepResult={drove:false,started:false,finished:false,wallContact:false};
- constructor(readonly state:LocalRaceState,readonly options:TrainingOptions,private playerName='你 / PLAYER'){this.restart();}
+ constructor(readonly state:LocalRaceState,readonly options:TrainingOptions,private playerName='你 / PLAYER',private externalClock=false){this.restart();}
  restart(){
   const s=this.state;s.track.spawn(s.player);s.ai.forEach(a=>a.reset());s.ramps.place(s.player,s.flight);s.bodies.forEach((b,i)=>b.height=i?s.ai[i-1].flight.height:s.flight.height);
   s.ramps.decisions.clear();s.tricks.reset();s.nitro.reset();
@@ -34,7 +34,7 @@ export class LocalRaceSession implements RaceSession {
   s.ramps.place(s.player,s.flight);s.bodies[0].height=s.flight.height;s.tricks.reset();s.nitro.active=false;this.race.syncPosition('player',s.player);if(valid)this.race.player.route=branch;return true;
  }
  step(dt:number,input:PlayerCommand){
-  const out=this.stepResult,s=this.state,r=this.race;out.drove=r.phase==='racing';out.started=out.finished=out.wallContact=false;r.tick(dt);out.started=!out.drove&&r.phase==='racing';
+  const out=this.stepResult,s=this.state,r=this.race;out.drove=r.phase==='racing';out.started=out.finished=out.wallContact=false;if(!this.externalClock)r.tick(dt);out.started=!out.drove&&r.phase==='racing';
   if(!out.drove)return out;
   s.collisions.capture(s.bodies);const before={x:s.player.x,z:s.player.z,route:s.player.route};s.flight.beginStep(dt);s.nitro.update(dt,input.boost);
   s.player.update(dt,input,s.nitro.active);out.wallContact=s.track.constrain(s.player);s.ramps.prepare(s.player,s.flight);s.bodies[0].height=s.flight.height;
@@ -45,7 +45,7 @@ export class LocalRaceSession implements RaceSession {
   s.ai.forEach((a,i)=>a.updateActions(dt,!aiWall[i]&&a.model.speed>8&&!s.collisions.hasContact(a.id),r.racers[i+1].finishTime===null));
   if(s.flight.takeoff)s.tricks.beginJump();if(input.trick)s.tricks.request(s.flight);s.tricks.update(dt);s.ai.forEach(a=>{if(s.collisions.hasContact(a.id))a.onContact();});
   if(s.flight.landed){const factor=s.flight.impactFactor;s.player.speed*=factor;s.player.vx*=factor;s.player.vz*=factor;const result=s.tricks.land(!out.wallContact&&s.player.speed>8&&!s.collisions.hasContact('player'));s.nitro.reward(result.reward);if(result.penalty){s.player.speed*=.72;s.player.vx*=.72;s.player.vz*=.72;}}
-  r.record('player',s.player,dt,s.collisions.movementAllowance('player'));s.ai.forEach(a=>r.record(a.id,a.model,dt,s.collisions.movementAllowance(a.id)));r.completeStep();
+  if(!this.externalClock){r.record('player',s.player,dt,s.collisions.movementAllowance('player'));s.ai.forEach(a=>r.record(a.id,a.model,dt,s.collisions.movementAllowance(a.id)));r.completeStep();}
   if(r.phase==='finished'){out.finished=true;s.nitro.active=false;s.ai.forEach(a=>a.nitro.active=false);s.player.speed=0;}
   return out;
  }
