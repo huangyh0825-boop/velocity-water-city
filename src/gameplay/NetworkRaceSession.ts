@@ -91,7 +91,7 @@ export class NetworkRaceSession implements RaceSession {
    this.sendTime%=.1;const s=this.state,m=s.player,rotation=s.tricks.rotation;
    lobby.sendRaceState(this.online.race.id,{seq:++this.sequence,t:r.elapsed,x:m.x,z:m.z,y:s.flight.height,heading:m.heading,speed:m.speed,vx:m.vx,vz:m.vz,airborne:s.flight.airborne,nitro:s.nitro.active,pitch:rotation.pitch,spin:rotation.yaw,correction:this.correction});
   }
-  if(r.phase==='finished')this.state.player.speed=0;
+  if(r.phase==='finished'){this.state.player.speed=this.state.player.vx=this.state.player.vz=0;this.state.nitro.active=false;}
   return result;
  }
  summary():TrainingRun{return{laps:this.race.laps,difficulty:'hard',elapsed:this.race.player.finishTime??this.race.elapsed,completedLaps:Math.floor(this.race.player.passed/this.state.track.checkpointCount),rank:this.race.playerRank,completed:this.race.phase==='finished'};}

@@ -59,5 +59,6 @@ test('online session keeps the existing driving frozen until all loaded and GO, 
  server.loaded(ids[1],clock);clock=server.view.startAt!-1;session.step(1/60,command);assert.equal(player.speed,0);
  clock++;session.step(1/60,command);assert.equal(session.race.phase,'racing');for(let i=0;i<60;i++){clock+=1000/60;session.step(1/60,command);}assert.ok(player.speed>0);assert.ok(sent.length>=9&&sent.length<=11);
  const f=server.frame(clock);f.states[0].correction++;f.states[0].x=x+4;lobby.frame=f;for(const fn of listeners)fn();assert.equal(player.x,x+4);assert.equal(session.consumeCorrection(),true);
+ nitro.active=true;const finish={...f,states:f.states.map((p,i)=>i? p:{...p,passed:72,finishTime:120})};lobby.frame=finish;for(const fn of listeners)fn();const completed=session.step(1/60,command);assert.equal(completed.finished,true);assert.equal(session.race.phase,'finished');assert.equal(session.summary().completedLaps,3);assert.equal(nitro.active,false);assert.equal(player.vx,0);
  session.dispose();assert.equal(listeners.size,0);
 });
