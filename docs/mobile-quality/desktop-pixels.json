@@ -1,0 +1,14 @@
+[
+  {
+    "scene": "city-five",
+    "meanError": 0.0,
+    "changedPixels": 0.0,
+    "over8": 0.0
+  },
+  {
+    "scene": "harbor-five",
+    "meanError": 0.0,
+    "changedPixels": 0.0,
+    "over8": 0.0
+  }
+]

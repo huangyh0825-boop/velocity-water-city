@@ -7,12 +7,15 @@ import { FlightController } from '../player/FlightController';
 import { TrickController } from '../player/TrickController';
 import { AudioController } from '../audio/AudioController';
 import {TouchControls,TOUCH_CONTROLS} from './TouchControls';
+const setText=(element:HTMLElement,value:string)=>{if(element.textContent!==value)element.textContent=value;};
+const width=(element:HTMLElement,value:string)=>{if(element.style.width!==value)element.style.width=value;};
 export class Hud {
   private speed: HTMLElement; private bar: HTMLElement; private status: HTMLElement;
   private rank: HTMLElement; private lap: HTMLElement; private time: HTMLElement; private countdown: HTMLElement;
   private result: HTMLElement; private resultShown = false;private resultKey='';
   private nitroBar: HTMLElement; private nitroLabel: HTMLElement;
   private touch:TouchControls;
+  private toast:HTMLElement;
   constructor(root: HTMLElement, input: InputController, restart: () => void, recover: () => void, quality: (low: boolean) => void, audio?:AudioController,onHome?:()=>void,private online=false) {
     root.insertAdjacentHTML('beforeend', `
       <header class="topbar"><div class="brand"><span class="brand-icon">≋</span><div><strong>极速水城<span>未来竞速</span></strong><small>VELOCITY / WATER CITY</small></div></div><div class="phase"><i></i> ${online?'多人竞速':'单人训练'} <span>曙光都市</span></div></header>
@@ -36,7 +39,7 @@ export class Hud {
     root.querySelector('#result-home')?.addEventListener('click',()=>onHome?.());
     root.querySelector<HTMLButtonElement>('#sound')!.addEventListener('click',event=>{if(!audio)return;audio.setEnabled(!audio.enabled);const button=event.currentTarget as HTMLButtonElement;button.textContent=`声音 · ${audio.enabled?'开':'关'}`;button.setAttribute('aria-pressed',String(audio.enabled));});
     root.querySelector<HTMLInputElement>('#volume')!.addEventListener('input',event=>audio?.setVolume(Number((event.currentTarget as HTMLInputElement).value)/100));
-    let low = matchMedia('(pointer: coarse)').matches;
+    let low = false;
     const button = root.querySelector<HTMLButtonElement>('#quality')!;
     const apply = () => { button.textContent = `画质 · ${low ? '低' : '标准'}`; quality(low); };
     button.addEventListener('click', () => { low = !low; apply(); }); apply();
@@ -44,21 +47,21 @@ export class Hud {
     this.speed = get('#speed'); this.bar = get('#speed-bar'); this.status = get('#status');
     this.rank = get('#rank'); this.lap = get('#lap'); this.time = get('#race-time'); this.countdown = get('#countdown'); this.result = get('#result');
     this.nitroBar=get('#nitro-bar'); this.nitroLabel=get('#nitro-label');
+    this.toast=get('#trick-toast');
   }
   update(model: DrivingModel, race: RaceController, wallContact: boolean, nitro?:NitroController, flight?:FlightController, tricks?:TrickController,waitingMessage?:string) {
     this.touch.update(race.phase==='racing'&&!waitingMessage,!!flight?.airborne&&!!flight.legalLaunch&&!tricks?.used,nitro?.energy??0,race.phase==='finished');
-    const toast=this.result.parentElement!.querySelector<HTMLElement>('#trick-toast')!;
-    toast.hidden=!tricks || tricks.feedbackTime<=0 || race.phase!=='racing'; if(!toast.hidden) toast.textContent=tricks!.message;
-    this.speed.textContent = String(Math.round(model.speed * 3.6)).padStart(3, '0');
-    this.bar.style.width = `${Math.min(1,model.speed / MAX_SPEED) * 100}%`;
-    if(nitro) { this.nitroBar.style.width=`${nitro.energy}%`; this.nitroLabel.textContent=`${Math.ceil(nitro.energy)}%`; this.nitroBar.parentElement!.classList.toggle('boosting',nitro.active); this.nitroBar.parentElement!.setAttribute('aria-valuenow',String(Math.round(nitro.energy))); }
-    this.rank.textContent = `${race.playerRank} / ${race.racers.length}`;
-    this.lap.textContent = `${race.lap()} / ${race.laps}`;
-    this.time.textContent = formatTime(race.player.finishTime ?? race.elapsed);
+    const toast=this.toast,hidden=!tricks || tricks.feedbackTime<=0 || race.phase!=='racing';
+    if(toast.hidden!==hidden)toast.hidden=hidden;if(!hidden)setText(toast,tricks!.message);
+    setText(this.speed,String(Math.round(model.speed * 3.6)).padStart(3, '0'));
+    width(this.bar,`${Math.min(1,model.speed / MAX_SPEED) * 100}%`);
+    if(nitro) { width(this.nitroBar,`${nitro.energy}%`);setText(this.nitroLabel,`${Math.ceil(nitro.energy)}%`);const meter=this.nitroBar.parentElement!;if(meter.classList.contains('boosting')!==nitro.active)meter.classList.toggle('boosting',nitro.active);const value=String(Math.round(nitro.energy));if(meter.getAttribute('aria-valuenow')!==value)meter.setAttribute('aria-valuenow',value); }
+    setText(this.rank,`${race.playerRank} / ${race.racers.length}`);
+    setText(this.lap,`${race.lap()} / ${race.laps}`);
+    setText(this.time,formatTime(race.player.finishTime ?? race.elapsed));
     const gate = race.nextCheckpoint(), angle = race.track.angle(model);
     const heading=race.track.heading(angle),forwardSpeed = Math.sin(heading) * model.vx + Math.cos(heading) * model.vz;
-    this.status.textContent = race.phase === 'countdown' ? '准备起航 · 沿水道箭头行驶' : race.phase === 'finished' ? `${race.laps} 圈完成` : wallContact ? '触碰边界 · 转向返回水道' : forwardSpeed < -1 ? '逆向行驶 · 请调转方向' : gate === 0 ? '下一检查点 · 起终点' : `下一检查点 · CP ${String(gate).padStart(2,'0')} / ${race.track.checkpointCount-1}`;
-    if(race.phase==='racing' && flight?.airborne) this.status.textContent=`${tricks?.message ?? '腾空'} · ${flight.remainingTime.toFixed(1)}s`;
+    setText(this.status,race.phase==='racing'&&flight?.airborne?`${tricks?.message ?? '腾空'} · ${flight.remainingTime.toFixed(1)}s`:race.phase === 'countdown' ? '准备起航 · 沿水道箭头行驶' : race.phase === 'finished' ? `${race.laps} 圈完成` : wallContact ? '触碰边界 · 转向返回水道' : forwardSpeed < -1 ? '逆向行驶 · 请调转方向' : gate === 0 ? '下一检查点 · 起终点' : `下一检查点 · CP ${String(gate).padStart(2,'0')} / ${race.track.checkpointCount-1}`);
     const text = waitingMessage?'等待':race.phase === 'countdown' ? String(Math.ceil(race.countdown)) : race.phase === 'racing' && race.elapsed < 0.8 ? 'GO' : '';
     if (this.countdown.dataset.value !== text) {
       this.countdown.dataset.value = text;

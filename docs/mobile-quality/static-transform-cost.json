@@ -1,0 +1,23 @@
+{
+  "sceneryObjects": 1679,
+  "results": [
+    {
+      "cached": false,
+      "ms": 304.80000000074506
+    },
+    {
+      "cached": true,
+      "ms": 146.5
+    },
+    {
+      "cached": true,
+      "ms": 115.59999999962747
+    },
+    {
+      "cached": false,
+      "ms": 231.09999999962747
+    }
+  ],
+  "exactMatrices": true,
+  "method": "Isolated CPU cost of the actual loaded scene world-matrix update; 100 warmups +1000 updates, uncached/cached/cached/uncached in one page. Rendering is excluded; this is not an FPS measurement."
+}

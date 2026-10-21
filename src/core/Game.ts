@@ -40,6 +40,8 @@ import {CameraObstacles} from '../camera/CameraObstacles';
 import {yieldToBrowser} from './yieldToBrowser';
 import {RenderPassMaterials} from './RenderPassMaterials';
 import {watchAssetActivity,assetWaitExpired} from './AssetActivity';
+import {renderQuality,renderPixelRatio} from './RenderQuality';
+import {cacheStaticTransforms} from './StaticTransforms';
 export interface GameOptions extends Partial<TrainingOptions>{online?:OnlineGameOptions;playerId?:string;onHome?:()=>void;onRunStart?:()=>void;onRunEnd?:(run:TrainingRun)=>void}
 export class Game {
   readonly ready:Promise<void>;
@@ -70,7 +72,9 @@ export class Game {
   private get race(){return this.session.race;}
   private runStarted=false;private runRecorded=false;
   private camera = new FollowCamera();
-  private heroLighting=new HeroLighting();
+  private mobile=matchMedia('(pointer: coarse)').matches;
+  private qualityProfile=renderQuality(this.mobile,false);
+  private heroLighting=new HeroLighting(2,this.qualityProfile.racerShadowSize);
   private aiLighting:HeroLighting[];
   private input = new InputController();
   private controls=new LocalRaceControls(this.input);
@@ -93,7 +97,7 @@ export class Game {
     this.jet=new BoosterJet(this.craft.visual);this.craftMotion=new MotionInterpolation(this.craft.model);
     const config=trainingOptions(options);this.ai=options.online?onlinePeers(this.track,options.online):createCityOpponents(this.track,config.difficulty);
     this.aiCraft=this.ai.map((ai,i)=>{const craft=new Watercraft(this.scene,options.online?onlineRacerColor(options.online.race,ai.id):['#ee7953','#a583ed','#f6cc61','#55c8a2'][i],ai.model);craft.rider.root.name='ai-rider';return craft;});
-    this.aiJets=this.aiCraft.map(c=>new BoosterJet(c.visual));this.aiMotion=this.ai.map(a=>new MotionInterpolation(a.model));this.aiLighting=this.aiCraft.map((_,i)=>new HeroLighting(3+i));
+    this.aiJets=this.aiCraft.map(c=>new BoosterJet(c.visual));this.aiMotion=this.ai.map(a=>new MotionInterpolation(a.model));this.aiLighting=this.aiCraft.map((_,i)=>new HeroLighting(3+i,this.qualityProfile.racerShadowSize));
     this.bodies=[{id:'player',model:this.craft.model},...this.ai.map(a=>({id:a.id,model:a.model}))];
     const state={track:this.track,player:this.craft.model,flight:this.flight,tricks:this.tricks,nitro:this.nitro,ai:this.ai,ramps:this.ramps,collisions:this.collisions,bodies:this.bodies};
     this.session=options.online?new NetworkRaceSession({...state,ai:[],bodies:[state.bodies[0]]},this.ai,options.online):new LocalRaceSession(state,config,options.playerId??'你 / PLAYER');
@@ -104,6 +108,9 @@ export class Game {
     this.renderer.autoClear = true; // Clear every frame; no history accumulation or motion blur.
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=THREE.PCFSoftShadowMap;this.citySample.configureSun(this.scene);
+    const sun=this.scene.children.find(o=>o instanceof THREE.DirectionalLight) as THREE.DirectionalLight|undefined;
+    sun?.shadow.mapSize.set(this.qualityProfile.cityShadowSize,this.qualityProfile.cityShadowSize);
+    this.water.setBudget(this.qualityProfile.waterSegments,this.qualityProfile.reflectionSize);
     this.renderer.toneMapping=THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure=.95;
     const generator=new THREE.PMREMGenerator(this.renderer),room=new RoomEnvironment();this.reflection=generator.fromScene(room,.04);this.scene.environment=this.reflection.texture;room.dispose();generator.dispose();
@@ -113,7 +120,7 @@ export class Game {
     loading.complete('renderer');loading.complete('track');
     this.ai.forEach(ai=>ai.setRamps(this.ramps));
     this.restart();
-    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { if(this.low===low)return;this.low = low; this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.city.setLow(low);void this.citySample.setLow(low).then(()=>this.citySample.bakeReflections(this.renderer,this.scene));this.renderer.shadowMap.enabled=!low;void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(low)); this.resize(); },this.audio,options.onHome,!!options.online);
+    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { if(this.low===low)return;this.low = low;this.qualityProfile=renderQuality(this.mobile,low); this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.water.setBudget(this.qualityProfile.waterSegments,this.qualityProfile.reflectionSize);this.city.setLow(low);void this.citySample.setLow(low).then(()=>this.citySample.bakeReflections(this.renderer,this.scene));this.renderer.shadowMap.enabled=!low;void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(low)); this.resize(); },this.audio,options.onHome,!!options.online);
     this.debug=new RampDebug(root);this.ramps.onDecision=value=>this.debug.record(value);
     window.addEventListener('pointerdown',this.activateAudio);
     window.addEventListener('keydown',this.activateAudio);
@@ -147,6 +154,7 @@ export class Game {
     this.loading.begin('effects');this.water.update(0);racers.forEach(c=>c.sync(0));this.loading.complete('effects');
     this.loading.begin('shaders');await yieldToBrowser();
     this.citySample.density.enableBatches(this.renderer);
+    cacheStaticTransforms(this.citySample.root);cacheStaticTransforms(this.city.root);cacheStaticTransforms(this.verticalView.root);
     const jets=[this.jet,...this.aiJets];jets.forEach(j=>j.object.visible=true);
     let timeout:ReturnType<typeof setTimeout>|undefined;
     try{await Promise.race([this.renderer.compileAsync(this.scene,this.camera.camera),new Promise<never>((_,reject)=>{timeout=setTimeout(()=>reject(Error('Shader 初始化超时，请确认硬件加速可用后重试')),90000);})]);}finally{clearTimeout(timeout);jets.forEach(j=>j.object.visible=false);}
@@ -176,7 +184,7 @@ export class Game {
   };
   private resize = () => {
     const width = this.root.clientWidth, height = this.root.clientHeight;
-    this.renderer.setPixelRatio(Math.min(devicePixelRatio, this.low ? 1 : 1.75));
+    this.renderer.setPixelRatio(renderPixelRatio(this.qualityProfile,devicePixelRatio,width,height));
     this.renderer.setSize(width, height); this.camera.resize(width, height);
   };
   private visibility = () => { this.paused = document.hidden;if(this.paused)this.saveProgress(); this.audio.setPaused(this.paused); this.input.clear(); this.previous = 0; this.accumulator = 0; this.craftMotion.reset(); this.aiMotion.forEach(motion => motion.reset()); };

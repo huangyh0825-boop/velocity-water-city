@@ -1,0 +1,20 @@
+[
+  {
+    "name": "watercraft",
+    "sourceTriangles": 3419130,
+    "mobileTriangles": 239116,
+    "maximumSimplifierError": 0.005870940629392862,
+    "transportBytes": 4317587,
+    "sourceSHA256": "79373d98ce397c48f9c198d2116c33c914446d36fad05f155302b6591825e34a",
+    "preserved": "Original materials, bones, skin weights, joints, normals and UVs at retained vertices. Separate 1024px lossless WebP textures. Desktop assets untouched."
+  },
+  {
+    "name": "rider",
+    "sourceTriangles": 1508630,
+    "mobileTriangles": 95478,
+    "maximumSimplifierError": 0.005832662805914879,
+    "transportBytes": 1865230,
+    "sourceSHA256": "f47188e11ecafb221f3bcdc2334b4dd67218d648476a053730887c93fa29bae9",
+    "preserved": "Original materials, bones, skin weights, joints, normals and UVs at retained vertices. Separate 1024px lossless WebP textures. Desktop assets untouched."
+  }
+]

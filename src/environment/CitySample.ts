@@ -6,6 +6,7 @@ import {readableSign,disposeSign} from './ReadableSign';
 import {CityAtmosphere} from './CityAtmosphere';
 import {SurfaceContacts} from './SurfaceContacts';
 import {CityDensity} from './CityDensity';
+import {cacheStaticTransforms} from '../core/StaticTransforms';
 
 export const CITY_SAMPLE={center:.06,length:280} as const;
 export function inCitySample(track:CityTrack,angle:number){return Math.abs(angle/TAU-CITY_SAMPLE.center)*track.length<CITY_SAMPLE.length/2;}
@@ -33,7 +34,7 @@ export class CitySample {
   }
   const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));geometry.computeVertexNormals();
   this.shadowWater=new THREE.Mesh(geometry,new THREE.ShadowMaterial({opacity:.24,side:THREE.DoubleSide,depthWrite:false}));this.shadowWater.receiveShadow=true;this.shadowWater.visible=false;scene.add(this.shadowWater);
-  void this.setLow(typeof matchMedia==='function'&&matchMedia('(pointer: coarse)').matches);
+  void this.setLow(false);
  }
  async setLow(low:boolean){
   this.shadowWater.visible=this.loaded&&!low;const request=++this.generation;
@@ -51,7 +52,7 @@ export class CitySample {
      if(o.name==='continuous-quay-ground'){this.quayMaterial?.dispose();this.quayMaterial=(material as THREE.MeshStandardMaterial).clone();this.quayMaterial.side=THREE.DoubleSide;material=this.quayMaterial;}
      o.material=material;o.receiveShadow=true;o.castShadow=o.name!=='continuous-quay-ground';}
    }});dispose.forEach(m=>m.dispose());
-   this.releaseSigns();this.atmosphere?.dispose();this.root.clear();this.root.add(group,this.contacts.mesh,this.density.root);this.contacts.mesh.visible=!low;this.loaded=true;this.error='';this.shadowWater.visible=!low;this.addSigns();this.atmosphere=new CityAtmosphere(this.track);this.atmosphere.setLow(low);this.root.add(this.atmosphere.root);if(this.sun)this.sun.shadow.needsUpdate=true;this.ready(true);
+   this.releaseSigns();this.atmosphere?.dispose();this.root.clear();this.root.add(group,this.contacts.mesh,this.density.root);this.contacts.mesh.visible=!low;this.loaded=true;this.error='';this.shadowWater.visible=!low;this.addSigns();this.atmosphere=new CityAtmosphere(this.track);this.atmosphere.setLow(low);this.root.add(this.atmosphere.root);cacheStaticTransforms(this.root);if(this.sun)this.sun.shadow.needsUpdate=true;this.ready(true);
   }catch(e){if(request!==this.generation||this.disposed)return;this.error=String(e);this.cache.delete(low);console.error('City sample GLB failed; retaining existing district',e);if(!this.loaded)this.ready(false);}
  }
  update(time:number,camera?:THREE.Camera){

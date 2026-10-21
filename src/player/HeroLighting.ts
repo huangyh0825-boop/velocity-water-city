@@ -18,7 +18,8 @@ export class HeroLighting {
  private root?:THREE.Object3D;private revision?:number;
  private casters:{mesh:THREE.Mesh;material:THREE.Material|THREE.Material[]}[]=[];
  private surfaces=new Set<THREE.MeshStandardMaterial>();private center=new THREE.Vector3();
- constructor(private layer=2){
+ constructor(private layer=2,size=2048){
+  this.target.setSize(size,size);
   sparseSkinning(this.depth);
   // Only depthTexture is sampled; the colour attachment is never consumed.
   this.depth.colorWrite=false;
@@ -55,7 +56,7 @@ export class HeroLighting {
      vec3 lightDirection=normalize((viewMatrix*vec4(-.636,.677,.369,0.)).xyz);
      float bias=.00035+.001*(1.-abs(dot(surfaceNormal,lightDirection))),sum=0.;
      for(int x=-1;x<=1;x++)for(int y=-1;y<=1;y++){
-      float d=texture2D(heroDepth,p.xy+vec2(float(x),float(y))/2048.).x;
+      float d=texture2D(heroDepth,p.xy+vec2(float(x),float(y))/${this.target.width}.).x;
       sum+=step(p.z-bias,d);
      }
      return .12+.88*sum/9.;

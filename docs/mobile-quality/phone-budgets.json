@@ -1,0 +1,56 @@
+{
+  "method": "Same Edge GPU, touch browser emulation 844x390 DPR3, five identical boats. Rendering workload and visual-budget checks only; no real-phone FPS claim.",
+  "results": [
+    {
+      "label": "previous-low",
+      "pixelRatio": 1,
+      "drawingSize": [
+        844,
+        390
+      ],
+      "waterSegments": 64,
+      "reflection": 0,
+      "reflectionSize": 1024,
+      "shadows": false,
+      "shadowSize": 2048,
+      "asset": "watercraft-low",
+      "triangles": 6500306,
+      "calls": 425,
+      "errors": []
+    },
+    {
+      "label": "previous-standard",
+      "pixelRatio": 1.75,
+      "drawingSize": [
+        1477,
+        682
+      ],
+      "waterSegments": 320,
+      "reflection": 1,
+      "reflectionSize": 1024,
+      "shadows": true,
+      "shadowSize": 2048,
+      "asset": "watercraft",
+      "triangles": 68212993,
+      "calls": 737,
+      "errors": []
+    },
+    {
+      "label": "phone-standard",
+      "pixelRatio": 1,
+      "drawingSize": [
+        844,
+        390
+      ],
+      "waterSegments": 160,
+      "reflection": 1,
+      "reflectionSize": 512,
+      "shadows": true,
+      "shadowSize": 1024,
+      "asset": "watercraft-mobile",
+      "triangles": 16755304,
+      "calls": 737,
+      "errors": []
+    }
+  ]
+}

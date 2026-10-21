@@ -9,6 +9,7 @@ const byAge=(a:WakeStamp,b:WakeStamp)=>a.age-b.age;
 export class Water {
  readonly mesh:ReflectiveWater;
  private standard=waterGrid(320);
+ private balanced?:THREE.PlaneGeometry;
  private lightweight=waterGrid(64);
  private normals=waterNormalTexture();
  private material:THREE.ShaderMaterial;
@@ -137,5 +138,10 @@ export class Water {
   this.material.uniforms.wakeCount.value=count;
  }
  setLow(low:boolean){this.low=low;this.mesh.geometry=low?this.lightweight:this.standard;this.material.uniforms.detail.value=low?0:1;this.material.uniforms.reflectionEnabled.value=low?0:1;}
- dispose(){this.standard.dispose();this.lightweight.dispose();this.normals.dispose();(this.material.uniforms.mirrorSampler.value as THREE.Texture).renderTarget?.dispose();this.channelMaterial.dispose();this.material.dispose();}
+ setBudget(segments:number,reflectionSize:number){
+  if(segments===160)this.balanced??=waterGrid(160);
+  this.mesh.geometry=segments===64?this.lightweight:segments===160?this.balanced!:this.standard;
+  (this.material.uniforms.mirrorSampler.value as THREE.Texture).renderTarget?.setSize(reflectionSize,reflectionSize);
+ }
+ dispose(){this.standard.dispose();this.balanced?.dispose();this.lightweight.dispose();this.normals.dispose();(this.material.uniforms.mirrorSampler.value as THREE.Texture).renderTarget?.dispose();this.channelMaterial.dispose();this.material.dispose();}
 }

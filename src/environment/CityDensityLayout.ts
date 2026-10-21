@@ -87,10 +87,10 @@ export function citySites(track:CityTrack):CitySite[]{
 }
 /** PC keeps full authored facades three times farther away. One tier at a time:
  * hysteresis avoids toggling; no alpha overlap, temporal trails or hidden buildings. */
-export const CITY_DETAIL_RANGE={standard:{near:375,far:800,slack:35},low:{near:70,far:210,slack:10}} as const;
-export function cityLOD(layer:CityLayer,distance:number,previous:number,low:boolean){
+export const CITY_DETAIL_RANGE={standard:{near:375,far:800,slack:35},balanced:{near:180,far:450,slack:20},low:{near:70,far:210,slack:10}} as const;
+export function cityLOD(layer:CityLayer,distance:number,previous:number,low:boolean,balanced=false){
  if(low&&layer==='skyline')return 2;
- const {near,far,slack}=low?CITY_DETAIL_RANGE.low:CITY_DETAIL_RANGE.standard;
+ const {near,far,slack}=low?CITY_DETAIL_RANGE.low:balanced?CITY_DETAIL_RANGE.balanced:CITY_DETAIL_RANGE.standard;
  if(previous===0&&distance<near+slack)return 0;
  if(previous===2&&distance>far-slack)return 2;
  return distance<near-slack?0:distance>far+slack?2:1;

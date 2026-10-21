@@ -5,6 +5,11 @@
  .touch.mobile-actions{right:max(20px,env(safe-area-inset-right));width:178px;height:158px;display:block}
  .touch.mobile-steering button,.touch.mobile-actions button{width:72px;height:72px;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:12px;background:#0a2c3ee8;backdrop-filter:none;box-shadow:0 3px 12px #00142122}
  .touch.mobile-steering svg,.touch.mobile-actions svg{width:30px;height:30px;flex:none;pointer-events:none}
+ .touch.mobile-steering svg{width:42px;height:42px;overflow:visible;transition:transform .1s ease-out;color:#b5fff2}
+ .touch.mobile-steering .turn-arrow{fill:currentColor;stroke:#e3fff9;stroke-width:1;filter:drop-shadow(0 2px 3px #45d7c555)}
+ .touch.mobile-steering .turn-trail{stroke-width:1.5;opacity:.32}
+ .touch.mobile-steering [aria-pressed="true"] svg{transform:translateX(-3px) scale(1.08)}
+ .touch.mobile-steering [data-action="right"][aria-pressed="true"] svg{transform:translateX(3px) scale(1.08)}
  .touch.mobile-steering span,.touch.mobile-actions span,.touch.mobile-actions small{pointer-events:none}
  .touch.mobile-steering button:active,.touch.mobile-actions button:active,.touch button[aria-pressed="true"]{background:#256d7d;border-color:#c4fff3}
  .touch.mobile-steering button:disabled,.touch.mobile-actions button:disabled{opacity:.42}

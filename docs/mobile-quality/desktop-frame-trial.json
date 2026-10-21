@@ -1,0 +1,222 @@
+{
+  "method": "Same Edge process, before/after/after/before. Desktop 1600x1000 DPR1 standard. Actual Game.frame, five racers, same replays; 60 warmup +180 measured RAF steps per scene. All original desktop visual budgets retained. Desktop GPU and browser results do not establish real phone FPS.",
+  "results": [
+    {
+      "pass": 1,
+      "label": "before",
+      "scenario": "city-five",
+      "fps": 17.017959175914267,
+      "cpuMs": 28.803910614496004,
+      "p95Ms": 98.90000000037253,
+      "calls": 827.391061452514,
+      "triangles": 82086912.55865921,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "reflectionSize": 1024,
+      "racerShadowSize": 2048,
+      "cityShadowSize": 2048,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": -220.91665938126965,
+        "z": 70.46208638651325
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 1,
+      "label": "before",
+      "scenario": "harbor-five",
+      "fps": 17.206409627899994,
+      "cpuMs": 40.25754189942885,
+      "p95Ms": 179.60000000149012,
+      "calls": 907.7150837988827,
+      "triangles": 82365240.4301676,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "reflectionSize": 1024,
+      "racerShadowSize": 2048,
+      "cityShadowSize": 2048,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": 615.5572945826634,
+        "z": -525.2338356494093
+      },
+      "passed": [
+        15,
+        15,
+        15,
+        15,
+        15
+      ]
+    },
+    {
+      "pass": 1,
+      "label": "after",
+      "scenario": "city-five",
+      "fps": 24.31107308262182,
+      "cpuMs": 27.95027932957564,
+      "p95Ms": 95.59999999962747,
+      "calls": 827.391061452514,
+      "triangles": 82086912.55865921,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "reflectionSize": 1024,
+      "racerShadowSize": 2048,
+      "cityShadowSize": 2048,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": -220.91665938126965,
+        "z": 70.46208638651325
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 1,
+      "label": "after",
+      "scenario": "harbor-five",
+      "fps": 12.498516237596517,
+      "cpuMs": 26.993296089400044,
+      "p95Ms": 105.40000000037253,
+      "calls": 907.7150837988827,
+      "triangles": 82365240.4301676,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "reflectionSize": 1024,
+      "racerShadowSize": 2048,
+      "cityShadowSize": 2048,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": 615.5572945826634,
+        "z": -525.2338356494093
+      },
+      "passed": [
+        15,
+        15,
+        15,
+        15,
+        15
+      ]
+    },
+    {
+      "pass": 2,
+      "label": "after",
+      "scenario": "city-five",
+      "fps": 5.889320260577746,
+      "cpuMs": 28.85418994413616,
+      "p95Ms": 216.30000000074506,
+      "calls": 826.391061452514,
+      "triangles": 82017135.8547486,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "reflectionSize": 1024,
+      "racerShadowSize": 2048,
+      "cityShadowSize": 2048,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": -220.91665938126965,
+        "z": 70.46208638651325
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 2,
+      "label": "after",
+      "scenario": "harbor-five",
+      "fps": 11.790821602893901,
+      "cpuMs": 32.848044692731186,
+      "p95Ms": 149.5,
+      "calls": 906.7709497206704,
+      "triangles": 82396808.41340782,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "reflectionSize": 1024,
+      "racerShadowSize": 2048,
+      "cityShadowSize": 2048,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": 615.5572945826634,
+        "z": -525.2338356494093
+      },
+      "passed": [
+        15,
+        15,
+        15,
+        15,
+        15
+      ]
+    },
+    {
+      "pass": 2,
+      "label": "before",
+      "scenario": "city-five",
+      "fps": 11.733780833950899,
+      "cpuMs": 28.73631284908293,
+      "p95Ms": 128.30000000074506,
+      "calls": 826.391061452514,
+      "triangles": 82017135.8547486,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "reflectionSize": 1024,
+      "racerShadowSize": 2048,
+      "cityShadowSize": 2048,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": -220.91665938126965,
+        "z": 70.46208638651325
+      },
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "pass": 2,
+      "label": "before",
+      "scenario": "harbor-five",
+      "fps": 24.75042172505909,
+      "cpuMs": 27.6296089385017,
+      "p95Ms": 90.59999999962747,
+      "calls": 906.7709497206704,
+      "triangles": 82396808.41340782,
+      "pixelRatio": 1,
+      "waterSegments": 320,
+      "reflectionSize": 1024,
+      "racerShadowSize": 2048,
+      "cityShadowSize": 2048,
+      "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "end": {
+        "x": 615.5572945826634,
+        "z": -525.2338356494093
+      },
+      "passed": [
+        15,
+        15,
+        15,
+        15,
+        15
+      ]
+    }
+  ],
+  "errors": []
+}
