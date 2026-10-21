@@ -23,7 +23,12 @@ export class RoomRace {
   this.rules=new RaceController(course(),this.view.participants.map(p=>({id:p.id,name:p.name,position:this.players.get(p.id)!.model,maxSpeed:MAX_SPEED*NITRO_TUNING.multiplier+5})),roster[0].id,{laps,bestKey:'online-server'});
  }
  get active(){return !['finished','aborted'].includes(this.view.phase);}
- resume(id:string,now:number){this.connected(id,true,now);const p=this.players.get(id);if(p){p.lastSeq=-1;p.correction++;p.pending=undefined;}}
+ resume(id:string,now:number){
+  // A replacement socket can arrive before the old close event (reload/proxy loss).
+  // Its new game must report ready again even if the old connection was loaded.
+  if(['loading','countdown'].includes(this.view.phase))this.connected(id,false,now);
+  this.connected(id,true,now);const p=this.players.get(id);if(p){p.lastSeq=-1;p.correction++;p.pending=undefined;}
+ }
  private participant(id:string){const p=this.view.participants.find(p=>p.id===id);if(!p)throw new LobbyFault(403,'你不在这场比赛中');return p;}
  loaded(id:string,now:number){const p=this.participant(id);if(!this.active||p.dnf)throw new LobbyFault(409,'这场比赛已结束');p.loaded=true;this.barrier(now);}
  connected(id:string,connected:boolean,now:number){
