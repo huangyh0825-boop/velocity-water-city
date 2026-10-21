@@ -1,4 +1,4 @@
-import {isLobbySnapshot,LOBBY_PROTOCOL,MAX_MESSAGE_BYTES,roomCode,type LobbyCommand,type LobbyEvent} from './protocol';
+import {isLobbySnapshot,LobbyFault,LOBBY_PROTOCOL,MAX_MESSAGE_BYTES,roomCode,type LobbyCommand,type LobbyEvent} from './protocol';
 import type {LobbyConnection,LobbyIdentity} from './types';
 
 type Pending={resolve:()=>void;reject:(e:Error)=>void;timer:ReturnType<typeof setTimeout>};
@@ -39,8 +39,8 @@ export class WebSocketLobbyClient {
     else if(data.type==='ack')this.complete(data.id);
     else if(data.type==='error') {
      if(typeof data.message!=='string'||typeof data.code!=='number'){ws.close(1002,'invalid error');return;}
-     if(!welcomed){clearTimeout(timeout);reject(Error(data.message));}
-     if(data.id)this.complete(data.id,Error(data.message));
+     if(!welcomed){clearTimeout(timeout);reject(new LobbyFault(data.code,data.message));}
+     if(data.id)this.complete(data.id,new LobbyFault(data.code,data.message));
     }
    };
    ws.onerror=()=>{if(!welcomed){clearTimeout(timeout);reject(Error('无法建立大厅连接，请稍后重试'));}};

@@ -1,0 +1,20 @@
+{
+  "url": "https://huangyh0825-boop.github.io/velocity-water-city/",
+  "localPreview": true,
+  "backend": "https://velocity-water-city-lobby-test.onrender.com/api/lobby",
+  "checks": {
+    "cancelStalledWake": true,
+    "wake503HtmlAndHealthBeyondSixSeconds": true,
+    "sameRoomAndReady": true,
+    "offlineReconnect": true,
+    "mobileAndSameRoom": true,
+    "leaveAndHostMigration": true,
+    "renderHttpAndWss": true,
+    "no3DAssetsLoaded": true
+  },
+  "firstJoinMs": 13572,
+  "healthRequests": 6,
+  "sockets": 4,
+  "errors": [],
+  "mainlandTesting": "Use user device; this browser test does not identify VPN/region"
+}

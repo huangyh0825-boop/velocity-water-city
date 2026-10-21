@@ -1,5 +1,7 @@
 # Render Free 新加坡大厅测试
 
+> 本文记录独立测试阶段。后续正式 GitHub 页面接入与最新验收见 [`../render-production/README.md`](../render-production/README.md)；下文“暂不切换”是当时的阶段边界。
+
 本阶段使用独立分支 `test/render-singapore-lobby`。正式 GitHub Pages 及仓库变量 `VITE_LOBBY_URL` 继续连接 Cloudflare。没有修改游戏渲染、模型、物理、赛道、AI 或单人流程。
 
 实际测试页：**https://velocity-water-city-lobby-test.onrender.com/** 。健康接口：`https://velocity-water-city-lobby-test.onrender.com/api/lobby/health`。WebSocket：`wss://velocity-water-city-lobby-test.onrender.com/api/lobby/rooms/四位房号/socket`。
