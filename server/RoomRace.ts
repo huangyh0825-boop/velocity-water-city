@@ -9,7 +9,7 @@ import {LobbyFault} from '../src/lobby/protocol';
 import {isOnlinePose,type OnlineFrame,type OnlinePose,type OnlineRace} from '../src/lobby/racing';
 let track:CityTrack|undefined;
 const course=()=>track??=new CityTrack();
-type Player={model:DrivingModel;pose:OnlinePose;pending?:OnlinePose;lastSeq:number;lastT:number;appliedT:number;correction:number};
+type Player={model:DrivingModel;pose:OnlinePose;pending?:OnlinePose;lastSeq:number;lastT:number;appliedT:number;correction:number;correctionKind:'collision'|'reset'};
 export class RoomRace {
  readonly view:OnlineRace;
  readonly players=new Map<string,Player>();
@@ -19,7 +19,7 @@ export class RoomRace {
  constructor(roster:{id:string;playerId:string}[],now:number,readonly laps=3){
   this.createdAt=this.lastTick=now;
   this.view={id:randomBytes(12).toString('hex'),phase:'loading',laps,participants:roster.map((p,slot)=>({id:p.id,name:p.playerId,slot,loaded:false,connected:true,dnf:false})),countdownAt:null,startAt:null,message:'等待所有玩家加载赛道'};
-  for(const p of this.view.participants){const model=new DrivingModel();onlineSpawn(course(),model,p.slot);this.players.set(p.id,{model,pose:{seq:0,t:0,x:model.x,z:model.z,y:model.y,heading:model.heading,speed:0,vx:0,vz:0,airborne:false,nitro:false,pitch:0,spin:0,correction:0},lastSeq:-1,lastT:0,appliedT:0,correction:0});}
+  for(const p of this.view.participants){const model=new DrivingModel();onlineSpawn(course(),model,p.slot);this.players.set(p.id,{model,pose:{seq:0,t:0,x:model.x,z:model.z,y:model.y,heading:model.heading,speed:0,vx:0,vz:0,airborne:false,nitro:false,pitch:0,spin:0,correction:0},lastSeq:-1,lastT:0,appliedT:0,correction:0,correctionKind:'reset'});}
   this.rules=new RaceController(course(),this.view.participants.map(p=>({id:p.id,name:p.name,position:this.players.get(p.id)!.model,maxSpeed:MAX_SPEED*NITRO_TUNING.multiplier+5})),roster[0].id,{laps,bestKey:'online-server'});
  }
  get active(){return !['finished','aborted'].includes(this.view.phase);}
@@ -27,7 +27,7 @@ export class RoomRace {
   // A replacement socket can arrive before the old close event (reload/proxy loss).
   // Its new game must report ready again even if the old connection was loaded.
   if(['loading','countdown'].includes(this.view.phase))this.connected(id,false,now);
-  this.connected(id,true,now);const p=this.players.get(id);if(p){p.lastSeq=-1;p.correction++;p.pending=undefined;}
+  this.connected(id,true,now);const p=this.players.get(id);if(p){p.lastSeq=-1;p.correction++;p.correctionKind='reset';p.pending=undefined;}
  }
  private participant(id:string){const p=this.view.participants.find(p=>p.id===id);if(!p)throw new LobbyFault(403,'你不在这场比赛中');return p;}
  loaded(id:string,now:number){const p=this.participant(id);if(!this.active||p.dnf)throw new LobbyFault(409,'这场比赛已结束');p.loaded=true;this.barrier(now);}
@@ -53,14 +53,14 @@ export class RoomRace {
   p.lastSeq=value.seq;
   if(value.correction!==p.correction)return;
   const dt=Math.min(1,Math.max(.001,value.t-p.appliedT));
-  if(Math.hypot(value.x-p.model.x,value.z-p.model.z)>(MAX_SPEED*NITRO_TUNING.multiplier+5)*dt+2){p.correction++;return;}
+  if(Math.hypot(value.x-p.model.x,value.z-p.model.z)>(MAX_SPEED*NITRO_TUNING.multiplier+5)*dt+2){p.correction++;p.correctionKind='reset';return;}
   p.lastT=value.t;p.pending={...value};
  }
  recover(id:string,now:number){
   this.tickPhase(now);if(this.view.phase!=='racing')throw new LobbyFault(409,'比赛尚未开始');
   const p=this.players.get(id);if(!p||this.participant(id).dnf)throw new LobbyFault(403,'无法返回赛道');const racer=this.rules.racers.find(r=>r.id===id)!;
   course().spawn(p.model,racer.passed===0?-.014:course().checkpointAngle(racer.passed%course().checkpointCount)+10/course().radius);
-  p.pending=undefined;p.correction++;p.pose={...p.pose,x:p.model.x,z:p.model.z,y:p.model.y,speed:0,vx:0,vz:0,heading:p.model.heading,airborne:false,pitch:0,spin:0};
+  p.pending=undefined;p.correction++;p.correctionKind='reset';p.pose={...p.pose,x:p.model.x,z:p.model.z,y:p.model.y,speed:0,vx:0,vz:0,heading:p.model.heading,airborne:false,pitch:0,spin:0};
   this.rules.syncPosition(id,p.model);
  }
  private tickPhase(now:number){
@@ -77,7 +77,7 @@ export class RoomRace {
   for(const [id,p]of this.players)if(p.pending){const body=bodies.find(b=>b.id===id);if(body){Object.assign(p.model,p.pending);p.pose=p.pending;body.height=p.pose.y;}p.pending=undefined;}
   this.collisions.resolve(bodies,dt,m=>{course().constrain(m);});
   for(const member of this.view.participants){const p=this.players.get(member.id)!;
-   if(this.collisions.hasContact(member.id)){p.correction++;p.pose={...p.pose,x:p.model.x,z:p.model.z,y:p.model.y,heading:p.model.heading,speed:p.model.speed,vx:p.model.vx,vz:p.model.vz};}
+   if(this.collisions.hasContact(member.id)){const resetPending=p.correctionKind==='reset'&&p.pose.correction!==p.correction;p.correction++;if(!resetPending)p.correctionKind='collision';p.pose={...p.pose,x:p.model.x,z:p.model.z,y:p.model.y,heading:p.model.heading,speed:p.model.speed,vx:p.model.vx,vz:p.model.vz};}
    const motionDt=p.pose.t-p.appliedT;if(motionDt>0&&!member.dnf){this.rules.record(member.id,p.model,Math.min(1,motionDt),this.collisions.movementAllowance(member.id));p.appliedT=p.pose.t;}
    if(this.rules.racers.find(r=>r.id===member.id)!.finishTime!==null){p.model.speed=p.model.vx=p.model.vz=0;p.pose={...p.pose,speed:0,vx:0,vz:0,nitro:false};}
   }
@@ -87,6 +87,6 @@ export class RoomRace {
  frame(now:number):OnlineFrame {return{raceId:this.view.id,serverNow:now,phase:this.view.phase,states:this.view.participants.map(member=>{
   const p=this.players.get(member.id)!,r=this.rules.racers.find(r=>r.id===member.id)!;
   const round=(v:number)=>Math.round(v*1000)/1000;
-  return{...p.pose,x:round(p.model.x),z:round(p.model.z),y:round(p.model.y),heading:round(p.model.heading),speed:round(p.model.speed),vx:round(p.model.vx),vz:round(p.model.vz),correction:p.correction,id:member.id,passed:r.passed,progress:round(r.progress),finishTime:r.finishTime,dnf:member.dnf};
+  return{...p.pose,x:round(p.model.x),z:round(p.model.z),y:round(p.model.y),heading:round(p.model.heading),speed:round(p.model.speed),vx:round(p.model.vx),vz:round(p.model.vz),correction:p.correction,correctionKind:p.correctionKind,id:member.id,passed:r.passed,progress:round(r.progress),finishTime:r.finishTime,dnf:member.dnf};
  })};}
 }

@@ -1,0 +1,16 @@
+{
+  "before": {
+    "maxCorrection": 1.7311536864436858,
+    "maxOverlap": 1.4570860829624706,
+    "correctionCount": 131,
+    "totalCorrection": 24.44579087710821
+  },
+  "observationSeconds": 15,
+  "rttMs": 200,
+  "after": {
+    "maxCorrection": 0,
+    "maxOverlap": 0.03926022144296493,
+    "correctionCount": 0,
+    "totalCorrection": 0
+  }
+}

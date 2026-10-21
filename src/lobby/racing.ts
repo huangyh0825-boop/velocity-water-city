@@ -1,4 +1,5 @@
-export const RACE_FEATURE='race-v1';
+// Keep old cached clients out of matches that require collision prediction/colors.
+export const RACE_FEATURE='race-v2';
 export type OnlinePhase='loading'|'countdown'|'racing'|'finished'|'aborted';
 export interface OnlineParticipant {id:string;name:string;slot:number;loaded:boolean;connected:boolean;dnf:boolean}
 export interface OnlineRace {
@@ -9,7 +10,7 @@ export interface OnlinePose {
  seq:number;t:number;x:number;z:number;y:number;heading:number;speed:number;vx:number;vz:number;
  airborne:boolean;nitro:boolean;pitch:number;spin:number;correction:number;
 }
-export interface OnlineRacerState extends OnlinePose {id:string;passed:number;progress:number;finishTime:number|null;dnf:boolean}
+export interface OnlineRacerState extends OnlinePose {id:string;passed:number;progress:number;finishTime:number|null;dnf:boolean;correctionKind?:'collision'|'reset'}
 export interface OnlineFrame {raceId:string;serverNow:number;phase:OnlinePhase;states:OnlineRacerState[]}
 const phases=['loading','countdown','racing','finished','aborted'];
 export function isOnlineRace(value:unknown):value is OnlineRace {
@@ -25,5 +26,5 @@ export function isOnlinePose(value:unknown):value is OnlinePose {
 }
 export function isOnlineFrame(value:unknown):value is OnlineFrame {
  const f=value as OnlineFrame;return !!f&&typeof f.raceId==='string'&&/^[a-f0-9]{24}$/.test(f.raceId)&&Number.isFinite(f.serverNow)&&phases.includes(f.phase)&&Array.isArray(f.states)&&f.states.length>=2&&f.states.length<=5
-  &&f.states.every(s=>isOnlinePose(s)&&/^[a-f0-9]{24}$/.test(s.id)&&Number.isSafeInteger(s.passed)&&s.passed>=0&&Number.isFinite(s.progress)&&(s.finishTime===null||(Number.isFinite(s.finishTime)&&s.finishTime>=0))&&typeof s.dnf==='boolean');
+  &&f.states.every(s=>isOnlinePose(s)&&/^[a-f0-9]{24}$/.test(s.id)&&Number.isSafeInteger(s.passed)&&s.passed>=0&&Number.isFinite(s.progress)&&(s.finishTime===null||(Number.isFinite(s.finishTime)&&s.finishTime>=0))&&typeof s.dnf==='boolean'&&(s.correctionKind===undefined||s.correctionKind==='collision'||s.correctionKind==='reset'));
 }

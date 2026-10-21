@@ -1,0 +1,78 @@
+{
+  "delayMsEachWay": 100,
+  "checks": {
+    "sameRealGLBPaintInBothViewpoints": true,
+    "sustainedRealContactWithoutPullback": true
+  },
+  "errors": [],
+  "colors": [
+    [
+      {
+        "id": "4e854efd8c4f6e4595d0cacb",
+        "colors": [
+          "#126bba"
+        ]
+      },
+      {
+        "id": "d1ed4d2e949716205c6b56ae",
+        "colors": [
+          "#f6cc61"
+        ]
+      }
+    ],
+    [
+      {
+        "id": "d1ed4d2e949716205c6b56ae",
+        "colors": [
+          "#f6cc61"
+        ]
+      },
+      {
+        "id": "4e854efd8c4f6e4595d0cacb",
+        "colors": [
+          "#126bba"
+        ]
+      }
+    ]
+  ],
+  "views": [
+    {
+      "samples": 158,
+      "contactSteps": 24,
+      "maxPhysicalStep": 0.6470227532939351,
+      "quality": "standard",
+      "waterVertices": 103041,
+      "phase": "racing",
+      "player": {
+        "x": -186.59360408556134,
+        "z": -330.04821970889975,
+        "speed": 0
+      },
+      "input": {
+        "throttle": 0,
+        "brake": 0,
+        "steer": 0
+      },
+      "remoteBodies": 1
+    },
+    {
+      "samples": 147,
+      "contactSteps": 48,
+      "maxPhysicalStep": 0.08457715779450937,
+      "quality": "standard",
+      "waterVertices": 103041,
+      "phase": "racing",
+      "player": {
+        "x": -187.74452775857526,
+        "z": -333.9339315358821,
+        "speed": 7.002888267514645
+      },
+      "input": {
+        "throttle": 0,
+        "brake": 0,
+        "steer": 0
+      },
+      "remoteBodies": 1
+    }
+  ]
+}

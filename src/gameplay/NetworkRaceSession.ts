@@ -5,7 +5,9 @@ import {onlineSpawn} from './OnlineSpawn';
 import type {PlayerCommand} from './PlayerCommand';
 import type {RaceSession,SessionStep} from './RaceSession';
 import type {LobbyClient} from '../lobby/LobbyClient';
-import type {OnlineRace,OnlineFrame,OnlineRacerState} from '../lobby/racing';
+import type {OnlineRace,OnlineFrame,OnlineRacerState,OnlinePose} from '../lobby/racing';
+import {DrivingModel} from '../player/DrivingModel';
+import type {BoatBody} from '../physics/BoatCollisions';
 import type {TrainingRun} from '../modes/TrainingOptions';
 
 export interface OnlineGameOptions {lobby:LobbyClient;race:OnlineRace;memberId:string}
@@ -18,13 +20,19 @@ export class NetworkRaceSession implements RaceSession {
  private sequence=0;private correction=-1;private sendTime=0;private frame?:OnlineFrame;
  private ready=false;private loading=false;private previousPhase='countdown';private changed=false;private recoverPending=false;
  private targets=new Map<string,OnlineRacerState>();
+ private remoteBodies:BoatBody[];
+ private sent=new Map<number,OnlinePose>();private reconciled?:OnlineRacerState;
+ private offset={x:0,z:0};
  message='等待所有玩家加载赛道';
  get race(){return this.local.race;}
  constructor(readonly state:LocalRaceState,readonly peers:AIController[],readonly online:OnlineGameOptions){
+  this.remoteBodies=peers.map(p=>({id:p.id,model:new DrivingModel(),height:0}));
+  state.remoteBodies=this.remoteBodies;state.advancePeers=dt=>{for(const body of this.remoteBodies)if(!body.fixed){body.model.x+=body.model.vx*dt;body.model.z+=body.model.vz*dt;}};
   this.local=new LocalRaceSession(state,{laps:online.race.laps,difficulty:'hard'},'你',true);
   this.restart();this.unsubscribe=online.lobby.subscribe(()=>this.receive());this.receive();
  }
  restart(){
+  this.sent.clear();this.reconciled=undefined;this.offset.x=this.offset.z=0;
   this.local.restart();const {race,memberId}=this.online;
   onlineSpawn(this.state.track,this.state.player,race.participants.find(p=>p.id===memberId)!.slot);
   this.state.ramps.place(this.state.player,this.state.flight);
@@ -50,17 +58,30 @@ export class NetworkRaceSession implements RaceSession {
    this.targets.set(pose.id,pose);
    if(pose.id===this.online.memberId){
     if(this.correction!==pose.correction){
-     const {player,flight,tricks,nitro}=this.state;Object.assign(player,{x:pose.x,z:pose.z,y:pose.y,heading:pose.heading,speed:pose.speed,vx:pose.vx,vz:pose.vz});
-     // Server corrections retain current vertical momentum during a jump.
-     if(!pose.airborne){flight.reset();flight.managedSurface=this.state.track.vertical;flight.surface(pose.y);flight.previousHeight=pose.y;tricks.reset();}
-     else {flight.height=flight.previousHeight=pose.y;flight.airborne=true;flight.state='air';}
-     nitro.active=pose.nitro;this.correction=pose.correction;this.changed=true;
+     const {player,flight,tricks,nitro}=this.state;
+     const reference=this.reconciled?.seq===pose.seq?this.reconciled:this.sent.get(pose.seq);
+     if(pose.correctionKind==='collision'&&reference&&this.correction>=0){
+      // Rebase the collision at its acknowledged sample. Keep all movement and
+      // steering since that sample instead of replaying an old network pose.
+      const dx=pose.x-reference.x,dz=pose.z-reference.z;
+      player.x+=dx;player.z+=dz;player.vx+=pose.vx-reference.vx;player.vz+=pose.vz-reference.vz;
+      player.speed=Math.max(0,Math.min(120,player.speed+pose.speed-reference.speed));
+      this.offset.x-=dx;this.offset.z-=dz;
+     }else{
+      Object.assign(player,{x:pose.x,z:pose.z,y:pose.y,heading:pose.heading,speed:pose.speed,vx:pose.vx,vz:pose.vz});
+      if(!pose.airborne){flight.reset();flight.managedSurface=this.state.track.vertical;flight.surface(pose.y);flight.previousHeight=pose.y;tricks.reset();}
+      else {flight.height=flight.previousHeight=pose.y;flight.airborne=true;flight.state='air';}
+      nitro.active=pose.nitro;this.offset.x=this.offset.z=0;this.changed=true;this.sent.clear();
+     }
+     this.correction=pose.correction;this.reconciled=pose;this.changed=true;
     }
     racer.position={x:this.state.player.x,z:this.state.player.z};
    }else racer.position={x:pose.x,z:pose.z};
   }
  }
  consumeCorrection(){const changed=this.changed;this.changed=false;return changed;}
+ /** Only affects the displayed pose, including the chase camera; never physics. */
+ applyVisualOffset(model:DrivingModel){model.x+=this.offset.x;model.z+=this.offset.z;}
  rotation(id:string){const p=this.targets.get(id);return p?{pitch:p.pitch,yaw:p.spin}:{pitch:0,yaw:0};}
  recover(){if(this.race.phase!=='racing'||this.recoverPending)return false;this.recoverPending=true;void this.online.lobby.raceCommand('race.recover',this.online.race.id).catch(e=>{this.message=e.message;}).finally(()=>{this.recoverPending=false;});return true;}
  step(dt:number,input:PlayerCommand):SessionStep {
@@ -77,19 +98,29 @@ export class NetworkRaceSession implements RaceSession {
   if(own?.dnf){r.phase='countdown';this.message='你已退出本场比赛，请返回首页';}
   r.countdown=view?.startAt?Math.max(0,Math.min(5,(view.startAt-now)/1000)):5;
   r.elapsed=view?.startAt?Math.max(0,(now-view.startAt)/1000):0;
+  const decay=Math.exp(-dt*20);this.offset.x*=decay;this.offset.z*=decay;
+  for(const body of this.remoteBodies){
+   const p=this.targets.get(body.id),member=view?.participants.find(p=>p.id===body.id);
+   if(!p||!member?.connected||p.dnf){body.fixed=true;body.model.x=body.model.z=100000;body.model.vx=body.model.vz=0;continue;}
+   const age=Math.max(0,Math.min(.5,r.elapsed-p.t-dt)),m=body.model;
+   body.fixed=p.finishTime!==null;body.height=p.y;
+   Object.assign(m,{x:p.x+p.vx*age,z:p.z+p.vz*age,y:p.y,heading:p.heading,speed:p.speed,vx:p.vx,vz:p.vz,worldLimit:this.state.player.worldLimit,route:undefined});
+  }
   const previous=this.previousPhase;this.previousPhase=r.phase;
   const result=this.local.step(dt,r.phase==='racing'?input:IDLE_COMMAND);
   result.started=previous==='countdown'&&r.phase==='racing';result.finished=previous!=='finished'&&r.phase==='finished';
   for(const peer of this.peers){const p=this.targets.get(peer.id);if(!p)continue;
-   const m=peer.model,f=peer.flight,a=1-Math.exp(-dt*14),distance=Math.hypot(m.x-p.x,m.z-p.z);
+   const m=peer.model,f=peer.flight,a=1-Math.exp(-dt*14),age=Math.max(0,Math.min(.5,r.elapsed-p.t)),x=p.x+p.vx*age,z=p.z+p.vz*age,distance=Math.hypot(m.x-x,m.z-z);
    f.previousHeight=f.height;f.takeoff=!f.airborne&&p.airborne;f.landed=f.airborne&&!p.airborne;f.airborne=p.airborne;f.state=p.airborne?'air':'water';
-   m.x=distance>35?p.x:m.x+(p.x-m.x)*a;m.z=distance>35?p.z:m.z+(p.z-m.z)*a;m.heading+=Math.atan2(Math.sin(p.heading-m.heading),Math.cos(p.heading-m.heading))*a;
+   m.x=distance>35?x:m.x+(x-m.x)*a;m.z=distance>35?z:m.z+(z-m.z)*a;m.heading+=Math.atan2(Math.sin(p.heading-m.heading),Math.cos(p.heading-m.heading))*a;
    m.speed=p.speed;m.vx=p.vx;m.vz=p.vz;m.y=f.height=f.height+(p.y-f.height)*a;peer.nitro.active=p.nitro;
   }
   this.sendTime+=dt;
   if(r.phase==='racing'&&this.sendTime>=.1&&connected&&this.correction>=0){
    this.sendTime%=.1;const s=this.state,m=s.player,rotation=s.tricks.rotation;
-   lobby.sendRaceState(this.online.race.id,{seq:++this.sequence,t:r.elapsed,x:m.x,z:m.z,y:s.flight.height,heading:m.heading,speed:m.speed,vx:m.vx,vz:m.vz,airborne:s.flight.airborne,nitro:s.nitro.active,pitch:rotation.pitch,spin:rotation.yaw,correction:this.correction});
+   const pose={seq:++this.sequence,t:r.elapsed,x:m.x,z:m.z,y:s.flight.height,heading:m.heading,speed:m.speed,vx:m.vx,vz:m.vz,airborne:s.flight.airborne,nitro:s.nitro.active,pitch:rotation.pitch,spin:rotation.yaw,correction:this.correction};
+   this.sent.set(pose.seq,pose);if(this.sent.size>96)this.sent.delete(this.sent.keys().next().value!);
+   lobby.sendRaceState(this.online.race.id,pose);
   }
   if(r.phase==='finished'){this.state.player.speed=this.state.player.vx=this.state.player.vz=0;this.state.nitro.active=false;}
   return result;

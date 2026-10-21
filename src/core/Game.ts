@@ -12,6 +12,7 @@ import { TrackView } from '../track/TrackView';
 import {createCityOpponents} from '../ai/CityOpponents';
 import type{AIController}from'../ai/AIController';
 import{NetworkRaceSession,onlinePeers,type OnlineGameOptions}from'../gameplay/NetworkRaceSession';
+import{onlineRacerColor}from'../gameplay/RacerColors';
 import{LocalRaceSession,IDLE_COMMAND}from'../gameplay/LocalRaceSession';
 import{LocalRaceControls}from'../controls/LocalRaceControls';
 import{trainingOptions,type TrainingOptions,type TrainingRun}from'../modes/TrainingOptions';
@@ -51,13 +52,13 @@ export class Game {
   private city=new CityDistricts(this.scene,this.track);
   private citySample=new CitySample(this.scene,this.track,loaded=>this.city.setSampleLoaded(loaded));
   private trackView = new TrackView(this.scene, this.track);
-  private craft = new Watercraft(this.scene);
+  private craft:Watercraft;
   private flight = new FlightController();
   private tricks = new TrickController();
   private nitro = new NitroController();
-  private jet = new BoosterJet(this.craft.visual);
+  private jet:BoosterJet;
   private ramps = new Ramps(this.track, this.scene);
-  private craftMotion = new MotionInterpolation(this.craft.model);
+  private craftMotion:MotionInterpolation;
   private ai:AIController[];
   private aiCraft:Watercraft[];
   private aiJets:BoosterJet[];
@@ -88,8 +89,10 @@ export class Game {
   private frameId = 0;
   private reflection?:THREE.WebGLRenderTarget;
   constructor(private root: HTMLElement,private loading=new LoadingScreen(root),private options:GameOptions={}) {
+    this.craft=new Watercraft(this.scene,options.online?onlineRacerColor(options.online.race,options.online.memberId):'#126bba');
+    this.jet=new BoosterJet(this.craft.visual);this.craftMotion=new MotionInterpolation(this.craft.model);
     const config=trainingOptions(options);this.ai=options.online?onlinePeers(this.track,options.online):createCityOpponents(this.track,config.difficulty);
-    this.aiCraft=this.ai.map((ai,i)=>{const craft=new Watercraft(this.scene,['#ee7953','#a583ed','#f6cc61','#55c8a2'][i],ai.model);craft.rider.root.name='ai-rider';return craft;});
+    this.aiCraft=this.ai.map((ai,i)=>{const craft=new Watercraft(this.scene,options.online?onlineRacerColor(options.online.race,ai.id):['#ee7953','#a583ed','#f6cc61','#55c8a2'][i],ai.model);craft.rider.root.name='ai-rider';return craft;});
     this.aiJets=this.aiCraft.map(c=>new BoosterJet(c.visual));this.aiMotion=this.ai.map(a=>new MotionInterpolation(a.model));this.aiLighting=this.aiCraft.map((_,i)=>new HeroLighting(3+i));
     this.bodies=[{id:'player',model:this.craft.model},...this.ai.map(a=>({id:a.id,model:a.model}))];
     const state={track:this.track,player:this.craft.model,flight:this.flight,tricks:this.tricks,nitro:this.nitro,ai:this.ai,ramps:this.ramps,collisions:this.collisions,bodies:this.bodies};
@@ -192,7 +195,6 @@ export class Game {
       const result=this.session.step(step,canDrive?this.controls.sample(input):IDLE_COMMAND);
       if(result.started&&!this.runStarted){this.runStarted=true;this.options.onRunStart?.();}
       this.wallContact=result.wallContact;
-      if(this.session instanceof NetworkRaceSession&&this.session.consumeCorrection())this.craftMotion.reset();
       const cue=this.session instanceof NetworkRaceSession&&this.session.message?null:this.countdownCue.update(this.race.phase,this.race.countdown);if(cue!==null)this.audio.countdown(cue);
       if (canDrive) {
         this.ai.forEach(ai=>{
@@ -218,7 +220,9 @@ export class Game {
       this.time += step; this.accumulator -= step;
     }
     const displayTime = this.time + this.accumulator;
+    if(this.session instanceof NetworkRaceSession&&this.session.consumeCorrection())this.craftMotion.reset();
     const displayModel = this.craftMotion.sample(this.accumulator / step);
+    if(this.session instanceof NetworkRaceSession)this.session.applyVisualOffset(displayModel);
     const ground=this.track.surface(this.craft.model).height;
     this.craft.sync(displayTime, displayModel, this.flight.displayHeight(this.accumulator / step), this.tricks.rotation,ground,this.flight.airborne?0:this.ramps.slope(this.craft.model));
     this.aiCraft.forEach((craft, i) => craft.sync(displayTime, this.aiMotion[i].sample(this.accumulator / step),this.ai[i].flight.displayHeight(this.accumulator/step),this.session instanceof NetworkRaceSession?this.session.rotation(this.ai[i].id):this.ai[i].tricks.rotation,this.track.surface(this.ai[i].model).height,this.ai[i].flight.airborne?0:this.ramps.slope(this.ai[i].model)));

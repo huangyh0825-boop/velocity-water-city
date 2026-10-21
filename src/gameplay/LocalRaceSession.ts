@@ -14,6 +14,8 @@ import type{RaceSession}from'./RaceSession';
 export interface LocalRaceState {
  track:CityTrack;player:DrivingModel;flight:FlightController;tricks:TrickController;nitro:NitroController;
  ai:AIController[];ramps:Ramps;collisions:BoatCollisions;bodies:BoatBody[];
+ /** Online peers supply collision poses, while their visual interpolation stays separate. */
+ remoteBodies?:BoatBody[];advancePeers?:(dt:number)=>void;
 }
 export const IDLE_COMMAND:PlayerCommand={throttle:0,brake:0,steer:0,boost:false,trick:false};
 /** Fixed-step rules only: no renderer, DOM, audio, browser storage or network. */
@@ -21,7 +23,8 @@ export class LocalRaceSession implements RaceSession {
  readonly mode='training' as const;
  race!:RaceController;
  private stepResult={drove:false,started:false,finished:false,wallContact:false};
- constructor(readonly state:LocalRaceState,readonly options:TrainingOptions,private playerName='你 / PLAYER',private externalClock=false){this.restart();}
+ private contactBodies:BoatBody[];
+ constructor(readonly state:LocalRaceState,readonly options:TrainingOptions,private playerName='你 / PLAYER',private externalClock=false){this.contactBodies=state.remoteBodies?[...state.bodies,...state.remoteBodies]:state.bodies;this.restart();}
  restart(){
   const s=this.state;s.track.spawn(s.player);s.ai.forEach(a=>a.reset());s.ramps.place(s.player,s.flight);s.bodies.forEach((b,i)=>b.height=i?s.ai[i-1].flight.height:s.flight.height);
   s.ramps.decisions.clear();s.tricks.reset();s.nitro.reset();
@@ -36,10 +39,11 @@ export class LocalRaceSession implements RaceSession {
  step(dt:number,input:PlayerCommand){
   const out=this.stepResult,s=this.state,r=this.race;out.drove=r.phase==='racing';out.started=out.finished=out.wallContact=false;if(!this.externalClock)r.tick(dt);out.started=!out.drove&&r.phase==='racing';
   if(!out.drove)return out;
-  s.collisions.capture(s.bodies);const before={x:s.player.x,z:s.player.z,route:s.player.route};s.flight.beginStep(dt);s.nitro.update(dt,input.boost);
+  s.collisions.capture(this.contactBodies);const before={x:s.player.x,z:s.player.z,route:s.player.route};s.flight.beginStep(dt);s.nitro.update(dt,input.boost);
   s.player.update(dt,input,s.nitro.active);out.wallContact=s.track.constrain(s.player);s.ramps.prepare(s.player,s.flight);s.bodies[0].height=s.flight.height;
   const aiWall=s.ai.map((a,i)=>{a.update(dt,s.bodies,r.racers[i+1].finishTime===null);const w=s.track.constrain(a.model);s.bodies[i+1].height=a.flight.height;return w;});
-  s.collisions.resolve(s.bodies,dt,m=>{if(!s.track.constrain(m))return;if(m===s.player)out.wallContact=true;const i=s.ai.findIndex(a=>a.model===m);if(i>=0)aiWall[i]=true;});
+  s.advancePeers?.(dt);
+  s.collisions.resolve(this.contactBodies,dt,m=>{if(!s.track.constrain(m))return;if(m===s.player)out.wallContact=true;const i=s.ai.findIndex(a=>a.model===m);if(i>=0)aiWall[i]=true;});
   s.ramps.update(before,s.player,s.flight,'player',s.collisions.sweptPath('player'),s.collisions.movementAllowance('player'));s.bodies[0].height=s.flight.height;
   s.ai.forEach((a,i)=>{a.finishStep(s.collisions.sweptPath(a.id),s.collisions.movementAllowance(a.id));s.bodies[i+1].height=a.flight.height;});
   s.ai.forEach((a,i)=>a.updateActions(dt,!aiWall[i]&&a.model.speed>8&&!s.collisions.hasContact(a.id),r.racers[i+1].finishTime===null));

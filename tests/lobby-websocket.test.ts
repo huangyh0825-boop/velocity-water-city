@@ -5,6 +5,7 @@ import type {AddressInfo} from 'node:net';
 import {WebSocket} from 'ws';
 import {createLobbyServer} from '../server/lobby';
 import {isLobbySnapshot} from '../src/lobby/protocol';
+import {RACE_FEATURE} from '../src/lobby/racing';
 
 const identity=(n:number)=>({deviceId:n.toString(16).padStart(32,'0'),resumeKey:(n+100).toString(16).padStart(32,'0'),playerId:`玩家${n}`});
 type Event=Record<string,any>;
@@ -103,17 +104,17 @@ test('graceful shutdown closes upgraded sockets with restart code',async()=>{
 test('real race sockets enforce host/all-ready/loading barrier, reconnect countdown, locked roster and independent state rate',async()=>{
  let clock=1000;const f=await fixture({now:()=>clock});try{
   const a=await f.peer(),b=await f.peer();
-  for(const [p,n]of [[a,1],[b,2]]as const){const id=p.command('join',{identity:identity(n),features:['race-v1']});assert.equal((await p.event(e=>e.id===id)).type,'welcome');}
+  for(const [p,n]of [[a,1],[b,2]]as const){const id=p.command('join',{identity:identity(n),features:[RACE_FEATURE]});assert.equal((await p.event(e=>e.id===id)).type,'welcome');}
   assert.equal((await b.ack('start')).code,403);assert.equal((await a.ack('start')).code,409);
   await a.ack('ready',{ready:true});assert.equal((await a.ack('start')).code,409);await b.ack('ready',{ready:true});assert.equal((await a.ack('start')).type,'ack');
   let room=await a.state();const raceId=room.race.id;assert.equal(room.race.phase,'loading');
   const c=await f.peer();assert.equal((await c.join(3)).code,409);
   await a.ack('race.loaded',{raceId});room=await a.state();assert.equal(room.race.phase,'loading');
   await b.ack('race.loaded',{raceId});room=await a.state();assert.equal(room.race.startAt-room.race.countdownAt,5000);
-  const refresh=await f.peer(),refreshId=refresh.command('join',{identity:identity(2),features:['race-v1']});await refresh.event(e=>e.id===refreshId);assert.equal(await b.closed,4009);
+  const refresh=await f.peer(),refreshId=refresh.command('join',{identity:identity(2),features:[RACE_FEATURE]});await refresh.event(e=>e.id===refreshId);assert.equal(await b.closed,4009);
   room=await a.state();assert.equal(room.race.phase,'loading');assert.equal(room.race.participants[1].loaded,false);await refresh.ack('race.loaded',{raceId});
   refresh.socket.terminate();await refresh.closed;await a.event(e=>e.type==='room'&&e.room.race?.phase==='loading');
-  const resumed=await f.peer();const joinId=resumed.command('join',{identity:identity(2),features:['race-v1']});await resumed.event(e=>e.id===joinId);
+  const resumed=await f.peer();const joinId=resumed.command('join',{identity:identity(2),features:[RACE_FEATURE]});await resumed.event(e=>e.id===joinId);
   assert.equal((await a.state()).race.phase,'loading');await resumed.ack('race.loaded',{raceId});room=await a.state();clock=room.race.startAt+1000;
   const first=await a.event(e=>e.type==='race.frame'&&e.frame.phase==='racing'),pose=first.frame.states.find((p:any)=>p.id===room.members[0].id);
   // 60 updates within one minute exceed the lobby command budget, but remain valid at 10 Hz.
@@ -121,5 +122,12 @@ test('real race sockets enforce host/all-ready/loading barrier, reconnect countd
   assert.equal((await a.ack('clock')).type,'ack');assert.equal(a.socket.readyState,WebSocket.OPEN);
   assert.equal((await resumed.ack('race.recover',{raceId:'f'.repeat(24)})).code,409);
   await resumed.leave();room=await a.state();assert.equal(room.race.participants[1].dnf,true);
+ }finally{await f.close();}
+});
+test('old cached racing clients must refresh before mixing with collision-predicting color-consistent clients',async()=>{
+ const f=await fixture();try{const a=await f.peer(),b=await f.peer();
+  let id=a.command('join',{identity:identity(1),features:[RACE_FEATURE]});await a.event(e=>e.id===id);
+  id=b.command('join',{identity:identity(2),features:['race-v1']});await b.event(e=>e.id===id);
+  await a.ack('ready',{ready:true});await b.ack('ready',{ready:true});const state=await a.state();assert.equal(state.members[0].raceCapable,true);assert.equal(state.members[1].raceCapable,false);assert.equal((await a.ack('start')).code,409);
  }finally{await f.close();}
 });
