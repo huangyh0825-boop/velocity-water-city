@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-21T04:52:01.329Z",
+  "url": "https://velocity-water-city-lobby-test.onrender.com",
+  "attempts": [],
+  "http": {
+    "status": 200,
+    "health": {
+      "ok": true,
+      "service": "velocity-water-city-lobby",
+      "transport": "websocket",
+      "protocol": 1,
+      "capacity": 5,
+      "rooms": 0,
+      "instance": "660a6f66f30d5e90",
+      "revision": "09375dff0b4f251be329fa50ff6563b0c93f2060",
+      "storage": "memory",
+      "reconnectGraceMs": 30000
+    },
+    "elapsedMs": 866
+  },
+  "join": false,
+  "leaveAcknowledged": false,
+  "closeCode": 1006,
+  "error": "Opening handshake has timed out"
+}

@@ -39,9 +39,17 @@ try{
   results.checks.restartClearsRoomAndAutoRejoins=true;
  }
  await a.locator('#leave').click();await b.waitForFunction(()=>document.querySelectorAll('#members li').length===1&&document.querySelector('#members').textContent.includes('房主'));results.checks.hostMigration=true;
+ if(process.env.QA_STABILITY_SECONDS){
+  const duration=Number(process.env.QA_STABILITY_SECONDS);assert.ok([300,600].includes(duration));
+  await b.locator('#duration').selectOption(String(duration));await b.locator('#stability').click();
+  console.log(JSON.stringify({phase:'browser-stability',seconds:duration,url:base}));
+  await b.waitForFunction(()=>document.querySelector('#stabilityStatus').textContent.includes('本次连续连接通过'),undefined,{timeout:(duration+45)*1000});
+  results.checks.foregroundStability=true;
+ }
  const downloaded=await report(b);assert.equal(downloaded.vpnOffSelfConfirmed,false);assert.equal(downloaded.metrics.http,'成功');assert.equal(downloaded.metrics.wss,'成功');results.report=downloaded;
  const dimensions=await b.evaluate(()=>({width:innerWidth,scroll:document.documentElement.scrollWidth}));assert.ok(dimensions.scroll<=dimensions.width);results.checks.mobileLayout=true;
  await b.screenshot({path:output+'/mobile.png',fullPage:true});await a.screenshot({path:output+'/desktop.png',fullPage:true});
  await b.locator('#leave').click();assert.equal(errors.length,0,errors.join('\n'));results.checks.noPageErrors=true;
  await writeFile(output+'/result.json',JSON.stringify(results,null,2));console.log(JSON.stringify(results,null,2));
-}finally{await browser.close();if(server)await new Promise(resolve=>server.close(resolve));}
+}catch(e){results.error=e.message;await writeFile(output+'/failure.json',JSON.stringify(results,null,2));throw e;}
+finally{await browser.close();if(server)await new Promise(resolve=>server.close(resolve));}

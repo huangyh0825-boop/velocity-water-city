@@ -1,0 +1,78 @@
+{
+  "url": "https://velocity-water-city-lobby-test.onrender.com",
+  "code": "7248",
+  "checkedAt": "2026-10-20T16:51:23.073Z",
+  "testNetwork": "本机自动化浏览器；不代表中国大陆无 VPN 网络",
+  "checks": {
+    "joinAndSync": true,
+    "readyAndRename": true,
+    "offlineAndRejoin": true,
+    "hostMigration": true,
+    "foregroundStability": true,
+    "mobileLayout": true,
+    "noPageErrors": true
+  },
+  "mainlandNoVpn": "pending-real-user-test",
+  "report": {
+    "test": "Render Singapore lobby connectivity",
+    "createdAt": "2026-10-20T16:56:37.571Z",
+    "url": "https://velocity-water-city-lobby-test.onrender.com",
+    "region": "本机自动化测试（非国内实测）",
+    "network": "开发电脑浏览器；VPN 情况未判定",
+    "vpnOffSelfConfirmed": false,
+    "mainlandVerification": "待测试者及开发者核实，页面不会自动判定地区或 VPN",
+    "room": "7248",
+    "memberCount": 1,
+    "metrics": {
+      "http": "成功",
+      "wss": "成功",
+      "httpMs": 139,
+      "wssMs": 494,
+      "firstConnectionMs": 632,
+      "instance": "1a2f60b01212cc1c",
+      "revision": "09375dff0b4f251be329fa50ff6563b0c93f2060",
+      "rejoins": 1,
+      "disconnects": 1,
+      "pageResponseMs": 305.30000001192093
+    },
+    "stability": {
+      "startedAt": "2026-10-20T16:51:36.601Z",
+      "requiredSeconds": 300,
+      "elapsedSeconds": 300,
+      "disconnects": 0,
+      "observationInterrupted": false,
+      "completed": true,
+      "passed": true
+    },
+    "log": [
+      {
+        "at": "2026-10-20T16:51:24.720Z",
+        "message": "HTTP 健康检查成功，累计 139 ms"
+      },
+      {
+        "at": "2026-10-20T16:51:25.214Z",
+        "message": "WSS 已连接；房间 7248，2 人"
+      },
+      {
+        "at": "2026-10-20T16:51:25.509Z",
+        "message": "网络已断开，恢复网络后自动重连…"
+      },
+      {
+        "at": "2026-10-20T16:51:25.626Z",
+        "message": "大厅连接中断，正在重连…"
+      },
+      {
+        "at": "2026-10-20T16:51:36.442Z",
+        "message": "WSS 已连接；房间 7248，2 人"
+      },
+      {
+        "at": "2026-10-20T16:51:36.601Z",
+        "message": "开始 5 分钟连续连接测试"
+      },
+      {
+        "at": "2026-10-20T16:56:37.557Z",
+        "message": "已观察 300 / 300 秒，断线 0 次。 本次连续连接通过。"
+      }
+    ]
+  }
+}

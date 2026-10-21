@@ -1,0 +1,61 @@
+{
+  "url": "https://velocity-water-city-lobby-test.onrender.com",
+  "code": "1081",
+  "checkedAt": "2026-10-21T04:53:16.497Z",
+  "testNetwork": "本机自动化浏览器；不代表中国大陆无 VPN 网络",
+  "checks": {
+    "joinAndSync": true,
+    "readyAndRename": true,
+    "offlineAndRejoin": true,
+    "hostMigration": true,
+    "mobileLayout": true,
+    "noPageErrors": true
+  },
+  "mainlandNoVpn": "pending-real-user-test",
+  "report": {
+    "test": "Render Singapore lobby connectivity",
+    "createdAt": "2026-10-21T04:53:30.260Z",
+    "url": "https://velocity-water-city-lobby-test.onrender.com",
+    "region": "本机自动化测试（非国内实测）",
+    "network": "开发电脑浏览器；VPN 情况未判定",
+    "vpnOffSelfConfirmed": false,
+    "mainlandVerification": "待测试者及开发者核实，页面不会自动判定地区或 VPN",
+    "room": "1081",
+    "memberCount": 1,
+    "metrics": {
+      "http": "成功",
+      "wss": "成功",
+      "httpMs": 152,
+      "wssMs": 761,
+      "firstConnectionMs": 913,
+      "instance": "660a6f66f30d5e90",
+      "revision": "09375dff0b4f251be329fa50ff6563b0c93f2060",
+      "rejoins": 1,
+      "disconnects": 1,
+      "pageResponseMs": 472.5
+    },
+    "stability": null,
+    "log": [
+      {
+        "at": "2026-10-21T04:53:18.105Z",
+        "message": "HTTP 健康检查成功，累计 152 ms"
+      },
+      {
+        "at": "2026-10-21T04:53:18.866Z",
+        "message": "WSS 已连接；房间 1081，2 人"
+      },
+      {
+        "at": "2026-10-21T04:53:19.243Z",
+        "message": "网络已断开，恢复网络后自动重连…"
+      },
+      {
+        "at": "2026-10-21T04:53:19.243Z",
+        "message": "网络已断开"
+      },
+      {
+        "at": "2026-10-21T04:53:30.078Z",
+        "message": "WSS 已连接；房间 1081，2 人"
+      }
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "url": "https://velocity-water-city-lobby-test.onrender.com",
+  "checkedAt": "2026-10-20T16:52:16.466Z",
+  "testNetwork": "本机公网测试；地区、运营商及 VPN 状态未验证，不代表中国大陆无 VPN",
+  "checks": {
+    "publicAssetsMatchBuild": true,
+    "createJoinSync": true,
+    "readyRename": true,
+    "hostPermissions": true,
+    "disconnectAndResume": true,
+    "leaveAndHostMigration": true
+  },
+  "mainlandNoVpn": "pending-real-user-test",
+  "initialRequestFailures": [],
+  "http": {
+    "status": 200,
+    "elapsedMs": 868,
+    "corsOrigin": "https://huangyh0825-boop.github.io",
+    "health": {
+      "ok": true,
+      "service": "velocity-water-city-lobby",
+      "transport": "websocket",
+      "protocol": 1,
+      "capacity": 5,
+      "rooms": 2,
+      "instance": "1a2f60b01212cc1c",
+      "revision": "09375dff0b4f251be329fa50ff6563b0c93f2060",
+      "storage": "memory",
+      "reconnectGraceMs": 30000
+    }
+  },
+  "wss": {
+    "httpUpgrade": 101,
+    "firstWelcomeMs": 2931
+  },
+  "abruptDisconnectDetectionMs": 20359,
+  "stability": {
+    "requestedSeconds": 300,
+    "elapsedSeconds": 300,
+    "disconnects": 0,
+    "pongs": 11,
+    "latencyMs": [
+      417,
+      418,
+      417,
+      418,
+      418,
+      418,
+      417,
+      418,
+      417,
+      419
+    ],
+    "passed": true
+  },
+  "error": "Expected values to be strictly equal:\n\n1006 !== 1000\n",
+  "audit": {
+    "note": "Public HTTP 200, WSS 101, room operations and an actual uninterrupted 300-second protocol observation completed. After a response matching the leave request ID, the final close-code assertion failed: client observed 1006 rather than 1000. Cause unconfirmed. Original error retained; the acknowledgement payload was not saved by the original harness.",
+    "exitResponseReceived": true,
+    "finalCloseCode": 1006,
+    "continuousObservationPassed": true
+  }
+}

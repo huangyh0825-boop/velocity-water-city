@@ -1,0 +1,80 @@
+{
+  "serviceId": "srv-dbbpj6ff3r2c73duvce0",
+  "deploymentId": "dep-dbbpj77f3r2c73duvfcg",
+  "url": "https://velocity-water-city-lobby-test.onrender.com",
+  "dashboard": "https://dashboard.render.com/web/srv-dbbpj6ff3r2c73duvce0",
+  "commit": "09375dff0b4f251be329fa50ff6563b0c93f2060",
+  "branch": "test/render-singapore-lobby",
+  "region": "singapore",
+  "plan": "free",
+  "autoDeploy": "off",
+  "buildCommand": "npm ci --include=dev && npm run build:lobby",
+  "startCommand": "node dist-lobby/lobby.mjs",
+  "healthCheckPath": "/api/lobby/health",
+  "accountVerified": {
+    "workspacePlan": "Hobby",
+    "paymentMethod": "No card on file",
+    "monthToDateUsd": 0,
+    "projectedMonthUsd": 0,
+    "freeHoursPerMonth": 750,
+    "includedBandwidthGb": 5,
+    "includedPipelineMinutes": 500
+  },
+  "status": "live",
+  "publicHttp": {
+    "status": 200,
+    "corsOrigin": "https://huangyh0825-boop.github.io"
+  },
+  "publicWss": {
+    "status": 101
+  },
+  "mainlandNoVpn": {
+    "status": "user-reported reachable on one real mainland network",
+    "http": true,
+    "wss": true,
+    "firstConnectionMs": 2331,
+    "continuousStability": "not certified: user intentionally left the page twice",
+    "formalSwitchApproved": false
+  },
+  "productionBackend": "Cloudflare, unchanged",
+  "verifiedAt": "2026-10-21T04:49:02.547Z",
+  "nodeVersion": "22.23.3",
+  "listen": "0.0.0.0:10000",
+  "publicRoomOperations": "create/join/ready/rename/leave/host migration/disconnect and rejoin verified",
+  "browserStability": {
+    "elapsedSeconds": 300,
+    "disconnects": 0,
+    "observationInterrupted": false,
+    "passed": true,
+    "network": "agent local network, mainland/VPN not verified"
+  },
+  "protocolCloseObservation": "After an exit response, client observed 1006; cause unconfirmed. Raw observation retained.",
+  "lastRecheck": {
+    "checkedAt": "2026-10-21T04:53:16.497Z",
+    "httpStatus": 200,
+    "revision": "09375dff0b4f251be329fa50ff6563b0c93f2060",
+    "browserRoomChecks": {
+      "joinAndSync": true,
+      "readyAndRename": true,
+      "offlineAndRejoin": true,
+      "hostMigration": true,
+      "mobileLayout": true,
+      "noPageErrors": true
+    },
+    "wssPathProbe": [
+      {
+        "address": "216.24.57.18",
+        "upgrade": 101,
+        "elapsedMs": 1756,
+        "error": null
+      },
+      {
+        "address": "216.24.57.16",
+        "upgrade": null,
+        "elapsedMs": 15011,
+        "error": "Opening handshake has timed out"
+      }
+    ],
+    "assessment": "Browser recheck passed. One directed CLI path returned 101; the other timed out. Route-specific cause unconfirmed; do not infer all mainland networks are stable. Keep production on Cloudflare."
+  }
+}

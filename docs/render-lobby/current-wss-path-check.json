@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-10-21T04:54:19.378Z",
+  "testNetwork": "agent local CLI, not verified mainland network",
+  "results": [
+    {
+      "address": "216.24.57.18",
+      "upgrade": 101,
+      "elapsedMs": 1756,
+      "error": null
+    },
+    {
+      "address": "216.24.57.16",
+      "upgrade": null,
+      "elapsedMs": 15011,
+      "error": "Opening handshake has timed out"
+    }
+  ]
+}
