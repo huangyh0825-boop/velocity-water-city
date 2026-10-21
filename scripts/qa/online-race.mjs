@@ -11,7 +11,8 @@ let server,web,browser;const report={url:base,localBuild:process.env.QA_LOCAL_BU
 try{
  if(!remote){server=createLobbyServer({allowedOrigins:['http://127.0.0.1:5291']});server.listen(0,'127.0.0.1');await once(server,'listening');web=await preview({build:{outDir:process.env.QA_BUILD_DIR??'dist'},preview:{host:'127.0.0.1',port:5291,strictPort:true,proxy:{'/api/lobby':{target:`http://127.0.0.1:${server.address().port}`,ws:true}}}});}
  const {chromium}=loadPlaywright();browser=await chromium.launch({channel:'msedge',headless:true});
- const contexts=await Promise.all([0,1].map(()=>browser.newContext({viewport:{width:1280,height:720}})));
+ const touch=process.env.QA_TOUCH==='1';report.touch=touch;
+ const contexts=await Promise.all([0,1].map(()=>browser.newContext(touch?{viewport:{width:844,height:390},hasTouch:true,isMobile:true}:{viewport:{width:1280,height:720}})));
  if(process.env.QA_LOCAL_BUILD==='1')for(const context of contexts)await context.route('https://huangyh0825-boop.github.io/velocity-water-city/**',async route=>{
   const root=resolve('dist'),path=decodeURIComponent(new URL(route.request().url()).pathname.slice('/velocity-water-city/'.length))||'index.html',file=resolve(root,path);
   if(!file.startsWith(root+sep)){await route.abort();return;}
@@ -46,6 +47,7 @@ try{
  assert.ok(starts[0]&&starts[1]);assert.equal(starts[0].startAt,starts[1].startAt);assert.equal(starts[0].startAt-starts[0].countdownAt,5000);
  assert.ok(starts[0].participants.every(p=>p.loaded));report.checks.allAssetsLoadedAndSharedFiveSecondCountdown=true;
  for(const p of pages)await p.waitForFunction(()=>/00:0[1-9]/.test(document.querySelector('#race-time')?.textContent),undefined,{timeout:30000});
+ if(touch){for(const [i,p]of pages.entries()){assert.equal(await p.locator('[data-action="throttle"]').count(),0);assert.equal(await p.locator('.mobile-steering').isVisible(),true);assert.ok(sent[i].some(e=>e.type==='race.state'&&e.state.speed>1),'mobile drives after GO without held throttle');}report.checks.mobileAutoThrottleInBothClients=true;}
  await pages[0].keyboard.down('w');await new Promise(r=>setTimeout(r,3500));await pages[0].keyboard.up('w');
  for(const p of pages)await p.screenshot({path:`${output}/player-${pages.indexOf(p)+1}.png`});
  const states=sent[0].filter(e=>e.type==='race.state');assert.ok(states.length>10);const first=states[0].state,last=states.at(-1).state;assert.ok(Math.hypot(last.x-first.x,last.z-first.z)>1);
@@ -58,7 +60,7 @@ try{
  const deadline=Date.now()+60000;while(Date.now()<deadline){await new Promise(r=>setTimeout(r,5000));}
  for(const [i,list]of sent.entries()){const packets=list.filter(e=>e.type==='race.state');report['player'+(i+1)+'Packets']=packets.length;const peak=new Map();for(const p of packets){const key=Math.floor(p.at/1000);peak.set(key,(peak.get(key)||0)+1);}assert.ok(Math.max(...peak.values())<=16);}
  assert.deepEqual(events.flat().filter(e=>e.type==='error'),[]);assert.deepEqual(report.errors,[]);report.checks.oneMinuteNoRateLimitDisconnect=true;
- for(const p of pages){assert.equal(await p.locator('#reset').isVisible(),false);await p.locator('#home').click();await p.waitForSelector('#room-form');}
+ for(const p of pages){assert.equal(await p.locator('#reset').isVisible(),false);if(touch)await p.locator('#mobile-settings').tap();await p.locator('#home').click();await p.waitForSelector('#room-form');}
  report.checks.exitToHome=true;console.log(JSON.stringify(report,null,2));await writeFile(output+'/result.json',JSON.stringify(report,null,2));
 }catch(error){report.error=String(error.stack);await writeFile(output+'/failure.json',JSON.stringify(report,null,2));throw error;}
 finally{await browser?.close();await web?.close();if(server)await new Promise(r=>server.close(r));}

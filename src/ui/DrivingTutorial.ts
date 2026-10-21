@@ -17,8 +17,9 @@ const panels=[
 export class DrivingTutorial {
  private dialog:HTMLDialogElement;
  constructor(root:HTMLElement){
+  const keys=matchMedia('(pointer: coarse)').matches?['自动加速 · 左右箭头','腾空后点按特技','特技成功 +35%','按住闪电释放氮气']:panels.map(p=>p.key);
   this.dialog=document.createElement('dialog');this.dialog.className='driving-tutorial';this.dialog.id='driving-tutorial';this.dialog.setAttribute('aria-labelledby','tutorial-title');
-  this.dialog.innerHTML=`<div class="tutorial-heading"><div><small>30 秒 · 上手水城</small><h2 id="tutorial-title">想跑得快，先学会飞。</h2></div><button type="button" class="tutorial-close" aria-label="关闭玩法教程">×</button></div><p class="tutorial-intro">核心玩法：冲跳台 → 空中特技 → 安全落水获得氮气 → 氮气加速</p><ol class="tutorial-panels">${panels.map((p,i)=>`<li><div class="tutorial-art"><span>0${i+1}</span>${p.image}</div><h3>${p.title}</h3><strong>${p.key}</strong><p>${p.text}</p></li>`).join('')}</ol><p class="tutorial-touch">手机玩家：用屏幕上的「加速」「转向」「特技」「氮气」按钮完成同样的操作。<br>先在单人训练熟悉跳台；普通腾空不奖励氮气，特技未完成就落水会短暂减速。</p><button class="primary-button tutorial-done" type="button">明白了，准备出发 <span>→</span></button><p class="tutorial-footer">首页「玩法教程」随时重看 · 单人和多人玩法相同</p>`;
+  this.dialog.innerHTML=`<div class="tutorial-heading"><div><small>30 秒 · 上手水城</small><h2 id="tutorial-title">想跑得快，先学会飞。</h2></div><button type="button" class="tutorial-close" aria-label="关闭玩法教程">×</button></div><p class="tutorial-intro">核心玩法：冲跳台 → 空中特技 → 安全落水获得氮气 → 氮气加速</p><ol class="tutorial-panels">${panels.map((p,i)=>`<li><div class="tutorial-art"><span>0${i+1}</span>${p.image}</div><h3>${p.title}</h3><strong>${keys[i]}</strong><p>${p.text}</p></li>`).join('')}</ol><p class="tutorial-touch">手机玩家：自动加速，左侧箭头转向；右侧按住刹车踏板减速、按住闪电释放氮气，腾空后点亮的特技键可按一次。设置在右上角。<br>先在单人训练熟悉跳台；普通腾空不奖励氮气，特技未完成就落水会短暂减速。</p><button class="primary-button tutorial-done" type="button">明白了，准备出发 <span>→</span></button><p class="tutorial-footer">首页「玩法教程」随时重看 · 单人和多人玩法相同</p>`;
   root.append(this.dialog);
   const dismiss=()=>{remember();this.dialog.close();};
   this.dialog.querySelector<HTMLButtonElement>('.tutorial-close')!.onclick=dismiss;this.dialog.querySelector<HTMLButtonElement>('.tutorial-done')!.onclick=dismiss;
