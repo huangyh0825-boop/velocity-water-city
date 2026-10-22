@@ -1,17 +1,22 @@
 import {BOOT_TASKS,BootProgress,type BootTask} from '../core/BootProgress';
 import './loading.css';
+import {observeAssets} from '../core/AssetActivity';
 export class LoadingScreen {
  readonly progress=new BootProgress();
  private panel:HTMLElement;private stage:HTMLElement;private fill:HTMLElement;private label:HTMLElement;
+ private release:()=>void;
  constructor(root:HTMLElement,onHome?:()=>void){
   this.panel=document.createElement('section');this.panel.className='boot-screen';this.panel.setAttribute('aria-label','游戏加载');
   this.panel.innerHTML=`<div class="boot-art" aria-hidden="true"></div><div class="boot-card"><small>AURORA RACEWAY / SYSTEM START</small><h1>极速水城<span>未来竞速</span></h1><p class="boot-english">VELOCITY / WATER CITY</p><div class="boot-stage" aria-live="polite">初始化竞速系统</div><div class="boot-track" role="progressbar" aria-label="已完成的启动任务" aria-valuemin="0" aria-valuemax="100"><i></i></div><div class="boot-progress">0% · 0 / 9 项任务</div><p class="boot-tip">正在准备完整城市与参赛选手。首次启动需要解码高质量资源。<br>WASD 驾驶 · Shift 氮气 · 空格 特技</p><button type="button" hidden>重新加载资源</button></div>`;
   root.append(this.panel);this.stage=this.panel.querySelector('.boot-stage')!;this.fill=this.panel.querySelector('.boot-track i')!;this.label=this.panel.querySelector('.boot-progress')!;
   this.panel.querySelector('button')!.onclick=()=>location.reload();
-  if(onHome){const back=document.createElement('button');back.textContent='返回首页';back.type='button';back.onclick=onHome;this.panel.querySelector('.boot-card')!.append(back);}
+  const detail=document.createElement('p');detail.className='boot-network';this.label.after(detail);
+  this.release=observeAssets(s=>{const mb=(n:number)=>(n/1048576).toFixed(1),value=`已接收 ${mb(s.networkBytes)} MB${s.cachedBytes?` · 本地复用 ${mb(s.cachedBytes)} MB`:''}${s.pending?` · ${s.pending} 项资源处理中`:''}${s.retries?` · 已自动重试 ${s.retries} 次`:''}`;if(detail.textContent!==value)detail.textContent=value;});
+  if(onHome){const back=document.createElement('button');back.textContent='返回首页';back.type='button';back.onclick=()=>{this.dispose();onHome();};this.panel.querySelector('.boot-card')!.append(back);}
  }
  begin(task:BootTask){this.stage.textContent=BOOT_TASKS.find(t=>t[0]===task)![1];this.panel.dataset.stage=task;}
  complete(task:BootTask){this.progress.complete(task);this.fill.style.width=`${this.progress.percent}%`;this.fill.parentElement!.setAttribute('aria-valuenow',String(this.progress.percent));this.label.textContent=`${this.progress.percent}% · ${this.progress.completed.size} / ${BOOT_TASKS.length} 项任务`;}
- fail(error:unknown){this.panel.classList.add('boot-failed');this.stage.textContent='启动未完成';this.label.textContent=String(error instanceof Error?error.message:error);this.panel.querySelector<HTMLButtonElement>('button')!.hidden=false;}
- finish(){this.panel.remove();}
+ fail(error:unknown){this.release();this.panel.classList.add('boot-failed');this.stage.textContent='启动未完成';this.label.textContent=String(error instanceof Error?error.message:error)+'；重新加载会复用已缓存资源。';this.panel.querySelector<HTMLButtonElement>('button')!.hidden=false;}
+ finish(){this.dispose();}
+ dispose(){this.release();this.panel.remove();}
 }

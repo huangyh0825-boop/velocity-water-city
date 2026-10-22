@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "failedPagePreservesTwoChunks": true,
+    "reloadResumesBytesAndDecompressesExactly": true,
+    "warmReloadUsesNoModelNetworkRequests": true,
+    "downloadConcurrencyBoundedToThree": true,
+    "storageAndWorkerUnavailableStillLoads": true
+  },
+  "errors": [],
+  "resumeOffsets": [
+    2097152,
+    3145728
+  ],
+  "peakRequests": 3
+}

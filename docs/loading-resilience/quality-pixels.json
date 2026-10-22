@@ -1,0 +1,14 @@
+[
+  {
+    "scene": "city",
+    "sameSize": true,
+    "meanRGBError": 0.0,
+    "changedPixelFraction": 0.0
+  },
+  {
+    "scene": "harbor",
+    "sameSize": true,
+    "meanRGBError": 0.0,
+    "changedPixelFraction": 0.0
+  }
+]

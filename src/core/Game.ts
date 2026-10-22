@@ -42,6 +42,7 @@ import {RenderPassMaterials} from './RenderPassMaterials';
 import {watchAssetActivity,assetWaitExpired} from './AssetActivity';
 import {renderQuality,renderPixelRatio} from './RenderQuality';
 import {cacheStaticTransforms} from './StaticTransforms';
+import {foregroundDeadline} from './ForegroundDeadline';
 export interface GameOptions extends Partial<TrainingOptions>{online?:OnlineGameOptions;playerId?:string;onHome?:()=>void;onRunStart?:()=>void;onRunEnd?:(run:TrainingRun)=>void}
 export class Game {
   readonly ready:Promise<void>;
@@ -156,8 +157,7 @@ export class Game {
     this.citySample.density.enableBatches(this.renderer);
     cacheStaticTransforms(this.citySample.root);cacheStaticTransforms(this.city.root);cacheStaticTransforms(this.verticalView.root);
     const jets=[this.jet,...this.aiJets];jets.forEach(j=>j.object.visible=true);
-    let timeout:ReturnType<typeof setTimeout>|undefined;
-    try{await Promise.race([this.renderer.compileAsync(this.scene,this.camera.camera),new Promise<never>((_,reject)=>{timeout=setTimeout(()=>reject(Error('Shader 初始化超时，请确认硬件加速可用后重试')),90000);})]);}finally{clearTimeout(timeout);jets.forEach(j=>j.object.visible=false);}
+    try{await foregroundDeadline(this.renderer.compileAsync(this.scene,this.camera.camera),90000,'Shader 初始化超时，请确认硬件加速可用后重试');}finally{jets.forEach(j=>j.object.visible=false);}
     this.loading.complete('shaders');
     this.loading.begin('reflection');await yieldToBrowser();await this.citySample.bakeReflections(this.renderer,this.scene);this.loading.complete('reflection');
     if(!this.low){this.heroLighting.update(this.renderer,this.scene,this.craft.visual);this.aiCraft.forEach((c,i)=>this.aiLighting[i].update(this.renderer,this.scene,c.visual));}
@@ -249,6 +249,7 @@ export class Game {
     this.recordRun();
     this.disposed=true;if(this.session instanceof NetworkRaceSession)this.session.dispose();
     this.releaseAssetActivity();
+    this.loading.dispose();
     this.renderPassMaterials.dispose();
     this.heroLighting.dispose();this.aiLighting.forEach(light=>light.dispose());
     this.citySample.dispose();

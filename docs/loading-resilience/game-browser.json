@@ -1,0 +1,31 @@
+{
+  "results": [
+    {
+      "mobile": true,
+      "coldMs": 14997,
+      "warmMs": 12753,
+      "progress": "已接收 4.0 MB · 4 项资源处理中 · 已自动重试 1 次",
+      "reuse": "已接收 0.0 MB · 本地复用 35.3 MB · 19 项资源处理中",
+      "retriedCity503": true,
+      "completeGameStarts": true,
+      "warmModelRequests": 0,
+      "quality": "standard",
+      "asset": "watercraft-mobile",
+      "waterSegments": 160
+    },
+    {
+      "mobile": false,
+      "coldMs": 18235,
+      "warmMs": 16139,
+      "progress": "已接收 1.0 MB · 4 项资源处理中 · 已自动重试 1 次",
+      "reuse": "已接收 0.0 MB · 本地复用 25.0 MB · 2 项资源处理中",
+      "retriedCity503": true,
+      "completeGameStarts": true,
+      "warmModelRequests": 0,
+      "quality": "standard",
+      "asset": "watercraft",
+      "waterSegments": 320
+    }
+  ],
+  "errors": []
+}

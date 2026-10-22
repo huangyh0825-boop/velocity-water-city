@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "activeSlowDownloadSurvives130Seconds": true,
+    "fullGameStartsAfterSlowCity": true
+  },
+  "errors": [],
+  "at130Seconds": {
+    "streamed": 12238848,
+    "cityBytes": 15709780,
+    "label": "已接收 48.1 MB · 1 项资源处理中"
+  },
+  "elapsedMs": 173807
+}

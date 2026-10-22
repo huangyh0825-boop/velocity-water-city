@@ -11,7 +11,7 @@ test('model downloads remain valid beyond two minutes while bytes arrive, but id
  const pending=fetchRuntimeModel('https://game.test/model.glb.gz'),active=FakeWorker.current;advance(119000);active.onmessage!({data:{progress:true}}as MessageEvent);advance(119000);assert.equal(active.terminated,0);assert.equal(tasks.size,1);const data=new Uint8Array([1,2,3]).buffer;active.onmessage!({data:{data,transportBytes:3}}as MessageEvent);assert.equal(await pending,data);assert.equal(active.terminated,1);assert.equal(tasks.size,0);
  const idle=fetchRuntimeModel('https://game.test/model.glb.gz'),stalled=FakeWorker.current;advance(120001);await assert.rejects(idle,/没有进展/);assert.equal(stalled.terminated,1);assert.equal(tasks.size,0);
 });
-test('city loading progress resets inactivity checks without removing the finite overall startup limit',t=>{
+test('active city downloads can exceed ten minutes while genuinely idle requests still expire',t=>{
  let now=0;t.mock.method(performance,'now',()=>now);assetProgress();const manager=new LoadingManager();let previousCalls=0;const previous=()=>previousCalls++;manager.onProgress=previous;const release=watchAssetActivity(manager);assert.equal(assetWaitExpired(0,119999),false);assert.equal(assetWaitExpired(0,120001),true);
- now=119000;manager.itemStart('texture');manager.itemEnd('texture');assert.equal(previousCalls,1);assert.equal(assetWaitExpired(0,238999),false);assert.equal(assetWaitExpired(0,239001),true);now=590000;assetProgress();assert.equal(assetWaitExpired(0,600001),true);release();assert.equal(manager.onProgress,previous);
+ now=119000;manager.itemStart('texture');manager.itemEnd('texture');assert.equal(previousCalls,1);assert.equal(assetWaitExpired(0,238999),false);assert.equal(assetWaitExpired(0,239001),true);now=590000;assetProgress();assert.equal(assetWaitExpired(0,600001),false);assert.equal(assetWaitExpired(0,710001),true);release();assert.equal(manager.onProgress,previous);
 });

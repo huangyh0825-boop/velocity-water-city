@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {loadAssetGLTF} from '../player/AssetGLTF';
 import {CityTrack} from '../track/CityTrack';
 import {cityServices,SERVICE_MODULES} from './CityServicesLayout';
 import {CityMaterialBatch,type CityPart} from './CityMaterialBatch';
@@ -12,7 +12,7 @@ export class CityServices {
  constructor(track:CityTrack){this.root.name='authored-city-engineering';this.sites=cityServices(track);}
  async load(materials:Map<string,THREE.Material>){
   if(this.loaded)return;
-  const gltf=await new GLTFLoader().loadAsync(`${import.meta.env.BASE_URL}models/city-sample/city-services.glb`);gltf.scene.updateMatrixWorld(true);
+  const gltf=await loadAssetGLTF(`${import.meta.env.BASE_URL}models/city-sample/city-services.glb`);gltf.scene.updateMatrixWorld(true);
   const discarded=new Set<THREE.Material>(),textures=new Set<THREE.Texture>();
   for(const kind of Object.keys(SERVICE_MODULES)){
    const original=gltf.scene.getObjectByName(kind);if(!original)throw Error(`Missing engineering asset ${kind}`);
