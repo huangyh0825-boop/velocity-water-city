@@ -1,0 +1,54 @@
+[
+  {
+    "mobile": false,
+    "scenario": "city-five",
+    "beforeFrameMs": 29.644972067034942,
+    "afterFrameMs": 30.47486033519553,
+    "beforeGPU": 29.329663999999998,
+    "afterGPU": 30.174762666666666,
+    "beforeCalls": 826.2960893854749,
+    "afterCalls": 826.2960893854749,
+    "beforeTriangles": 81987920.88826816,
+    "afterTriangles": 82064344.88826816,
+    "frameChangePercent": 2.799423343304208
+  },
+  {
+    "mobile": false,
+    "scenario": "shortcut-five",
+    "beforeFrameMs": 28.971508379890352,
+    "afterFrameMs": 29.832681564249974,
+    "beforeGPU": 29.231957333333334,
+    "afterGPU": 30.07018666666667,
+    "beforeCalls": 904.7094972067039,
+    "afterCalls": 904.7094972067039,
+    "beforeTriangles": 82395802.21787709,
+    "afterTriangles": 82472226.21787709,
+    "frameChangePercent": 2.972483079125343
+  },
+  {
+    "mobile": true,
+    "scenario": "city-five",
+    "beforeFrameMs": 20.80921787709289,
+    "afterFrameMs": 20.07988826815018,
+    "beforeGPU": 20.597376,
+    "afterGPU": 19.714809333333335,
+    "beforeCalls": 845.927374301676,
+    "afterCalls": 845.927374301676,
+    "beforeTriangles": 21324064.44134078,
+    "afterTriangles": 21400488.44134078,
+    "frameChangePercent": -3.504839121058778
+  },
+  {
+    "mobile": true,
+    "scenario": "shortcut-five",
+    "beforeFrameMs": 22.7128491620195,
+    "afterFrameMs": 21.262849162015335,
+    "beforeGPU": 23.893714666666668,
+    "afterGPU": 21.98156,
+    "beforeCalls": 906.3240223463687,
+    "afterCalls": 906.3240223463687,
+    "beforeTriangles": 34092640.8575419,
+    "afterTriangles": 34169064.8575419,
+    "frameChangePercent": -6.3840515545220855
+  }
+]

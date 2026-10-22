@@ -7,6 +7,7 @@ import {CityAtmosphere} from './CityAtmosphere';
 import {SurfaceContacts} from './SurfaceContacts';
 import {CityDensity} from './CityDensity';
 import {cacheStaticTransforms} from '../core/StaticTransforms';
+import {architecturalFinish} from './ArchitecturalFinish';
 
 export const CITY_SAMPLE={center:.06,length:280} as const;
 export function inCitySample(track:CityTrack,angle:number){return Math.abs(angle/TAU-CITY_SAMPLE.center)*track.length<CITY_SAMPLE.length/2;}
@@ -42,7 +43,7 @@ export class CitySample {
    let asset=this.cache.get(low);
    if(!asset){asset=loadAssetGLTF(`${import.meta.env.BASE_URL}models/city-sample/waterfront${low?'-low':''}.glb`).then(g=>{
     g.scene.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.receiveShadow=true;const mats=Array.isArray(o.material)?o.material:[o.material];for(const mat of mats)if(mat instanceof THREE.MeshStandardMaterial){mat.envMapIntensity=.55;if(/Graphite joint/.test(mat.name)){mat.color.set('#14212a');mat.envMapIntensity=.2;mat.metalness=.05;}if(/glaz|glass/i.test(mat.name)){mat.metalness=0;if(/Blue laminated/.test(mat.name))mat.color.set('#d4e0e6');if(/Silver blue/.test(mat.name))mat.color.set('#718590');if(/Marina teal/.test(mat.name))mat.color.set('#b3c7ba');mat.envMapIntensity=.4;}if(/Concrete034/.test(mat.name))mat.color.set('#b4bec2');mat.aoMapIntensity=.85;this.density.glass.prepare(mat,low);if(low){mat.normalMap=null;if(mat instanceof THREE.MeshPhysicalMaterial)mat.clearcoat=0;mat.needsUpdate=true;}else{for(const t of [mat.map,mat.normalMap,mat.roughnessMap,mat.metalnessMap,mat.aoMap])if(t)t.anisotropy=4;}}}});return g.scene;
-   });this.cache.set(low,asset);}
+   }).then(group=>{group.traverse(o=>{if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(m instanceof THREE.MeshStandardMaterial)architecturalFinish(m);});return group;});this.cache.set(low,asset);}
    const [group]=await Promise.all([asset,this.density.setLow(low)]);if(this.disposed||request!==this.generation)return;
    await this.density.loadServices(group);if(this.disposed||request!==this.generation)return;
    const shell=this.root.parent?.getObjectByName('city-engineering-shell'),dispose=new Set<THREE.Material>();

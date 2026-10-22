@@ -1,13 +1,14 @@
 import * as THREE from 'three';
 import {CityTrack} from './CityTrack';
 import {canalBanks,CANAL_BANK} from './CanalBanks';
+import {marineMaterial,quayProfile} from '../environment/MarineSurfaces';
 
 
 export class CityTrackView {
  constructor(scene:THREE.Scene,track:CityTrack){
 
-  const dark=new THREE.MeshStandardMaterial({color:'#224459',metalness:.4,roughness:.4}),light=new THREE.MeshBasicMaterial({color:'#6edfea'}),dummy=new THREE.Object3D();
-  const spans=canalBanks(track),banks=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),dark,spans.length),rims=new THREE.InstancedMesh(new THREE.BoxGeometry(1,1,1),light,spans.length);
+  const dark=marineMaterial('quay',{color:'#d4dfe0',metalness:.08,roughness:1}),light=new THREE.MeshStandardMaterial({color:'#a8c2ca',metalness:.48,roughness:.48}),dummy=new THREE.Object3D();
+  const spans=canalBanks(track),banks=new THREE.InstancedMesh(quayProfile(),dark,spans.length),rims=new THREE.InstancedMesh(quayProfile(),light,spans.length);
   banks.name='canal-bank-spans';rims.name='canal-rim-spans';
   const height=CANAL_BANK.top-CANAL_BANK.bottom,center=(CANAL_BANK.top+CANAL_BANK.bottom)/2;
   spans.forEach((p,i)=>{

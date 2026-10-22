@@ -5,7 +5,7 @@ import { FlightController } from '../player/FlightController';
 import { BOAT_HULL } from '../physics/BoatCollisions';
 import {SurfaceContact} from './SurfaceContact';
 import {CITY_RAMPS} from './JumpLayout';
-import {ModelBatch} from '../player/ModelBatch';
+import {rampVisuals} from './RampVisuals';
 export interface RampData { id:string;angle:number;heading:number;width:number;length:number;height:number;minSpeed:number;baseHeight?:number;liftBase?:number;liftFactor?:number;entry:{x:number;z:number};lip:{x:number;z:number};landing:{x:number;z:number} }
 interface Pose { x:number;z:number;heading?:number }
 export interface RampDecision {boatId:string;rampId:string;reason:string;triggered:boolean;position:Pose;path:readonly Pose[];correction:number;speed:number;horizontalVelocity:{x:number;z:number};height:number;verticalSpeed:number;state:string;support:number}
@@ -23,25 +23,7 @@ export class Ramps {
     const layout=track.vertical?CITY_RAMPS.map(r=>({...r,angle:r.t*Math.PI*2})):(track.isSpline?[.28,.41,.876].map(t=>t*Math.PI*2):RAMP_ANGLES).map((angle,i)=>({id:`ramp-${i+1}`,angle,width:10,length:12,height:2,minSpeed:2}));
     this.data=layout.map(r=>({...r,heading:track.heading(r.angle),baseHeight:track.surface(track.point(r.angle)).height,entry:track.point(r.angle-r.length/track.radius),lip:track.point(r.angle),landing:track.point(r.angle+110/track.radius)}));
     if (!scene) return;
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute([
-      -5,0,-12, 5,0,-12, 5,2,0, -5,0,-12, 5,2,0, -5,2,0,
-      -5,0,-12, -5,2,0, -5,0,0, 5,0,-12, 5,0,0, 5,2,0,
-      -5,0,0, -5,2,0, 5,2,0, -5,0,0, 5,2,0, 5,0,0,
-    ], 3)); geometry.computeVertexNormals();
-    const material = new THREE.MeshStandardMaterial({ color: '#195b7d', metalness: 0.6, roughness: 0.35, side: THREE.DoubleSide }),stripMaterial = new THREE.MeshBasicMaterial({ color: '#83fff0' }),batch=new ModelBatch();
-    for (const ramp of this.data) {
-      const {angle}=ramp,group = new THREE.Group(), p = track.point(angle); group.position.set(p.x, (ramp.baseHeight??0)+0.16, p.z); group.rotation.y = track.heading(angle);group.name=ramp.id;
-      group.scale.set(ramp.width/10,ramp.height/2,ramp.length/12);
-      group.add(new THREE.Mesh(geometry, material));
-      for (const x of [-4.9, 4.9]) {
-        const strip = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.08, 12.2), stripMaterial);
-        strip.position.set(x, 1.05, -6); strip.rotation.x = -Math.atan2(2,12); group.add(strip);
-      }
-      const arrow = new THREE.Mesh(new THREE.BoxGeometry(0.4, 0.08, 6), stripMaterial); arrow.position.set(0, 1.05, -6); arrow.rotation.x = -Math.atan2(2,12); group.add(arrow);
-      group.updateMatrixWorld(true);group.traverse(o=>{if(o instanceof THREE.Mesh){const source=o.geometry,g=source.index?source.toNonIndexed():source.clone();if(!g.getAttribute('uv'))g.setAttribute('uv',new THREE.Float32BufferAttribute(new Float32Array(g.getAttribute('position').count*2),2));g.applyMatrix4(o.matrixWorld);batch.add(g,o.material as THREE.Material,new THREE.Vector3());if(source!==geometry)source.dispose();}});
-    }
-    const visuals=new THREE.Group();visuals.name='ramp-visuals';batch.build(visuals);scene.add(visuals);geometry.dispose();
+    rampVisuals(scene,track,this.data);
   }
   local(p:Pose,r:RampData){const dx=p.x-r.lip.x,dz=p.z-r.lip.z;return{along:Math.sin(r.heading)*dx+Math.cos(r.heading)*dz,radial:Math.cos(r.heading)*dx-Math.sin(r.heading)*dz};}
   support(p:Pose,r:RampData,heading:number){

@@ -1,0 +1,49 @@
+{
+  "phase": "finished",
+  "steps": 21016,
+  "passed": [
+    72,
+    72,
+    72,
+    72,
+    72
+  ],
+  "times": [
+    350.23333333334347,
+    269.6833333334167,
+    306.61666666671647,
+    326.80000000003145,
+    344.01666666668245
+  ],
+  "routes": [
+    "tunnel-cut",
+    "harbor-cut"
+  ],
+  "wallHits": 168,
+  "launches": 22,
+  "landings": 17,
+  "ai": [
+    {
+      "id": "ai-1",
+      "energy": 12.733333333333078,
+      "tricks": false
+    },
+    {
+      "id": "ai-2",
+      "energy": 15.333333333333172,
+      "tricks": false
+    },
+    {
+      "id": "ai-3",
+      "energy": 15.16666666666655,
+      "tricks": true
+    },
+    {
+      "id": "ai-4",
+      "energy": 16.299999999999976,
+      "tricks": true
+    }
+  ],
+  "errors": [],
+  "method": "Production-compiled real Game.frame, unchanged 60Hz driving/collision/AI/race. Automatic steering/braking input, no player routeIntent, main lap1, S1 lap2, S2 lap3. Player waits before the last gate for all four AI to finish. Accelerated QA renders each 12th physical step; no production rendering or physics settings changed."
+}

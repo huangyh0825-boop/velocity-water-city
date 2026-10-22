@@ -20,6 +20,12 @@ export function paintRoomAtlas(canvas:HTMLCanvasElement){
    c.fillStyle='#25353f';c.fillRect(22,49,68,146);for(let j=0;j<5;j++){c.fillStyle='#9caaac';c.fillRect(27,56+j*27,59,4);c.fillStyle=j%2?'#519caa':'#b39d7d';c.fillRect(32,63+j*27,18,16);c.fillStyle='#3d505c';c.fillRect(56,63+j*27,25,16);}
    c.fillStyle='#b5b9ad';c.fillRect(123,145,105,8);c.fillStyle='#3a535d';c.fillRect(133,153,85,44);c.fillStyle='#e5b76e';c.fillRect(146,86,58,39);
   }
+  // Baked ceiling baffles, skirting, floor joints and soft reveal shadows add
+  // depth to the existing room cards at exactly the same atlas/sample budget.
+  c.fillStyle='rgba(9,22,30,.30)';for(let j=0;j<5;j++)c.fillRect(12+j*48,29,2,160);
+  c.fillStyle='rgba(190,205,204,.13)';for(let j=0;j<4;j++){c.fillRect(0,205+j*14,256,1);c.fillRect(35+j*61,198,1,58);}
+  const reveal=c.createLinearGradient(0,0,29,0);reveal.addColorStop(0,'rgba(4,13,19,.75)');reveal.addColorStop(1,'rgba(4,13,19,0)');c.fillStyle=reveal;c.fillRect(0,29,29,167);
+  c.fillStyle='#8b9694';c.fillRect(212,167,15,22);c.fillStyle='#38675c';c.beginPath();c.ellipse(219,151,12,22,-.3,0,Math.PI*2);c.fill();c.fillStyle='#4e7e6b';c.beginPath();c.ellipse(209,157,8,15,.4,0,Math.PI*2);c.fill();
   c.fillStyle='rgba(10,20,30,.35)';c.fillRect(0,191,256,7);c.restore();
  }
 }
@@ -62,7 +68,7 @@ export class CityGlass {
  constructor(){const canvas=document.createElement('canvas');paintRoomAtlas(canvas);this.atlas=new THREE.CanvasTexture(canvas);this.atlas.colorSpace=THREE.SRGBColorSpace;this.atlas.anisotropy=2;}
  prepare(material:THREE.MeshStandardMaterial,low:boolean){
   if(!/glaz|glass/i.test(material.name)||material.userData.cityRoomGlass)return;
-  material.userData.cityRoomGlass=true;material.metalness=0;material.roughness=.24;material.envMapIntensity=.32;
+  material.userData.cityRoomGlass=true;material.metalness=0;material.roughness=.82;material.envMapIntensity=.38;
   if(material instanceof THREE.MeshPhysicalMaterial){material.clearcoat=low?0:.12;material.clearcoatRoughness=.2;}
   material.onBeforeCompile=shader=>{
    shader.uniforms.cityRoomAtlas={value:this.atlas};
@@ -78,7 +84,7 @@ export class CityGlass {
      float cityFresnel=pow(1.0-clamp(abs(dot(normalize(vViewPosition),normal)),0.0,1.0),3.0);
      float cityRoomWeight=cityNear*cityVertical*(.76-.38*cityFresnel);
      diffuseColor.rgb=mix(diffuseColor.rgb,cityRoom*.22,cityRoomWeight);
-     totalEmissiveRadiance+=cityRoom*(.52-.2*cityFresnel)*cityNear;
+     totalEmissiveRadiance+=cityRoom*(.35-.13*cityFresnel)*cityNear;
     }
    `);
   };

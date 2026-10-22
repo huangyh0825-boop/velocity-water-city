@@ -50,9 +50,9 @@ export class Water {
     vec2 p=world.xz;vec3 V=normalize(cameraPosition-world);
     float distanceToEye=length(cameraPosition-world),nearDetail=1.-smoothstep(35.,170.,distanceToEye);
     float height;vec2 slope;waterWaves(p,time,height,slope);
-    vec3 ripple=texture2D(normalSampler,p*.043+vec2(time*.009,-time*.006)).xyz*2.-1.;
-    vec3 micro=texture2D(normalSampler,p*vec2(-.137,.131)+vec2(-time*.018,time*.014)).xyz*2.-1.;
-    slope+=ripple.xy*.75+micro.xy*(.30*nearDetail*detail);
+    vec3 ripple=texture2D(normalSampler,p*vec2(.037,.052)+vec2(time*.009,-time*.006)).xyz*2.-1.;
+    vec3 micro=texture2D(normalSampler,p*vec2(-.123,.146)+vec2(-time*.018,time*.014)).xyz*2.-1.;
+    slope+=ripple.xy*.48+micro.xy*(.18*nearDetail*detail);
     float foam=0.,aeration=0.;
     for(int i=0;i<${WAKE_SAMPLES};i++){
      if(i>=wakeCount)break;
@@ -78,12 +78,12 @@ export class Water {
     vec3 sun=normalize(vec3(-.45,.8,.4));float NV=max(.001,dot(N,V));
     float fresnel=.0204+.9796*pow(1.-NV,5.);
     float waterVariation=noise(p*.024)+noise(p*.071)*.25;
-    vec3 body=mix(vec3(.005,.045,.10),vec3(.012,.13,.21),smoothstep(.10,1.1,waterVariation));
+    vec3 body=mix(vec3(.009,.065,.10),vec3(.025,.15,.18),smoothstep(.10,1.1,waterVariation));
     body*=.75+.30*max(0.,dot(N,sun));body+=vec3(.013,.043,.039)*(height+.08)*2.;
     vec3 R=reflect(-V,N);
     vec3 sky=mix(vec3(.57,.76,.82),vec3(.075,.30,.49),smoothstep(0.,.75,R.y));
     vec2 reflectedUV=mirrorCoord.xy/mirrorCoord.w;
-    vec2 distortion=N.xz*(.015+1.2/max(4.,distanceToEye));
+    vec2 distortion=N.xz*(.010+.8/max(4.,distanceToEye));
     reflectedUV=clamp(reflectedUV+distortion,vec2(.002),vec2(.998));
     vec2 blur=vec2(.0012,.0012)*(1.+distanceToEye*.001);
     vec3 reflectionSample=texture2D(mirrorSampler,reflectedUV).rgb*.40;
@@ -91,7 +91,7 @@ export class Water {
     reflectionSample+=(texture2D(mirrorSampler,reflectedUV+vec2(blur.x,-blur.y)).rgb+texture2D(mirrorSampler,reflectedUV+vec2(-blur.x,blur.y)).rgb)*.15;
     vec3 reflected=mix(sky,reflectionSample,reflectionEnabled);
     vec3 col=mix(body,reflected,clamp(fresnel*.93,0.,.94));
-    vec3 H=normalize(V+sun);float NH=max(0.,dot(N,H));float rough=.10+.03*(1.-nearDetail);
+    vec3 H=normalize(V+sun);float NH=max(0.,dot(N,H));float rough=.14+.035*(1.-nearDetail);
     float alpha=rough*rough,denom=NH*NH*(alpha*alpha-1.)+1.;
     float D=alpha*alpha/(3.14159265*denom*denom+.00001);
     col+=vec3(1.,.91,.72)*min(2.2,D*.018)*max(0.,dot(N,sun));

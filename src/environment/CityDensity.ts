@@ -12,6 +12,7 @@ import {CityMaterialBatch} from './CityMaterialBatch';
 import {CityFurnishings} from './CityFurnishings';
 import {readableSign,atlasCellUV} from './ReadableSign';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
+import {architecturalFinish} from './ArchitecturalFinish';
 
 interface Part {geometry:THREE.BufferGeometry;material:THREE.Material}
 interface Library {scene:THREE.Group;parts:Map<string,Part[]>}
@@ -57,11 +58,14 @@ export class CityDensity {
       this.glass.prepare(material,low);list.push({geometry,material});
      }});parts.set(`${kind}:${tier}`,list);
     }
+    // Shared materials appear in several LOD roots. Finish once after the
+    // loader's existing per-part initialization has completed for all roots.
+    for(const list of parts.values())for(const {material}of list)if(material instanceof THREE.MeshStandardMaterial)architecturalFinish(material);
     return {scene:g.scene,parts};
    });this.cache.set(low,promise);}
    const library=await promise;if(this.disposed||request!==this.generation)return;
    let concrete:THREE.MeshStandardMaterial|undefined;library.scene.traverse(o=>{if(o instanceof THREE.Mesh&&/Concrete034/.test((o.material as THREE.Material).name))concrete=o.material as THREE.MeshStandardMaterial;});
-   if(concrete){(this.terrain.material as THREE.Material).dispose();const material=concrete.clone();material.color.set('#88989f');material.side=THREE.DoubleSide;this.terrain.material=material;}
+   if(concrete){(this.terrain.material as THREE.Material).dispose();const material=concrete.clone();material.color.set('#a0a6a4');material.side=THREE.DoubleSide;this.terrain.material=material;}
    this.library=library;this.createInstances(library);
    this.foundation.mesh.visible=!low;this.interiors.setLow(low);this.signs.visible=!low;this.links.visible=!low;this.loaded=true;this.error='';this.previous.fill(-1);this.lastTime=-Infinity;
    const center=this.track.point(.06*Math.PI*2);this.update(new THREE.Vector3(center.x,5,center.z),0,true);
