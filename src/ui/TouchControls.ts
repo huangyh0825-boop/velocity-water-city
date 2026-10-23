@@ -11,8 +11,8 @@ const icons={
  settings:icon('<path d="M4 6h16M4 12h16M4 18h16"/>')
 };
 export const TOUCH_CONTROLS=`<div class="touch mobile-steering" aria-label="转向控制"><button data-action="left" aria-label="左转">${icons.left}</button><button data-action="right" aria-label="右转">${icons.right}</button></div>
- <div class="touch mobile-actions" aria-label="减速与技能"><button data-action="brake" aria-label="减速" class="mobile-brake">${icons.brake}<span>减速</span></button><button data-action="trick" aria-label="空中特技" class="mobile-trick" disabled>${icons.trick}<span>腾空特技</span></button><button data-action="nitro" aria-label="氮气加速" class="mobile-nitro">${icons.nitro}<span>氮气</span><small id="touch-nitro-level">40%</small></button></div>
- <span class="mobile-drive-note">自动加速 · 按住减速</span><button class="mobile-settings" id="mobile-settings" type="button" aria-label="打开游戏设置" aria-expanded="false" aria-controls="mobile-settings-shade">${icons.settings}</button><button id="mobile-settings-shade" class="mobile-settings-shade" type="button" aria-label="关闭游戏设置" hidden></button>`;
+ <div class="touch mobile-actions" aria-label="减速与技能"><button data-action="brake" aria-label="减速" class="mobile-brake">${icons.brake}<span>减速</span></button><span class="mobile-drive-note">自动加速<br>按住减速</span><button data-action="trick" aria-label="空中特技" class="mobile-trick" disabled>${icons.trick}<span>腾空特技</span></button><button data-action="nitro" aria-label="氮气加速" class="mobile-nitro">${icons.nitro}<span>氮气</span><small id="touch-nitro-level">40%</small></button></div>
+ <button class="mobile-settings" id="mobile-settings" type="button" aria-label="打开游戏设置" aria-expanded="false" aria-controls="mobile-settings-shade">${icons.settings}</button><button id="mobile-settings-shade" class="mobile-settings-shade" type="button" aria-label="关闭游戏设置" hidden></button>`;
 
 /** Changes DOM only when availability or the integer energy level changes. */
 export class TouchControls {
@@ -23,6 +23,7 @@ export class TouchControls {
  private menu=false;private mask=-1;private percent=-1;
  constructor(private root:HTMLElement,private input:InputController){
   root.dataset.touchMenu='false';root.dataset.touchFinished='false';
+  input.bindTouchSurface(root);
   this.buttons=Array.from(root.querySelectorAll<HTMLButtonElement>('[data-action]'));for(const b of this.buttons)input.bindButton(b,b.dataset.action!);
   this.settings=root.querySelector('#mobile-settings')!;this.shade=root.querySelector('#mobile-settings-shade')!;this.level=root.querySelector('#touch-nitro-level')!;
   this.settings.onclick=()=>this.setMenu(!this.menu);this.shade.onclick=()=>this.setMenu(false);

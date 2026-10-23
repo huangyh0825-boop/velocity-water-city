@@ -1,3 +1,4 @@
+import {raceTouchSurface} from './RaceTouchSurface';
 export interface InputState { throttle: number; brake: number; steer: number }
 export class InputController {
   private keys = new Set<string>();
@@ -6,6 +7,8 @@ export class InputController {
   private focused = true;
   private touchEnabled = true;
   private buttons = new Map<HTMLButtonElement,string>();
+  private releaseTouchSurface?:()=>void;
+  bindTouchSurface(root:HTMLElement){if(!this.touchMode)return;this.releaseTouchSurface?.();this.releaseTouchSurface=raceTouchSurface(root);}
   private onBlur = () => { this.focused=false;this.clear(); };
   private onFocus = () => { this.focused=true; };
   private onKey = (event: KeyboardEvent) => {
@@ -54,6 +57,6 @@ export class InputController {
   dispose() {
     window.removeEventListener('keydown', this.onKey); window.removeEventListener('keyup', this.onKey);
     window.removeEventListener('blur', this.onBlur);
-    window.removeEventListener('focus', this.onFocus);this.clear();this.buttons.clear();
+    window.removeEventListener('focus', this.onFocus);this.releaseTouchSurface?.();this.releaseTouchSurface=undefined;this.clear();this.buttons.clear();
   }
 }

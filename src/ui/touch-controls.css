@@ -1,8 +1,9 @@
 .mobile-settings,.mobile-settings-shade,.mobile-drive-note{display:none}
+[data-touch-surface="race"]{touch-action:none;overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 @media(pointer:coarse){
  .touch.mobile-steering,.touch.mobile-actions{bottom:max(20px,env(safe-area-inset-bottom));z-index:3;gap:10px}
  .touch.mobile-steering{left:max(20px,env(safe-area-inset-left))}
- .touch.mobile-actions{right:max(20px,env(safe-area-inset-right));width:178px;height:158px;display:block}
+ .touch.mobile-actions{right:max(20px,env(safe-area-inset-right));width:178px;height:178px;display:block}
  .touch.mobile-steering button,.touch.mobile-actions button{width:72px;height:72px;border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:12px;background:#0a2c3ee8;backdrop-filter:none;box-shadow:0 3px 12px #00142122}
  .touch.mobile-steering svg,.touch.mobile-actions svg{width:30px;height:30px;flex:none;pointer-events:none}
  .touch.mobile-steering svg{width:42px;height:42px;overflow:visible;transition:transform .1s ease-out;color:#b5fff2}
@@ -20,7 +21,7 @@
  .touch.mobile-actions .mobile-nitro{right:0;bottom:2px;width:86px;height:86px;border-radius:50%;border:2px solid #86ecf9;background:#12475cef;gap:1px}
  .touch.mobile-actions .mobile-nitro svg{width:26px;height:26px;color:#a5f4ff}
  .touch.mobile-actions .mobile-nitro small{font-size:11px;color:#a5f4ff}
- .mobile-drive-note{display:block;position:absolute;left:max(20px,env(safe-area-inset-left));bottom:102px;font-size:10px;letter-spacing:1px;text-shadow:0 1px 7px #082536;pointer-events:none}
+ .mobile-drive-note{display:block;position:absolute;left:0;bottom:69px;width:62px;text-align:center;font-size:10px;line-height:13px;letter-spacing:.3px;text-shadow:0 1px 7px #082536;pointer-events:none}
  .topbar{display:none}
  .race-hud{top:max(16px,env(safe-area-inset-top));left:max(20px,env(safe-area-inset-left));right:auto;border-radius:9px;backdrop-filter:none}
  .race-hud>div{padding:7px 12px}.race-hud small{font-size:8px;letter-spacing:2px;margin-bottom:3px}.race-hud strong{font-size:17px}
@@ -43,21 +44,21 @@
  [data-touch-finished="true"] .mobile-settings{display:none}
 }
 @media(pointer:coarse) and (max-width:700px){
- .touch.mobile-steering{left:max(14px,env(safe-area-inset-left))}.touch.mobile-actions{right:max(14px,env(safe-area-inset-right));width:158px;height:145px}
+ .touch.mobile-steering{left:max(14px,env(safe-area-inset-left))}.touch.mobile-actions{right:max(14px,env(safe-area-inset-right));width:158px;height:165px}
  .touch.mobile-steering button{width:62px;height:66px;border-radius:19px}.touch.mobile-steering{gap:8px}
  .touch.mobile-actions .mobile-nitro{width:78px;height:78px}.touch.mobile-actions .mobile-trick{width:64px;height:65px;left:4px}.touch.mobile-actions .mobile-brake{width:58px;height:58px}
- .mobile-drive-note{left:max(14px,env(safe-area-inset-left));bottom:96px}
+ .mobile-drive-note{bottom:65px;width:58px}
  .speedometer #status{max-width:calc(100% - 360px);font-size:9px}
 }
 @media(pointer:coarse) and (max-width:600px) and (orientation:portrait){
  .race-hud{left:14px;right:auto;top:max(16px,env(safe-area-inset-top));justify-content:initial}.race-hud>div{padding:7px 10px}.race-hud strong{font-size:15px}
  .speedometer{top:88px;right:18px;width:123px}.speedometer #status{left:auto;right:18px;top:132px;bottom:auto;transform:none;max-width:165px;text-align:right;font-size:10px}
- .touch.mobile-steering,.touch.mobile-actions{bottom:max(28px,env(safe-area-inset-bottom))}.mobile-drive-note{bottom:104px;font-size:9px}
+ .touch.mobile-steering,.touch.mobile-actions{bottom:max(28px,env(safe-area-inset-bottom))}
  [data-touch-menu="true"] .tools{top:76px;right:20px}
  [data-touch-menu="true"] .audio-controls{top:310px;right:20px}
  .rotate-hint{top:38%;font-size:11px;z-index:1;pointer-events:none}
 }
 @media(pointer:coarse) and (max-height:350px) and (orientation:landscape){
- .touch.mobile-steering,.touch.mobile-actions{bottom:max(12px,env(safe-area-inset-bottom))}.mobile-drive-note{bottom:89px}
+ .touch.mobile-steering,.touch.mobile-actions{bottom:max(12px,env(safe-area-inset-bottom))}
  [data-touch-menu="true"] .tools{top:61px;padding:8px;gap:5px}[data-touch-menu="true"] .tools button{min-height:40px;padding:6px 8px}
 }
