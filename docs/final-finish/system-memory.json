@@ -1,0 +1,8 @@
+{
+  "AvailableMBytes": 509,
+  "CacheBytes": 21356544,
+  "CommittedBytes": 35106594816,
+  "PoolNonpagedBytes": 2467225600,
+  "PoolPagedBytes": 1489354752,
+  "ModifiedPageListBytes": 30703616
+}

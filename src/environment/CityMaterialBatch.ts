@@ -7,7 +7,7 @@ interface Slot {mesh:THREE.BatchedMesh;id:number;geometry:(number|undefined)[]}
 export class CityMaterialBatch {
  readonly meshes:THREE.BatchedMesh[]=[];
  private slots:Slot[][];
- constructor(parts:Map<string,CityPart[]>,sites:Placement[],poses:THREE.Matrix4[]){
+ constructor(parts:Map<string,CityPart[]>,sites:Placement[],poses:THREE.Matrix4[],colors?:readonly THREE.Color[]){
   this.slots=sites.map(()=>[]);
   const groups=new Map<THREE.Material,Map<string,THREE.BufferGeometry>>();
   for(const [key,list] of parts)for(const p of list){let group=groups.get(p.material);if(!group){group=new Map();groups.set(p.material,group);}group.set(key,p.geometry);}
@@ -21,7 +21,7 @@ export class CityMaterialBatch {
    const ids=new Map([...geometries].map(([k,g])=>[k,mesh.addGeometry(g)]));
    sites.forEach((s,i)=>{
     const geometry=['near','mid','far'].map(t=>ids.get(`${s.kind}:${t}`)),first=geometry.find(id=>id!==undefined);if(first===undefined)return;
-    const id=mesh.addInstance(first);mesh.setMatrixAt(id,poses[i]);mesh.setColorAt(id,new THREE.Color(tints[s.tint]));mesh.setVisibleAt(id,false);this.slots[i].push({mesh,id,geometry});
+    const id=mesh.addInstance(first);mesh.setMatrixAt(id,poses[i]);mesh.setColorAt(id,colors?.[i]??new THREE.Color(tints[s.tint]));mesh.setVisibleAt(id,false);this.slots[i].push({mesh,id,geometry});
    });
    mesh.computeBoundingBox();mesh.computeBoundingSphere();this.meshes.push(mesh);
   }

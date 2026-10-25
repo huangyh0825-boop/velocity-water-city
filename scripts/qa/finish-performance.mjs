@@ -1,0 +1,25 @@
+import {freemem,totalmem} from 'node:os';import {preview} from 'vite';import {loadPlaywright} from './qa-playwright.mjs';import {writeFile,mkdir} from 'node:fs/promises';import assert from 'node:assert/strict';
+const servers=[];for(const[label,port]of[['before',5322],['after',5323]])servers.push(await preview({build:{outDir:`.qa/finish-${label}`},preview:{host:'127.0.0.1',port,strictPort:true}}));
+const {chromium}=loadPlaywright(),results=[];let browser;
+try{for(const[pass,label,port]of[[1,'before',5322],[1,'after',5323],[2,'after',5323],[2,'before',5322]]){
+ browser=await chromium.launch({channel:'msedge',headless:true});const memoryBeforeLoad=freemem();const p=await browser.newPage({viewport:{width:1600,height:1000},deviceScaleFactor:1}),errors=[];p.on('pageerror',e=>errors.push(e.message));
+ await p.addInitScript(()=>{let seed=8128461;Math.random=()=>((seed=(Math.imul(seed,1664525)+1013904223)>>>0)/4294967296);});
+ await p.goto(`http://127.0.0.1:${port}/scripts/qa/vertical.html`);await p.waitForFunction(()=>window.verticalQA,null,{timeout:180000});await p.evaluate(()=>window.verticalQA.ready());
+ for(const[scenario,t,route,ai,boost]of[['city-separated',.06,null,false,false],['city-five',.06,null,true,false],['elevated-five',.18,'harbor-cut',true,false],['nitro-five',.06,null,true,true]]){
+  const availableBefore=freemem();const r=await p.evaluate(async({t,route,ai,boost})=>{
+   const g=window.testGame,q=window.verticalQA,frames=[],cpu=[],gpu=[],calls=[],triangles=[],pending=[];q.fixture(t,route,40,ai);q.setSpeedCap(144);q.setBoost(boost);g.nitro.energy=100;
+   for(let i=0;i<180;i++){await new Promise(requestAnimationFrame);q.step(false);}q.fixture(t,route,40,ai);q.setSpeedCap(144);q.setBoost(boost);g.nitro.energy=100;
+   const gl=g.renderer.getContext(),ext=gl.getExtension('EXT_disjoint_timer_query_webgl2'),debug=gl.getExtension('WEBGL_debug_renderer_info');g.renderer.info.autoReset=false;let last;
+   for(let i=0;i<240;i++){await new Promise(requestAnimationFrame);const now=performance.now();g.renderer.info.reset();let query;
+    if(ext&&i%8===0){query=gl.createQuery();gl.beginQuery(ext.TIME_ELAPSED_EXT,query);}const start=performance.now();q.step(false);if(query){gl.endQuery(ext.TIME_ELAPSED_EXT);pending.push(query);}
+    if(last!==undefined){frames.push(now-last);cpu.push(performance.now()-start);calls.push(g.renderer.info.render.calls);triangles.push(g.renderer.info.render.triangles);}last=now;
+    for(let j=pending.length-1;j>=0;j--)if(gl.getQueryParameter(pending[j],gl.QUERY_RESULT_AVAILABLE)){if(!gl.getParameter(ext.GPU_DISJOINT_EXT))gpu.push(gl.getQueryParameter(pending[j],gl.QUERY_RESULT)/1e6);gl.deleteQuery(pending[j]);pending.splice(j,1);}
+   }pending.forEach(v=>gl.deleteQuery(v));g.renderer.info.autoReset=true;g.paused=true;
+   const avg=a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:null,sorted=[...frames].sort((a,b)=>a-b);
+   return{fps:1000/avg(frames),frameMs:avg(frames),p95Ms:sorted[Math.floor(sorted.length*.95)],cpuMs:avg(cpu),gpuMs:avg(gpu),gpuSamples:gpu.length,calls:avg(calls),triangles:avg(triangles),pixelRatio:g.renderer.getPixelRatio(),waterSegments:g.water.mesh.geometry.parameters.widthSegments,shadow:g.citySample.sun?.shadow.mapSize.toArray(),renderer:debug?gl.getParameter(debug.UNMASKED_RENDERER_WEBGL):null,end:[g.craft,...g.aiCraft].map(c=>({x:c.model.x,z:c.model.z,speed:c.model.speed,route:c.model.route??null})),passed:g.race.racers.map(r=>r.passed)};
+  },{t,route,ai,boost});results.push({pass,label,scenario,memory:{total:totalmem(),beforeLoad:memoryBeforeLoad,beforeScene:availableBefore,afterScene:freemem()},...r});console.log(JSON.stringify({pass,label,scenario,...r}));
+ }assert.deepEqual(errors,[]);await p.evaluate(()=>{window.testGame.dispose();window.testGame.renderer.forceContextLoss();});await p.close();await browser.close();browser=undefined;await new Promise(r=>setTimeout(r,3000));
+}
+ for(const scenario of['city-separated','city-five','elevated-five','nitro-five']){const group=results.filter(r=>r.scenario===scenario);for(const r of group){assert.deepEqual(r.end,group[0].end);assert.deepEqual(r.passed,group[0].passed);assert.equal(r.waterSegments,320);assert.equal(r.pixelRatio,1);}}
+ await mkdir('work/final-finish',{recursive:true});await writeFile('work/final-finish/performance.json',JSON.stringify({method:'Fresh Edge process for each ABBA pass (before, after, after, before); previous process is closed and GPU context released before the next pass. Available system memory recorded before/after each scene. Identical 1600x1000 DPR1 desktop standard. Real Game.frame at 60Hz physical steps, 180 warmup then 240 measured RAF frames per scene, all samples retained. Renderer counts include local depth, mirror and main passes. GPU uses non-disjoint timer queries every eighth frame. No recording or concurrent GPU QA. Physical end states and checkpoint progress asserted identical across all four passes.',results},null,2));
+}finally{await browser?.close();for(const s of servers)await s.close();}

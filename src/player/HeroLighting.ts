@@ -92,7 +92,7 @@ export class HeroLighting {
    material.onBeforeCompile=original.compile;material.customProgramCacheKey=original.key;material.envMap=original.environment;material.envMapIntensity=original.intensity;this.originals.delete(material);
    }
   }
-  for(const surface of this.surfaces)if(this.environment&&surface.envMap!==this.environment){surface.envMap=this.environment;surface.envMapIntensity=/fabric|textile|nylon/i.test(surface.name)?.22:.72;surface.needsUpdate=true;}
+  for(const surface of this.surfaces)if(this.environment&&surface.envMap!==this.environment){surface.envMap=this.environment;surface.envMapIntensity=typeof surface.userData.finishEnvironment==='number'?surface.userData.finishEnvironment:/fabric|textile|nylon/i.test(surface.name)?.22:.72;surface.needsUpdate=true;}
  }
  update(renderer:THREE.WebGLRenderer,scene:THREE.Scene,hero:THREE.Object3D){
   this.prepare(scene,hero);

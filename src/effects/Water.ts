@@ -18,6 +18,7 @@ export class Water {
  private low=false;
  private pool?:WakePool;
  private active:WakeStamp[]=[];
+ private wakeView=new THREE.Frustum();private wakeViewMatrix=new THREE.Matrix4();private wakeBound=new THREE.Sphere(new THREE.Vector3(),14);
  private channels:{mesh:THREE.Mesh;visible:boolean}[]=[];
  private wakePositions=Array.from({length:WAKE_SAMPLES},()=>new THREE.Vector4());
  private wakeAges=Array.from({length:WAKE_SAMPLES},()=>new THREE.Vector2(10,0));
@@ -65,17 +66,21 @@ export class Water {
      // Keep every wave, stamp and texture sample inside it; skip only zero work.
      if(gate==0. || strength==0.)continue;
      float spread=.22+aft*.27+age*.35;
-     float edge=abs(lateral)-spread,width=.10+age*.12;
+     float edge=abs(lateral)-spread,width=.16+age*.20;
      float envelope=exp(-edge*edge/(width*width))*gate;
-     float life=pow(max(0.,1.-age/1.45),1.8)*smoothstep(0.,.08,age)*strength;
+     float life=pow(max(0.,1.-age/1.45),1.45)*smoothstep(0.,.08,age)*strength;
      vec2 right=vec2(ch,-sh)*sign(lateral);
      slope+=right*envelope*sin(edge*25.-age*7.)*life*.055;
-     float cells=noise(p*12.+vec2(age*2.,-age*3.));
-     foam+=envelope*life*smoothstep(.30,.78,cells)*.35;
-     aeration+=exp(-lateral*lateral/(.22+age*.5))*gate*life*.12;
+     float cells=noise(p*4.5+vec2(age*.7,-age*.9));
+     float crest=envelope*life*smoothstep(.28,.74,cells)*.70;
+     float churn=exp(-lateral*lateral/(.32+age*.7))*gate*life;
+     // Overlapping stamps describe the same crest, not separate opaque layers.
+     // Max preserves the broken V edge without bleaching a rectangle of water.
+     foam=max(foam,crest+churn*smoothstep(.44,.76,cells)*.12);
+     aeration=max(aeration,churn*.24);
     }
     vec3 N=normalize(vec3(-slope.x,1.,-slope.y));
-    vec3 sun=normalize(vec3(-.45,.8,.4));float NV=max(.001,dot(N,V));
+    vec3 sun=normalize(vec3(-155.,165.,90.));float NV=max(.001,dot(N,V));
     float fresnel=.0204+.9796*pow(1.-NV,5.);
     float waterVariation=noise(p*.024)+noise(p*.071)*.25;
     vec3 body=mix(vec3(.009,.065,.10),vec3(.025,.15,.18),smoothstep(.10,1.1,waterVariation));
@@ -125,10 +130,11 @@ export class Water {
   /** Raised surfaces share current-frame reflection and the full water shader;
    * exclude their water skin from its own reflection target to prevent feedback. */
   channel(geometry:THREE.BufferGeometry){const mesh=new THREE.Mesh(geometry,this.channelMaterial);mesh.name='elevated-water-surface';mesh.renderOrder=-2;mesh.onBeforeRender=this.prepare;this.channels.push({mesh,visible:true});return mesh;}
- update(time:number){
+ update(time:number,camera=this.preparedCamera){
   this.material.uniforms.time.value=time;
   const active=this.active;active.length=0;
-  if(this.pool)for(const p of this.pool.stamps)if(p.age<this.pool.lifetime)active.push(p);
+  if(camera){camera.updateMatrixWorld();this.wakeView.setFromProjectionMatrix(this.wakeViewMatrix.multiplyMatrices(camera.projectionMatrix,camera.matrixWorldInverse));}
+  if(this.pool)for(const p of this.pool.stamps)if(p.age<this.pool.lifetime){this.wakeBound.center.set(p.x,p.height??0,p.z);if(!camera||this.wakeView.intersectsSphere(this.wakeBound))active.push(p);}
   active.sort(byAge);
   const count=Math.min(WAKE_SAMPLES,active.length);
   for(let i=0;i<count;i++){

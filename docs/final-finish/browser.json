@@ -1,0 +1,60 @@
+{
+  "checks": {
+    "autoAccelerationUsesRealDrivingModel": true,
+    "raceSurfaceAndSafariGestureGuard": true,
+    "trustedTwoFingerDefaultCanceledWithoutLosingButtons": true,
+    "nativeMultitouchAndCancelledCapture": true,
+    "brakeOverridesAndRestoresThrottle": true,
+    "airborneTrickUsesExistingTrickController": true,
+    "settingsClearHeldInputAndRetainQualityToggle": true,
+    "homeGesturePolicyRestoredAfterDispose": true,
+    "finishAndNewGameClearMenuState": true,
+    "desktopRemainsManual": true
+  },
+  "layouts": [
+    {
+      "width": 844,
+      "height": 390,
+      "noOverlap": true,
+      "icons": true
+    },
+    {
+      "width": 740,
+      "height": 360,
+      "noOverlap": true,
+      "icons": true
+    },
+    {
+      "width": 667,
+      "height": 375,
+      "noOverlap": true,
+      "icons": true
+    },
+    {
+      "width": 568,
+      "height": 320,
+      "noOverlap": true,
+      "icons": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "noOverlap": true,
+      "icons": true
+    },
+    {
+      "width": 320,
+      "height": 640,
+      "noOverlap": true,
+      "icons": true
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "noOverlap": true,
+      "icons": true
+    }
+  ],
+  "errors": [],
+  "nativeZoomLimit": "Native viewport pinch could not be observed on the unguarded Windows headless baseline; physical phone zoom is not claimed as tested."
+}

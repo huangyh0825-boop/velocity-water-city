@@ -4,6 +4,7 @@ import { ModelBatch } from './ModelBatch';
 import { Rider } from './Rider';
 import {loadVisual} from './VisualAssets';
 import {RacerMaterials} from './RacerMaterials';
+import {refineRacecraft} from './RacecraftDetails';
 export class Watercraft {
   readonly model: DrivingModel;
   readonly object = new THREE.Group();
@@ -62,6 +63,7 @@ export class Watercraft {
     const request=++this.visualRequest;
     try{const [boat,racer]=await Promise.all([loadVisual('watercraft',low),loadVisual('rider',low)]);if(request!==this.visualRequest)return;
       this.finishes.dispose();this.finishes=new RacerMaterials();
+      refineRacecraft(boat,racer);
       this.finishes.apply(boat,this.color);this.finishes.apply(racer,this.color);
       boat.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.receiveShadow=true;}});
       if(this.asset)this.visual.remove(this.asset);

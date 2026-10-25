@@ -13,6 +13,7 @@ import {CityFurnishings} from './CityFurnishings';
 import {readableSign,atlasCellUV} from './ReadableSign';
 import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 import {architecturalFinish} from './ArchitecturalFinish';
+import {districtFinish} from './DistrictFinish';
 
 interface Part {geometry:THREE.BufferGeometry;material:THREE.Material}
 interface Library {scene:THREE.Group;parts:Map<string,Part[]>}
@@ -26,6 +27,7 @@ export class CityDensity {
  private cache=new Map<boolean,Promise<Library>>();private batches=new Map<string,Batch>();
  private combined?:CityMaterialBatch;private multiDraw=false;private library?:Library;
  private generation=0;private disposed=false;private previous:number[];private poses:THREE.Matrix4[];
+ private siteColors:THREE.Color[];
  private lastCamera=new THREE.Vector3(Infinity,Infinity,Infinity);private lastTime=-Infinity;
  private signs=new THREE.Group();private atlas:THREE.CanvasTexture;
  private adverts?:CityMaterialBatch;private advertGeometry:THREE.BufferGeometry[]=[];
@@ -33,7 +35,7 @@ export class CityDensity {
  readonly services:CityServices;
  furnishings?:CityFurnishings;
  constructor(private track:CityTrack){
-  this.root.name='authored-world-city';this.sites=worldCitySites(track);this.previous=this.sites.map(()=>-1);
+  this.root.name='authored-world-city';this.sites=worldCitySites(track);this.previous=this.sites.map(()=>-1);this.siteColors=this.sites.map(s=>new THREE.Color(districtFinish(s.angle,s.tint)));
   this.poses=this.sites.map(s=>new THREE.Matrix4().compose(new THREE.Vector3(s.x,.265-.25*s.scaleY,s.z),new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),s.heading),new THREE.Vector3(s.scaleXZ,s.scaleY,s.scaleXZ)));
   this.foundation=new CityContactShadows(this.sites);this.root.add(this.foundation.mesh);
   this.interiors=new CityInteriors(track,this.sites);this.root.add(this.interiors.root);
@@ -78,7 +80,7 @@ export class CityDensity {
  }
  private createInstances(library:Library){
   this.clearInstances();
-  if(this.multiDraw&&!this.low){this.combined=new CityMaterialBatch(library.parts,this.sites,this.poses);this.root.add(...this.combined.meshes);return;}
+  if(this.multiDraw&&!this.low){this.combined=new CityMaterialBatch(library.parts,this.sites,this.poses,this.siteColors);this.root.add(...this.combined.meshes);return;}
   for(const kind of new Set(this.sites.map(s=>s.kind)))for(const tier of ['near','mid','far']){
    const meshes=library.parts.get(`${kind}:${tier}`)!.map(part=>{
     const mesh=new THREE.InstancedMesh(part.geometry,part.material,this.sites.filter(s=>s.kind===kind).length);mesh.name=`city-${kind}-${tier}`;mesh.count=0;mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);mesh.castShadow=!this.low&&tier==='near';mesh.receiveShadow=!this.low;this.root.add(mesh);return mesh;
@@ -99,9 +101,9 @@ export class CityDensity {
   // Poses/tints are immutable. An unchanged LOD assignment needs no matrix
   // writes, GPU uploads or bounding-sphere rebuilds, even while the camera moves.
   if(!lodChanged&&!force)return;
-  const color=new THREE.Color(),tints=['#ffffff','#cbdbe1','#e7dcc6','#c9dcd4'];
+  const color=new THREE.Color();
   if(!this.combined)for(let i=0;i<this.sites.length;i++){
-   const s=this.sites[i],b=this.batches.get(`${s.kind}:${['near','mid','far'][this.previous[i]]}`)!;color.set(tints[s.tint]);
+   const s=this.sites[i],b=this.batches.get(`${s.kind}:${['near','mid','far'][this.previous[i]]}`)!;color.copy(this.siteColors[i]);
    for(const mesh of b.meshes){mesh.setMatrixAt(b.used,this.poses[i]);mesh.setColorAt(b.used,color);}b.used++;
   }
   for(const b of this.batches.values())for(const mesh of b.meshes){mesh.count=b.used;mesh.instanceMatrix.needsUpdate=true;if(mesh.instanceColor)mesh.instanceColor.needsUpdate=true;mesh.computeBoundingSphere();}

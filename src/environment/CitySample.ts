@@ -106,8 +106,8 @@ export class CitySample {
   if(!sun)return;const a=CITY_SAMPLE.center*TAU,p=this.track.point(a);
   sun.position.set(p.x-155,165,p.z+90);sun.target.position.set(p.x,0,p.z);scene.add(sun.target);
   scene.environmentIntensity=.35;
-  this.sun=sun;sun.intensity=3.7;sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-160,right:160,top:175,bottom:-175,near:1,far:450});sun.shadow.bias=-.00008;sun.shadow.normalBias=.025;sun.shadow.camera.updateProjectionMatrix();
-  for(const light of scene.children)if(light instanceof THREE.HemisphereLight){light.intensity=.58;light.color.set('#d7e9f1');light.groundColor.set('#263748');}
+  this.sun=sun;sun.intensity=3.35;sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);Object.assign(sun.shadow.camera,{left:-160,right:160,top:175,bottom:-175,near:1,far:450});sun.shadow.bias=-.00008;sun.shadow.normalBias=.025;sun.shadow.camera.updateProjectionMatrix();
+  for(const light of scene.children)if(light instanceof THREE.HemisphereLight){light.intensity=.92;light.color.set('#dfedf1');light.groundColor.set('#35434c');}
   // Refresh static shadows on asset/quality or occupied-bay visibility changes.
   sun.shadow.autoUpdate=false;sun.shadow.needsUpdate=true;
  }

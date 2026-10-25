@@ -103,7 +103,7 @@ export class Game {
     const state={track:this.track,player:this.craft.model,flight:this.flight,tricks:this.tricks,nitro:this.nitro,ai:this.ai,ramps:this.ramps,collisions:this.collisions,bodies:this.bodies};
     this.session=options.online?new NetworkRaceSession({...state,ai:[],bodies:[state.bodies[0]]},this.ai,options.online):new LocalRaceSession(state,config,options.playerId??'你 / PLAYER');
     loading.begin('renderer');
-    this.water.bindWake(this.wake.pool);this.wake.setSurfaceIntegrated(true);
+    this.water.bindWake(this.wake.pool);this.wake.setSurfaceIntegrated(true);this.spray.bindSurfaceTime(this.water.mesh.material.uniforms.time);
     this.renderer = new THREE.WebGLRenderer({ antialias: !matchMedia('(pointer: coarse)').matches, stencil:true, powerPreference: 'high-performance', preserveDrawingBuffer: false });
     this.renderPassMaterials=new RenderPassMaterials(this.renderer);
     this.renderer.autoClear = true; // Clear every frame; no history accumulation or motion blur.
@@ -113,7 +113,7 @@ export class Game {
     sun?.shadow.mapSize.set(this.qualityProfile.cityShadowSize,this.qualityProfile.cityShadowSize);
     this.water.setBudget(this.qualityProfile.waterSegments,this.qualityProfile.reflectionSize);
     this.renderer.toneMapping=THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure=.95;
+    this.renderer.toneMappingExposure=.99;
     const generator=new THREE.PMREMGenerator(this.renderer),room=new RoomEnvironment();this.reflection=generator.fromScene(room,.04);this.scene.environment=this.reflection.texture;room.dispose();generator.dispose();
     this.renderer.domElement.className = 'game-canvas';
     this.renderer.domElement.setAttribute('aria-label', '3D 城市水道竞速场景');
@@ -238,7 +238,7 @@ export class Game {
     this.aiJets.forEach((jet,i)=>jet.update(displayTime,this.ai[i].nitro.active));
     this.audio.update({speed:this.craft.model.speed,throttle:input.throttle,boost:this.nitro.active,grounded:!this.flight.airborne&&Math.abs(this.flight.height-ground)<.3,airborne:this.flight.airborne,running:this.race.phase==='racing'});
     this.audio.updateAI(this.ai.map(ai=>{const dx=ai.model.x-this.craft.model.x,dz=ai.model.z-this.craft.model.z,distance=Math.hypot(dx,dz,ai.flight.height-this.flight.height);return{id:ai.id,speed:ai.model.speed,throttle:1,boost:ai.nitro.active,airborne:ai.flight.airborne,grounded:!ai.flight.airborne&&Math.abs(ai.flight.height-this.track.surface(ai.model).height)<.3,running:this.race.phase==='racing',distance,pan:(dx*Math.cos(this.craft.model.heading)-dz*Math.sin(this.craft.model.heading))/Math.max(10,distance)};}));
-    this.water.update(displayTime);this.camera.update(dt, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active,ground);this.citySample.update(displayTime,this.camera.camera);
+    this.camera.update(dt, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active,ground);this.water.update(displayTime,this.camera.camera);this.citySample.update(displayTime,this.camera.camera);
     this.trackView.highlight(this.race.nextCheckpoint());
     this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks,this.session instanceof NetworkRaceSession?this.session.message:undefined);
     if(!this.low&&this.craft.assetLoaded)this.heroLighting.update(this.renderer,this.scene,this.craft.visual);

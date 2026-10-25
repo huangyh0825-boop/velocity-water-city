@@ -60,7 +60,8 @@ export class Rider {
   update(time:number,speed:number,yawRate:number,landing=0,airborne=0){
     const dt=this.elapsed?Math.max(0,Math.min(.1,time-this.previousTime)):0;
     const acceleration=dt>0?(speed-this.previousSpeed)/dt:0;
-    const target=.15+Math.min(1.2,speed/50)*.14+Math.max(-.03,Math.min(.045,acceleration*.003))+landing;
+    const breath=Math.sin(time*1.65)*.003*(1-Math.min(1,speed/25));
+    const target=.15+Math.min(1.2,speed/50)*.14+Math.max(-.03,Math.min(.045,acceleration*.003))+landing+breath;
     const smooth=this.elapsed?1-Math.exp(-dt*7):1;
     this.lean+=(target-this.lean)*smooth;this.bank+=(-yawRate*.16-this.bank)*smooth;
     if(this.anatomical)this.anatomical.update(this.lean,this.bank,airborne);

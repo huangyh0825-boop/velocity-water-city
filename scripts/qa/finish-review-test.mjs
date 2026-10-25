@@ -1,0 +1,14 @@
+import {loadPlaywright} from './qa-playwright.mjs';import assert from 'node:assert/strict';import {writeFile} from 'node:fs/promises';
+const {chromium}=loadPlaywright(),browser=await chromium.launch({channel:'msedge',headless:true}),report={errors:[],checks:{}};
+try{const page=await browser.newPage({viewport:{width:1440,height:1000}});page.on('pageerror',e=>report.errors.push(e.message));await page.goto('http://127.0.0.1:5329/review/');
+ assert.equal(await page.locator('.shot').count(),21);await page.getByRole('button',{name:'车手',exact:true}).click();assert.equal(await page.locator('.shot:visible').count(),3);
+ await page.locator('.shot:visible').first().click();assert.equal(await page.locator('dialog').isVisible(),true);await page.getByRole('button',{name:'关闭 ×'}).click();
+ await page.getByLabel('选择对照内容').selectOption('nitro');await page.getByLabel('前后画面对照分隔线').fill('70');assert.ok((await page.locator('.comparison').getAttribute('style')).includes('70%'));report.checks.galleryFilterZoomAndComparison=true;
+ await page.getByRole('button',{name:'全部',exact:true}).click();await page.locator('footer').scrollIntoViewIfNeeded();await page.waitForFunction(()=>Array.from(document.images).every(i=>i.complete&&i.naturalWidth>0));
+ await page.setViewportSize({width:390,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);report.checks.allImagesLoadedAndMobileGalleryFits=true;
+ await page.setViewportSize({width:1600,height:1000});await page.goto('http://127.0.0.1:5329/');await page.getByLabel('游戏 ID',{exact:true}).fill('精修实机验收');await page.getByRole('button',{name:'保存 ID'}).click();await page.locator('.tutorial-done').click();await page.locator('#training-laps').fill('1');await page.locator('#start-training').click();
+ await page.waitForFunction(()=>document.querySelector('.game-canvas')&&!document.querySelector('.boot-screen'),undefined,{timeout:240000});await page.waitForFunction(()=>/00:0[1-9]/.test(document.querySelector('#race-time')?.textContent),undefined,{timeout:30000});
+ const initial=Number(await page.locator('#speed').textContent());await page.keyboard.down('w');await page.waitForFunction(v=>Number(document.querySelector('#speed')?.textContent)>v+10,initial,{timeout:30000});await page.keyboard.up('w');
+ assert.ok(await page.locator('.keyboard').textContent().then(t=>t.includes('左Shift')));await page.screenshot({path:'work/final-finish/production-driver.png'});report.checks.productionEntryLoadsAndKeyboardDrives=true;
+ await page.locator('#home').click();await page.locator('#start-training').waitFor();report.checks.productionReturnsHome=true;assert.deepEqual(report.errors,[]);await writeFile('work/final-finish/review-browser.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+}finally{await browser.close();}

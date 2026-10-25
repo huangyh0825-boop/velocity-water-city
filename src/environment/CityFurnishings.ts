@@ -37,7 +37,10 @@ export class CityFurnishings{
   const planter=()=>{add(slab(1.6,.65,1.2,.12),curb,0,.325,0);add(slab(1.7,.08,1.3,.14),silver,0,.65,0);add(slab(1.45,.05,1.05,.12),bark,0,.70,0);};
   const blade=(height:number,width:number)=>{const g=new THREE.PlaneGeometry(width,height,1,4),p=g.attributes.position;for(let i=0;i<p.count;i++){const t=(p.getY(i)+height/2)/height;p.setX(i,p.getX(i)*Math.sin(Math.PI*Math.max(.03,Math.min(.97,t))));p.setZ(i,Math.sin(t*Math.PI)*height*.16);}g.translate(0,height/2,0);g.computeVertexNormals();return g;};
   planter();for(let i=0;i<30;i++){const a=i*2.39996,r=.15+(i%6)*.085;add(blade(.45+(i%5)*.11,.08),grass,Math.cos(a)*r,.71,Math.sin(a)*r*.7,1,1,1,new THREE.Euler(.1*Math.sin(a),a,.14*Math.cos(a)));}done('reeds');
-  planter();for(let i=0;i<22;i++){const a=i*2.39996,r=.1+(i%5)*.12;add(new THREE.SphereGeometry(.17,8,6),foliage,Math.cos(a)*r,.85+(i%3)*.07,Math.sin(a)*r*.7,1.35,1,.9);}done('flowerbox');
+  // Layered lance leaves give the low planting a deliberate planted silhouette.
+  // These are part of the existing shared prototype, with no extra draw group.
+  planter();for(let i=0;i<22;i++){const a=i*2.39996,r=.1+(i%5)*.12;add(new THREE.SphereGeometry(.17,8,6),foliage,Math.cos(a)*r,.85+(i%3)*.07,Math.sin(a)*r*.7,1.35,1,.9);}
+  for(let i=0;i<36;i++){const a=i*2.39996,r=.12+(i%6)*.075;add(blade(.22+(i%4)*.045,.075),grass,Math.cos(a)*r,.95+(i%3)*.045,Math.sin(a)*r*.7,1,1,1,new THREE.Euler(.45*Math.sin(a),a,.4*Math.cos(a)));}done('flowerbox');
   // Small three-dimensional leaves with convex tops and shaded undersides;
   // three crown/branch silhouettes, rather than oversized crossed paper cards.
   for(let variant=0;variant<3;variant++)for(const tier of['near','mid']){
@@ -67,7 +70,11 @@ export class CityFurnishings{
   for(const z of[-1.1,1.1]){const path=new THREE.CatmullRomCurve3([new THREE.Vector3(-1.6,0,z),new THREE.Vector3(-1.55,2.3,z),new THREE.Vector3(0,2.9,z),new THREE.Vector3(1.55,2.3,z),new THREE.Vector3(1.6,0,z)]);add(new THREE.TubeGeometry(path,24,.055,8,false),silver);}
   const roof=new THREE.PlaneGeometry(3.4,2.5,20,4);roof.rotateX(-Math.PI/2);for(let i=0;i<roof.attributes.position.count;i++){const x=roof.attributes.position.getX(i);roof.attributes.position.setY(i,2.85-.28*(x/1.7)**2);}roof.computeVertexNormals();add(roof,canopy);done('pergola');
   add(slab(2.9,.16,1.2,.15),dark,0,.08,0);add(slab(2.7,.92,1.03,.16),stone,0,.6,0);add(slab(2.95,.08,1.18,.12),wood,0,1.1,0);for(const x of[-1.1,0,1.1])add(slab(.12,.62,.05),silver,x,.6,-.54);add(new THREE.PlaneGeometry(1.5,.44),display,0,.72,-.565,1,1,1,new THREE.Euler(0,Math.PI,0));done('market-counter');
-  add(slab(2.3,.16,1.5),dark,0,.08,0);for(const x of[-.6,.6]){add(slab(.96,1.65,1.12,.12),silver,x,.97,0);add(slab(.78,1.38,.06),dark,x,1,-.58);for(let i=0;i<6;i++)add(slab(.6,.035,.04),silver,x,.6+i*.12,-.625);add(new THREE.PlaneGeometry(.5,.3),display,x,1.42,-.63,1,1,1,new THREE.Euler(0,Math.PI,0));}add(new THREE.TorusGeometry(.25,.045,8,20),wood,1.0,1.0,0);done('utility-dock');
+  add(slab(2.3,.16,1.5),dark,0,.08,0);for(const x of[-.6,.6]){add(slab(.96,1.65,1.12,.12),silver,x,.97,0);add(slab(.78,1.38,.06),dark,x,1,-.58);for(let i=0;i<6;i++)add(slab(.6,.035,.04),silver,x,.6+i*.12,-.625);add(new THREE.PlaneGeometry(.5,.3),display,x,1.42,-.63,1,1,1,new THREE.Euler(0,Math.PI,0));
+   rod(new THREE.Vector3(x+.28,.9,-.66),new THREE.Vector3(x+.28,1.1,-.66),.018,silver);
+   for(const side of[-1,1])for(const y of[.31,1.64])add(new THREE.CylinderGeometry(.022,.022,.017,6),silver,x+side*.34,y,-.627,1,1,1,new THREE.Euler(Math.PI/2,0,0));
+   for(const z of[-.42,.42])add(slab(.13,.18,.13,.025),rubber,x,.16,z);
+  }add(new THREE.TorusGeometry(.25,.045,8,20),wood,1.0,1.0,0);done('utility-dock');
   add(slab(1.6,.25,1.6,.22),stone,0,.125,0);add(new THREE.TorusKnotGeometry(.55,.10,70,8,2,3),silver,0,1.18,0,1,1.5,1);add(new THREE.TorusGeometry(.62,.025,6,36),glow,0,.25,0,1,1,1,new THREE.Euler(Math.PI/2,0,0));done('public-art');
   publicCitizens(citizens,parts,this.owned,this.geometries,this.textures);
   const objects:{kind:string;tint:number}[]=[],poses:THREE.Matrix4[]=[],sampleHeading=track.heading(.06*Math.PI*2);

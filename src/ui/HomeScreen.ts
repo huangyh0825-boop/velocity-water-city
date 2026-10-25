@@ -5,6 +5,7 @@ import type{LobbyConnection}from'../lobby/types';
 import{formatTime}from'./formatTime';
 import{DrivingTutorial}from'./DrivingTutorial';
 import'./home.css';
+import './finish.css';
 const skyline=`<svg viewBox="0 0 900 330" aria-hidden="true"><defs><linearGradient id="canal" x2="1" y2="1"><stop stop-color="#173749"/><stop offset="1" stop-color="#35c7bf" stop-opacity=".35"/></linearGradient></defs><g fill="#173a4d" stroke="#6ae6e5" stroke-opacity=".25"><path d="M10 230V115h65v115m20 0V55h54v175m20 0V90h84v140m20 0V20h50v210m20 0V65h65v165m40 0V110h70v120m30 0V45h42v185m30 0V0h60v230m25 0V70h80v160m30 0V95h85v135"/><path d="M0 245h900"/></g><path d="M90 330 420 218h106L410 330" fill="url(#canal)" stroke="#76e9dd" stroke-opacity=".6"/><g stroke="#60babc" stroke-opacity=".22"><path d="M0 260h900M0 285h900M0 315h900M110 0v230M195 90v140M300 20v210M376 65v165M544 45v185M620 0v230M730 70v160M840 95v135"/></g><path d="m302 300 25-8-12-10z" fill="#befff2"/></svg>`;
 export class HomeScreen {
  private lobby:LobbyClient;private connection?:LobbyConnection;private closed=false;private joinAttempt=0;private roomNotice='';

@@ -7,6 +7,7 @@ import { FlightController } from '../player/FlightController';
 import { TrickController } from '../player/TrickController';
 import { AudioController } from '../audio/AudioController';
 import {TouchControls,TOUCH_CONTROLS} from './TouchControls';
+import './finish.css';
 const setText=(element:HTMLElement,value:string)=>{if(element.textContent!==value)element.textContent=value;};
 const width=(element:HTMLElement,value:string)=>{if(element.style.width!==value)element.style.width=value;};
 export class Hud {
@@ -16,6 +17,7 @@ export class Hud {
   private nitroBar: HTMLElement; private nitroLabel: HTMLElement;
   private touch:TouchControls;
   private toast:HTMLElement;
+  private previousRank=-1;
   constructor(root: HTMLElement, input: InputController, restart: () => void, recover: () => void, quality: (low: boolean) => void, audio?:AudioController,onHome?:()=>void,private online=false) {
     root.insertAdjacentHTML('beforeend', `
       <header class="topbar"><div class="brand"><span class="brand-icon">≋</span><div><strong>极速水城<span>未来竞速</span></strong><small>VELOCITY / WATER CITY</small></div></div><div class="phase"><i></i> ${online?'多人竞速':'单人训练'} <span>曙光都市</span></div></header>
@@ -52,11 +54,12 @@ export class Hud {
   update(model: DrivingModel, race: RaceController, wallContact: boolean, nitro?:NitroController, flight?:FlightController, tricks?:TrickController,waitingMessage?:string) {
     this.touch.update(race.phase==='racing'&&!waitingMessage,!!flight?.airborne&&!!flight.legalLaunch&&!tricks?.used,nitro?.energy??0,race.phase==='finished');
     const toast=this.toast,hidden=!tricks || tricks.feedbackTime<=0 || race.phase!=='racing';
-    if(toast.hidden!==hidden)toast.hidden=hidden;if(!hidden)setText(toast,tricks!.message);
+    if(toast.hidden!==hidden)toast.hidden=hidden;if(!hidden){setText(toast,tricks!.message);const kind=tricks!.message.includes('成功')?'success':'warning';if(toast.dataset.kind!==kind)toast.dataset.kind=kind;}
     setText(this.speed,String(Math.round(model.speed * 3.6)).padStart(3, '0'));
     width(this.bar,`${Math.min(1,model.speed / MAX_SPEED) * 100}%`);
     if(nitro) { width(this.nitroBar,`${nitro.energy}%`);setText(this.nitroLabel,`${Math.ceil(nitro.energy)}%`);const meter=this.nitroBar.parentElement!;if(meter.classList.contains('boosting')!==nitro.active)meter.classList.toggle('boosting',nitro.active);const value=String(Math.round(nitro.energy));if(meter.getAttribute('aria-valuenow')!==value)meter.setAttribute('aria-valuenow',value); }
     setText(this.rank,`${race.playerRank} / ${race.racers.length}`);
+    if(race.phase==='racing'){if(this.previousRank>0&&this.previousRank!==race.playerRank&&!matchMedia('(prefers-reduced-motion: reduce)').matches)this.rank.animate?.([{color:race.playerRank<this.previousRank?'#a5f4de':'#ffe0a0'},{color:'#eefbff'}],{duration:550,easing:'ease-out'});this.previousRank=race.playerRank;}else this.previousRank=-1;
     setText(this.lap,`${race.lap()} / ${race.laps}`);
     setText(this.time,formatTime(race.player.finishTime ?? race.elapsed));
     const gate = race.nextCheckpoint(), angle = race.track.angle(model);

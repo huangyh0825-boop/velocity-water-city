@@ -1,0 +1,9 @@
+{
+  "errors": [],
+  "checks": {
+    "galleryFilterZoomAndComparison": true,
+    "allImagesLoadedAndMobileGalleryFits": true,
+    "productionEntryLoadsAndKeyboardDrives": true,
+    "productionReturnsHome": true
+  }
+}

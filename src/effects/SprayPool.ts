@@ -4,6 +4,7 @@ export class SprayPool {
   readonly alpha = new Float32Array(this.capacity);
   readonly sizes = new Float32Array(this.capacity);
   private velocities = new Float32Array(this.capacity*3);
+  get motion(){return this.velocities;}
   private age = new Float32Array(this.capacity);
   private lifetime = new Float32Array(this.capacity);
   private cursor = 0;

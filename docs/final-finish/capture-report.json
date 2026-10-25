@@ -1,0 +1,2483 @@
+{
+  "label": "after",
+  "shots": [
+    {
+      "name": "boat-front-left",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "boat-rear-right",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "boat-left-front-45",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "boat-right-rear-45",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "rider-riding",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "rider-side",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "water-cruise",
+      "kmh": 112.46828907925548,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 33,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 98,
+      "wakeUniform": 19,
+      "time": 13.216666666666727
+    },
+    {
+      "name": "wake-high-speed",
+      "kmh": 180,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 46,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 130,
+      "wakeUniform": 10,
+      "time": 13.650000000000082
+    },
+    {
+      "name": "driving-third-person",
+      "kmh": 180,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 79,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 135,
+      "wakeUniform": 14,
+      "time": 15.633333333333514
+    },
+    {
+      "name": "turn-spray",
+      "kmh": 180,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 68,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 135,
+      "wakeUniform": 8,
+      "time": 16.15000000000019
+    },
+    {
+      "name": "rider-turning",
+      "kmh": 180,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 68,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 135,
+      "wakeUniform": 5,
+      "time": 16.15000000000019
+    },
+    {
+      "name": "nitro",
+      "kmh": 216,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 76.90000000000042,
+      "boost": true,
+      "particles": 40,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 83,
+      "wakeUniform": 8,
+      "time": 13.050000000000052
+    },
+    {
+      "name": "jump-airborne",
+      "kmh": 180,
+      "airborne": true,
+      "legal": true,
+      "trick": "前空翻",
+      "energy": 40,
+      "boost": false,
+      "particles": 40,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 116,
+      "wakeUniform": 0,
+      "time": 1.7999999999999985
+    },
+    {
+      "name": "jump-landing",
+      "kmh": 180,
+      "airborne": false,
+      "legal": true,
+      "trick": "特技成功 · 氮气 +35%",
+      "energy": 75,
+      "boost": false,
+      "particles": 106,
+      "pressure": {
+        "count": 8,
+        "ages": [
+          0.21666666865348816,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0.8666666746139526,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            840.7519598047069,
+            0,
+            328.275031865623
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 107,
+      "wakeUniform": 3,
+      "time": 3.6166666666666587
+    },
+    {
+      "name": "trick-feedback",
+      "kmh": 180,
+      "airborne": false,
+      "legal": true,
+      "trick": "特技成功 · 氮气 +35%",
+      "energy": 75,
+      "boost": false,
+      "particles": 106,
+      "pressure": {
+        "count": 8,
+        "ages": [
+          0.21666666865348816,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0.8666666746139526,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            840.7519598047069,
+            0,
+            328.275031865623
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 107,
+      "wakeUniform": 3,
+      "time": 3.6166666666666587
+    },
+    {
+      "name": "district-cbd",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0.8666666746139526,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            840.7519598047069,
+            0,
+            328.275031865623
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "district-tech",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0.8666666746139526,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            840.7519598047069,
+            0,
+            328.275031865623
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "district-harbor",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0.8666666746139526,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            840.7519598047069,
+            0,
+            328.275031865623
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "district-leisure",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0.8666666746139526,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            840.7519598047069,
+            0,
+            328.275031865623
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "district-elevated",
+      "kmh": 0,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 0,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0.8666666746139526,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            840.7519598047069,
+            0,
+            328.275031865623
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 0,
+      "wakeUniform": 0,
+      "time": 12
+    },
+    {
+      "name": "hud-racing",
+      "kmh": 143.4105058560512,
+      "airborne": false,
+      "legal": false,
+      "trick": "",
+      "energy": 40,
+      "boost": false,
+      "particles": 47,
+      "pressure": {
+        "count": 0,
+        "ages": [
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10,
+          10
+        ],
+        "strength": [
+          0.8666666746139526,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "centers": [
+          [
+            840.7519598047069,
+            0,
+            328.275031865623
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "wake": 35,
+      "wakeUniform": 32,
+      "time": 12.40000000000002
+    }
+  ],
+  "errors": [],
+  "events": [
+    {
+      "air": false,
+      "takeoff": false,
+      "landed": true,
+      "height": 0,
+      "water": 0,
+      "landingSpeed": 15.599999999999966,
+      "feedback": 1.8,
+      "message": "特技成功 · 氮气 +35%"
+    }
+  ],
+  "asset": {
+    "nodes": [
+      {
+        "name": "female_v006lowresUV",
+        "count": 109184,
+        "skinned": true,
+        "bounds": [
+          -0.5995758175849915,
+          -0.4809054434299469,
+          -0.0952674001455307
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_1",
+        "count": 83542,
+        "skinned": true,
+        "bounds": [
+          -0.4698197841644287,
+          0.1095300242304802,
+          0.09296572208404541
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_2",
+        "count": 70750,
+        "skinned": true,
+        "bounds": [
+          -0.564353346824646,
+          -0.48838484287261963,
+          -0.04500000551342964
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_3",
+        "count": 220192,
+        "skinned": true,
+        "bounds": [
+          -0.5738988518714905,
+          -0.5609021186828613,
+          -0.17000000178813934
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_4",
+        "count": 389226,
+        "skinned": true,
+        "bounds": [
+          -0.5700252652168274,
+          -0.5492545366287231,
+          -0.1679999977350235
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_5",
+        "count": 111648,
+        "skinned": true,
+        "bounds": [
+          -0.08876866847276688,
+          0.5705414414405823,
+          0.24375784397125244
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_6",
+        "count": 3680,
+        "skinned": true,
+        "bounds": [
+          -0.04095000773668289,
+          0.6994999647140503,
+          0.4136999845504761
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_7",
+        "count": 2208,
+        "skinned": true,
+        "bounds": [
+          -0.0332149975001812,
+          0.7026499509811401,
+          0.43672996759414673
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_8",
+        "count": 1840,
+        "skinned": true,
+        "bounds": [
+          -0.030666999518871307,
+          0.7051699757575989,
+          0.4386100172996521
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_9",
+        "count": 11476,
+        "skinned": true,
+        "bounds": [
+          -0.57901930809021,
+          -0.41715577244758606,
+          0.016780048608779907
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_10",
+        "count": 225024,
+        "skinned": true,
+        "bounds": [
+          -0.15005899965763092,
+          0.11785309761762619,
+          -0.042564086616039276
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_11",
+        "count": 9428,
+        "skinned": true,
+        "bounds": [
+          -0.13650000095367432,
+          0.13350000977516174,
+          0.18034255504608154
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_12",
+        "count": 199512,
+        "skinned": true,
+        "bounds": [
+          -0.13201375305652618,
+          0.5600000619888306,
+          0.1604086309671402
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_13",
+        "count": 62528,
+        "skinned": true,
+        "bounds": [
+          -0.12807150185108185,
+          0.6670454740524292,
+          0.37602299451828003
+        ]
+      },
+      {
+        "name": "female_v006lowresUV_14",
+        "count": 9488,
+        "skinned": true,
+        "bounds": [
+          -0.13547150790691376,
+          0.563044011592865,
+          0.18077100813388824
+        ]
+      },
+      {
+        "name": "pressure-core-and-sheath",
+        "count": 224,
+        "skinned": false
+      },
+      {
+        "name": "R8_R7_satin_engineering_polymer",
+        "count": 550150,
+        "skinned": false,
+        "bounds": [
+          -0.700415849685669,
+          -0.13265103101730347,
+          -2.009999990463257
+        ]
+      },
+      {
+        "name": "R8_Molded_traction_rubber",
+        "count": 116004,
+        "skinned": false,
+        "bounds": [
+          -0.7539949417114258,
+          -0.11249999701976776,
+          -2.205000162124634
+        ]
+      },
+      {
+        "name": "R7_FootMat_L",
+        "count": 14592,
+        "skinned": false,
+        "bounds": [
+          -0.630000114440918,
+          0.3080054521560669,
+          -0.7300001382827759
+        ]
+      },
+      {
+        "name": "R7_FootMat_R",
+        "count": 14592,
+        "skinned": false,
+        "bounds": [
+          0.3750000298023224,
+          0.3080054521560669,
+          -0.7300001382827759
+        ]
+      },
+      {
+        "name": "R8_Brushed_titanium",
+        "count": 84832,
+        "skinned": false,
+        "bounds": [
+          -0.6659999489784241,
+          -0.164000004529953,
+          -2.298100709915161
+        ]
+      },
+      {
+        "name": "R8_Recess_cavity",
+        "count": 5096,
+        "skinned": false,
+        "bounds": [
+          -0.009999999776482582,
+          -0.0020000000949949026,
+          -0.009999999776482582
+        ]
+      },
+      {
+        "name": "R8_Forged_carbon_composite",
+        "count": 59688,
+        "skinned": false,
+        "bounds": [
+          -0.787678599357605,
+          -0.0037362065631896257,
+          -1.59499990940094
+        ]
+      },
+      {
+        "name": "R7_Grip_L",
+        "count": 256,
+        "skinned": false,
+        "bounds": [
+          -0.48899999260902405,
+          0.9800333380699158,
+          0.45385998487472534
+        ]
+      },
+      {
+        "name": "R8_R7_cobalt_anodized_hardware",
+        "count": 4632,
+        "skinned": false,
+        "bounds": [
+          -0.4970000088214874,
+          -0.08799999952316284,
+          -2.2060000896453857
+        ]
+      },
+      {
+        "name": "R7_Grip_R",
+        "count": 256,
+        "skinned": false,
+        "bounds": [
+          0.3370000123977661,
+          0.9800333380699158,
+          0.45385998487472534
+        ]
+      },
+      {
+        "name": "R7_Nozzle",
+        "count": 3200,
+        "skinned": false,
+        "bounds": [
+          -0.15299999713897705,
+          -0.11299999803304672,
+          -2.203000068664551
+        ]
+      },
+      {
+        "name": "R7_ReverseBucket",
+        "count": 116160,
+        "skinned": false,
+        "bounds": [
+          -0.18393906950950623,
+          0.17245610058307648,
+          -2.212995767593384
+        ]
+      },
+      {
+        "name": "R8_Pearl_ceramic_silver",
+        "count": 666732,
+        "skinned": false,
+        "bounds": [
+          -0.7517078518867493,
+          -0.22446441650390625,
+          -1.8200002908706665
+        ]
+      },
+      {
+        "name": "R8_Paint",
+        "count": 754944,
+        "skinned": false,
+        "bounds": [
+          -0.7538864612579346,
+          0.17919322848320007,
+          -1.8046940565109253
+        ]
+      },
+      {
+        "name": "R8_R8_graphite_ceramic_coating",
+        "count": 491080,
+        "skinned": false,
+        "bounds": [
+          -0.6057072281837463,
+          0.10732440650463104,
+          -1.805999994277954
+        ]
+      },
+      {
+        "name": "R8_Ice_navigation_lens",
+        "count": 3264,
+        "skinned": false,
+        "bounds": [
+          -0.5317716002464294,
+          -0.1290000081062317,
+          -2.2048532962799072
+        ]
+      },
+      {
+        "name": "R7_SeatDriver",
+        "count": 257280,
+        "skinned": false,
+        "bounds": [
+          -0.1920298933982849,
+          0.6039815545082092,
+          -0.9099999666213989
+        ]
+      },
+      {
+        "name": "R8_R8_stitched_saddle_side_leather",
+        "count": 226560,
+        "skinned": false,
+        "bounds": [
+          -0.21466442942619324,
+          0.6540495157241821,
+          -1.4299999475479126
+        ]
+      },
+      {
+        "name": "R8_Ceramic_markings",
+        "count": 51084,
+        "skinned": false,
+        "bounds": [
+          -0.25504693388938904,
+          0.4594239890575409,
+          -1.310921549797058
+        ]
+      },
+      {
+        "name": "R8_Original_LCD_display",
+        "count": 96,
+        "skinned": false,
+        "bounds": [
+          -0.13349999487400055,
+          0.9695149660110474,
+          0.6380000114440918
+        ]
+      },
+      {
+        "name": "R8_R8_optical_instrument_shield",
+        "count": 672,
+        "skinned": false,
+        "bounds": [
+          -0.13850000500679016,
+          0.9725298881530762,
+          0.6320000290870667
+        ]
+      }
+    ],
+    "materials": [
+      {
+        "name": "R4 articulated technical race suit",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 1,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.27,
+          -0.27
+        ]
+      },
+      {
+        "name": "Hero blue leather panels",
+        "type": "MeshPhysicalMaterial",
+        "color": "0f5ea4",
+        "roughness": 0.98,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.24,
+          -0.24
+        ]
+      },
+      {
+        "name": "Hero woven protection",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 1,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.27,
+          -0.27
+        ],
+        "map": 2048
+      },
+      {
+        "name": "Hero glove and boot grip",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.94,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.27,
+          -0.27
+        ],
+        "map": 2048
+      },
+      {
+        "name": "Hero stretch racing textile",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 1,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.27,
+          -0.27
+        ],
+        "map": 2048
+      },
+      {
+        "name": "Warm facial skin",
+        "type": "MeshPhysicalMaterial",
+        "color": "bd937d",
+        "roughness": 0.58,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Anatomical eye white",
+        "type": "MeshPhysicalMaterial",
+        "color": "a8acaa",
+        "roughness": 0.30000001192092896,
+        "metalness": 0,
+        "clearcoat": 0.20000000298023224,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Natural iris",
+        "type": "MeshPhysicalMaterial",
+        "color": "423524",
+        "roughness": 0.4000000059604645,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Eye pupil",
+        "type": "MeshPhysicalMaterial",
+        "color": "070a0d",
+        "roughness": 0.23000000417232513,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Hero reflective piping",
+        "type": "MeshPhysicalMaterial",
+        "color": "d1e1ea",
+        "roughness": 0.41999998688697815,
+        "metalness": 0.20000000298023224,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Team woven flotation panels",
+        "type": "MeshPhysicalMaterial",
+        "color": "0f5ea4",
+        "roughness": 0.98,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.24,
+          -0.24
+        ]
+      },
+      {
+        "name": "Hero satin hardware",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.85,
+        "metalness": 0.95,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.22,
+          -0.22
+        ],
+        "map": 2048
+      },
+      {
+        "name": "Hero pearl helmet",
+        "type": "MeshPhysicalMaterial",
+        "color": "edf3f2",
+        "roughness": 0.78,
+        "metalness": 0.15,
+        "clearcoat": 0.82,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.16,
+          -0.16
+        ],
+        "map": 2048
+      },
+      {
+        "name": "Racer neutral smoke optical visor",
+        "type": "MeshPhysicalMaterial",
+        "color": "c0d8df",
+        "roughness": 0.065,
+        "metalness": 0.02,
+        "clearcoat": 0.86,
+        "opacity": 0.22,
+        "transparent": true,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Hero cavity and visor gasket",
+        "type": "MeshPhysicalMaterial",
+        "color": "161e27",
+        "roughness": 0.699999988079071,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "",
+        "type": "ShaderMaterial",
+        "opacity": 1,
+        "transparent": true
+      },
+      {
+        "name": "R7 satin engineering polymer",
+        "type": "MeshPhysicalMaterial",
+        "color": "4d5760",
+        "roughness": 0.46,
+        "metalness": 0.08,
+        "clearcoat": 0.12,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Molded traction rubber",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.94,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.27,
+          -0.27
+        ],
+        "map": 2048
+      },
+      {
+        "name": "Brushed titanium",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.85,
+        "metalness": 0.95,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.22,
+          -0.22
+        ],
+        "map": 2048
+      },
+      {
+        "name": "Recess cavity",
+        "type": "MeshPhysicalMaterial",
+        "color": "182228",
+        "roughness": 0.6499999761581421,
+        "metalness": 0.10000000149011612,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Forged carbon composite",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.87,
+        "metalness": 0.08,
+        "clearcoat": 0.28,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.22,
+          -0.22
+        ],
+        "map": 2048
+      },
+      {
+        "name": "R7 cobalt anodized hardware",
+        "type": "MeshPhysicalMaterial",
+        "color": "3579a0",
+        "roughness": 0.30000001192092896,
+        "metalness": 0.699999988079071,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Pearl ceramic silver",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.82,
+        "metalness": 0.26,
+        "clearcoat": 0.58,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.2,
+          -0.2
+        ],
+        "map": 2048
+      },
+      {
+        "name": "Paint",
+        "type": "MeshPhysicalMaterial",
+        "color": "126bba",
+        "roughness": 0.76,
+        "metalness": 0.3,
+        "clearcoat": 0.95,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.18,
+          -0.18
+        ],
+        "map": 2048
+      },
+      {
+        "name": "R8 graphite ceramic coating",
+        "type": "MeshPhysicalMaterial",
+        "color": "424c55",
+        "roughness": 0.46,
+        "metalness": 0.08,
+        "clearcoat": 0.12,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Ice navigation lens",
+        "type": "MeshPhysicalMaterial",
+        "color": "69dded",
+        "roughness": 0.20000000298023224,
+        "metalness": 0.25,
+        "clearcoat": 0.6000000238418579,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Perforated marine saddle",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.94,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.27,
+          -0.27
+        ],
+        "map": 2048
+      },
+      {
+        "name": "R8 stitched saddle side leather",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.94,
+        "metalness": 0,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          0.27,
+          -0.27
+        ],
+        "map": 2048
+      },
+      {
+        "name": "Ceramic markings",
+        "type": "MeshPhysicalMaterial",
+        "color": "ddebf0",
+        "roughness": 0.3799999952316284,
+        "metalness": 0.14000000059604645,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ]
+      },
+      {
+        "name": "Original LCD display",
+        "type": "MeshPhysicalMaterial",
+        "color": "ffffff",
+        "roughness": 0.23000000417232513,
+        "metalness": 0.10000000149011612,
+        "clearcoat": 0,
+        "opacity": 1,
+        "transparent": false,
+        "normal": [
+          1,
+          -1
+        ],
+        "map": 1024
+      },
+      {
+        "name": "R8 optical instrument shield",
+        "type": "MeshPhysicalMaterial",
+        "color": "c0d8df",
+        "roughness": 0.065,
+        "metalness": 0.02,
+        "clearcoat": 0.86,
+        "opacity": 0.22,
+        "transparent": true,
+        "normal": [
+          1,
+          -1
+        ]
+      }
+    ],
+    "grips": [
+      [
+        -0.4118197560310364,
+        0.11953002214431763,
+        0.5743599608540535
+      ],
+      [
+        0.41181978583335876,
+        0.1195300817489624,
+        0.574360080063343
+      ]
+    ],
+    "seat": [
+      0,
+      0.8799999952316284,
+      -0.10000000149011612
+    ]
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "baseline": "b2daa088c06bb9451203ec9e08f18ef631d1b1b0",
+  "performanceStatus": "inconclusive-system-memory-pressure",
+  "quality": "Desktop standard, 1600x1000 DPR1, RTX 4060 Laptop / Edge",
+  "geometryBefore": 4927792,
+  "geometryAfter": 4931120,
+  "performance": [
+    {
+      "name": "普通驾驶",
+      "before": 44.97722910173591,
+      "after": 32.91716306388599,
+      "gpuBefore": 20.148343466666663,
+      "gpuAfter": 28.69727946666667,
+      "callsBefore": 439.07531380753136,
+      "callsAfter": 437.2887029288703
+    },
+    {
+      "name": "商务区五艇",
+      "before": 25.313640239043785,
+      "after": 27.14058596420723,
+      "gpuBefore": 39.7033488,
+      "gpuAfter": 34.19229866666667,
+      "callsBefore": 795.1966527196653,
+      "callsAfter": 782.5941422594142
+    },
+    {
+      "name": "高架五艇",
+      "before": 34.16872775092413,
+      "after": 23.129330701001283,
+      "gpuBefore": 28.24738133333333,
+      "gpuAfter": 36.61861546666667,
+      "callsBefore": 943.8786610878661,
+      "callsAfter": 936.3849372384938
+    },
+    {
+      "name": "氮气五艇",
+      "before": 35.5882484328401,
+      "after": 24.757346924007905,
+      "gpuBefore": 27.887906133333335,
+      "gpuAfter": 33.14077013333334,
+      "callsBefore": 818.2343096234309,
+      "callsAfter": 802.8912133891214
+    }
+  ],
+  "shots": [
+    {
+      "id": "boat-left-front-45",
+      "category": "快艇",
+      "title": "左前 45° 近景"
+    },
+    {
+      "id": "boat-right-rear-45",
+      "category": "快艇",
+      "title": "右后 45° 近景"
+    },
+    {
+      "id": "driving-third-person",
+      "category": "快艇",
+      "title": "实际驾驶跟随视角"
+    },
+    {
+      "id": "rider-riding",
+      "category": "车手",
+      "title": "骑乘近景"
+    },
+    {
+      "id": "rider-side",
+      "category": "车手",
+      "title": "骑乘侧面"
+    },
+    {
+      "id": "rider-turning",
+      "category": "车手",
+      "title": "转弯姿态"
+    },
+    {
+      "id": "water-cruise",
+      "category": "水面与特效",
+      "title": "平稳行驶"
+    },
+    {
+      "id": "wake-high-speed",
+      "category": "水面与特效",
+      "title": "高速尾浪"
+    },
+    {
+      "id": "turn-spray",
+      "category": "水面与特效",
+      "title": "转弯水花"
+    },
+    {
+      "id": "jump-airborne",
+      "category": "水面与特效",
+      "title": "真实跳台腾空"
+    },
+    {
+      "id": "jump-landing",
+      "category": "水面与特效",
+      "title": "落水冲击"
+    },
+    {
+      "id": "nitro",
+      "category": "水面与特效",
+      "title": "氮气加速"
+    },
+    {
+      "id": "district-cbd",
+      "category": "城市环境",
+      "title": "中央商务区"
+    },
+    {
+      "id": "district-tech",
+      "category": "城市环境",
+      "title": "未来科技区"
+    },
+    {
+      "id": "district-harbor",
+      "category": "城市环境",
+      "title": "港湾区"
+    },
+    {
+      "id": "district-leisure",
+      "category": "城市环境",
+      "title": "滨水休闲区"
+    },
+    {
+      "id": "district-elevated",
+      "category": "城市环境",
+      "title": "高架水道"
+    },
+    {
+      "id": "hud-racing",
+      "category": "界面",
+      "title": "比赛 HUD"
+    },
+    {
+      "id": "trick-feedback",
+      "category": "界面",
+      "title": "特技成功反馈"
+    },
+    {
+      "id": "menu-home",
+      "category": "界面",
+      "title": "首页"
+    },
+    {
+      "id": "loading",
+      "category": "界面",
+      "title": "加载界面"
+    }
+  ]
+}

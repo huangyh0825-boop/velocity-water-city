@@ -1,0 +1,3 @@
+import {build} from 'vite';import path from 'node:path';import {execFileSync} from 'node:child_process';
+const revision=process.env.QA_REV,files=revision?new Set(execFileSync('git',['ls-tree','-r','--name-only',revision,'src'],{encoding:'utf8'}).trim().split('\n')):new Set();
+await build({base:'/',plugins:revision?[{name:'finish-baseline',enforce:'pre',load(id){const name=path.relative(process.cwd(),id).replaceAll('\\','/');if(files.has(name))return execFileSync('git',['show',`${revision}:${name}`],{encoding:'utf8'});}}]:[],build:{outDir:process.env.QA_OUT??'.qa/finish-after',rollupOptions:{input:['scripts/qa/vertical.html','scripts/qa/mobile-controls-view.html']}}});
