@@ -1,5 +1,5 @@
 import {preview} from 'vite';import {loadPlaywright} from './qa-playwright.mjs';import assert from 'node:assert/strict';import {writeFile} from 'node:fs/promises';
-const web=await preview({build:{outDir:'.qa/resource-after'},preview:{host:'127.0.0.1',port:5334,strictPort:true}}),{chromium}=loadPlaywright(),browser=await chromium.launch({channel:'msedge',headless:true});
+const web=await preview({build:{outDir:process.env.QA_BUILD_DIR??'.qa/resource-after'},preview:{host:'127.0.0.1',port:5334,strictPort:true}}),{chromium}=loadPlaywright(),browser=await chromium.launch({channel:'msedge',headless:true});
 try{const p=await browser.newPage({viewport:{width:1280,height:800}});await p.goto('http://127.0.0.1:5334/scripts/qa/vertical.html');await p.waitForFunction(()=>window.verticalQA,null,{timeout:240000});await p.evaluate(()=>window.verticalQA.ready());
  const result=await p.evaluate(()=>{const g=window.testGame,q=window.verticalQA,states=[];let submitted=0;g.renderer.render=()=>{submitted++;};for(const l of[g.heroLighting,...g.aiLighting]){l.update=l.updateVisible=()=>false;}
   for(const rate of[0,60,120]){q.fixture(.06,null,40,true);g.renderPacer.setRate(rate);submitted=0;let steps=0;const original=g.session.step.bind(g.session);g.session.step=(...args)=>{steps++;return original(...args);};

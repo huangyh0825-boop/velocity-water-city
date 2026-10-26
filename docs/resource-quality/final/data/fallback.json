@@ -1,0 +1,306 @@
+{
+  "checks": [
+    {
+      "mode": "corrupt-compressed-textures",
+      "intercepted": 43,
+      "loadMs": 10594,
+      "assets": true,
+      "city": true,
+      "maps": [
+        {
+          "name": "Hero woven protection",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Hero glove and boot grip",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Hero stretch racing textile",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Hero satin hardware",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Hero pearl helmet",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Brushed titanium",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Forged carbon composite",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Brushed titanium",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Pearl ceramic silver",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Paint",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Perforated marine saddle",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "R8 stitched saddle side leather",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Original LCD display",
+          "width": 1024,
+          "compressed": false
+        }
+      ],
+      "glError": 0
+    },
+    {
+      "mode": "packed-model-unavailable",
+      "intercepted": 25,
+      "loadMs": 15910,
+      "assets": true,
+      "city": true,
+      "maps": [
+        {
+          "name": "Hero woven protection",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Hero glove and boot grip",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Hero stretch racing textile",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Hero satin hardware",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Hero pearl helmet",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Brushed titanium",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Forged carbon composite",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Brushed titanium",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Pearl ceramic silver",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Paint",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Perforated marine saddle",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "R8 stitched saddle side leather",
+          "width": 2048,
+          "compressed": true
+        },
+        {
+          "name": "Original LCD display",
+          "width": 1024,
+          "compressed": true
+        }
+      ],
+      "glError": 0
+    },
+    {
+      "mode": "compressed-formats-unavailable",
+      "intercepted": 0,
+      "loadMs": 6418,
+      "assets": true,
+      "city": true,
+      "maps": [
+        {
+          "name": "Hero woven protection",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Hero glove and boot grip",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Hero stretch racing textile",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Hero satin hardware",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Hero pearl helmet",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Brushed titanium",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Forged carbon composite",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Molded traction rubber",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Brushed titanium",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Pearl ceramic silver",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Paint",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Perforated marine saddle",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "R8 stitched saddle side leather",
+          "width": 2048,
+          "compressed": false
+        },
+        {
+          "name": "Original LCD display",
+          "width": 1024,
+          "compressed": false
+        }
+      ],
+      "glError": 0
+    }
+  ],
+  "errors": [],
+  "completed": true
+}

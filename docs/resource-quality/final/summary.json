@@ -1,0 +1,16 @@
+{
+  "sourceHash": "7ac604b024445c7de305da2bc870a8797c0be6fee7ec57b53fce31c112a7a775",
+  "baseline": "b17679f",
+  "round1Checkpoint": "e5ea0b0",
+  "textureReductionPercent": 62.5,
+  "privateCommitReductionPercent": 36.4,
+  "combinedFps": [
+    40.176630087239374,
+    43.68915159943236
+  ],
+  "longSeconds": 960.565,
+  "networkBytes": [
+    143600648,
+    134835723
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "checks": {
+    "filterZoomAndComparison": true,
+    "allImagesAndMobileLayout": true,
+    "productionDriveNitroFrameRateMenuAndHome": true
+  },
+  "errors": [],
+  "completed": true
+}

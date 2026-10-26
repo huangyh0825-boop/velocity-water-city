@@ -2,7 +2,7 @@ import {readFile,writeFile,mkdir,copyFile,access} from 'node:fs/promises';import
 // Offline authoring only. The isolated encoder is ktx2-encoder 0.6.0, npm
 // SHA512 gEWkw2YUlhKO4hXhqVLQQWJ+fGJObsXIwz0pGjJMclnQ4MQU3SAtN1MzutjFxO3ejWvxHyvFk5kr8+RtLmHiTA==.
 // It does not add a runtime dependency or replace original source images.
-const out='public/models/gpu-textures',scratch='.qa/texture-sources';await mkdir(out,{recursive:true});await mkdir(scratch,{recursive:true});await mkdir('src/generated',{recursive:true});
+const out='public/models/gpu-textures',scratch='.qa/texture-sources';await mkdir(out,{recursive:true});await mkdir(scratch,{recursive:true});await mkdir('src/generated',{recursive:true});await mkdir('work/resource-quality',{recursive:true});
 const manifest={byURI:{},byHash:{}},jobs=new Map(),legacy=JSON.parse(await readFile('public/models/runtime-textures/manifest.json','utf8'));
 for(const name of['watercraft','rider',...['waterfront','waterfront-low','city-modules','city-modules-low','city-services','public-citizens'].map(n=>'city-sample/'+n)]){
  const data=await readFile(`public/models/${name}.glb`),jsonLength=data.readUInt32LE(12),g=JSON.parse(data.subarray(20,20+jsonLength).toString()),bin=data.subarray(28+jsonLength),folder=name.includes('/')?'city-sample/':'';

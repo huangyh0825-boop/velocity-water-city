@@ -1,0 +1,1931 @@
+{
+  "label": "before-final",
+  "method": "1600x1000 DPR1 standard, actual Game.frame; 120 warmup +360 measured RAF samples per fixture. Long run uses real RAF timestamps with original fixed 60Hz physics for >=16 wall-clock minutes; not time-accelerated. Browser memory via Chrome process IDs and Windows counters. GL storage is API-request estimate, not exclusive physical VRAM.",
+  "system": {
+    "totalBytes": 16332115968
+  },
+  "errors": [],
+  "scenes": [
+    {
+      "id": "entry",
+      "availableSystemBytesBefore": 2139217920,
+      "fps": 30.846164421249984,
+      "low1Fps": 18.091361374211896,
+      "cpuMs": 19.20640668563524,
+      "gpuMs": 32.36505600000001,
+      "gpuSamples": 30,
+      "calls": 975.5097493036212,
+      "triangles": 97815894.35654595,
+      "compileDuringMeasurement": 0,
+      "end": [
+        {
+          "x": -173.05379146526369,
+          "z": -311.3596074456095,
+          "speed": 0,
+          "route": null
+        },
+        {
+          "x": -177.3431664388017,
+          "z": -214.80319780330012,
+          "speed": 19.903277785968815,
+          "route": null
+        },
+        {
+          "x": -163.6692259197962,
+          "z": -184.37598497955992,
+          "speed": 66.66666666666667,
+          "route": null
+        },
+        {
+          "x": -175.39829755372355,
+          "z": -216.6794544773282,
+          "speed": 19.755975739740094,
+          "route": null
+        },
+        {
+          "x": -168.7456324032269,
+          "z": -147.2145393727609,
+          "speed": 44.44444444444444,
+          "route": null
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "memory": {
+        "availableSystemBytes": 1959198720,
+        "heap": {
+          "usedSize": 69292412,
+          "totalSize": 161681408,
+          "embedderHeapUsedSize": 7823944,
+          "backingStorageSize": 312056111
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 616,
+          "jsEventListeners": 62
+        },
+        "processes": [
+          {
+            "Name": "msedge#10",
+            "IDProcess": 118096,
+            "WorkingSet": 340566016,
+            "WorkingSetPrivate": 225161216,
+            "PrivateBytes": 236519424
+          },
+          {
+            "Name": "msedge#12",
+            "IDProcess": 128560,
+            "WorkingSet": 1318862848,
+            "WorkingSetPrivate": 1158586368,
+            "PrivateBytes": 2863734784
+          },
+          {
+            "Name": "msedge#13",
+            "IDProcess": 127488,
+            "WorkingSet": 114733056,
+            "WorkingSetPrivate": 77275136,
+            "PrivateBytes": 82857984
+          },
+          {
+            "Name": "msedge#14",
+            "IDProcess": 118652,
+            "WorkingSet": 25231360,
+            "WorkingSetPrivate": 3178496,
+            "PrivateBytes": 8073216
+          },
+          {
+            "Name": "msedge#15",
+            "IDProcess": 130600,
+            "WorkingSet": 23199744,
+            "WorkingSetPrivate": 2793472,
+            "PrivateBytes": 7663616
+          },
+          {
+            "Name": "msedge#16",
+            "IDProcess": 129300,
+            "WorkingSet": 38039552,
+            "WorkingSetPrivate": 8122368,
+            "PrivateBytes": 16867328
+          },
+          {
+            "Name": "msedge#17",
+            "IDProcess": 127860,
+            "WorkingSet": 1496498176,
+            "WorkingSetPrivate": 1401282560,
+            "PrivateBytes": 1428910080
+          },
+          {
+            "Name": "msedge#18",
+            "IDProcess": 124912,
+            "WorkingSet": 23699456,
+            "WorkingSetPrivate": 2895872,
+            "PrivateBytes": 7786496
+          }
+        ],
+        "gl": [
+          {
+            "bufferBytes": 286515946,
+            "textureBytesEstimate": 1148248888,
+            "renderbufferBytesEstimate": 24117248,
+            "buffers": 2907,
+            "textures": 183,
+            "renderbuffers": 3,
+            "programs": 149,
+            "compiled": 312,
+            "links": 156,
+            "uploadBytes": 318835002
+          }
+        ]
+      }
+    },
+    {
+      "id": "central",
+      "availableSystemBytesBefore": 1959059456,
+      "fps": 65.89211313624367,
+      "low1Fps": 46.728971965870635,
+      "cpuMs": 14.770194985864887,
+      "gpuMs": 15.296477866666669,
+      "gpuSamples": 30,
+      "calls": 453.1058495821727,
+      "triangles": 34996972.09192201,
+      "compileDuringMeasurement": 0,
+      "end": [
+        {
+          "x": -135.18934223091645,
+          "z": 151.63149811514802,
+          "speed": 40.04772340008878,
+          "route": null
+        },
+        {
+          "x": -183.82445401500343,
+          "z": -141.02033296118896,
+          "speed": 74.19999999999989,
+          "route": null
+        },
+        {
+          "x": -167.71840708025636,
+          "z": -154.19705197241757,
+          "speed": 65.25000000000001,
+          "route": null
+        },
+        {
+          "x": -180.8507332686384,
+          "z": -159.8095199117942,
+          "speed": 60,
+          "route": null
+        },
+        {
+          "x": -163.99173998342047,
+          "z": -178.80487951569677,
+          "speed": 53.33333333333333,
+          "route": null
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "memory": {
+        "availableSystemBytes": 2143768576,
+        "heap": {
+          "usedSize": 70995216,
+          "totalSize": 162467840,
+          "embedderHeapUsedSize": 11655808,
+          "backingStorageSize": 312058194
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 1050,
+          "jsEventListeners": 62
+        },
+        "processes": [
+          {
+            "Name": "msedge#10",
+            "IDProcess": 118096,
+            "WorkingSet": 339812352,
+            "WorkingSetPrivate": 224411648,
+            "PrivateBytes": 235700224
+          },
+          {
+            "Name": "msedge#12",
+            "IDProcess": 128560,
+            "WorkingSet": 1326514176,
+            "WorkingSetPrivate": 1166204928,
+            "PrivateBytes": 2892087296
+          },
+          {
+            "Name": "msedge#13",
+            "IDProcess": 127488,
+            "WorkingSet": 114753536,
+            "WorkingSetPrivate": 77213696,
+            "PrivateBytes": 82792448
+          },
+          {
+            "Name": "msedge#14",
+            "IDProcess": 118652,
+            "WorkingSet": 25231360,
+            "WorkingSetPrivate": 3178496,
+            "PrivateBytes": 8073216
+          },
+          {
+            "Name": "msedge#15",
+            "IDProcess": 129300,
+            "WorkingSet": 38002688,
+            "WorkingSetPrivate": 8085504,
+            "PrivateBytes": 16797696
+          },
+          {
+            "Name": "msedge#16",
+            "IDProcess": 127860,
+            "WorkingSet": 1422012416,
+            "WorkingSetPrivate": 1326739456,
+            "PrivateBytes": 1354551296
+          }
+        ],
+        "gl": [
+          {
+            "bufferBytes": 286515946,
+            "textureBytesEstimate": 1148248888,
+            "renderbufferBytesEstimate": 24117248,
+            "buffers": 2907,
+            "textures": 183,
+            "renderbuffers": 3,
+            "programs": 149,
+            "compiled": 312,
+            "links": 156,
+            "uploadBytes": 1739490746
+          }
+        ]
+      }
+    },
+    {
+      "id": "dense-science",
+      "availableSystemBytesBefore": 2143543296,
+      "fps": 33.55391057279049,
+      "low1Fps": 27.063599462002266,
+      "cpuMs": 17.775208914097306,
+      "gpuMs": 28.922163199999993,
+      "gpuSamples": 30,
+      "calls": 866.9526462395543,
+      "triangles": 91880136.86908078,
+      "compileDuringMeasurement": 0,
+      "end": [
+        {
+          "x": 66.38344549409742,
+          "z": 590.4509741217906,
+          "speed": 40.08072166404468,
+          "route": null
+        },
+        {
+          "x": 224.0874166359011,
+          "z": 636.0213561717189,
+          "speed": 62.5,
+          "route": null
+        },
+        {
+          "x": 186.20104636124663,
+          "z": 623.9895523480307,
+          "speed": 64.40000000000002,
+          "route": null
+        },
+        {
+          "x": 110.17366398454443,
+          "z": 611.7558594710423,
+          "speed": 56.03333333333336,
+          "route": null
+        },
+        {
+          "x": 119.17957947593946,
+          "z": 609.5704625845015,
+          "speed": 44.44444444444444,
+          "route": null
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "memory": {
+        "availableSystemBytes": 2136166400,
+        "heap": {
+          "usedSize": 98079636,
+          "totalSize": 162729984,
+          "embedderHeapUsedSize": 15834632,
+          "backingStorageSize": 312060093
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 1595,
+          "jsEventListeners": 62
+        },
+        "processes": [
+          {
+            "Name": "msedge#10",
+            "IDProcess": 118096,
+            "WorkingSet": 339664896,
+            "WorkingSetPrivate": 224264192,
+            "PrivateBytes": 235552768
+          },
+          {
+            "Name": "msedge#12",
+            "IDProcess": 128560,
+            "WorkingSet": 1329635328,
+            "WorkingSetPrivate": 1169326080,
+            "PrivateBytes": 2894639104
+          },
+          {
+            "Name": "msedge#13",
+            "IDProcess": 127488,
+            "WorkingSet": 114757632,
+            "WorkingSetPrivate": 77213696,
+            "PrivateBytes": 82792448
+          },
+          {
+            "Name": "msedge#14",
+            "IDProcess": 118652,
+            "WorkingSet": 25231360,
+            "WorkingSetPrivate": 3178496,
+            "PrivateBytes": 8073216
+          },
+          {
+            "Name": "msedge#15",
+            "IDProcess": 129300,
+            "WorkingSet": 38002688,
+            "WorkingSetPrivate": 8085504,
+            "PrivateBytes": 16797696
+          },
+          {
+            "Name": "msedge#16",
+            "IDProcess": 127860,
+            "WorkingSet": 1427808256,
+            "WorkingSetPrivate": 1332531200,
+            "PrivateBytes": 1360076800
+          }
+        ],
+        "gl": [
+          {
+            "bufferBytes": 286530874,
+            "textureBytesEstimate": 1148248888,
+            "renderbufferBytesEstimate": 24117248,
+            "buffers": 2917,
+            "textures": 183,
+            "renderbuffers": 3,
+            "programs": 149,
+            "compiled": 312,
+            "links": 156,
+            "uploadBytes": 3206592650
+          }
+        ]
+      }
+    },
+    {
+      "id": "elevated",
+      "availableSystemBytesBefore": 2136162304,
+      "fps": 34.2423288598634,
+      "low1Fps": 27.06359945927372,
+      "cpuMs": 19.26239554347434,
+      "gpuMs": 29.7964544,
+      "gpuSamples": 30,
+      "calls": 966.4038997214485,
+      "triangles": 90221964.52089137,
+      "compileDuringMeasurement": 0,
+      "end": [
+        {
+          "x": 494.7081418235832,
+          "z": -511.23860268504234,
+          "speed": 40.08099075412133,
+          "route": "harbor-cut"
+        },
+        {
+          "x": 392.5282674025494,
+          "z": -508.57498678333775,
+          "speed": 62.5,
+          "route": "harbor-cut"
+        },
+        {
+          "x": 433.4228151333376,
+          "z": -505.4657885943598,
+          "speed": 63.35555555555548,
+          "route": "harbor-cut"
+        },
+        {
+          "x": 447.60363827775916,
+          "z": -509.91354281082346,
+          "speed": 50,
+          "route": "harbor-cut"
+        },
+        {
+          "x": 479.842862769524,
+          "z": -508.3886708291547,
+          "speed": 44.44444444444444,
+          "route": "harbor-cut"
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "memory": {
+        "availableSystemBytes": 2165444608,
+        "heap": {
+          "usedSize": 103643660,
+          "totalSize": 163254272,
+          "embedderHeapUsedSize": 19558144,
+          "backingStorageSize": 312061754
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 2049,
+          "jsEventListeners": 62
+        },
+        "processes": [
+          {
+            "Name": "msedge#10",
+            "IDProcess": 118096,
+            "WorkingSet": 338427904,
+            "WorkingSetPrivate": 219983872,
+            "PrivateBytes": 231325696
+          },
+          {
+            "Name": "msedge#12",
+            "IDProcess": 128560,
+            "WorkingSet": 1322401792,
+            "WorkingSetPrivate": 1162067968,
+            "PrivateBytes": 2890362880
+          },
+          {
+            "Name": "msedge#13",
+            "IDProcess": 127488,
+            "WorkingSet": 108118016,
+            "WorkingSetPrivate": 70307840,
+            "PrivateBytes": 75767808
+          },
+          {
+            "Name": "msedge#14",
+            "IDProcess": 118652,
+            "WorkingSet": 25239552,
+            "WorkingSetPrivate": 3121152,
+            "PrivateBytes": 7966720
+          },
+          {
+            "Name": "msedge#15",
+            "IDProcess": 129300,
+            "WorkingSet": 38002688,
+            "WorkingSetPrivate": 8069120,
+            "PrivateBytes": 16764928
+          },
+          {
+            "Name": "msedge#16",
+            "IDProcess": 127860,
+            "WorkingSet": 1417994240,
+            "WorkingSetPrivate": 1322684416,
+            "PrivateBytes": 1349156864
+          }
+        ],
+        "gl": [
+          {
+            "bufferBytes": 286530874,
+            "textureBytesEstimate": 1148248888,
+            "renderbufferBytesEstimate": 24117248,
+            "buffers": 2917,
+            "textures": 183,
+            "renderbuffers": 3,
+            "programs": 149,
+            "compiled": 312,
+            "links": 156,
+            "uploadBytes": 4196675338
+          }
+        ]
+      }
+    },
+    {
+      "id": "high-speed",
+      "availableSystemBytesBefore": 2165444608,
+      "fps": 65.25018629920774,
+      "low1Fps": 32.97609232981776,
+      "cpuMs": 13.287465180983782,
+      "gpuMs": 15.056649599999997,
+      "gpuSamples": 30,
+      "calls": 533.2256267409471,
+      "triangles": 38121027.713091925,
+      "compileDuringMeasurement": 0,
+      "end": [
+        {
+          "x": 108.59022144990259,
+          "z": -653.5264119241101,
+          "speed": 49.973333333333336,
+          "route": null
+        },
+        {
+          "x": -183.82445401500343,
+          "z": -141.02033296118896,
+          "speed": 74.19999999999989,
+          "route": null
+        },
+        {
+          "x": -167.71840708025636,
+          "z": -154.19705197241757,
+          "speed": 65.25000000000001,
+          "route": null
+        },
+        {
+          "x": -180.8507332686384,
+          "z": -159.8095199117942,
+          "speed": 60,
+          "route": null
+        },
+        {
+          "x": -163.99173998342047,
+          "z": -178.80487951569677,
+          "speed": 53.33333333333333,
+          "route": null
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "memory": {
+        "availableSystemBytes": 2153234432,
+        "heap": {
+          "usedSize": 109626060,
+          "totalSize": 163254272,
+          "embedderHeapUsedSize": 22869464,
+          "backingStorageSize": 312061879
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 2402,
+          "jsEventListeners": 62
+        },
+        "processes": [
+          {
+            "Name": "msedge#10",
+            "IDProcess": 118096,
+            "WorkingSet": 337027072,
+            "WorkingSetPrivate": 217964544,
+            "PrivateBytes": 229322752
+          },
+          {
+            "Name": "msedge#12",
+            "IDProcess": 128560,
+            "WorkingSet": 1319383040,
+            "WorkingSetPrivate": 1159049216,
+            "PrivateBytes": 2887892992
+          },
+          {
+            "Name": "msedge#13",
+            "IDProcess": 127488,
+            "WorkingSet": 108126208,
+            "WorkingSetPrivate": 70307840,
+            "PrivateBytes": 75767808
+          },
+          {
+            "Name": "msedge#14",
+            "IDProcess": 118652,
+            "WorkingSet": 25239552,
+            "WorkingSetPrivate": 3121152,
+            "PrivateBytes": 7966720
+          },
+          {
+            "Name": "msedge#15",
+            "IDProcess": 129300,
+            "WorkingSet": 38002688,
+            "WorkingSetPrivate": 8069120,
+            "PrivateBytes": 16764928
+          },
+          {
+            "Name": "msedge#16",
+            "IDProcess": 127860,
+            "WorkingSet": 1420902400,
+            "WorkingSetPrivate": 1325584384,
+            "PrivateBytes": 1352232960
+          }
+        ],
+        "gl": [
+          {
+            "bufferBytes": 286530874,
+            "textureBytesEstimate": 1148248888,
+            "renderbufferBytesEstimate": 24117248,
+            "buffers": 2917,
+            "textures": 183,
+            "renderbuffers": 3,
+            "programs": 149,
+            "compiled": 312,
+            "links": 156,
+            "uploadBytes": 5490064778
+          }
+        ]
+      }
+    },
+    {
+      "id": "five-racers",
+      "availableSystemBytesBefore": 2153234432,
+      "fps": 38.02241098096902,
+      "low1Fps": 28.109627545080162,
+      "cpuMs": 17.35543175469202,
+      "gpuMs": 26.333286400000006,
+      "gpuSamples": 30,
+      "calls": 756.4902506963788,
+      "triangles": 77526234.41504179,
+      "compileDuringMeasurement": 0,
+      "end": [
+        {
+          "x": -136.71524832137507,
+          "z": 150.3435397220487,
+          "speed": 40.269915715312365,
+          "route": null
+        },
+        {
+          "x": -132.850700950168,
+          "z": 158.62942544327282,
+          "speed": 57.282400819539745,
+          "route": null
+        },
+        {
+          "x": -147.2215982067028,
+          "z": 130.47982312517033,
+          "speed": 48.41214510373074,
+          "route": null
+        },
+        {
+          "x": -137.20316407786513,
+          "z": 157.1626341359215,
+          "speed": 47.76634693280454,
+          "route": null
+        },
+        {
+          "x": -144.74447319121802,
+          "z": 133.87892868735048,
+          "speed": 42.516374203906906,
+          "route": null
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "memory": {
+        "availableSystemBytes": 2156711936,
+        "heap": {
+          "usedSize": 125781580,
+          "totalSize": 170070016,
+          "embedderHeapUsedSize": 26462680,
+          "backingStorageSize": 312063349
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 2861,
+          "jsEventListeners": 62
+        },
+        "processes": [
+          {
+            "Name": "msedge#10",
+            "IDProcess": 118096,
+            "WorkingSet": 336957440,
+            "WorkingSetPrivate": 217894912,
+            "PrivateBytes": 229261312
+          },
+          {
+            "Name": "msedge#12",
+            "IDProcess": 128560,
+            "WorkingSet": 1324888064,
+            "WorkingSetPrivate": 1164546048,
+            "PrivateBytes": 2895155200
+          },
+          {
+            "Name": "msedge#13",
+            "IDProcess": 127488,
+            "WorkingSet": 108126208,
+            "WorkingSetPrivate": 70307840,
+            "PrivateBytes": 75767808
+          },
+          {
+            "Name": "msedge#14",
+            "IDProcess": 118652,
+            "WorkingSet": 25239552,
+            "WorkingSetPrivate": 3121152,
+            "PrivateBytes": 7966720
+          },
+          {
+            "Name": "msedge#15",
+            "IDProcess": 129300,
+            "WorkingSet": 38002688,
+            "WorkingSetPrivate": 8069120,
+            "PrivateBytes": 16764928
+          },
+          {
+            "Name": "msedge#16",
+            "IDProcess": 127860,
+            "WorkingSet": 1431539712,
+            "WorkingSetPrivate": 1336197120,
+            "PrivateBytes": 1363329024
+          }
+        ],
+        "gl": [
+          {
+            "bufferBytes": 286530874,
+            "textureBytesEstimate": 1148248888,
+            "renderbufferBytesEstimate": 24117248,
+            "buffers": 2917,
+            "textures": 183,
+            "renderbuffers": 3,
+            "programs": 149,
+            "compiled": 312,
+            "links": 156,
+            "uploadBytes": 6881255882
+          }
+        ]
+      }
+    },
+    {
+      "id": "spray-nitro",
+      "availableSystemBytesBefore": 2156711936,
+      "fps": 38.45700635239357,
+      "low1Fps": 25.789813022368932,
+      "cpuMs": 18.13036211702485,
+      "gpuMs": 25.797592533333333,
+      "gpuSamples": 30,
+      "calls": 725.4958217270195,
+      "triangles": 73358237.47910863,
+      "compileDuringMeasurement": 0,
+      "end": [
+        {
+          "x": -93.5219527770415,
+          "z": 183.58923211528494,
+          "speed": 49.973333333333336,
+          "route": null
+        },
+        {
+          "x": -116.7047600872025,
+          "z": 169.31920252480313,
+          "speed": 55.88985206432801,
+          "route": null
+        },
+        {
+          "x": -98.02067673193051,
+          "z": 168.19410434473625,
+          "speed": 44.072222222222294,
+          "route": null
+        },
+        {
+          "x": -142.76633462634953,
+          "z": 150.19493201386396,
+          "speed": 58.76666666666658,
+          "route": null
+        },
+        {
+          "x": -131.9210517965899,
+          "z": 153.66550742462164,
+          "speed": 47.02777777777774,
+          "route": null
+        }
+      ],
+      "passed": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "memory": {
+        "availableSystemBytes": 2177585152,
+        "heap": {
+          "usedSize": 122519676,
+          "totalSize": 177410048,
+          "embedderHeapUsedSize": 32026976,
+          "backingStorageSize": 312065760
+        },
+        "dom": {
+          "documents": 1,
+          "nodes": 3504,
+          "jsEventListeners": 62
+        },
+        "processes": [
+          {
+            "Name": "msedge#10",
+            "IDProcess": 118096,
+            "WorkingSet": 336822272,
+            "WorkingSetPrivate": 217763840,
+            "PrivateBytes": 229130240
+          },
+          {
+            "Name": "msedge#12",
+            "IDProcess": 128560,
+            "WorkingSet": 1332862976,
+            "WorkingSetPrivate": 1172328448,
+            "PrivateBytes": 2911084544
+          },
+          {
+            "Name": "msedge#13",
+            "IDProcess": 127488,
+            "WorkingSet": 108109824,
+            "WorkingSetPrivate": 70291456,
+            "PrivateBytes": 75751424
+          },
+          {
+            "Name": "msedge#14",
+            "IDProcess": 118652,
+            "WorkingSet": 25239552,
+            "WorkingSetPrivate": 3121152,
+            "PrivateBytes": 7966720
+          },
+          {
+            "Name": "msedge#15",
+            "IDProcess": 129300,
+            "WorkingSet": 38002688,
+            "WorkingSetPrivate": 8069120,
+            "PrivateBytes": 16764928
+          },
+          {
+            "Name": "msedge#16",
+            "IDProcess": 127860,
+            "WorkingSet": 1448423424,
+            "WorkingSetPrivate": 1353019392,
+            "PrivateBytes": 1381273600
+          }
+        ],
+        "gl": [
+          {
+            "bufferBytes": 286538338,
+            "textureBytesEstimate": 1148248888,
+            "renderbufferBytesEstimate": 24117248,
+            "buffers": 2922,
+            "textures": 183,
+            "renderbuffers": 3,
+            "programs": 149,
+            "compiled": 312,
+            "links": 156,
+            "uploadBytes": 8653166386
+          }
+        ]
+      }
+    }
+  ],
+  "long": [],
+  "loadMs": 9287,
+  "initial": {
+    "renderer": {
+      "geometries": 324,
+      "textures": 179,
+      "programs": 148
+    },
+    "scene": {
+      "geometries": 330,
+      "attributes": 2927,
+      "attributeBytes": 286551694,
+      "arrayBufferBytes": 286551694,
+      "materials": 273,
+      "textures": 99
+    },
+    "textures": [
+      {
+        "name": "Hero-stretch-racing-textile-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-stretch-racing-textile-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-blue-leather-panels-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-blue-leather-panels-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-woven-protection-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-woven-protection-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-woven-protection-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-glove-and-boot-grip-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-glove-and-boot-grip-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-glove-and-boot-grip-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-stretch-racing-textile-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-stretch-racing-textile-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-satin-hardware-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-satin-hardware-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-satin-hardware-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-pearl-helmet-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-pearl-helmet-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Hero-pearl-helmet-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Molded-traction-rubber-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Molded-traction-rubber-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Molded-traction-rubber-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Brushed-titanium-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Brushed-titanium-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Brushed-titanium-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Forged-carbon-composite-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Forged-carbon-composite-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Forged-carbon-composite-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Pearl-ceramic-silver-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Pearl-ceramic-silver-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Pearl-ceramic-silver-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Paint-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Paint-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Perforated-marine-saddle-basecolor",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Perforated-marine-saddle-orm",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Perforated-marine-saddle-normal",
+        "width": 2048,
+        "height": 2048,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 2048,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Metal032_1K-JPG_Color",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Metal032_1K-JPG_NormalGL",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Metal032_1K-JPG_Metalness-Metal032_1K-JPG_Roughness",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Metal032_1K-JPG_Color",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Metal032_1K-JPG_NormalGL",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Metal032_1K-JPG_Metalness-Metal032_1K-JPG_Roughness",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": false
+      },
+      {
+        "name": "Original-LCD",
+        "width": 1024,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "PMREM.cubeUv",
+        "width": 768,
+        "height": 1024,
+        "format": 1023,
+        "type": 1016,
+        "mipmaps": false
+      },
+      {
+        "name": "PMREM.cubeUv",
+        "width": 768,
+        "height": 1024,
+        "format": 1023,
+        "type": 1016,
+        "mipmaps": false
+      },
+      {
+        "name": "Concrete034_1K-JPG_Color",
+        "width": 1024,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Concrete034_1K-JPG_NormalGL",
+        "width": 1024,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Concrete034_1K-JPG_Roughness",
+        "width": 1024,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Concrete034_1K-JPG_Color",
+        "width": 1024,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Concrete034_1K-JPG_NormalGL",
+        "width": 1024,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Concrete034_1K-JPG_Roughness",
+        "width": 1024,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "original-curtain-wall",
+        "width": 512,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "original-glazing-normal",
+        "width": 512,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "original-glazing-roughness",
+        "width": 512,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "original-curtain-wall",
+        "width": 512,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "original-glazing-normal",
+        "width": 512,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "original-glazing-roughness",
+        "width": 512,
+        "height": 1024,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "coated-alloy-basecolor",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "coated-alloy-orm",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "coated-alloy-normal",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "composite-paving-basecolor",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "composite-paving-orm",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "composite-paving-normal",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "coated-alloy-basecolor",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "coated-alloy-orm",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "coated-alloy-normal",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Public woven fabric normal",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "marine-ramp-color",
+        "width": 512,
+        "height": 512,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 512,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 512,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 256,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "",
+        "width": 256,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "marine-quay-color",
+        "width": 256,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      },
+      {
+        "name": "Original tiled water normal spectrum",
+        "width": 256,
+        "height": 256,
+        "format": 1023,
+        "type": 1009,
+        "mipmaps": true
+      }
+    ],
+    "largestMeshes": [
+      {
+        "name": "R8_Paint",
+        "triangles": 754944,
+        "skinned": false
+      },
+      {
+        "name": "R8_Paint",
+        "triangles": 754944,
+        "skinned": false
+      },
+      {
+        "name": "R8_Paint",
+        "triangles": 754944,
+        "skinned": false
+      },
+      {
+        "name": "R8_Paint",
+        "triangles": 754944,
+        "skinned": false
+      },
+      {
+        "name": "R8_Paint",
+        "triangles": 754944,
+        "skinned": false
+      },
+      {
+        "name": "R8_Pearl_ceramic_silver",
+        "triangles": 666732,
+        "skinned": false
+      },
+      {
+        "name": "R8_Pearl_ceramic_silver",
+        "triangles": 666732,
+        "skinned": false
+      },
+      {
+        "name": "R8_Pearl_ceramic_silver",
+        "triangles": 666732,
+        "skinned": false
+      },
+      {
+        "name": "R8_Pearl_ceramic_silver",
+        "triangles": 666732,
+        "skinned": false
+      },
+      {
+        "name": "R8_Pearl_ceramic_silver",
+        "triangles": 666732,
+        "skinned": false
+      },
+      {
+        "name": "R8_R7_satin_engineering_polymer",
+        "triangles": 550150,
+        "skinned": false
+      },
+      {
+        "name": "R8_R7_satin_engineering_polymer",
+        "triangles": 550150,
+        "skinned": false
+      },
+      {
+        "name": "R8_R7_satin_engineering_polymer",
+        "triangles": 550150,
+        "skinned": false
+      },
+      {
+        "name": "R8_R7_satin_engineering_polymer",
+        "triangles": 550150,
+        "skinned": false
+      },
+      {
+        "name": "R8_R7_satin_engineering_polymer",
+        "triangles": 550150,
+        "skinned": false
+      }
+    ],
+    "allocation": [
+      {
+        "bufferBytes": 286501018,
+        "textureBytesEstimate": 1148248888,
+        "renderbufferBytesEstimate": 24117248,
+        "buffers": 2897,
+        "textures": 183,
+        "renderbuffers": 3,
+        "programs": 148,
+        "compiled": 310,
+        "links": 155,
+        "uploadBytes": 300923754
+      }
+    ],
+    "quality": {
+      "pixelRatio": 1,
+      "width": 1600,
+      "height": 1000,
+      "waterSegments": 320,
+      "reflectionSize": 1024,
+      "racerShadowSize": 2048,
+      "cityShadowSize": 2048
+    },
+    "boot": [
+      {
+        "task": "renderer",
+        "elapsedMs": 117.20000000298023,
+        "percent": 11
+      },
+      {
+        "task": "track",
+        "elapsedMs": 117.20000000298023,
+        "percent": 22
+      },
+      {
+        "task": "city",
+        "elapsedMs": 3320.4000000059605,
+        "percent": 33
+      },
+      {
+        "task": "racers",
+        "elapsedMs": 3320.5,
+        "percent": 44
+      },
+      {
+        "task": "textures",
+        "elapsedMs": 4061.1000000089407,
+        "percent": 55
+      },
+      {
+        "task": "effects",
+        "elapsedMs": 4062.5,
+        "percent": 66
+      },
+      {
+        "task": "shaders",
+        "elapsedMs": 4683.9000000059605,
+        "percent": 77
+      },
+      {
+        "task": "reflection",
+        "elapsedMs": 6106.20000000298,
+        "percent": 88
+      },
+      {
+        "task": "scene",
+        "elapsedMs": 8063.29999999702,
+        "percent": 100
+      }
+    ]
+  },
+  "initialMemory": {
+    "availableSystemBytes": 2139287552,
+    "heap": {
+      "usedSize": 72190636,
+      "totalSize": 159059968,
+      "embedderHeapUsedSize": 5457024,
+      "backingStorageSize": 312053991
+    },
+    "dom": {
+      "documents": 1,
+      "nodes": 262,
+      "jsEventListeners": 62
+    },
+    "processes": [
+      {
+        "Name": "msedge#10",
+        "IDProcess": 118096,
+        "WorkingSet": 340312064,
+        "WorkingSetPrivate": 225214464,
+        "PrivateBytes": 236568576
+      },
+      {
+        "Name": "msedge#12",
+        "IDProcess": 128560,
+        "WorkingSet": 1306796032,
+        "WorkingSetPrivate": 1150271488,
+        "PrivateBytes": 2848927744
+      },
+      {
+        "Name": "msedge#13",
+        "IDProcess": 127488,
+        "WorkingSet": 114737152,
+        "WorkingSetPrivate": 77283328,
+        "PrivateBytes": 82866176
+      },
+      {
+        "Name": "msedge#14",
+        "IDProcess": 118652,
+        "WorkingSet": 25231360,
+        "WorkingSetPrivate": 3178496,
+        "PrivateBytes": 8073216
+      },
+      {
+        "Name": "msedge#15",
+        "IDProcess": 130600,
+        "WorkingSet": 23199744,
+        "WorkingSetPrivate": 2793472,
+        "PrivateBytes": 7663616
+      },
+      {
+        "Name": "msedge#16",
+        "IDProcess": 129300,
+        "WorkingSet": 38039552,
+        "WorkingSetPrivate": 8122368,
+        "PrivateBytes": 16867328
+      },
+      {
+        "Name": "msedge#17",
+        "IDProcess": 127860,
+        "WorkingSet": 1500897280,
+        "WorkingSetPrivate": 1406205952,
+        "PrivateBytes": 1433669632
+      },
+      {
+        "Name": "msedge#18",
+        "IDProcess": 124912,
+        "WorkingSet": 23699456,
+        "WorkingSetPrivate": 2895872,
+        "PrivateBytes": 7786496
+      }
+    ],
+    "gl": [
+      {
+        "bufferBytes": 286501018,
+        "textureBytesEstimate": 1148248888,
+        "renderbufferBytesEstimate": 24117248,
+        "buffers": 2897,
+        "textures": 183,
+        "renderbuffers": 3,
+        "programs": 148,
+        "compiled": 310,
+        "links": 155,
+        "uploadBytes": 300923754
+      }
+    ]
+  },
+  "short": true,
+  "completed": true
+}

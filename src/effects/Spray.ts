@@ -17,8 +17,12 @@ export class Spray {
     this.geometry.setAttribute('motion',new THREE.BufferAttribute(this.pool.motion,3));
     for(const attribute of Object.values(this.geometry.attributes))if(attribute instanceof THREE.BufferAttribute)attribute.setUsage(THREE.DynamicDrawUsage);
     const material=new THREE.ShaderMaterial({transparent:true,depthWrite:false,
-      vertexShader:`attribute float alpha;attribute float size;attribute vec3 motion;varying float a;varying vec2 axis;varying float stretch;void main(){a=alpha;vec4 p=modelViewMatrix*vec4(position,1.);vec3 v=mat3(modelViewMatrix)*motion;axis=normalize(v.xy+vec2(.001));stretch=clamp(length(v.xy)*.12+1.,1.,3.2);gl_Position=projectionMatrix*p;gl_PointSize=clamp(size*440./max(1.,-p.z),1.,38.);}`,
-      fragmentShader:`varying float a;varying vec2 axis;varying float stretch;void main(){vec2 q=gl_PointCoord-.5;vec2 d=vec2(dot(q,vec2(-axis.y,axis.x))*stretch,dot(q,axis));float r=length(d),opacity=a*(1.-smoothstep(.12,.49,r));if(opacity<.005)discard;vec3 color=mix(vec3(.48,.73,.82),vec3(.94,.99,1.),1.-smoothstep(.05,.4,r));gl_FragColor=vec4(color,opacity);
+      vertexShader:`attribute float alpha;attribute float size;attribute vec3 motion;varying float a;varying vec2 axis;varying float stretch;varying vec3 sunView;void main(){a=alpha;if(alpha<=0.){gl_Position=vec4(2.,2.,2.,1.);gl_PointSize=0.;return;}vec4 p=modelViewMatrix*vec4(position,1.);vec3 v=mat3(modelViewMatrix)*motion;axis=normalize(v.xy+vec2(.001));stretch=clamp(length(v.xy)*.12+1.,1.,3.2);vec3 sun=normalize(mat3(viewMatrix)*vec3(-155.,165.,90.));sunView=vec3(dot(sun.xy,vec2(-axis.y,axis.x)),dot(sun.xy,axis),abs(sun.z));gl_Position=projectionMatrix*p;gl_PointSize=clamp(size*440./max(1.,-p.z),1.,38.);}`,
+      fragmentShader:`varying float a;varying vec2 axis;varying float stretch;varying vec3 sunView;void main(){vec2 q=gl_PointCoord-.5;vec2 d=vec2(dot(q,vec2(-axis.y,axis.x))*stretch,dot(q,axis));float r=length(d),opacity=a*(1.-smoothstep(.12,.49,r));if(opacity<.005)discard;
+       float radius2=dot(d,d),lens=1.-2.*radius2-2.*radius2*radius2,rim=1.-lens;vec3 normal=vec3(d*2.,lens);float daylight=clamp(dot(normal,sunView),0.,1.);
+       vec2 focusUV=(d-vec2(-.075,.10))*vec2(9.,7.);float focus=max(0.,1.-dot(focusUV,focusUV)*.25);focus*=focus;focus*=focus;
+       vec3 color=mix(vec3(.40,.68,.78),vec3(.84,.97,1.),.28+.72*daylight)+vec3(.36,.44,.46)*focus;opacity*=.78+.22*rim*rim;
+       gl_FragColor=vec4(color,opacity);
       #include <tonemapping_fragment>
       #include <colorspace_fragment>
       }`

@@ -1,0 +1,3201 @@
+{
+  "method": "Fresh browser context per version. Primary metric: actual HTTP response body bytes measured in preview-server middleware, including all worker and Range requests; content lengths cross-checked. Window timing and worker measures are retained as partial corroboration only (legacy raw-GLB worker values can be missing). Local 1600x1000, not an internet bandwidth promise. HEAD response body bytes are zero and are excluded; bytesPassedToEnd records buffers offered to Node on HEAD only, not transmitted data.",
+  "completed": true,
+  "result": [
+    {
+      "label": "before",
+      "loadMs": 9875,
+      "items": [
+        {
+          "path": "/assets/vertical-C8RwV6JH.js",
+          "bytes": 1883,
+          "transfer": 2183,
+          "cached": false
+        },
+        {
+          "path": "/assets/three-Bz6m4ULt.js",
+          "bytes": 193286,
+          "transfer": 193586,
+          "cached": false
+        },
+        {
+          "path": "/assets/LoadingScreen-DhiMiaqG.js",
+          "bytes": 2636,
+          "transfer": 2936,
+          "cached": false
+        },
+        {
+          "path": "/assets/model-loaders-Y7NAgoK0.js",
+          "bytes": 12877,
+          "transfer": 13177,
+          "cached": false
+        },
+        {
+          "path": "/assets/LoadingScreen-htyRGMsv.css",
+          "bytes": 4746,
+          "transfer": 5046,
+          "cached": false
+        },
+        {
+          "path": "/assets/Game-CfX6NwWG.css",
+          "bytes": 1804,
+          "transfer": 2104,
+          "cached": false
+        },
+        {
+          "path": "/assets/Game-CtEHzjY_.js",
+          "bytes": 89072,
+          "transfer": 89372,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "bytes": 2785,
+          "transfer": 300,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "bytes": 2785,
+          "transfer": 300,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "bytes": 2785,
+          "transfer": 3085,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "bytes": 2785,
+          "transfer": 300,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/fe5bae937b9c22e9ffaa.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/fe5bae937b9c22e9ffaa.webp",
+          "bytes": 170444,
+          "transfer": 170744,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/560595f52bc946120945.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/560595f52bc946120945.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/b116d85e8e62abe1fc2f.webp",
+          "bytes": 104482,
+          "transfer": 104782,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/bc1facc8ddffc28b00dc.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/560595f52bc946120945.webp",
+          "bytes": 917704,
+          "transfer": 918004,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a740f0bc2240186e9237.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/bc1facc8ddffc28b00dc.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/37adb5e352224afdbd7a.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a740f0bc2240186e9237.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/bc1facc8ddffc28b00dc.webp",
+          "bytes": 427416,
+          "transfer": 427716,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/37adb5e352224afdbd7a.webp",
+          "bytes": 153474,
+          "transfer": 153774,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a740f0bc2240186e9237.webp",
+          "bytes": 417576,
+          "transfer": 417876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/9a7a94cc03bf1bc15367.webp",
+          "bytes": 10872,
+          "transfer": 11172,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/e7b1ce5b4bc2ece5ed9e.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/65172c9abac5eca46625.webp",
+          "bytes": 59852,
+          "transfer": 60152,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/e7b1ce5b4bc2ece5ed9e.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/3510df3292199a428ea7.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/0330aa7967182acbb1c8.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/e7b1ce5b4bc2ece5ed9e.webp",
+          "bytes": 815264,
+          "transfer": 815564,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/3510df3292199a428ea7.webp",
+          "bytes": 1023812,
+          "transfer": 1024112,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/0330aa7967182acbb1c8.webp",
+          "bytes": 606526,
+          "transfer": 606826,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/6b465234a3a520d779df.webp",
+          "bytes": 1033506,
+          "transfer": 1033806,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/f0c48b4ee3e12ffd33c0.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/b13b68a813320992ea62.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/9ecd1e9bc5b81ac62ff5.webp",
+          "bytes": 403184,
+          "transfer": 403484,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/b13b68a813320992ea62.webp",
+          "bytes": 598458,
+          "transfer": 598758,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/f0c48b4ee3e12ffd33c0.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/f0c48b4ee3e12ffd33c0.webp",
+          "bytes": 174738,
+          "transfer": 175038,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/fcfe459ca867733ea6f0.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/88f5ef580707967548d0.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/fcfe459ca867733ea6f0.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/88f5ef580707967548d0.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/64a0ee65ef3cfa6f2438.webp",
+          "bytes": 1536,
+          "transfer": 1836,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/fcfe459ca867733ea6f0.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/88f5ef580707967548d0.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "bytes": 2785,
+          "transfer": 300,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/fcfe459ca867733ea6f0.webp",
+          "bytes": 262160,
+          "transfer": 262460,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/88f5ef580707967548d0.webp",
+          "bytes": 215040,
+          "transfer": 215340,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/23e02b034b8d28c3d9fb.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/bb50cddcad3d7d44e2d8.webp",
+          "bytes": 51358,
+          "transfer": 51658,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/23e02b034b8d28c3d9fb.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/d1cf99dabca561f7faad.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/23e02b034b8d28c3d9fb.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/d1cf99dabca561f7faad.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/23e02b034b8d28c3d9fb.webp",
+          "bytes": 560126,
+          "transfer": 560426,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/d1cf99dabca561f7faad.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/d1cf99dabca561f7faad.webp",
+          "bytes": 262266,
+          "transfer": 262566,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a810f3d277877a08123e.webp",
+          "bytes": 10232,
+          "transfer": 10532,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/3f53ad56702cb88b589c.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/6a8a65e05d5fd1a7eae8.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/3f53ad56702cb88b589c.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/9494993a3d012f41744f.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/6a8a65e05d5fd1a7eae8.webp",
+          "bytes": 350770,
+          "transfer": 351070,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/3f53ad56702cb88b589c.webp",
+          "bytes": 815352,
+          "transfer": 815652,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/9494993a3d012f41744f.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/9494993a3d012f41744f.webp",
+          "bytes": 917800,
+          "transfer": 918100,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/6ee1e29f4e3eeb2761e8.webp",
+          "bytes": 1734,
+          "transfer": 2034,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a5a7a6117474fc7015cc.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a5a7a6117474fc7015cc.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/ec0b155ef3681079aebe.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a098c0c818a83756a6b3.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a5a7a6117474fc7015cc.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/ec0b155ef3681079aebe.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a098c0c818a83756a6b3.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/ec0b155ef3681079aebe.webp",
+          "bytes": 407078,
+          "transfer": 407378,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a5a7a6117474fc7015cc.webp",
+          "bytes": 560724,
+          "transfer": 561024,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/a098c0c818a83756a6b3.webp",
+          "bytes": 425382,
+          "transfer": 425682,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/fdfb661ab6df4c534801.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/79e4ea6cf2e75941d4c6.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "bytes": 2785,
+          "transfer": 300,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/fdfb661ab6df4c534801.webp",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/79e4ea6cf2e75941d4c6.webp",
+          "bytes": 598706,
+          "transfer": 599006,
+          "cached": false
+        },
+        {
+          "path": "/models/runtime-textures/fdfb661ab6df4c534801.webp",
+          "bytes": 78830,
+          "transfer": 79130,
+          "cached": false
+        }
+      ],
+      "workers": [
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "bytes": null
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "bytes": null
+        },
+        {
+          "path": "/models/watercraft-packed.glb.gz",
+          "bytes": 32005716
+        },
+        {
+          "path": "/models/rider-packed.glb.gz",
+          "bytes": 17362994
+        },
+        {
+          "path": "/models/city-sample/city-services.glb",
+          "bytes": null
+        },
+        {
+          "path": "/models/city-sample/public-citizens.glb",
+          "bytes": null
+        }
+      ],
+      "mainBodyBytes": 56799608,
+      "mainModelAndTextureBytes": 56476594,
+      "workerModelBytes": 49368710,
+      "modelAndTextureBytes": 143600648,
+      "serverRequests": [
+        {
+          "path": "/scripts/qa/vertical.html",
+          "method": "GET",
+          "status": 200,
+          "bytes": 781,
+          "contentLength": 781
+        },
+        {
+          "path": "/assets/LoadingScreen-DhiMiaqG.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 2636,
+          "contentLength": 2636
+        },
+        {
+          "path": "/assets/vertical-C8RwV6JH.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 1883,
+          "contentLength": 1883
+        },
+        {
+          "path": "/assets/model-loaders-Y7NAgoK0.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 12877,
+          "contentLength": 12877
+        },
+        {
+          "path": "/assets/LoadingScreen-htyRGMsv.css",
+          "method": "GET",
+          "status": 200,
+          "bytes": 4746,
+          "contentLength": 4746
+        },
+        {
+          "path": "/assets/Game-CfX6NwWG.css",
+          "method": "GET",
+          "status": 200,
+          "bytes": 1804,
+          "contentLength": 1804
+        },
+        {
+          "path": "/assets/Game-CtEHzjY_.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 89072,
+          "contentLength": 89072
+        },
+        {
+          "path": "/assets/three-Bz6m4ULt.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 193286,
+          "contentLength": 193286
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 2785,
+          "contentLength": 2785
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "method": "GET",
+          "status": 304,
+          "bytes": 0,
+          "contentLength": 0
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "method": "GET",
+          "status": 304,
+          "bytes": 0,
+          "contentLength": 0
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/watercraft-packed.glb.gz",
+          "method": "HEAD",
+          "status": 200,
+          "bytes": 0,
+          "contentLength": 32005716,
+          "bytesPassedToEnd": 32005716
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/watercraft-packed.glb.gz",
+          "method": "GET",
+          "status": 200,
+          "bytes": 32005716,
+          "contentLength": 32005716
+        },
+        {
+          "path": "/models/city-sample/city-modules.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 42892,
+          "contentLength": 42892
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "method": "GET",
+          "status": 304,
+          "bytes": 0,
+          "contentLength": 0
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/rider-packed.glb.gz",
+          "method": "HEAD",
+          "status": 200,
+          "bytes": 0,
+          "contentLength": 17362994,
+          "bytesPassedToEnd": 17362994
+        },
+        {
+          "path": "/models/city-sample/waterfront.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1029716,
+          "contentLength": 1029716
+        },
+        {
+          "path": "/models/runtime-textures/fe5bae937b9c22e9ffaa.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/fe5bae937b9c22e9ffaa.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 170444,
+          "contentLength": 170444
+        },
+        {
+          "path": "/models/rider-packed.glb.gz",
+          "method": "GET",
+          "status": 200,
+          "bytes": 17362994,
+          "contentLength": 17362994
+        },
+        {
+          "path": "/models/runtime-textures/560595f52bc946120945.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/560595f52bc946120945.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/b116d85e8e62abe1fc2f.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 104482,
+          "contentLength": 104482
+        },
+        {
+          "path": "/models/runtime-textures/560595f52bc946120945.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 917704,
+          "contentLength": 917704
+        },
+        {
+          "path": "/models/runtime-textures/bc1facc8ddffc28b00dc.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/a740f0bc2240186e9237.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/bc1facc8ddffc28b00dc.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/37adb5e352224afdbd7a.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/37adb5e352224afdbd7a.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 153474,
+          "contentLength": 153474
+        },
+        {
+          "path": "/models/runtime-textures/a740f0bc2240186e9237.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/bc1facc8ddffc28b00dc.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 427416,
+          "contentLength": 427416
+        },
+        {
+          "path": "/models/runtime-textures/a740f0bc2240186e9237.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 417576,
+          "contentLength": 417576
+        },
+        {
+          "path": "/models/runtime-textures/9a7a94cc03bf1bc15367.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 10872,
+          "contentLength": 10872
+        },
+        {
+          "path": "/models/runtime-textures/65172c9abac5eca46625.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 59852,
+          "contentLength": 59852
+        },
+        {
+          "path": "/models/runtime-textures/e7b1ce5b4bc2ece5ed9e.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/e7b1ce5b4bc2ece5ed9e.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/3510df3292199a428ea7.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/0330aa7967182acbb1c8.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/e7b1ce5b4bc2ece5ed9e.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 815264,
+          "contentLength": 815264
+        },
+        {
+          "path": "/models/runtime-textures/0330aa7967182acbb1c8.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 606526,
+          "contentLength": 606526
+        },
+        {
+          "path": "/models/runtime-textures/3510df3292199a428ea7.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1023812,
+          "contentLength": 1023812
+        },
+        {
+          "path": "/models/runtime-textures/6b465234a3a520d779df.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1033506,
+          "contentLength": 1033506
+        },
+        {
+          "path": "/models/runtime-textures/b13b68a813320992ea62.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/f0c48b4ee3e12ffd33c0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/9ecd1e9bc5b81ac62ff5.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 403184,
+          "contentLength": 403184
+        },
+        {
+          "path": "/models/runtime-textures/b13b68a813320992ea62.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 598458,
+          "contentLength": 598458
+        },
+        {
+          "path": "/models/runtime-textures/f0c48b4ee3e12ffd33c0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/f0c48b4ee3e12ffd33c0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 174738,
+          "contentLength": 174738
+        },
+        {
+          "path": "/models/runtime-textures/88f5ef580707967548d0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/fcfe459ca867733ea6f0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/fcfe459ca867733ea6f0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/88f5ef580707967548d0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/64a0ee65ef3cfa6f2438.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1536,
+          "contentLength": 1536
+        },
+        {
+          "path": "/models/runtime-textures/88f5ef580707967548d0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "method": "GET",
+          "status": 304,
+          "bytes": 0,
+          "contentLength": 0
+        },
+        {
+          "path": "/models/runtime-textures/fcfe459ca867733ea6f0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-services.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/88f5ef580707967548d0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 215040,
+          "contentLength": 215040
+        },
+        {
+          "path": "/models/runtime-textures/fcfe459ca867733ea6f0.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 262160,
+          "contentLength": 262160
+        },
+        {
+          "path": "/models/city-sample/city-services.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-services.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/bb50cddcad3d7d44e2d8.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 51358,
+          "contentLength": 51358
+        },
+        {
+          "path": "/models/runtime-textures/23e02b034b8d28c3d9fb.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-services.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-services.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/23e02b034b8d28c3d9fb.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-services.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/d1cf99dabca561f7faad.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-services.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/23e02b034b8d28c3d9fb.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-services.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/d1cf99dabca561f7faad.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/city-services.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 962068,
+          "contentLength": 962068
+        },
+        {
+          "path": "/models/runtime-textures/23e02b034b8d28c3d9fb.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 560126,
+          "contentLength": 560126
+        },
+        {
+          "path": "/models/runtime-textures/d1cf99dabca561f7faad.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/d1cf99dabca561f7faad.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 262266,
+          "contentLength": 262266
+        },
+        {
+          "path": "/models/runtime-textures/a810f3d277877a08123e.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 10232,
+          "contentLength": 10232
+        },
+        {
+          "path": "/models/runtime-textures/3f53ad56702cb88b589c.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/6a8a65e05d5fd1a7eae8.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/3f53ad56702cb88b589c.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/6a8a65e05d5fd1a7eae8.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 350770,
+          "contentLength": 350770
+        },
+        {
+          "path": "/models/runtime-textures/9494993a3d012f41744f.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/3f53ad56702cb88b589c.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 815352,
+          "contentLength": 815352
+        },
+        {
+          "path": "/models/runtime-textures/9494993a3d012f41744f.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/9494993a3d012f41744f.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 917800,
+          "contentLength": 917800
+        },
+        {
+          "path": "/models/runtime-textures/6ee1e29f4e3eeb2761e8.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1734,
+          "contentLength": 1734
+        },
+        {
+          "path": "/models/runtime-textures/a5a7a6117474fc7015cc.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/a5a7a6117474fc7015cc.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/ec0b155ef3681079aebe.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/a098c0c818a83756a6b3.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/a098c0c818a83756a6b3.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/ec0b155ef3681079aebe.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/a5a7a6117474fc7015cc.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/ec0b155ef3681079aebe.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 407078,
+          "contentLength": 407078
+        },
+        {
+          "path": "/models/runtime-textures/a098c0c818a83756a6b3.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 425382,
+          "contentLength": 425382
+        },
+        {
+          "path": "/models/runtime-textures/a5a7a6117474fc7015cc.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 560724,
+          "contentLength": 560724
+        },
+        {
+          "path": "/assets/ModelTransport.worker-CvQrEdil.js",
+          "method": "GET",
+          "status": 304,
+          "bytes": 0,
+          "contentLength": 0
+        },
+        {
+          "path": "/models/runtime-textures/fdfb661ab6df4c534801.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/79e4ea6cf2e75941d4c6.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/public-citizens.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/runtime-textures/79e4ea6cf2e75941d4c6.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 598706,
+          "contentLength": 598706
+        },
+        {
+          "path": "/models/runtime-textures/fdfb661ab6df4c534801.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/public-citizens.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/city-sample/public-citizens.glb",
+          "method": "GET",
+          "status": 206,
+          "bytes": 69084,
+          "contentLength": 69084
+        },
+        {
+          "path": "/models/runtime-textures/fdfb661ab6df4c534801.webp",
+          "method": "GET",
+          "status": 206,
+          "bytes": 78830,
+          "contentLength": 78830
+        }
+      ],
+      "errors": []
+    },
+    {
+      "label": "after",
+      "loadMs": 8719,
+      "items": [
+        {
+          "path": "/assets/vertical-CBXfXgiN.js",
+          "bytes": 1885,
+          "transfer": 2185,
+          "cached": false
+        },
+        {
+          "path": "/assets/model-loaders-CNXGcW7C.js",
+          "bytes": 17331,
+          "transfer": 17631,
+          "cached": false
+        },
+        {
+          "path": "/assets/three-DpNvrvd1.js",
+          "bytes": 213521,
+          "transfer": 213821,
+          "cached": false
+        },
+        {
+          "path": "/assets/VisualAssets-COoc2qW2.js",
+          "bytes": 13980,
+          "transfer": 14280,
+          "cached": false
+        },
+        {
+          "path": "/assets/Game-BHz-toJD.js",
+          "bytes": 85466,
+          "transfer": 85766,
+          "cached": false
+        },
+        {
+          "path": "/assets/Game-CfX6NwWG.css",
+          "bytes": 1804,
+          "transfer": 2104,
+          "cached": false
+        },
+        {
+          "path": "/assets/VisualAssets-BKBeHm97.css",
+          "bytes": 4996,
+          "transfer": 5296,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "bytes": 2783,
+          "transfer": 3083,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "bytes": 2783,
+          "transfer": 300,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "bytes": 2783,
+          "transfer": 300,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "bytes": 2783,
+          "transfer": 300,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/c171227d1268d749a58e2c91.ktx2",
+          "bytes": 16435,
+          "transfer": 16735,
+          "cached": false
+        },
+        {
+          "path": "/decoders/basis/basis_transcoder.js",
+          "bytes": 15169,
+          "transfer": 15469,
+          "cached": false
+        },
+        {
+          "path": "/decoders/basis/basis_transcoder.wasm",
+          "bytes": 527333,
+          "transfer": 527633,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/b5934b643b1311c0e02011ed.ktx2",
+          "bytes": 5162,
+          "transfer": 5462,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/f82f3ae632015c946513fa0a.ktx2",
+          "bytes": 1371,
+          "transfer": 1671,
+          "cached": false
+        },
+        {
+          "path": "/models/city-textures/8ceb9186d990b31fce785e06fdc6974c160f1d27c43f6160266f164deba713aa.jpg",
+          "bytes": 269501,
+          "transfer": 269801,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/767626c70001e9ef499250fa.ktx2",
+          "bytes": 430727,
+          "transfer": 431027,
+          "cached": false
+        },
+        {
+          "path": "/models/city-textures/e509eb9dfa978e780fbebfd2acacc2ce158b5b7ced722ddc0759039dd51e18ca.jpg",
+          "bytes": 821681,
+          "transfer": 821981,
+          "cached": false
+        },
+        {
+          "path": "/models/city-textures/49493d6ade78ccbbbd270c6a15e4b4c9b1a097e66ddf28a1073de3e85712d9af.jpg",
+          "bytes": 701900,
+          "transfer": 702200,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/b9fe4745e1057c5867e4bf5d.ktx2",
+          "bytes": 885543,
+          "transfer": 885843,
+          "cached": false
+        },
+        {
+          "path": "/models/city-textures/8537c1015de5cc33d20231e5b6aa27309edcb983e1c37e608d08bb00f733747d.jpg",
+          "bytes": 341948,
+          "transfer": 342248,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/25a10e4b776ebda9c4f5de3b.ktx2",
+          "bytes": 248842,
+          "transfer": 249142,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/78806af3762fed03f99c1f97.ktx2",
+          "bytes": 216471,
+          "transfer": 216771,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/53731f1d29f2d7e98307546c.ktx2",
+          "bytes": 150879,
+          "transfer": 151179,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/33b4f4bca50868d59faaeec5.ktx2",
+          "bytes": 231677,
+          "transfer": 231977,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/27edc0131fee426595b48849.ktx2",
+          "bytes": 229796,
+          "transfer": 230096,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/8c01926297dc2929332a3f79.ktx2",
+          "bytes": 156527,
+          "transfer": 156827,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/23e02b034b8d28c3d9fb9cb4.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/bb50cddcad3d7d44e2d8073b.ktx2",
+          "bytes": 92268,
+          "transfer": 92568,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/23e02b034b8d28c3d9fb9cb4.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/d1cf99dabca561f7faad933a.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/88f5ef580707967548d02317.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/23e02b034b8d28c3d9fb9cb4.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/d1cf99dabca561f7faad933a.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/88f5ef580707967548d02317.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/23e02b034b8d28c3d9fb9cb4.ktx2",
+          "bytes": 741496,
+          "transfer": 741796,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/d1cf99dabca561f7faad933a.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/88f5ef580707967548d02317.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/d1cf99dabca561f7faad933a.ktx2",
+          "bytes": 826138,
+          "transfer": 826438,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/88f5ef580707967548d02317.ktx2",
+          "bytes": 598351,
+          "transfer": 598651,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a810f3d277877a08123ef5d6.ktx2",
+          "bytes": 23858,
+          "transfer": 24158,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/3f53ad56702cb88b589c56d9.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/65172c9abac5eca46625d918.ktx2",
+          "bytes": 67150,
+          "transfer": 67450,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/6a8a65e05d5fd1a7eae8b35e.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/3f53ad56702cb88b589c56d9.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/6a8a65e05d5fd1a7eae8b35e.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/9494993a3d012f41744f45fb.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/6a8a65e05d5fd1a7eae8b35e.ktx2",
+          "bytes": 324458,
+          "transfer": 324758,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/3f53ad56702cb88b589c56d9.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/9494993a3d012f41744f45fb.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/3f53ad56702cb88b589c56d9.ktx2",
+          "bytes": 329586,
+          "transfer": 329886,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/9494993a3d012f41744f45fb.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/b116d85e8e62abe1fc2f416b.ktx2",
+          "bytes": 185632,
+          "transfer": 185932,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/6ee1e29f4e3eeb2761e8d0d9.ktx2",
+          "bytes": 7368,
+          "transfer": 7668,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a5a7a6117474fc7015cc9d8d.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/9494993a3d012f41744f45fb.ktx2",
+          "bytes": 934883,
+          "transfer": 935183,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a5a7a6117474fc7015cc9d8d.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/ec0b155ef3681079aebe0c30.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/ec0b155ef3681079aebe0c30.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a5a7a6117474fc7015cc9d8d.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a098c0c818a83756a6b3b26a.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/ec0b155ef3681079aebe0c30.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a5a7a6117474fc7015cc9d8d.ktx2",
+          "bytes": 758013,
+          "transfer": 758313,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a098c0c818a83756a6b3b26a.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a098c0c818a83756a6b3b26a.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/ec0b155ef3681079aebe0c30.ktx2",
+          "bytes": 208228,
+          "transfer": 208528,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a098c0c818a83756a6b3b26a.ktx2",
+          "bytes": 256401,
+          "transfer": 256701,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/37adb5e352224afdbd7a1518.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/37adb5e352224afdbd7a1518.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fdfb661ab6df4c5348013046.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/79e4ea6cf2e75941d4c61694.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/37adb5e352224afdbd7a1518.ktx2",
+          "bytes": 237851,
+          "transfer": 238151,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fdfb661ab6df4c5348013046.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/79e4ea6cf2e75941d4c61694.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fdfb661ab6df4c5348013046.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/79e4ea6cf2e75941d4c61694.ktx2",
+          "bytes": 956805,
+          "transfer": 957105,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/6b465234a3a520d779df4f90.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fdfb661ab6df4c5348013046.ktx2",
+          "bytes": 257030,
+          "transfer": 257330,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/6b465234a3a520d779df4f90.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/6b465234a3a520d779df4f90.ktx2",
+          "bytes": 177491,
+          "transfer": 177791,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fe5bae937b9c22e9ffaaf197.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/560595f52bc9461209454402.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fe5bae937b9c22e9ffaaf197.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/560595f52bc9461209454402.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/bc1facc8ddffc28b00dcbb72.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fe5bae937b9c22e9ffaaf197.ktx2",
+          "bytes": 312249,
+          "transfer": 312549,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/560595f52bc9461209454402.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/bc1facc8ddffc28b00dcbb72.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/560595f52bc9461209454402.ktx2",
+          "bytes": 871887,
+          "transfer": 872187,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/bc1facc8ddffc28b00dcbb72.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a740f0bc2240186e9237c4ce.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/bc1facc8ddffc28b00dcbb72.ktx2",
+          "bytes": 203345,
+          "transfer": 203645,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/9a7a94cc03bf1bc153676c0f.ktx2",
+          "bytes": 19806,
+          "transfer": 20106,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a740f0bc2240186e9237c4ce.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/a740f0bc2240186e9237c4ce.ktx2",
+          "bytes": 1028481,
+          "transfer": 1028781,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/e7b1ce5b4bc2ece5ed9e92d9.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/3510df3292199a428ea7fade.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/e7b1ce5b4bc2ece5ed9e92d9.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/0330aa7967182acbb1c89b1f.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/3510df3292199a428ea7fade.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/e7b1ce5b4bc2ece5ed9e92d9.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/0330aa7967182acbb1c89b1f.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/3510df3292199a428ea7fade.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/e7b1ce5b4bc2ece5ed9e92d9.ktx2",
+          "bytes": 319334,
+          "transfer": 319634,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/0330aa7967182acbb1c89b1f.ktx2",
+          "bytes": 981187,
+          "transfer": 981487,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/3510df3292199a428ea7fade.ktx2",
+          "bytes": 90337,
+          "transfer": 90637,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/f0c48b4ee3e12ffd33c0e8e4.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/b13b68a813320992ea622ed9.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/9ecd1e9bc5b81ac62ff55eba.ktx2",
+          "bytes": 827721,
+          "transfer": 828021,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/f0c48b4ee3e12ffd33c0e8e4.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/b13b68a813320992ea622ed9.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/f0c48b4ee3e12ffd33c0e8e4.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/b13b68a813320992ea622ed9.ktx2",
+          "bytes": 758543,
+          "transfer": 758843,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/f0c48b4ee3e12ffd33c0e8e4.ktx2",
+          "bytes": 192907,
+          "transfer": 193207,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fcfe459ca867733ea6f01cff.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fcfe459ca867733ea6f01cff.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/64a0ee65ef3cfa6f2438c64b.ktx2",
+          "bytes": 28971,
+          "transfer": 29271,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fcfe459ca867733ea6f01cff.ktx2",
+          "bytes": 1048576,
+          "transfer": 1048876,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "bytes": 2783,
+          "transfer": 3083,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/fcfe459ca867733ea6f01cff.ktx2",
+          "bytes": 882182,
+          "transfer": 882482,
+          "cached": false
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "bytes": 2783,
+          "transfer": 300,
+          "cached": false
+        },
+        {
+          "path": "/models/gpu-textures/051db79660cf909d63bd480d.ktx2",
+          "bytes": 652,
+          "transfer": 952,
+          "cached": false
+        }
+      ],
+      "workers": [
+        {
+          "path": "/models/city-sample/waterfront-efficient.glb.gz",
+          "bytes": 3426499
+        },
+        {
+          "path": "/models/city-sample/city-modules-efficient.glb.gz",
+          "bytes": 2261802
+        },
+        {
+          "path": "/models/watercraft-efficient.glb.gz",
+          "bytes": 28635328
+        },
+        {
+          "path": "/models/rider-efficient.glb.gz",
+          "bytes": 14902756
+        },
+        {
+          "path": "/models/city-sample/city-services-efficient.glb.gz",
+          "bytes": 1859322
+        },
+        {
+          "path": "/models/city-sample/public-citizens-efficient.glb.gz",
+          "bytes": 1577811
+        }
+      ],
+      "mainBodyBytes": 83070388,
+      "mainModelAndTextureBytes": 82172205,
+      "workerModelBytes": 52663518,
+      "modelAndTextureBytes": 134835723,
+      "serverRequests": [
+        {
+          "path": "/scripts/qa/vertical.html",
+          "method": "GET",
+          "status": 200,
+          "bytes": 779,
+          "contentLength": 779
+        },
+        {
+          "path": "/assets/vertical-CBXfXgiN.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 1885,
+          "contentLength": 1885
+        },
+        {
+          "path": "/assets/VisualAssets-COoc2qW2.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 13980,
+          "contentLength": 13980
+        },
+        {
+          "path": "/assets/model-loaders-CNXGcW7C.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 17331,
+          "contentLength": 17331
+        },
+        {
+          "path": "/assets/Game-CfX6NwWG.css",
+          "method": "GET",
+          "status": 200,
+          "bytes": 1804,
+          "contentLength": 1804
+        },
+        {
+          "path": "/assets/VisualAssets-BKBeHm97.css",
+          "method": "GET",
+          "status": 200,
+          "bytes": 4996,
+          "contentLength": 4996
+        },
+        {
+          "path": "/assets/Game-BHz-toJD.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 85466,
+          "contentLength": 85466
+        },
+        {
+          "path": "/assets/three-DpNvrvd1.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 213521,
+          "contentLength": 213521
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 2783,
+          "contentLength": 2783
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "method": "GET",
+          "status": 304,
+          "bytes": 0,
+          "contentLength": 0
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "method": "GET",
+          "status": 304,
+          "bytes": 0,
+          "contentLength": 0
+        },
+        {
+          "path": "/models/city-sample/city-modules-efficient.glb.gz",
+          "method": "HEAD",
+          "status": 200,
+          "bytes": 0,
+          "contentLength": 2261802,
+          "bytesPassedToEnd": 2261802
+        },
+        {
+          "path": "/models/city-sample/waterfront-efficient.glb.gz",
+          "method": "HEAD",
+          "status": 200,
+          "bytes": 0,
+          "contentLength": 3426499,
+          "bytesPassedToEnd": 3426499
+        },
+        {
+          "path": "/models/city-sample/city-modules-efficient.glb.gz",
+          "method": "GET",
+          "status": 200,
+          "bytes": 2261802,
+          "contentLength": 2261802
+        },
+        {
+          "path": "/models/city-sample/waterfront-efficient.glb.gz",
+          "method": "GET",
+          "status": 200,
+          "bytes": 3426499,
+          "contentLength": 3426499
+        },
+        {
+          "path": "/models/watercraft-efficient.glb.gz",
+          "method": "HEAD",
+          "status": 200,
+          "bytes": 0,
+          "contentLength": 28635328,
+          "bytesPassedToEnd": 28635328
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "method": "GET",
+          "status": 304,
+          "bytes": 0,
+          "contentLength": 0
+        },
+        {
+          "path": "/models/gpu-textures/c171227d1268d749a58e2c91.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 16435,
+          "contentLength": 16435
+        },
+        {
+          "path": "/models/gpu-textures/b5934b643b1311c0e02011ed.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 5162,
+          "contentLength": 5162
+        },
+        {
+          "path": "/decoders/basis/basis_transcoder.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 15169,
+          "contentLength": 15169
+        },
+        {
+          "path": "/decoders/basis/basis_transcoder.wasm",
+          "method": "GET",
+          "status": 200,
+          "bytes": 527333,
+          "contentLength": 527333
+        },
+        {
+          "path": "/models/gpu-textures/f82f3ae632015c946513fa0a.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1371,
+          "contentLength": 1371
+        },
+        {
+          "path": "/models/rider-efficient.glb.gz",
+          "method": "HEAD",
+          "status": 200,
+          "bytes": 0,
+          "contentLength": 14902756,
+          "bytesPassedToEnd": 14902756
+        },
+        {
+          "path": "/models/city-textures/8ceb9186d990b31fce785e06fdc6974c160f1d27c43f6160266f164deba713aa.jpg",
+          "method": "GET",
+          "status": 206,
+          "bytes": 269501,
+          "contentLength": 269501
+        },
+        {
+          "path": "/models/gpu-textures/767626c70001e9ef499250fa.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 430727,
+          "contentLength": 430727
+        },
+        {
+          "path": "/models/city-textures/e509eb9dfa978e780fbebfd2acacc2ce158b5b7ced722ddc0759039dd51e18ca.jpg",
+          "method": "GET",
+          "status": 206,
+          "bytes": 821681,
+          "contentLength": 821681
+        },
+        {
+          "path": "/models/city-textures/49493d6ade78ccbbbd270c6a15e4b4c9b1a097e66ddf28a1073de3e85712d9af.jpg",
+          "method": "GET",
+          "status": 206,
+          "bytes": 701900,
+          "contentLength": 701900
+        },
+        {
+          "path": "/models/watercraft-efficient.glb.gz",
+          "method": "GET",
+          "status": 200,
+          "bytes": 28635328,
+          "contentLength": 28635328
+        },
+        {
+          "path": "/models/rider-efficient.glb.gz",
+          "method": "GET",
+          "status": 200,
+          "bytes": 14902756,
+          "contentLength": 14902756
+        },
+        {
+          "path": "/models/gpu-textures/b9fe4745e1057c5867e4bf5d.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 885543,
+          "contentLength": 885543
+        },
+        {
+          "path": "/models/gpu-textures/25a10e4b776ebda9c4f5de3b.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 248842,
+          "contentLength": 248842
+        },
+        {
+          "path": "/models/gpu-textures/78806af3762fed03f99c1f97.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 216471,
+          "contentLength": 216471
+        },
+        {
+          "path": "/models/city-textures/8537c1015de5cc33d20231e5b6aa27309edcb983e1c37e608d08bb00f733747d.jpg",
+          "method": "GET",
+          "status": 206,
+          "bytes": 341948,
+          "contentLength": 341948
+        },
+        {
+          "path": "/models/gpu-textures/53731f1d29f2d7e98307546c.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 150879,
+          "contentLength": 150879
+        },
+        {
+          "path": "/models/gpu-textures/33b4f4bca50868d59faaeec5.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 231677,
+          "contentLength": 231677
+        },
+        {
+          "path": "/models/gpu-textures/27edc0131fee426595b48849.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 229796,
+          "contentLength": 229796
+        },
+        {
+          "path": "/models/gpu-textures/bb50cddcad3d7d44e2d8073b.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 92268,
+          "contentLength": 92268
+        },
+        {
+          "path": "/models/gpu-textures/8c01926297dc2929332a3f79.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 156527,
+          "contentLength": 156527
+        },
+        {
+          "path": "/models/gpu-textures/23e02b034b8d28c3d9fb9cb4.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/23e02b034b8d28c3d9fb9cb4.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/d1cf99dabca561f7faad933a.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/88f5ef580707967548d02317.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/23e02b034b8d28c3d9fb9cb4.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/23e02b034b8d28c3d9fb9cb4.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 741496,
+          "contentLength": 741496
+        },
+        {
+          "path": "/models/gpu-textures/d1cf99dabca561f7faad933a.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/88f5ef580707967548d02317.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/d1cf99dabca561f7faad933a.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/88f5ef580707967548d02317.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/d1cf99dabca561f7faad933a.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 826138,
+          "contentLength": 826138
+        },
+        {
+          "path": "/models/gpu-textures/88f5ef580707967548d02317.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 598351,
+          "contentLength": 598351
+        },
+        {
+          "path": "/models/gpu-textures/a810f3d277877a08123ef5d6.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 23858,
+          "contentLength": 23858
+        },
+        {
+          "path": "/models/gpu-textures/65172c9abac5eca46625d918.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 67150,
+          "contentLength": 67150
+        },
+        {
+          "path": "/models/gpu-textures/3f53ad56702cb88b589c56d9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/6a8a65e05d5fd1a7eae8b35e.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/6a8a65e05d5fd1a7eae8b35e.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/3f53ad56702cb88b589c56d9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/9494993a3d012f41744f45fb.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/6a8a65e05d5fd1a7eae8b35e.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 324458,
+          "contentLength": 324458
+        },
+        {
+          "path": "/models/gpu-textures/3f53ad56702cb88b589c56d9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/9494993a3d012f41744f45fb.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/3f53ad56702cb88b589c56d9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 329586,
+          "contentLength": 329586
+        },
+        {
+          "path": "/models/gpu-textures/9494993a3d012f41744f45fb.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/b116d85e8e62abe1fc2f416b.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 185632,
+          "contentLength": 185632
+        },
+        {
+          "path": "/models/gpu-textures/6ee1e29f4e3eeb2761e8d0d9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 7368,
+          "contentLength": 7368
+        },
+        {
+          "path": "/models/gpu-textures/9494993a3d012f41744f45fb.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 934883,
+          "contentLength": 934883
+        },
+        {
+          "path": "/models/gpu-textures/a5a7a6117474fc7015cc9d8d.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/ec0b155ef3681079aebe0c30.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/a5a7a6117474fc7015cc9d8d.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/a5a7a6117474fc7015cc9d8d.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/ec0b155ef3681079aebe0c30.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/a098c0c818a83756a6b3b26a.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/a5a7a6117474fc7015cc9d8d.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 758013,
+          "contentLength": 758013
+        },
+        {
+          "path": "/models/gpu-textures/a098c0c818a83756a6b3b26a.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/ec0b155ef3681079aebe0c30.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/a098c0c818a83756a6b3b26a.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/ec0b155ef3681079aebe0c30.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 208228,
+          "contentLength": 208228
+        },
+        {
+          "path": "/models/gpu-textures/a098c0c818a83756a6b3b26a.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 256401,
+          "contentLength": 256401
+        },
+        {
+          "path": "/models/gpu-textures/37adb5e352224afdbd7a1518.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/37adb5e352224afdbd7a1518.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/fdfb661ab6df4c5348013046.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/37adb5e352224afdbd7a1518.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 237851,
+          "contentLength": 237851
+        },
+        {
+          "path": "/models/gpu-textures/79e4ea6cf2e75941d4c61694.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/fdfb661ab6df4c5348013046.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/79e4ea6cf2e75941d4c61694.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/79e4ea6cf2e75941d4c61694.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 956805,
+          "contentLength": 956805
+        },
+        {
+          "path": "/models/gpu-textures/fdfb661ab6df4c5348013046.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/6b465234a3a520d779df4f90.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/fdfb661ab6df4c5348013046.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 257030,
+          "contentLength": 257030
+        },
+        {
+          "path": "/models/gpu-textures/6b465234a3a520d779df4f90.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/6b465234a3a520d779df4f90.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 177491,
+          "contentLength": 177491
+        },
+        {
+          "path": "/models/gpu-textures/fe5bae937b9c22e9ffaaf197.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/560595f52bc9461209454402.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/fe5bae937b9c22e9ffaaf197.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/560595f52bc9461209454402.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/bc1facc8ddffc28b00dcbb72.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/fe5bae937b9c22e9ffaaf197.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 312249,
+          "contentLength": 312249
+        },
+        {
+          "path": "/models/gpu-textures/560595f52bc9461209454402.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/bc1facc8ddffc28b00dcbb72.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/560595f52bc9461209454402.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 871887,
+          "contentLength": 871887
+        },
+        {
+          "path": "/models/gpu-textures/bc1facc8ddffc28b00dcbb72.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/bc1facc8ddffc28b00dcbb72.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 203345,
+          "contentLength": 203345
+        },
+        {
+          "path": "/models/gpu-textures/a740f0bc2240186e9237c4ce.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/9a7a94cc03bf1bc153676c0f.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 19806,
+          "contentLength": 19806
+        },
+        {
+          "path": "/models/gpu-textures/a740f0bc2240186e9237c4ce.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/a740f0bc2240186e9237c4ce.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1028481,
+          "contentLength": 1028481
+        },
+        {
+          "path": "/models/gpu-textures/e7b1ce5b4bc2ece5ed9e92d9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/3510df3292199a428ea7fade.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/e7b1ce5b4bc2ece5ed9e92d9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/0330aa7967182acbb1c89b1f.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/3510df3292199a428ea7fade.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/e7b1ce5b4bc2ece5ed9e92d9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/0330aa7967182acbb1c89b1f.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/e7b1ce5b4bc2ece5ed9e92d9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 319334,
+          "contentLength": 319334
+        },
+        {
+          "path": "/models/gpu-textures/0330aa7967182acbb1c89b1f.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 981187,
+          "contentLength": 981187
+        },
+        {
+          "path": "/models/gpu-textures/3510df3292199a428ea7fade.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/3510df3292199a428ea7fade.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 90337,
+          "contentLength": 90337
+        },
+        {
+          "path": "/models/gpu-textures/f0c48b4ee3e12ffd33c0e8e4.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/b13b68a813320992ea622ed9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/9ecd1e9bc5b81ac62ff55eba.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 827721,
+          "contentLength": 827721
+        },
+        {
+          "path": "/models/gpu-textures/f0c48b4ee3e12ffd33c0e8e4.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/b13b68a813320992ea622ed9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/f0c48b4ee3e12ffd33c0e8e4.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/b13b68a813320992ea622ed9.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 758543,
+          "contentLength": 758543
+        },
+        {
+          "path": "/models/gpu-textures/f0c48b4ee3e12ffd33c0e8e4.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 192907,
+          "contentLength": 192907
+        },
+        {
+          "path": "/models/gpu-textures/fcfe459ca867733ea6f01cff.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/fcfe459ca867733ea6f01cff.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/models/gpu-textures/64a0ee65ef3cfa6f2438c64b.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 28971,
+          "contentLength": 28971
+        },
+        {
+          "path": "/models/gpu-textures/fcfe459ca867733ea6f01cff.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 1048576,
+          "contentLength": 1048576
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "method": "GET",
+          "status": 200,
+          "bytes": 2783,
+          "contentLength": 2783
+        },
+        {
+          "path": "/models/gpu-textures/fcfe459ca867733ea6f01cff.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 882182,
+          "contentLength": 882182
+        },
+        {
+          "path": "/models/city-sample/city-services-efficient.glb.gz",
+          "method": "HEAD",
+          "status": 200,
+          "bytes": 0,
+          "contentLength": 1859322,
+          "bytesPassedToEnd": 1859322
+        },
+        {
+          "path": "/models/city-sample/city-services-efficient.glb.gz",
+          "method": "GET",
+          "status": 200,
+          "bytes": 1859322,
+          "contentLength": 1859322
+        },
+        {
+          "path": "/assets/ModelTransport.worker-D6D8ypL9.js",
+          "method": "GET",
+          "status": 304,
+          "bytes": 0,
+          "contentLength": 0
+        },
+        {
+          "path": "/models/city-sample/public-citizens-efficient.glb.gz",
+          "method": "HEAD",
+          "status": 200,
+          "bytes": 0,
+          "contentLength": 1577811,
+          "bytesPassedToEnd": 1577811
+        },
+        {
+          "path": "/models/city-sample/public-citizens-efficient.glb.gz",
+          "method": "GET",
+          "status": 200,
+          "bytes": 1577811,
+          "contentLength": 1577811
+        },
+        {
+          "path": "/models/gpu-textures/051db79660cf909d63bd480d.ktx2",
+          "method": "GET",
+          "status": 206,
+          "bytes": 652,
+          "contentLength": 652
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

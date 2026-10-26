@@ -1,0 +1,90 @@
+{
+  "errors": [],
+  "views": [
+    {
+      "label": "round1",
+      "particles": 44,
+      "kmh": 180,
+      "yaw": 0.4052197802636975,
+      "glError": 0
+    },
+    {
+      "label": "final",
+      "particles": 44,
+      "kmh": 180,
+      "yaw": 0.4052197802636975,
+      "glError": 0
+    }
+  ],
+  "grades": [
+    {
+      "level": "low",
+      "profile": {
+        "mobile": false,
+        "low": true,
+        "pixelRatio": 1,
+        "maxEdge": null,
+        "waterSegments": 64,
+        "reflectionSize": 1024,
+        "racerShadowSize": 2048,
+        "cityShadowSize": 2048
+      },
+      "triangles": 31764,
+      "asset": "watercraft-low",
+      "pixelRatio": 1,
+      "glError": 0
+    },
+    {
+      "level": "standard",
+      "profile": {
+        "mobile": false,
+        "low": false,
+        "pixelRatio": 1.75,
+        "maxEdge": null,
+        "waterSegments": 320,
+        "reflectionSize": 1024,
+        "racerShadowSize": 2048,
+        "cityShadowSize": 2048
+      },
+      "triangles": 4932592,
+      "asset": "watercraft",
+      "pixelRatio": 1,
+      "glError": 0
+    },
+    {
+      "level": "high",
+      "profile": {
+        "mobile": false,
+        "low": false,
+        "pixelRatio": 2,
+        "maxEdge": null,
+        "waterSegments": 320,
+        "reflectionSize": 1536,
+        "racerShadowSize": 2048,
+        "cityShadowSize": 3072
+      },
+      "triangles": 4932592,
+      "asset": "watercraft",
+      "pixelRatio": 1,
+      "glError": 0
+    },
+    {
+      "level": "standard",
+      "profile": {
+        "mobile": false,
+        "low": false,
+        "pixelRatio": 1.75,
+        "maxEdge": null,
+        "waterSegments": 320,
+        "reflectionSize": 1024,
+        "racerShadowSize": 2048,
+        "cityShadowSize": 2048
+      },
+      "triangles": 4932592,
+      "asset": "watercraft",
+      "pixelRatio": 1,
+      "glError": 0
+    }
+  ],
+  "completed": true
+}
