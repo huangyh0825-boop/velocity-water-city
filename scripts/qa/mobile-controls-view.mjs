@@ -1,8 +1,14 @@
 // Private test entry; no game references are exported from the production entry.
 import '../../src/style.css';import '../../src/ui/race.css';import '../../src/ui/phase3.css';
 import {GameApplication} from '../../src/app/GameApplication';
+import {textureResourceStats} from '../../src/player/TextureResources';
+import {visualResourceStats} from '../../src/player/VisualAssets';
 const app=new GameApplication(document.querySelector('#app'));
 window.mobileQA={
+ resources:()=>({textures:textureResourceStats(),visuals:visualResourceStats(),game:!!app.game}),
+ quality(level){app.game.setQuality(level);},
+ frameRate(rate){app.game.renderPacer.setRate(rate);},
+ qualityReady(){const g=app.game;return !!g&&[g.craft,...g.aiCraft].every(c=>c.assetLoaded&&!c.assetError&&c.asset?.userData.visualAsset===(g.low?'watercraft-low':g.mobile?'watercraft-mobile':'watercraft'))&&g.citySample.loaded;},
  ready:()=>!!app.game?.initialized,
  snapshot(){const g=app.game;return{...g.input.state,boost:g.input.boost,touchMode:g.input.touchMode,speed:g.craft.model.speed,phase:g.race.phase,energy:g.nitro.energy,airborne:g.flight.airborne,used:g.tricks.used,quality:g.low?'low':'standard',assets:[g.craft,...g.aiCraft].map(c=>c.asset?.userData.visualAsset),profile:g.qualityProfile,pixelRatio:g.renderer.getPixelRatio(),waterSegments:g.water.mesh.geometry.parameters.widthSegments};},
  freeze(){app.game.paused=true;},

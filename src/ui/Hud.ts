@@ -8,6 +8,7 @@ import { TrickController } from '../player/TrickController';
 import { AudioController } from '../audio/AudioController';
 import {TouchControls,TOUCH_CONTROLS} from './TouchControls';
 import './finish.css';
+import type {FrameRate} from '../core/RenderPacer';
 const setText=(element:HTMLElement,value:string)=>{if(element.textContent!==value)element.textContent=value;};
 const width=(element:HTMLElement,value:string)=>{if(element.style.width!==value)element.style.width=value;};
 export class Hud {
@@ -18,11 +19,11 @@ export class Hud {
   private touch:TouchControls;
   private toast:HTMLElement;
   private previousRank=-1;
-  constructor(root: HTMLElement, input: InputController, restart: () => void, recover: () => void, quality: (low: boolean) => void, audio?:AudioController,onHome?:()=>void,private online=false) {
+  constructor(root: HTMLElement, input: InputController, restart: () => void, recover: () => void, quality: (level:'high'|'standard'|'low') => void, audio?:AudioController,onHome?:()=>void,private online=false,onFrameRate?:(rate:FrameRate)=>void) {
     root.insertAdjacentHTML('beforeend', `
       <header class="topbar"><div class="brand"><span class="brand-icon">≋</span><div><strong>极速水城<span>未来竞速</span></strong><small>VELOCITY / WATER CITY</small></div></div><div class="phase"><i></i> ${online?'多人竞速':'单人训练'} <span>曙光都市</span></div></header>
       <div class="race-hud" aria-label="比赛信息"><div><small>POS</small><strong id="rank">1 / 5</strong></div><div><small>LAP</small><strong id="lap">1 / 3</strong></div><div><small>TIME</small><strong id="race-time">00:00.00</strong></div></div>
-      <div class="tools">${onHome?'<button id="home" type="button">返回首页</button>':''}<button id="quality" type="button">画质 · 标准</button><button id="recover" type="button">返回赛道 ↺</button><button id="reset" type="button">重新比赛</button></div>
+      <div class="tools">${onHome?'<button id="home" type="button">返回首页</button>':''}<select id="quality" aria-label="画质"><option value="high" ${input.touchMode?'disabled':''}>画质 · 高</option><option value="standard" selected>画质 · 标准</option><option value="low">画质 · 低</option></select><select id="frame-rate" aria-label="帧率上限"><option value="60" selected>帧率 · 60</option><option value="120">帧率 · 120</option><option value="0">帧率 · 不限制</option></select><button id="recover" type="button">返回赛道 ↺</button><button id="reset" type="button">重新比赛</button></div>
       <div class="audio-controls"><button id="sound" type="button" aria-pressed="true">声音 · 开</button><label>音量 <input id="volume" type="range" min="0" max="100" value="35" aria-label="总音量"></label></div>
       <div class="countdown" id="countdown" aria-live="polite"></div>
       <div class="trick-toast" id="trick-toast" hidden aria-live="polite"></div>
@@ -41,10 +42,8 @@ export class Hud {
     root.querySelector('#result-home')?.addEventListener('click',()=>onHome?.());
     root.querySelector<HTMLButtonElement>('#sound')!.addEventListener('click',event=>{if(!audio)return;audio.setEnabled(!audio.enabled);const button=event.currentTarget as HTMLButtonElement;button.textContent=`声音 · ${audio.enabled?'开':'关'}`;button.setAttribute('aria-pressed',String(audio.enabled));});
     root.querySelector<HTMLInputElement>('#volume')!.addEventListener('input',event=>audio?.setVolume(Number((event.currentTarget as HTMLInputElement).value)/100));
-    let low = false;
-    const button = root.querySelector<HTMLButtonElement>('#quality')!;
-    const apply = () => { button.textContent = `画质 · ${low ? '低' : '标准'}`; quality(low); };
-    button.addEventListener('click', () => { low = !low; apply(); }); apply();
+    root.querySelector<HTMLSelectElement>('#quality')!.addEventListener('change',event=>quality((event.target as HTMLSelectElement).value as 'high'|'standard'|'low'));
+    root.querySelector<HTMLSelectElement>('#frame-rate')!.addEventListener('change',event=>onFrameRate?.(Number((event.target as HTMLSelectElement).value) as FrameRate));
     const get = (selector: string) => root.querySelector<HTMLElement>(selector)!;
     this.speed = get('#speed'); this.bar = get('#speed-bar'); this.status = get('#status');
     this.rank = get('#rank'); this.lap = get('#lap'); this.time = get('#race-time'); this.countdown = get('#countdown'); this.result = get('#result');

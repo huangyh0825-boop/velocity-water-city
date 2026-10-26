@@ -8,7 +8,7 @@ import {sparseSkinning} from './SparseSkinning';
 export class HeroLighting {
  private camera=new THREE.OrthographicCamera(-2.8,2.8,2.8,-2.8,.1,20);
  private depth=new THREE.MeshDepthMaterial({depthPacking:THREE.BasicDepthPacking});
- private target=new THREE.WebGLRenderTarget(2048,2048,{minFilter:THREE.NearestFilter,magFilter:THREE.NearestFilter,depthTexture:new THREE.DepthTexture(2048,2048,THREE.UnsignedIntType)});
+ private target=new THREE.WebGLRenderTarget(2048,2048,{format:THREE.RedFormat,minFilter:THREE.NearestFilter,magFilter:THREE.NearestFilter,depthTexture:new THREE.DepthTexture(2048,2048,THREE.UnsignedIntType)});
  private matrix=new THREE.Matrix4();
  private originals=new Map<THREE.MeshStandardMaterial,{compile:THREE.Material['onBeforeCompile'];key:THREE.Material['customProgramCacheKey'];environment:THREE.Texture|null;intensity:number}>();
  private environment?:THREE.Texture;
@@ -33,6 +33,7 @@ export class HeroLighting {
   if(!racer.visible||!racer.parent?.visible||!this.viewFrustum.intersectsSphere(this.bounds))return false;
   this.update(renderer,scene,racer);return true;
  }
+ releaseTarget(){this.target.dispose();}
  private configure(material:THREE.MeshStandardMaterial) {
   if(this.originals.has(material))return;
   this.originals.set(material,{compile:material.onBeforeCompile,key:material.customProgramCacheKey,environment:material.envMap,intensity:material.envMapIntensity});

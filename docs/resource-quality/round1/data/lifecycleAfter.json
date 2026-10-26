@@ -1,0 +1,853 @@
+{
+  "label": "after",
+  "checkpoints": [
+    {
+      "name": "home-initial",
+      "heap": {
+        "usedSize": 2815488,
+        "totalSize": 3465216,
+        "embedderHeapUsedSize": 1372072,
+        "backingStorageSize": 953763
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 357,
+        "jsEventListeners": 29
+      },
+      "allocation": [],
+      "resources": {
+        "textures": {
+          "games": 0,
+          "pending": 0,
+          "sources": 0,
+          "decoded": 0,
+          "compressed": false
+        },
+        "visuals": {
+          "entries": 0,
+          "users": 0
+        },
+        "game": false
+      }
+    },
+    {
+      "name": "game-1",
+      "heap": {
+        "usedSize": 49078924,
+        "totalSize": 51113984,
+        "embedderHeapUsedSize": 4541808,
+        "backingStorageSize": 480639876
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 307,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 278097254,
+          "textureBytesEstimate": 430325352,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2887,
+          "textures": 178,
+          "renderbuffers": 3,
+          "programs": 165,
+          "compiled": 344,
+          "links": 172,
+          "uploadBytes": 306714870
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 47,
+          "decoded": 47,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "restart-1",
+      "heap": {
+        "usedSize": 49212308,
+        "totalSize": 50589696,
+        "embedderHeapUsedSize": 4562312,
+        "backingStorageSize": 480831954
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 309,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 278097254,
+          "textureBytesEstimate": 430325352,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2887,
+          "textures": 178,
+          "renderbuffers": 3,
+          "programs": 165,
+          "compiled": 344,
+          "links": 172,
+          "uploadBytes": 306717238
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 47,
+          "decoded": 47,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "low-1",
+      "heap": {
+        "usedSize": 48288756,
+        "totalSize": 50065408,
+        "embedderHeapUsedSize": 5443304,
+        "backingStorageSize": 492603726
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 315,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 116997754,
+          "textureBytesEstimate": 129877736,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 5011,
+          "textures": 117,
+          "renderbuffers": 3,
+          "programs": 131,
+          "compiled": 408,
+          "links": 204,
+          "uploadBytes": 317735492
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 67,
+          "decoded": 67,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "standard-1",
+      "heap": {
+        "usedSize": 51004108,
+        "totalSize": 53735424,
+        "embedderHeapUsedSize": 5236576,
+        "backingStorageSize": 662063331
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 311,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 286085428,
+          "textureBytesEstimate": 323354372,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 4545,
+          "textures": 167,
+          "renderbuffers": 3,
+          "programs": 156,
+          "compiled": 476,
+          "links": 238,
+          "uploadBytes": 490081290
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 67,
+          "decoded": 67,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "high-1",
+      "heap": {
+        "usedSize": 51083804,
+        "totalSize": 52424704,
+        "embedderHeapUsedSize": 5235840,
+        "backingStorageSize": 662063326
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 311,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 286085428,
+          "textureBytesEstimate": 349568772,
+          "renderbufferBytesEstimate": 50331648,
+          "buffers": 4545,
+          "textures": 167,
+          "renderbuffers": 3,
+          "programs": 156,
+          "compiled": 476,
+          "links": 238,
+          "uploadBytes": 490081674
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 67,
+          "decoded": 67,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "home-1",
+      "heap": {
+        "usedSize": 8905764,
+        "totalSize": 10338304,
+        "embedderHeapUsedSize": 1760640,
+        "backingStorageSize": 1209878
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 352,
+        "jsEventListeners": 44
+      },
+      "allocation": [],
+      "resources": {
+        "textures": {
+          "games": 0,
+          "pending": 0,
+          "sources": 0,
+          "decoded": 0,
+          "compressed": false
+        },
+        "visuals": {
+          "entries": 0,
+          "users": 0
+        },
+        "game": false
+      }
+    },
+    {
+      "name": "game-2",
+      "heap": {
+        "usedSize": 50287548,
+        "totalSize": 51900416,
+        "embedderHeapUsedSize": 4639760,
+        "backingStorageSize": 480640053
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 307,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 278097254,
+          "textureBytesEstimate": 430325352,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2887,
+          "textures": 178,
+          "renderbuffers": 3,
+          "programs": 165,
+          "compiled": 344,
+          "links": 172,
+          "uploadBytes": 306714870
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 47,
+          "decoded": 47,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "restart-2",
+      "heap": {
+        "usedSize": 50328204,
+        "totalSize": 51900416,
+        "embedderHeapUsedSize": 4639584,
+        "backingStorageSize": 480832053
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 309,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 278097254,
+          "textureBytesEstimate": 430325352,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2887,
+          "textures": 178,
+          "renderbuffers": 3,
+          "programs": 165,
+          "compiled": 344,
+          "links": 172,
+          "uploadBytes": 306717238
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 47,
+          "decoded": 47,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "low-2",
+      "heap": {
+        "usedSize": 49978788,
+        "totalSize": 51113984,
+        "embedderHeapUsedSize": 5420784,
+        "backingStorageSize": 492603775
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 315,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 116997754,
+          "textureBytesEstimate": 129877736,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 5011,
+          "textures": 117,
+          "renderbuffers": 3,
+          "programs": 131,
+          "compiled": 408,
+          "links": 204,
+          "uploadBytes": 317735492
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 67,
+          "decoded": 67,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "standard-2",
+      "heap": {
+        "usedSize": 52573016,
+        "totalSize": 54259712,
+        "embedderHeapUsedSize": 5293480,
+        "backingStorageSize": 662063380
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 311,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 286085428,
+          "textureBytesEstimate": 323354372,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 4545,
+          "textures": 167,
+          "renderbuffers": 3,
+          "programs": 156,
+          "compiled": 476,
+          "links": 238,
+          "uploadBytes": 490081290
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 67,
+          "decoded": 67,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "high-2",
+      "heap": {
+        "usedSize": 52630620,
+        "totalSize": 53735424,
+        "embedderHeapUsedSize": 5163968,
+        "backingStorageSize": 662063375
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 311,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 286085428,
+          "textureBytesEstimate": 349568772,
+          "renderbufferBytesEstimate": 50331648,
+          "buffers": 4545,
+          "textures": 167,
+          "renderbuffers": 3,
+          "programs": 156,
+          "compiled": 476,
+          "links": 238,
+          "uploadBytes": 490081674
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 67,
+          "decoded": 67,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "home-2",
+      "heap": {
+        "usedSize": 9232836,
+        "totalSize": 10076160,
+        "embedderHeapUsedSize": 1819096,
+        "backingStorageSize": 1209909
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 352,
+        "jsEventListeners": 44
+      },
+      "allocation": [],
+      "resources": {
+        "textures": {
+          "games": 0,
+          "pending": 0,
+          "sources": 0,
+          "decoded": 0,
+          "compressed": false
+        },
+        "visuals": {
+          "entries": 0,
+          "users": 0
+        },
+        "game": false
+      }
+    },
+    {
+      "name": "game-3",
+      "heap": {
+        "usedSize": 51041148,
+        "totalSize": 52686848,
+        "embedderHeapUsedSize": 4633016,
+        "backingStorageSize": 480640053
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 307,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 278097254,
+          "textureBytesEstimate": 430325352,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2887,
+          "textures": 178,
+          "renderbuffers": 3,
+          "programs": 165,
+          "compiled": 344,
+          "links": 172,
+          "uploadBytes": 306702966
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 47,
+          "decoded": 47,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "restart-3",
+      "heap": {
+        "usedSize": 51096100,
+        "totalSize": 52424704,
+        "embedderHeapUsedSize": 4561208,
+        "backingStorageSize": 480832053
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 309,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 278097254,
+          "textureBytesEstimate": 430325352,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2887,
+          "textures": 178,
+          "renderbuffers": 3,
+          "programs": 165,
+          "compiled": 344,
+          "links": 172,
+          "uploadBytes": 306705334
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 47,
+          "decoded": 47,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "low-3",
+      "heap": {
+        "usedSize": 51219864,
+        "totalSize": 53211136,
+        "embedderHeapUsedSize": 5395888,
+        "backingStorageSize": 492603775
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 315,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 116997754,
+          "textureBytesEstimate": 129877736,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 5011,
+          "textures": 117,
+          "renderbuffers": 3,
+          "programs": 131,
+          "compiled": 408,
+          "links": 204,
+          "uploadBytes": 317723588
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 67,
+          "decoded": 67,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "standard-3",
+      "heap": {
+        "usedSize": 53958588,
+        "totalSize": 55832576,
+        "embedderHeapUsedSize": 5294008,
+        "backingStorageSize": 662063380
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 311,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 286085428,
+          "textureBytesEstimate": 323354372,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 4545,
+          "textures": 167,
+          "renderbuffers": 3,
+          "programs": 156,
+          "compiled": 476,
+          "links": 238,
+          "uploadBytes": 490069386
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 67,
+          "decoded": 67,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "high-3",
+      "heap": {
+        "usedSize": 53966256,
+        "totalSize": 55046144,
+        "embedderHeapUsedSize": 5251920,
+        "backingStorageSize": 662063375
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 311,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 286085428,
+          "textureBytesEstimate": 349568772,
+          "renderbufferBytesEstimate": 50331648,
+          "buffers": 4545,
+          "textures": 167,
+          "renderbuffers": 3,
+          "programs": 156,
+          "compiled": 476,
+          "links": 238,
+          "uploadBytes": 490069770
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 67,
+          "decoded": 67,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "home-3",
+      "heap": {
+        "usedSize": 9458436,
+        "totalSize": 10862592,
+        "embedderHeapUsedSize": 1881000,
+        "backingStorageSize": 1209909
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 352,
+        "jsEventListeners": 44
+      },
+      "allocation": [],
+      "resources": {
+        "textures": {
+          "games": 0,
+          "pending": 0,
+          "sources": 0,
+          "decoded": 0,
+          "compressed": false
+        },
+        "visuals": {
+          "entries": 0,
+          "users": 0
+        },
+        "game": false
+      }
+    },
+    {
+      "name": "aborted-load-home",
+      "heap": {
+        "usedSize": 9466084,
+        "totalSize": 10600448,
+        "embedderHeapUsedSize": 1387384,
+        "backingStorageSize": 1209886
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 349,
+        "jsEventListeners": 44
+      },
+      "allocation": [],
+      "resources": {
+        "textures": {
+          "games": 0,
+          "pending": 0,
+          "sources": 0,
+          "decoded": 0,
+          "compressed": false
+        },
+        "visuals": {
+          "entries": 0,
+          "users": 0
+        },
+        "game": false
+      }
+    },
+    {
+      "name": "game-after-abort",
+      "heap": {
+        "usedSize": 51682392,
+        "totalSize": 53997568,
+        "embedderHeapUsedSize": 4693128,
+        "backingStorageSize": 480640111
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 307,
+        "jsEventListeners": 82
+      },
+      "allocation": [
+        {
+          "bufferBytes": 278097254,
+          "textureBytesEstimate": 430325352,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2887,
+          "textures": 178,
+          "renderbuffers": 3,
+          "programs": 165,
+          "compiled": 344,
+          "links": 172,
+          "uploadBytes": 306714870
+        }
+      ],
+      "resources": {
+        "textures": {
+          "games": 1,
+          "pending": 0,
+          "sources": 47,
+          "decoded": 47,
+          "compressed": true
+        },
+        "visuals": {
+          "entries": 2,
+          "users": 10
+        },
+        "game": true
+      }
+    },
+    {
+      "name": "final-home",
+      "heap": {
+        "usedSize": 9534236,
+        "totalSize": 11124736,
+        "embedderHeapUsedSize": 1787744,
+        "backingStorageSize": 1209967
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 349,
+        "jsEventListeners": 44
+      },
+      "allocation": [],
+      "resources": {
+        "textures": {
+          "games": 0,
+          "pending": 0,
+          "sources": 0,
+          "decoded": 0,
+          "compressed": false
+        },
+        "visuals": {
+          "entries": 0,
+          "users": 0
+        },
+        "game": false
+      }
+    }
+  ],
+  "errors": [],
+  "completed": true
+}

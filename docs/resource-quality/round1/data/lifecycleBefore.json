@@ -1,0 +1,622 @@
+{
+  "label": "before",
+  "checkpoints": [
+    {
+      "name": "home-initial",
+      "heap": {
+        "usedSize": 2654884,
+        "totalSize": 3465216,
+        "embedderHeapUsedSize": 1366664,
+        "backingStorageSize": 811420
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 355,
+        "jsEventListeners": 29
+      },
+      "allocation": []
+    },
+    {
+      "name": "game-1",
+      "heap": {
+        "usedSize": 48185412,
+        "totalSize": 50327552,
+        "embedderHeapUsedSize": 4478480,
+        "backingStorageSize": 312062021
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 254,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 286501018,
+          "textureBytesEstimate": 1148248888,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2897,
+          "textures": 183,
+          "renderbuffers": 3,
+          "programs": 149,
+          "compiled": 312,
+          "links": 156,
+          "uploadBytes": 315023786
+        }
+      ]
+    },
+    {
+      "name": "restart-1",
+      "heap": {
+        "usedSize": 48416344,
+        "totalSize": 50065408,
+        "embedderHeapUsedSize": 4383712,
+        "backingStorageSize": 312254099
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 256,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 286501018,
+          "textureBytesEstimate": 1148248888,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2897,
+          "textures": 183,
+          "renderbuffers": 3,
+          "programs": 149,
+          "compiled": 312,
+          "links": 156,
+          "uploadBytes": 315026154
+        }
+      ]
+    },
+    {
+      "name": "low-1",
+      "heap": {
+        "usedSize": 47932356,
+        "totalSize": 49541120,
+        "embedderHeapUsedSize": 5238584,
+        "backingStorageSize": 326219687
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 262,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 290860346,
+          "textureBytesEstimate": 1142102248,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 5217,
+          "textures": 173,
+          "renderbuffers": 3,
+          "programs": 129,
+          "compiled": 372,
+          "links": 186,
+          "uploadBytes": 326044408
+        }
+      ]
+    },
+    {
+      "name": "standard-1",
+      "heap": {
+        "usedSize": 50210908,
+        "totalSize": 52686848,
+        "embedderHeapUsedSize": 5085048,
+        "backingStorageSize": 327245646
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 258,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 295452184,
+          "textureBytesEstimate": 1149281040,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 4631,
+          "textures": 201,
+          "renderbuffers": 3,
+          "programs": 148,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        }
+      ]
+    },
+    {
+      "name": "home-1",
+      "heap": {
+        "usedSize": 10227284,
+        "totalSize": 12959744,
+        "embedderHeapUsedSize": 1916136,
+        "backingStorageSize": 179385213
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 352,
+        "jsEventListeners": 46
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        }
+      ]
+    },
+    {
+      "name": "game-2",
+      "heap": {
+        "usedSize": 50476060,
+        "totalSize": 53211136,
+        "embedderHeapUsedSize": 4555776,
+        "backingStorageSize": 313026091
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 255,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        },
+        {
+          "bufferBytes": 286501018,
+          "textureBytesEstimate": 1148248888,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2897,
+          "textures": 183,
+          "renderbuffers": 3,
+          "programs": 149,
+          "compiled": 312,
+          "links": 156,
+          "uploadBytes": 315035690
+        }
+      ]
+    },
+    {
+      "name": "restart-2",
+      "heap": {
+        "usedSize": 50563256,
+        "totalSize": 51638272,
+        "embedderHeapUsedSize": 4281336,
+        "backingStorageSize": 313218091
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 257,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        },
+        {
+          "bufferBytes": 286501018,
+          "textureBytesEstimate": 1148248888,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2897,
+          "textures": 183,
+          "renderbuffers": 3,
+          "programs": 149,
+          "compiled": 312,
+          "links": 156,
+          "uploadBytes": 315038058
+        }
+      ]
+    },
+    {
+      "name": "low-2",
+      "heap": {
+        "usedSize": 50426420,
+        "totalSize": 52162560,
+        "embedderHeapUsedSize": 5437608,
+        "backingStorageSize": 326219714
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 263,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        },
+        {
+          "bufferBytes": 290860346,
+          "textureBytesEstimate": 1142102248,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 5217,
+          "textures": 173,
+          "renderbuffers": 3,
+          "programs": 129,
+          "compiled": 372,
+          "links": 186,
+          "uploadBytes": 326056312
+        }
+      ]
+    },
+    {
+      "name": "standard-2",
+      "heap": {
+        "usedSize": 52624512,
+        "totalSize": 54784000,
+        "embedderHeapUsedSize": 5192272,
+        "backingStorageSize": 327245673
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 259,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        },
+        {
+          "bufferBytes": 295452184,
+          "textureBytesEstimate": 1149281040,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 4631,
+          "textures": 201,
+          "renderbuffers": 3,
+          "programs": 148,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332901810
+        }
+      ]
+    },
+    {
+      "name": "home-2",
+      "heap": {
+        "usedSize": 11507648,
+        "totalSize": 15319040,
+        "embedderHeapUsedSize": 2005776,
+        "backingStorageSize": 179385213
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 353,
+        "jsEventListeners": 46
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        },
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332901810
+        }
+      ]
+    },
+    {
+      "name": "game-3",
+      "heap": {
+        "usedSize": 51919500,
+        "totalSize": 55177216,
+        "embedderHeapUsedSize": 4627216,
+        "backingStorageSize": 313026051
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 256,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        },
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332901810
+        },
+        {
+          "bufferBytes": 286501018,
+          "textureBytesEstimate": 1148248888,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2897,
+          "textures": 183,
+          "renderbuffers": 3,
+          "programs": 149,
+          "compiled": 312,
+          "links": 156,
+          "uploadBytes": 315023786
+        }
+      ]
+    },
+    {
+      "name": "restart-3",
+      "heap": {
+        "usedSize": 51966576,
+        "totalSize": 53342208,
+        "embedderHeapUsedSize": 4629016,
+        "backingStorageSize": 313218051
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 258,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        },
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332901810
+        },
+        {
+          "bufferBytes": 286501018,
+          "textureBytesEstimate": 1148248888,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 2897,
+          "textures": 183,
+          "renderbuffers": 3,
+          "programs": 149,
+          "compiled": 312,
+          "links": 156,
+          "uploadBytes": 315026154
+        }
+      ]
+    },
+    {
+      "name": "low-3",
+      "heap": {
+        "usedSize": 52360284,
+        "totalSize": 54128640,
+        "embedderHeapUsedSize": 5514800,
+        "backingStorageSize": 326219674
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 264,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        },
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332901810
+        },
+        {
+          "bufferBytes": 290860346,
+          "textureBytesEstimate": 1142102248,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 5217,
+          "textures": 173,
+          "renderbuffers": 3,
+          "programs": 129,
+          "compiled": 372,
+          "links": 186,
+          "uploadBytes": 326044408
+        }
+      ]
+    },
+    {
+      "name": "standard-3",
+      "heap": {
+        "usedSize": 54790936,
+        "totalSize": 56487936,
+        "embedderHeapUsedSize": 5342400,
+        "backingStorageSize": 327245633
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 260,
+        "jsEventListeners": 79
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        },
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332901810
+        },
+        {
+          "bufferBytes": 295452184,
+          "textureBytesEstimate": 1149281040,
+          "renderbufferBytesEstimate": 24117248,
+          "buffers": 4631,
+          "textures": 201,
+          "renderbuffers": 3,
+          "programs": 148,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        }
+      ]
+    },
+    {
+      "name": "home-3",
+      "heap": {
+        "usedSize": 12723872,
+        "totalSize": 16367616,
+        "embedderHeapUsedSize": 2151160,
+        "backingStorageSize": 179385213
+      },
+      "dom": {
+        "documents": 1,
+        "nodes": 354,
+        "jsEventListeners": 46
+      },
+      "allocation": [
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        },
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332901810
+        },
+        {
+          "bufferBytes": 1287728,
+          "textureBytesEstimate": 658505688,
+          "renderbufferBytesEstimate": 20971520,
+          "buffers": 87,
+          "textures": 85,
+          "renderbuffers": 2,
+          "programs": 53,
+          "compiled": 424,
+          "links": 212,
+          "uploadBytes": 332889906
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "completed": true
+}

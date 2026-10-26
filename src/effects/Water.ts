@@ -58,13 +58,21 @@ export class Water {
     for(int i=0;i<${WAKE_SAMPLES};i++){
      if(i>=wakeCount)break;
      if(abs(world.y-wakeAges[i].y)>2.5)continue;
-     vec4 source=wakePositions[i];float age=wakeAges[i].x,strength=source.w;
+     vec4 source=wakePositions[i];float age=wakeAges[i].x,strength=min(1.,source.w);
      vec2 delta=p-source.xy;float sh=sin(source.z),ch=cos(source.z);
      float lateral=dot(delta,vec2(ch,-sh)),forward=dot(delta,vec2(sh,ch));
+     // A stamp is emitted four metres aft of its hull. Its youngest contact
+     // ellipse supplies the bow/side pressure ridge, without another layer or
+     // extra wake samples. It follows each boat, including elevated canals.
+     float hullForward=forward-4.-age*source.w*50.;
+     if(age<.09&&abs(lateral)<1.2&&abs(hullForward)<2.8){float hull=length(vec2(lateral/.84,hullForward/2.05)),rim=exp(-pow((hull-1.)/.10,2.));float contact=(1.-smoothstep(.025,.09,age))*strength;float broken=.65+.35*sin(forward*17.+lateral*11.-time*9.);foam=max(foam,rim*contact*broken*.36);slope+=vec2(ch,-sh)*sign(lateral)*rim*contact*.035;}
      float aft=2.-forward,gate=smoothstep(0.,.6,aft)*(1.-smoothstep(5.+age*2.,8.+age*3.,aft));
      // The original contribution is exactly zero outside this longitudinal gate.
      // Keep every wave, stamp and texture sample inside it; skip only zero work.
-     if(gate==0. || strength==0.)continue;
+     // At |lateral|>12, both existing Gaussian contributions round to zero
+     // in float32 for every valid wake age / longitudinal gate. Avoid the
+     // expensive cellular noise there, retaining all visible foam and normals.
+     if(gate==0. || strength==0. || abs(lateral)>12.)continue;
      float spread=.22+aft*.27+age*.35;
      float edge=abs(lateral)-spread,width=.16+age*.20;
      float envelope=exp(-edge*edge/(width*width))*gate;
@@ -96,7 +104,7 @@ export class Water {
     reflectionSample+=(texture2D(mirrorSampler,reflectedUV+vec2(blur.x,-blur.y)).rgb+texture2D(mirrorSampler,reflectedUV+vec2(-blur.x,blur.y)).rgb)*.15;
     vec3 reflected=mix(sky,reflectionSample,reflectionEnabled);
     vec3 col=mix(body,reflected,clamp(fresnel*.93,0.,.94));
-    vec3 H=normalize(V+sun);float NH=max(0.,dot(N,H));float rough=.14+.035*(1.-nearDetail);
+    vec3 H=normalize(V+sun);float NH=max(0.,dot(N,H));float rough=.14+.035*(1.-nearDetail)+.018*clamp(waterVariation,0.,1.);
     float alpha=rough*rough,denom=NH*NH*(alpha*alpha-1.)+1.;
     float D=alpha*alpha/(3.14159265*denom*denom+.00001);
     col+=vec3(1.,.91,.72)*min(2.2,D*.018)*max(0.,dot(N,sun));
@@ -139,7 +147,7 @@ export class Water {
   const count=Math.min(WAKE_SAMPLES,active.length);
   for(let i=0;i<count;i++){
    const p=active[Math.floor(i*active.length/count)];
-   this.wakePositions[i].set(p.x,p.z,p.heading,Math.min(1,p.speed/50));this.wakeAges[i].set(p.age,p.height??0);
+   this.wakePositions[i].set(p.x,p.z,p.heading,p.speed/50);this.wakeAges[i].set(p.age,p.height??0);
   }
   this.material.uniforms.wakeCount.value=count;
  }

@@ -43,6 +43,8 @@ import {watchAssetActivity,assetWaitExpired} from './AssetActivity';
 import {renderQuality,renderPixelRatio} from './RenderQuality';
 import {cacheStaticTransforms} from './StaticTransforms';
 import {foregroundDeadline} from './ForegroundDeadline';
+import {retainTextureResources} from '../player/TextureResources';
+import {RenderPacer,type FrameRate} from './RenderPacer';
 export interface GameOptions extends Partial<TrainingOptions>{online?:OnlineGameOptions;playerId?:string;onHome?:()=>void;onRunStart?:()=>void;onRunEnd?:(run:TrainingRun)=>void}
 export class Game {
   readonly ready:Promise<void>;
@@ -75,6 +77,8 @@ export class Game {
   private camera = new FollowCamera();
   private mobile=matchMedia('(pointer: coarse)').matches;
   private qualityProfile=renderQuality(this.mobile,false);
+  private qualityLevel:'high'|'standard'|'low'='standard';
+  private renderPacer=new RenderPacer(60);
   private heroLighting=new HeroLighting(2,this.qualityProfile.racerShadowSize);
   private aiLighting:HeroLighting[];
   private input = new InputController();
@@ -93,6 +97,7 @@ export class Game {
   private paused = document.hidden; private low = false; private wallContact = false;
   private frameId = 0;
   private reflection?:THREE.WebGLRenderTarget;
+  private releaseTextures=()=>{};
   constructor(private root: HTMLElement,private loading=new LoadingScreen(root),private options:GameOptions={}) {
     this.craft=new Watercraft(this.scene,options.online?onlineRacerColor(options.online.race,options.online.memberId):'#126bba');
     this.jet=new BoosterJet(this.craft.visual);this.craftMotion=new MotionInterpolation(this.craft.model);
@@ -105,6 +110,7 @@ export class Game {
     loading.begin('renderer');
     this.water.bindWake(this.wake.pool);this.wake.setSurfaceIntegrated(true);this.spray.bindSurfaceTime(this.water.mesh.material.uniforms.time);
     this.renderer = new THREE.WebGLRenderer({ antialias: !matchMedia('(pointer: coarse)').matches, stencil:true, powerPreference: 'high-performance', preserveDrawingBuffer: false });
+    this.releaseTextures=retainTextureResources(this.renderer);
     this.renderPassMaterials=new RenderPassMaterials(this.renderer);
     this.renderer.autoClear = true; // Clear every frame; no history accumulation or motion blur.
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -121,7 +127,7 @@ export class Game {
     loading.complete('renderer');loading.complete('track');
     this.ai.forEach(ai=>ai.setRamps(this.ramps));
     this.restart();
-    this.hud = new Hud(root, this.input, this.restart, this.recover, low => { if(this.low===low)return;this.low = low;this.qualityProfile=renderQuality(this.mobile,low); this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);this.water.setBudget(this.qualityProfile.waterSegments,this.qualityProfile.reflectionSize);this.city.setLow(low);void this.citySample.setLow(low).then(()=>this.citySample.bakeReflections(this.renderer,this.scene));this.renderer.shadowMap.enabled=!low;void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(low)); this.resize(); },this.audio,options.onHome,!!options.online);
+    this.hud = new Hud(root,this.input,this.restart,this.recover,this.setQuality,this.audio,options.onHome,!!options.online,rate=>this.renderPacer.setRate(rate));
     this.debug=new RampDebug(root);this.ramps.onDecision=value=>this.debug.record(value);
     window.addEventListener('pointerdown',this.activateAudio);
     window.addEventListener('keydown',this.activateAudio);
@@ -166,6 +172,7 @@ export class Game {
     this.hud.update(this.craft.model,this.race,false,this.nitro,this.flight,this.tricks,this.session instanceof NetworkRaceSession?this.session.message:undefined);this.loading.complete('scene');this.loading.finish();
   }
   private restart = () => {
+    this.renderPacer.reset();
     this.recordRun();this.runStarted=this.runRecorded=false;this.input.clear();this.session.restart();
     this.spray.reset(); this.impactLimiter.reset();
     this.audio.reset();
@@ -182,12 +189,20 @@ export class Game {
     this.wake.reset(); this.wallContact = false;
     this.camera.update(0, this.craft.model, true,this.flight.height,false,this.track.surface(this.craft.model).height);
   };
+  private setQuality=(level:'high'|'standard'|'low')=>{
+    if(this.mobile&&level==='high')level='standard';if(this.qualityLevel===level)return;const wasLow=this.low,low=level==='low';this.qualityLevel=level;this.low=low;this.qualityProfile=renderQuality(this.mobile,low,level==='high');
+    if(wasLow!==low){this.spray.setLow(low);this.wake.setLow(low);this.water.setLow(low);}this.water.setBudget(this.qualityProfile.waterSegments,this.qualityProfile.reflectionSize);this.renderer.shadowMap.enabled=!low;
+    const sun=this.scene.children.find(o=>o instanceof THREE.DirectionalLight) as THREE.DirectionalLight|undefined;if(sun){const size=this.qualityProfile.cityShadowSize;if(sun.shadow.mapSize.x!==size){sun.shadow.map?.dispose();sun.shadow.map=null;sun.shadow.mapSize.set(size,size);}sun.shadow.needsUpdate=true;}
+    if(low){this.heroLighting.releaseTarget();this.aiLighting.forEach(l=>l.releaseTarget());}
+    if(wasLow!==low){this.city.setLow(low);void this.citySample.setLow(low).then(()=>this.citySample.bakeReflections(this.renderer,this.scene));void this.craft.setQuality(low);this.aiCraft.forEach(c=>void c.setQuality(low));}
+    this.renderPacer.reset();this.resize();
+  };
   private resize = () => {
     const width = this.root.clientWidth, height = this.root.clientHeight;
     this.renderer.setPixelRatio(renderPixelRatio(this.qualityProfile,devicePixelRatio,width,height));
     this.renderer.setSize(width, height); this.camera.resize(width, height);
   };
-  private visibility = () => { this.paused = document.hidden;if(this.paused)this.saveProgress(); this.audio.setPaused(this.paused); this.input.clear(); this.previous = 0; this.accumulator = 0; this.craftMotion.reset(); this.aiMotion.forEach(motion => motion.reset()); };
+  private visibility = () => { this.paused = document.hidden;if(this.paused)this.saveProgress(); this.audio.setPaused(this.paused); this.input.clear(); this.previous = 0; this.accumulator = 0;this.renderPacer.reset(); this.craftMotion.reset(); this.aiMotion.forEach(motion => motion.reset()); };
   private contextLost = (event: Event) => { event.preventDefault(); cancelAnimationFrame(this.frameId); this.root.insertAdjacentHTML('beforeend', '<div class="error">图形连接中断，请刷新页面重新比赛。</div>'); };
   private recordRun(){if(this.runStarted&&!this.runRecorded){this.runRecorded=true;this.options.onRunEnd?.(this.session.summary());}}
   saveProgress(){if(this.runStarted&&!this.runRecorded)this.options.onRunEnd?.(this.session.summary());}
@@ -227,6 +242,7 @@ export class Game {
       this.wake.updateAll(step,waterSources);this.spray.updateAll(step,waterSources);
       this.time += step; this.accumulator -= step;
     }
+    if(!this.renderPacer.accepts(now))return;
     const displayTime = this.time + this.accumulator;
     if(this.session instanceof NetworkRaceSession&&this.session.consumeCorrection())this.craftMotion.reset();
     const displayModel = this.craftMotion.sample(this.accumulator / step);
@@ -238,7 +254,7 @@ export class Game {
     this.aiJets.forEach((jet,i)=>jet.update(displayTime,this.ai[i].nitro.active));
     this.audio.update({speed:this.craft.model.speed,throttle:input.throttle,boost:this.nitro.active,grounded:!this.flight.airborne&&Math.abs(this.flight.height-ground)<.3,airborne:this.flight.airborne,running:this.race.phase==='racing'});
     this.audio.updateAI(this.ai.map(ai=>{const dx=ai.model.x-this.craft.model.x,dz=ai.model.z-this.craft.model.z,distance=Math.hypot(dx,dz,ai.flight.height-this.flight.height);return{id:ai.id,speed:ai.model.speed,throttle:1,boost:ai.nitro.active,airborne:ai.flight.airborne,grounded:!ai.flight.airborne&&Math.abs(ai.flight.height-this.track.surface(ai.model).height)<.3,running:this.race.phase==='racing',distance,pan:(dx*Math.cos(this.craft.model.heading)-dz*Math.sin(this.craft.model.heading))/Math.max(10,distance)};}));
-    this.camera.update(dt, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active,ground);this.water.update(displayTime,this.camera.camera);this.citySample.update(displayTime,this.camera.camera);
+    this.camera.update(this.renderPacer.delta, displayModel,false,this.flight.displayHeight(this.accumulator/step),this.nitro.active,ground);this.water.update(displayTime,this.camera.camera);this.citySample.update(displayTime,this.camera.camera);
     this.trackView.highlight(this.race.nextCheckpoint());
     this.hud.update(this.craft.model, this.race, this.wallContact,this.nitro,this.flight,this.tricks,this.session instanceof NetworkRaceSession?this.session.message:undefined);
     if(!this.low&&this.craft.assetLoaded)this.heroLighting.update(this.renderer,this.scene,this.craft.visual);
@@ -246,6 +262,7 @@ export class Game {
     this.renderer.render(this.scene, this.camera.camera);
   };
   dispose() {
+    if(this.disposed)return;
     this.recordRun();
     this.disposed=true;if(this.session instanceof NetworkRaceSession)this.session.dispose();
     this.releaseAssetActivity();
@@ -260,7 +277,7 @@ export class Game {
     window.removeEventListener('resize', this.resize); document.removeEventListener('visibilitychange', this.visibility);
     this.renderer.domElement.removeEventListener('webglcontextlost', this.contextLost);
     this.scene.traverse(object => { if (object instanceof THREE.Mesh || object instanceof THREE.Points) { object.geometry.dispose(); const materials = Array.isArray(object.material) ? object.material : [object.material]; materials.forEach(material => { const map = (material as THREE.MeshBasicMaterial).map; map?.dispose(); material.dispose(); }); } });
-    this.renderer.dispose(); this.root.replaceChildren();
-    this.water.dispose();
+    this.renderer.dispose();this.renderer.forceContextLoss();this.root.replaceChildren();
+    this.water.dispose();this.releaseTextures();
   }
 }

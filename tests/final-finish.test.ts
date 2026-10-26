@@ -14,6 +14,7 @@ test('shared finish details preserve authored geometry channels, skeletons and d
  for(const {mesh,base}of meshes){const g=mesh.geometry;if(g===base)continue;changed++;added+=g.userData.finishTriangles;
   for(const[name,attr]of Object.entries(base.attributes)){
    const next=g.getAttribute(name);assert.equal(next.itemSize,attr.itemSize);assert.equal(next.normalized,attr.normalized);
+   if(name==='color'&&g.userData.tailoredShoulders)continue;
    for(const i of[0,Math.floor(attr.count/2),attr.count-1])for(let k=0;k<attr.itemSize;k++)assert.equal(next.getComponent(i,k),attr.getComponent(i,k));
   }
   assert.deepEqual(Array.from(g.index!.array.subarray(0,base.index!.count)),Array.from(base.index!.array));
@@ -21,7 +22,7 @@ test('shared finish details preserve authored geometry channels, skeletons and d
    let sum=0;for(let k=0;k<4;k++){sum+=weights.getComponent(i,k);assert.ok(indices.getComponent(i,k)<mesh.skeleton.bones.length);}assert.ok(Math.abs(sum-1)<1e-6);
   }}assert.ok(g.boundingSphere&&Number.isFinite(g.boundingSphere.radius));
  }
- assert.equal(changed,5);assert.ok(added>100&&added<10000);assert.deepEqual(['RiderSeat','Grip_L','Grip_R','JetOutlet'].map(n=>boat.getObjectByName(n)!.position.toArray()),sockets);
+ assert.equal(changed,6);assert.ok(added>100&&added<10000);assert.deepEqual(['RiderSeat','Grip_L','Grip_R','JetOutlet'].map(n=>boat.getObjectByName(n)!.position.toArray()),sockets);
  let afterBones=0;rider.traverse(o=>{if(o instanceof THREE.Bone)afterBones++;});assert.equal(afterBones,bones);
  refineRacecraft(copyBoat,copyRider);const copies:THREE.Mesh[]=[];for(const root of[copyBoat,copyRider])root.traverse(o=>{if(o instanceof THREE.Mesh)copies.push(o);});
  assert.equal(copies.length,meshes.length);copies.forEach((m,i)=>assert.equal(m.geometry,meshes[i].mesh.geometry));

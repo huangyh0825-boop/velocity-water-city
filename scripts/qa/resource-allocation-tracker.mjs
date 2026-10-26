@@ -1,0 +1,25 @@
+// Private QA instrumentation. Records API-requested storage, not physical VRAM.
+(()=>{const original=HTMLCanvasElement.prototype.getContext,records=[],seen=new WeakSet();
+ window.resourceAllocation=()=>records.flatMap(r=>{const v=r.deref();return v?[v.snapshot()]:[];});
+ HTMLCanvasElement.prototype.getContext=function(...args){const gl=original.apply(this,args);if(!gl||!String(args[0]).startsWith('webgl')||seen.has(gl))return gl;seen.add(gl);
+  const buffers=new Map(),textures=new Map(),renderbuffers=new Map(),programs=new Set();let compiled=0,links=0,upload=0;
+  const sum=a=>[...a.values()].reduce((s,v)=>s+v,0),record={snapshot:()=>({bufferBytes:sum(buffers),textureBytesEstimate:[...textures.values()].reduce((s,m)=>s+sum(m),0),renderbufferBytesEstimate:sum(renderbuffers),buffers:buffers.size,textures:textures.size,renderbuffers:renderbuffers.size,programs:programs.size,compiled,links,uploadBytes:upload})};Object.defineProperty(gl,'resourceAllocationRecord',{value:record});records.push(new WeakRef(record));
+  const wrap=(name,after)=>{const fn=gl[name];if(fn)gl[name]=function(...a){const value=fn.apply(gl,a);after(a,value);return value;};};
+  const bound=target=>gl.getParameter(target===gl.ARRAY_BUFFER?gl.ARRAY_BUFFER_BINDING:target===gl.ELEMENT_ARRAY_BUFFER?gl.ELEMENT_ARRAY_BUFFER_BINDING:gl.COPY_WRITE_BUFFER_BINDING);
+  const bytes=(data,offset=0,length)=>typeof data==='number'?data:data?(length??(data.length===undefined?data.byteLength:data.length)-offset)*(data.BYTES_PER_ELEMENT??1):0;
+  wrap('bufferData',a=>{const b=bound(a[0]);if(b)buffers.set(b,bytes(a[1],a[3]??0,a[4]));upload+=bytes(a[1],a[3]??0,a[4]);});wrap('bufferSubData',a=>upload+=bytes(a[2],a[3]??0,a[4]));wrap('deleteBuffer',a=>buffers.delete(a[0]));
+  const tex=target=>gl.getParameter(target===gl.TEXTURE_3D?gl.TEXTURE_BINDING_3D:target===gl.TEXTURE_2D_ARRAY?gl.TEXTURE_BINDING_2D_ARRAY:target===gl.TEXTURE_CUBE_MAP||target>=34069&&target<=34074?gl.TEXTURE_BINDING_CUBE_MAP:gl.TEXTURE_BINDING_2D);
+  const bpp=(internal,format,type)=>({33321:1,33323:2,32849:3,32856:4,35905:3,35907:4,33325:2,33327:4,34843:6,34842:8,33326:4,33328:8,34837:12,34836:16,33189:2,33190:4,36012:4,35056:4,36013:8}[internal]??((format===gl.RED||format===gl.DEPTH_COMPONENT?1:format===gl.RG?2:format===gl.RGB?3:4)*(type===gl.FLOAT||type===gl.UNSIGNED_INT?4:type===gl.HALF_FLOAT||type===gl.UNSIGNED_SHORT?2:1)));
+  const blocks={33776:8,33777:8,33778:16,33779:16,36492:16,36493:16,37492:8,37493:8,37496:16,37497:16,36196:8,37808:16,37840:16};
+  const set=(target,level,w,h,d,internal,format,type,exact)=>{const t=tex(target);if(!t)return;const m=textures.get(t)??new Map(),storage=blocks[internal]?Math.ceil(w/4)*Math.ceil(h/4)*d*blocks[internal]:w*h*d*bpp(internal,format,type);m.set(target+':'+level,exact??storage*(target===gl.TEXTURE_CUBE_MAP?6:1));textures.set(t,m);};
+  wrap('texImage2D',a=>{const source=a.length===6?a[5]:null;set(a[0],a[1],source?.width??a[3],source?.height??a[4],1,a[2],source?a[3]:a[6],source?a[4]:a[7]);});
+  wrap('texImage3D',a=>set(a[0],a[1],a[3],a[4],a[5],a[2],a[7],a[8]));
+  for(const name of['texStorage2D','texStorage3D'])wrap(name,a=>{for(let level=0;level<a[1];level++)set(a[0],level,Math.max(1,a[3]>>level),Math.max(1,a[4]>>level),name==='texStorage3D'?Math.max(1,a[5]>>level):1,a[2],a[2],gl.UNSIGNED_BYTE);});
+  wrap('compressedTexImage2D',a=>set(a[0],a[1],a[3],a[4],1,a[2],a[2],0,a[6]?.byteLength??a[6]));
+  wrap('generateMipmap',a=>{const t=tex(a[0]),m=textures.get(t);if(!m)return;for(const [key,base]of [...m])if(key.endsWith(':0')){const target=key.split(':')[0];let size=base/4,level=1;while(size>=4){m.set(target+':'+level++,Math.ceil(size));size/=4;}}});
+  wrap('deleteTexture',a=>textures.delete(a[0]));
+  for(const name of['renderbufferStorage','renderbufferStorageMultisample'])wrap(name,a=>{const multi=name.endsWith('Multisample'),r=gl.getParameter(gl.RENDERBUFFER_BINDING);if(r)renderbuffers.set(r,(multi?a[1]:1)*a[multi?3:2]*a[multi?4:3]*bpp(a[multi?2:1],0,0));});
+  wrap('deleteRenderbuffer',a=>renderbuffers.delete(a[0]));wrap('createProgram',(_,p)=>programs.add(p));wrap('deleteProgram',a=>programs.delete(a[0]));wrap('compileShader',()=>compiled++);wrap('linkProgram',()=>links++);
+  return gl;
+ };
+})();

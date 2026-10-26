@@ -8,6 +8,10 @@ export function runtimeAssets(){
  let destination,files=[],revision;
  return {name:'runtime-asset-closure',apply:'build',config(){
   const root=resolve('public'),queue=['favicon.svg','models/README.md','models/watercraft-packed.glb.gz','models/rider-packed.glb.gz','models/watercraft-mobile.glb.gz','models/rider-mobile.glb.gz','models/watercraft-low.glb','models/rider-low.glb',...['waterfront','waterfront-low','city-modules','city-modules-low','city-services','public-citizens'].map(n=>`models/city-sample/${n}.glb`)],seen=new Set();let bytes=0;
+  for(const name of['watercraft','rider'])if(statSync(resolve(root,`models/${name}-efficient.glb.gz`),{throwIfNoEntry:false}))queue.push(`models/${name}-efficient.glb.gz`);
+  for(const name of['waterfront','waterfront-low','city-modules','city-modules-low','city-services','public-citizens'])if(statSync(resolve(root,`models/city-sample/${name}-efficient.glb.gz`),{throwIfNoEntry:false}))queue.push(`models/city-sample/${name}-efficient.glb.gz`);
+  const gpuManifest=resolve(root,'models/gpu-textures/manifest.json');
+  if(statSync(gpuManifest,{throwIfNoEntry:false})){const textures=JSON.parse(readFileSync(gpuManifest,'utf8'));queue.push('models/gpu-textures/manifest.json','decoders/basis/basis_transcoder.js','decoders/basis/basis_transcoder.wasm','decoders/basis/README.md',...new Set(Object.values(textures.byHash).map(t=>'models/'+t.path)));}
   for(let i=0;i<queue.length;i++){
    const path=resolve(root,queue[i]),name=relative(root,path);if(name.startsWith('..'))throw Error('Asset outside public directory');if(seen.has(name))continue;seen.add(name);
    files.push({path,name});bytes+=statSync(path).size;

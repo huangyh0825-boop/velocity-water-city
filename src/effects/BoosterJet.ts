@@ -11,7 +11,8 @@ export class BoosterJet {
    fragmentShader:`uniform float time;varying vec2 jetUV;varying float jetCore;void main(){float z=jetUV.y;
     float head=smoothstep(0.,.035,z),tail=1.-smoothstep(.44,1.,z),pulse=.82+.18*sin(time*17.-z*18.);
     float rings=pow(.5+.5*sin(z*53.-time*28.),6.);float strand=.68+.32*sin(jetUV.x*37.7-z*21.+time*8.);
-    float a=head*tail*pulse*mix(.24*strand+.16*rings,.72,jetCore);
+    float pressure=exp(-pow((z-.16)/.055,2.))*.18;
+    float a=head*tail*pulse*mix(.24*strand+.16*rings+pressure,.72,jetCore);
     vec3 color=mix(vec3(.025,.32,.80),vec3(.50,.95,1.),jetCore+.20*rings);gl_FragColor=vec4(color,a);
     #include <tonemapping_fragment>
     #include <colorspace_fragment>

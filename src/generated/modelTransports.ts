@@ -1,0 +1,2 @@
+// Lossless city transport; original GLBs remain the fallback.
+export const modelTransports={"city-sample/waterfront.glb":"city-sample/waterfront-efficient.glb.gz","city-sample/waterfront-low.glb":"city-sample/waterfront-low-efficient.glb.gz","city-sample/city-modules.glb":"city-sample/city-modules-efficient.glb.gz","city-sample/city-modules-low.glb":"city-sample/city-modules-low-efficient.glb.gz","city-sample/city-services.glb":"city-sample/city-services-efficient.glb.gz","city-sample/public-citizens.glb":"city-sample/public-citizens-efficient.glb.gz"};

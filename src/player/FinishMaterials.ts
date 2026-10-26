@@ -20,4 +20,12 @@ export function raceFinish(m:THREE.MeshStandardMaterial){
  else if(/Original LCD/.test(n)){m.emissive.set('#42aacb');m.emissiveIntensity=.12;environment=.35;}
  else if(/engineering polymer|graphite ceramic coating/.test(n)){m.roughness=.46;m.metalness=.08;environment=.42;if(p)p.clearcoat=.12;}
  m.userData.finishEnvironment=environment;
+ // ORM roughness multiplies the scalar above. Some authored cloth texels are
+ // almost polished even with roughness=1; keep their weave without plastic
+ // shoulder highlights. The paint, metal and optical channels are untouched.
+ const textile=/woven|stretch racing textile|technical race suit|blue leather panels/.test(n),rubber=/rubber|saddle|glove and boot/i.test(n);
+ if(textile||rubber){const floor=textile?.74:.62,compile=m.onBeforeCompile,key=m.customProgramCacheKey();
+  m.onBeforeCompile=(shader,renderer)=>{compile.call(m,shader,renderer);shader.fragmentShader=shader.fragmentShader.replace('#include <roughnessmap_fragment>',`#include <roughnessmap_fragment>\nroughnessFactor=max(roughnessFactor,${floor});`);};
+  m.customProgramCacheKey=()=>key+'|fabric-roughness-floor-'+floor;if(p)p.specularIntensity=textile?.32:.45;
+ }
 }

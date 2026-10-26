@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {type CityModule,type CitySite,sampleLocal} from './CityDensityLayout';
 import {CityTrack} from '../track/CityTrack';
 import {districtAt} from './WorldCityLayout';
@@ -38,7 +39,7 @@ export class CityInteriors {
   this.wallTexture=new THREE.CanvasTexture(wallCanvas);this.wallTexture.colorSpace=THREE.SRGBColorSpace;
   const wall=new THREE.MeshStandardMaterial({map:this.wallTexture,roughness:.82,envMapIntensity:.4}),frame=new THREE.MeshStandardMaterial({color:'#526574',metalness:.65,roughness:.35}),floor=new THREE.MeshStandardMaterial({color:'#354b56',roughness:.77,envMapIntensity:.4}),furniture=new THREE.MeshStandardMaterial({color:'#647f89',roughness:.55,metalness:.12,envMapIntensity:.4}),warm=new THREE.MeshBasicMaterial({color:'#ffe0a5'}),screen=new THREE.MeshBasicMaterial({map:this.texture}),pane=new THREE.MeshPhysicalMaterial({color:'#b1d5df',metalness:0,roughness:.12,transparent:true,opacity:.14,depthWrite:false,clearcoat:.4,envMapIntensity:.8});
   this.materials=[wall,frame,floor,furniture,warm,screen,pane];
-  const rows:Piece[][]=this.materials.map(()=>[]),unit=new THREE.BoxGeometry(1,1,1),dummy=new THREE.Object3D();
+  const rows:Piece[][]=this.materials.map(()=>[]),unit=new THREE.BoxGeometry(1,1,1),beveled=new RoundedBoxGeometry(1,1,1,1,.025),dummy=new THREE.Object3D();
   for(const s of this.selected){
    const bay=INTERIOR_BAYS[s.kind]!,{x,back,width:w,depth:d,floor:y,height:h}=bay,front=back-d,mid=(front+back)/2;
    const parent=new THREE.Matrix4().compose(new THREE.Vector3(s.x,.265-.25*s.scaleY,s.z),new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),s.heading),new THREE.Vector3(s.scaleXZ,s.scaleY,s.scaleXZ));
@@ -48,6 +49,13 @@ export class CityInteriors {
    box(2,x,(y+.25)/2,mid,w+.1,y-.25,d+.1);
    for(const side of [-1,1]){box(0,x+side*w/2,y+h/2,mid,.11,h,d);box(1,x+side*w/2,y+h/2,front-.02,.08,h,.1);}
    box(1,x,y+h,front,w+.13,.11,.13);box(1,x,y,front,w+.13,.11,.13);
+   // Layered entrance head, weather canopy, mullion and accessible threshold.
+   // Reuse the same seven material/instance pools at every occupied frontage.
+   box(1,x,y+h+.11,front-.18,w+.38,.12,.56);box(0,x,y+h+.21,front-.12,w+.48,.10,.54);
+   box(4,x,y+h+.035,front-.35,w*.75,.025,.035);
+   box(1,x+w*.24,y+h*.5,front-.075,.045,h-.12,.05);
+   box(1,x+w*.17,y+h*.38,front-.105,.025,.30,.055);
+   box(2,x,y-.06,front-.20,w+.23,.10,.45);
    // Service counter, recessed wall display, equipment cabinet and short partition.
    box(3,x,y+.65,front+d*.55,w*.66,1.2,.5);box(1,x,y+1.29,front+d*.55,w*.74,.08,.6);
    box(3,x+w*.27,y+1.45,back-.23,w*.2,2.6,.3);box(0,x-w*.24,y+1.2,back-.4,.09,2.3,.75);
@@ -61,7 +69,7 @@ export class CityInteriors {
    box(6,x,y+h*.5,front-.045,w-.13,h-.12,.02);
   }
   rows.forEach((pieces,i)=>{
-   const mesh=new THREE.InstancedMesh(unit,this.materials[i],pieces.length);mesh.name=`interior-${['walls','frames','floors','furniture','light-strips','screens','panes'][i]}`;mesh.count=0;mesh.castShadow=i<4;mesh.receiveShadow=i<4;
+   const mesh=new THREE.InstancedMesh(i===1||i===3?beveled:unit,this.materials[i],pieces.length);mesh.name=`interior-${['walls','frames','floors','furniture','light-strips','screens','panes'][i]}`;mesh.count=0;mesh.castShadow=i<4;mesh.receiveShadow=i<4;
    if(i===6)mesh.renderOrder=2;this.pools.push({mesh,pieces});this.root.add(mesh);
   });
  }
@@ -73,5 +81,5 @@ export class CityInteriors {
   if(signature!==this.visibleSignature){this.visibleSignature=signature;this.revision++;}
   for(const pool of this.pools){let count=0;for(const piece of pool.pieces)if(visible.has(piece.site.id))pool.mesh.setMatrixAt(count++,piece.matrix);pool.mesh.count=count;pool.mesh.instanceMatrix.needsUpdate=true;pool.mesh.computeBoundingSphere();}
  }
- dispose(){this.root.removeFromParent();for(const p of this.pools)p.mesh.dispose();this.pools[0]?.mesh.geometry.dispose();this.materials.forEach(m=>m.dispose());this.texture.dispose();this.wallTexture.dispose();}
+ dispose(){this.root.removeFromParent();const geometries=new Set<THREE.BufferGeometry>();for(const p of this.pools){geometries.add(p.mesh.geometry);p.mesh.dispose();}geometries.forEach(g=>g.dispose());this.materials.forEach(m=>m.dispose());this.texture.dispose();this.wallTexture.dispose();}
 }

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { DrivingModel, MAX_SPEED } from './DrivingModel';
 import { ModelBatch } from './ModelBatch';
 import { Rider } from './Rider';
-import {loadVisual} from './VisualAssets';
+import {loadVisual,releaseVisual} from './VisualAssets';
 import {RacerMaterials} from './RacerMaterials';
 import {refineRacecraft} from './RacecraftDetails';
 export class Watercraft {
@@ -15,6 +15,7 @@ export class Watercraft {
   private visualRequest=0;
   private fallback:THREE.Object3D[]=[];
   private asset?:THREE.Object3D;
+  private riderAsset?:THREE.Object3D;
   private finishes=new RacerMaterials();
   private color:string;
   private landingCompression=0;
@@ -61,23 +62,24 @@ export class Watercraft {
   async setQuality(low:boolean){
     this.shadow.visible=!low;
     const request=++this.visualRequest;
-    try{const [boat,racer]=await Promise.all([loadVisual('watercraft',low),loadVisual('rider',low)]);if(request!==this.visualRequest)return;
+    try{const assets=await Promise.allSettled([loadVisual('watercraft',low),loadVisual('rider',low)]);if(request!==this.visualRequest||assets.some(a=>a.status==='rejected')){assets.forEach(a=>{if(a.status==='fulfilled')releaseVisual(a.value);});const failed=assets.find(a=>a.status==='rejected');if(request===this.visualRequest&&failed?.status==='rejected')throw failed.reason;return;}
+      const boat=(assets[0] as PromiseFulfilledResult<THREE.Group>).value,racer=(assets[1] as PromiseFulfilledResult<THREE.Group>).value;
       this.finishes.dispose();this.finishes=new RacerMaterials();
       refineRacecraft(boat,racer);
       this.finishes.apply(boat,this.color);this.finishes.apply(racer,this.color);
       boat.traverse(o=>{if(o instanceof THREE.Mesh){o.castShadow=true;o.receiveShadow=true;}});
-      if(this.asset)this.visual.remove(this.asset);
+      const oldBoat=this.asset,oldRider=this.riderAsset;if(this.asset)this.visual.remove(this.asset);
       this.fallback.forEach(o=>{this.visual.remove(o);if(o instanceof THREE.Mesh){o.geometry.dispose();(o.material as THREE.Material).dispose();}});this.fallback=[];
       this.visual.add(boat);this.asset=boat;
       // Model-local authoring sockets affect visuals only; physical hull is unchanged.
       const seat=boat.getObjectByName('RiderSeat');
       if(seat){boat.updateWorldMatrix(true,true);this.rider.root.position.copy(boat.worldToLocal(seat.getWorldPosition(new THREE.Vector3())));
         for(const [i,name] of ['Grip_L','Grip_R'].entries()){const grip=boat.getObjectByName(name);if(grip)this.rider.grips[i].copy(boat.worldToLocal(grip.getWorldPosition(new THREE.Vector3()))).sub(this.rider.root.position);}}
-      this.rider.bindAsset(racer);this.visual.userData.visualRevision++;this.assetLoaded=true;this.assetError='';
+      this.rider.bindAsset(racer);this.riderAsset=racer;releaseVisual(oldBoat);releaseVisual(oldRider);this.visual.userData.visualRevision++;this.assetLoaded=true;this.assetError='';
     }catch(error){this.assetError=String(error);console.warn('GLB unavailable: fallback model retained',error);}
   }
   land(){this.landingCompression=.10;}
-  dispose(){this.visualRequest++;this.rider.dispose();this.finishes.dispose();}
+  dispose(){this.visualRequest++;this.rider.dispose();this.finishes.dispose();if(this.asset)this.visual.remove(this.asset);if(this.riderAsset)this.rider.root.remove(this.riderAsset);releaseVisual(this.asset);releaseVisual(this.riderAsset);this.asset=this.riderAsset=undefined;}
   sync(time: number, m: DrivingModel = this.model, height = 0, trick = {pitch:0,yaw:0},ground=0,slope=0) {
     this.shadow.position.set(m.x,ground+.14,m.z);this.shadow.rotation.z=-m.heading;this.shadow.material.uniforms.alpha.value=.20*Math.exp(-Math.max(0,height-ground)*.3);
     this.object.position.set(m.x, height + 0.16 + Math.sin(time * 3.2) * 0.07, m.z);

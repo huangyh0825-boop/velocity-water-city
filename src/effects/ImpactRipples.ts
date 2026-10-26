@@ -6,9 +6,9 @@ export class ImpactRipples{
   for(const[g,kind]of[[sheet,0],[crown,1]] as const)g.setAttribute('crown',new THREE.Float32BufferAttribute(new Float32Array(g.attributes.position.count).fill(kind),1));
   const geometry=mergeGeometries([sheet,crown],false)!;sheet.dispose();crown.dispose();geometry.setAttribute('ringOpacity',this.opacity);geometry.setAttribute('impactAge',new THREE.InstancedBufferAttribute(this.ages,1));
   this.material=new THREE.ShaderMaterial({transparent:true,depthWrite:false,side:THREE.DoubleSide,forceSinglePass:true,uniforms:{time:{value:0}},vertexShader:`uniform float time;attribute float ringOpacity;attribute float impactAge;attribute float crown;varying float opacity;varying vec2 ringUV;varying float isCrown;varying float age;${waterWaveGLSL}
-   void main(){ringUV=uv;opacity=ringOpacity;isCrown=crown;age=impactAge;vec3 local=position;if(crown>.5)local.y*=max(0.,sin(min(1.,impactAge/.6)*3.14159265))*.85;vec4 w=modelMatrix*instanceMatrix*vec4(local,1.);float h;vec2 slope;waterWaves(w.xz,time,h,slope);w.y+=h+.035;gl_Position=projectionMatrix*viewMatrix*w;}`,
+   void main(){ringUV=uv;opacity=ringOpacity;isCrown=crown;age=impactAge;vec3 local=position;if(crown>.5){float phi=uv.x*6.2831853,scallop=.66+.22*sin(phi*7.+impactAge*3.)+.12*sin(phi*13.-.8);local.y*=max(0.,sin(min(1.,impactAge/.6)*3.14159265))*.85*scallop;local.xz*=1.+local.y*.26;}vec4 w=modelMatrix*instanceMatrix*vec4(local,1.);float h;vec2 slope;waterWaves(w.xz,time,h,slope);w.y+=h+.035;gl_Position=projectionMatrix*viewMatrix*w;}`,
    fragmentShader:`varying float opacity;varying vec2 ringUV;varying float isCrown;varying float age;void main(){float a;
-    if(isCrown>.5){float strands=smoothstep(.1,.8,sin(ringUV.x*125.+age*4.));a=opacity*1.8*strands*smoothstep(0.,.1,ringUV.y)*(1.-smoothstep(.65,1.,ringUV.y));}
+    if(isCrown>.5){float sheet=.65+.35*sin(ringUV.x*69.+sin(ringUV.y*17.-age*10.)*2.);float holes=smoothstep(.05,.42,sin(ringUV.x*113.-ringUV.y*21.+age*7.)*sin(ringUV.y*27.+ringUV.x*13.));a=opacity*1.65*sheet*(1.-holes*.85)*smoothstep(0.,.1,ringUV.y)*(1.-smoothstep(.80,1.,ringUV.y));}
     else{float r=length(ringUV-.5)*2.,edge=abs(r-.76);float foam=exp(-edge*edge/ .003);float broken=.55+.45*sin(atan(ringUV.y-.5,ringUV.x-.5)*29.+r*32.);a=foam*broken*opacity;}
     if(a<.008)discard;gl_FragColor=vec4(.77,.92,.94,a);
     #include <tonemapping_fragment>
