@@ -1,0 +1,151 @@
+{
+  "date": "2026-11-02",
+  "candidate": "374c853bf9442b163ead4e2e03d1cc876a06b90d",
+  "nodeTests": 255,
+  "workersTests": 13,
+  "typeChecks": true,
+  "productionBuild": true,
+  "desktopEntry": {
+    "checks": {
+      "filterZoomAndComparison": true,
+      "allImagesAndMobileLayout": true,
+      "productionDriveNitroFrameRateMenuAndHome": true
+    },
+    "errors": [],
+    "completed": true
+  },
+  "mobile": {
+    "checks": {
+      "autoAccelerationUsesRealDrivingModel": true,
+      "raceSurfaceAndSafariGestureGuard": true,
+      "trustedTwoFingerDefaultCanceledWithoutLosingButtons": true,
+      "nativeMultitouchAndCancelledCapture": true,
+      "brakeOverridesAndRestoresThrottle": true,
+      "airborneTrickUsesExistingTrickController": true,
+      "settingsClearHeldInputAndRetainQualitySelection": true,
+      "homeGesturePolicyRestoredAfterDispose": true,
+      "finishAndNewGameClearMenuState": true,
+      "desktopRemainsManual": true
+    },
+    "layouts": [
+      {
+        "width": 844,
+        "height": 390,
+        "noOverlap": true,
+        "icons": true
+      },
+      {
+        "width": 740,
+        "height": 360,
+        "noOverlap": true,
+        "icons": true
+      },
+      {
+        "width": 667,
+        "height": 375,
+        "noOverlap": true,
+        "icons": true
+      },
+      {
+        "width": 568,
+        "height": 320,
+        "noOverlap": true,
+        "icons": true
+      },
+      {
+        "width": 390,
+        "height": 844,
+        "noOverlap": true,
+        "icons": true
+      },
+      {
+        "width": 320,
+        "height": 640,
+        "noOverlap": true,
+        "icons": true
+      },
+      {
+        "width": 1024,
+        "height": 768,
+        "noOverlap": true,
+        "icons": true
+      }
+    ],
+    "errors": [],
+    "nativeZoomLimit": "Native viewport pinch could not be observed on the unguarded Windows headless baseline; physical phone zoom is not claimed as tested."
+  },
+  "online": {
+    "url": "http://127.0.0.1:5291/",
+    "localBuild": false,
+    "checks": {
+      "hostAndAllReady": true,
+      "slowPlayerHoldsStart": true,
+      "allAssetsLoadedAndSharedFiveSecondCountdown": true,
+      "realDrivingAndOpponentBroadcast": true,
+      "offlineReconnectRestoresAuthoritativePose": true,
+      "oneMinuteNoRateLimitDisconnect": true,
+      "exitToHome": true
+    },
+    "errors": [],
+    "touch": false,
+    "player1Packets": 742,
+    "player2Packets": 727
+  },
+  "resourceLifecycle": {
+    "completed": true,
+    "cycles": 3,
+    "abortedLoadReentry": true
+  },
+  "fallback": {
+    "completed": true,
+    "modes": [
+      "corrupt-compressed-textures",
+      "packed-model-unavailable",
+      "compressed-formats-unavailable"
+    ]
+  },
+  "renderFramePhysics": [
+    {
+      "rate": 0,
+      "submissions": 1441,
+      "physicsSteps": 600
+    },
+    {
+      "rate": 60,
+      "submissions": 601,
+      "physicsSteps": 600
+    },
+    {
+      "rate": 120,
+      "submissions": 1201,
+      "physicsSteps": 600
+    }
+  ],
+  "fullRace": {
+    "phase": "finished",
+    "passed": [
+      72,
+      72,
+      72,
+      72,
+      72
+    ],
+    "routes": [
+      "tunnel-cut",
+      "harbor-cut"
+    ]
+  },
+  "publicBackend": {
+    "url": "https://velocity-water-city-lobby-test.onrender.com/api/lobby",
+    "healthy": true,
+    "revision": "816a451daaab003ab7ee84183da6836ee67ecfe9",
+    "coldWakeMs": 113664
+  },
+  "limitations": [
+    "Phone browser emulation is not physical-phone FPS or iOS pinch verification.",
+    "16-minute real-time drive and performance comparison are prior 2026-10-26 evidence, not repeated this release audit.",
+    "Dense full-detail multi-boat scenes can remain below 60 FPS.",
+    "Render Free can require up to minutes to wake; server configuration remains unchanged."
+  ],
+  "readyToPublish": true
+}

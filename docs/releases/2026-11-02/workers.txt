@@ -1,0 +1,8 @@
+
+ RUN  v5.0.5 C:/快艇
+
+
+ Test Files  1 passed (1)
+      Tests  13 passed (13)
+   Start at  21:00:01
+   Duration  3.96s (tests 73%, transform 14%, worker 9%, import 4%)
