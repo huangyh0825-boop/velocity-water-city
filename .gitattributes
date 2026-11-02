@@ -1,0 +1,2 @@
+# Published resource versions hash exact bytes; keep Windows and CI identical.
+/public/** -text

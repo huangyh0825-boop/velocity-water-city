@@ -1,0 +1,633 @@
+{
+  "publicGame": "https://huangyh0825-boop.github.io/velocity-water-city/",
+  "before": {
+    "startupTestTimeoutsMs": [
+      240000,
+      600000
+    ],
+    "oneMiBProbe": [
+      {
+        "direct": false,
+        "error": "Error: page.goto: net::ERR_CONNECTION_CLOSED at https://huangyh0825-boop.github.io/velocity-water-city/\nCall log:\n\u001b[2m  - navigating to \"https://huangyh0825-boop.github.io/velocity-water-city/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      },
+      {
+        "direct": true,
+        "status": 206,
+        "headers": {
+          "encoding": null,
+          "range": "bytes 0-1048575/28635328"
+        },
+        "error": "TimeoutError: signal timed out",
+        "ms": 30005.799999952316,
+        "verified": false
+      }
+    ]
+  },
+  "smallRanges": {
+    "parts": [
+      {
+        "offset": 0,
+        "status": 206,
+        "range": "bytes 0-262143/28635328",
+        "bytes": 262144,
+        "ms": 964.6999999284744
+      },
+      {
+        "offset": 262144,
+        "status": 206,
+        "range": "bytes 262144-524287/28635328",
+        "bytes": 262144,
+        "ms": 518.1000000238419
+      },
+      {
+        "offset": 524288,
+        "status": 206,
+        "range": "bytes 524288-786431/28635328",
+        "bytes": 262144,
+        "ms": 846
+      },
+      {
+        "offset": 786432,
+        "status": 206,
+        "range": "bytes 786432-1048575/28635328",
+        "bytes": 262144,
+        "ms": 584.3000000715256
+      }
+    ],
+    "sha": "d34bbc22b2980aed439aab608f01593629f4a8c9a3b42cb92f6664f353f06c28",
+    "verified": true
+  },
+  "fullModel": {
+    "bytes": 28635328,
+    "sha": "7cbed1728b920829bfb915f55a6a43a424ff6446b9d085d6fc190f89d4d685c4",
+    "rows": [
+      {
+        "method": "HEAD",
+        "range": null,
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "range": "bytes=0-262143",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=262144-524287",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=524288-786431",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=786432-1048575",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=1048576-1310719",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=1310720-1572863",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=1572864-1835007",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=1835008-2097151",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=2097152-2359295",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=2359296-2621439",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=2621440-2883583",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=2883584-3145727",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=3145728-3407871",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=3407872-3670015",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=3670016-3932159",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=3932160-4194303",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=4194304-4456447",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=4456448-4718591",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=4718592-4980735",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=4980736-5242879",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=5242880-5505023",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=5505024-5767167",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=5767168-6029311",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=6029312-6291455",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=6291456-6553599",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=6553600-6815743",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=6815744-7077887",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=7077888-7340031",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=7340032-7602175",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=7602176-7864319",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=7864320-8126463",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=8126464-8388607",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=8388608-8650751",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=8650752-8912895",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=8912896-9175039",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=9175040-9437183",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=9437184-9699327",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=9699328-9961471",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=9961472-10223615",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=10223616-10485759",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=10485760-10747903",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=10747904-11010047",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=11010048-11272191",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=11272192-11534335",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=11534336-11796479",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=11796480-12058623",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=12058624-12320767",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=12320768-12582911",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=12582912-12845055",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=12845056-13107199",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=13107200-13369343",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=13369344-13631487",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=13631488-13893631",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=13893632-14155775",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=14155776-14417919",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=14417920-14680063",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=14680064-14942207",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=14942208-15204351",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=15204352-15466495",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=15466496-15728639",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=15728640-15990783",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=15990784-16252927",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=16252928-16515071",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=16515072-16777215",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=16777216-17039359",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=17039360-17301503",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=17301504-17563647",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=17563648-17825791",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=17825792-18087935",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=18087936-18350079",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=18350080-18612223",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=18612224-18874367",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=18874368-19136511",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=19136512-19398655",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=19398656-19660799",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=19660800-19922943",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=19922944-20185087",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=20185088-20447231",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=20447232-20709375",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=20709376-20971519",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=20971520-21233663",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=21233664-21495807",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=21495808-21757951",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=21757952-22020095",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=21757952-22020095",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=22020096-22282239",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=22282240-22544383",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=22544384-22806527",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=22806528-23068671",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=23068672-23330815",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=23330816-23592959",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=23592960-23855103",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=23855104-24117247",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=24117248-24379391",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=24379392-24641535",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=24641536-24903679",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=24903680-25165823",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=25165824-25427967",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=25427968-25690111",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=25690112-25952255",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=25952256-26214399",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=26214400-26476543",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=26476544-26738687",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=26738688-27000831",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=27000832-27262975",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=27262976-27525119",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=27525120-27787263",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=27787264-28049407",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=28049408-28311551",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=28311552-28573695",
+        "status": 206
+      },
+      {
+        "method": "GET",
+        "range": "bytes=28573696-28835839",
+        "status": 206
+      }
+    ],
+    "retries": 2,
+    "ms": 234669.79999995232,
+    "verified": true
+  },
+  "resourceVersion": "88c9388eafb9",
+  "visualAndPhysicsChanges": false,
+  "nodeTests": 259,
+  "encodedFallbackGuardRegression": true
+}
