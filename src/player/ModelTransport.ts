@@ -1,4 +1,4 @@
-import{assetProgress,assetRetry,assetRequest}from'../core/AssetActivity';import{downloadModel}from'./downloadModel';import{assetCache,assetVersion}from'./AssetCache';
+import{assetProgress,assetRetry,assetRequest}from'../core/AssetActivity';import{downloadModel}from'./downloadModel';import{assetCache,assetVersion,requestAssetCacheMaintenance}from'./AssetCache';
 const pending:(()=>void)[]=[],inflight=new Map<string,Promise<ArrayBuffer>>();let active=0;
 async function slot<T>(task:()=>Promise<T>){if(active>=3)await new Promise<void>(resolve=>pending.push(resolve));else active++;try{return await task();}finally{const next=pending.shift();if(next)next();else active--;}}
 export async function fetchAssetBytes(url:string,backgroundWorker=false):Promise<ArrayBuffer>{
@@ -14,7 +14,7 @@ export async function fetchAssetBytes(url:string,backgroundWorker=false):Promise
    const visibility=()=>{worker.postMessage({type:'visibility',hidden:hidden()});heartbeat();};
    const finish=()=>{clearTimeout(timeout);worker.terminate();if(typeof document!=='undefined')document.removeEventListener('visibilitychange',visibility);};heartbeat();
    if(typeof document!=='undefined')document.addEventListener('visibilitychange',visibility);
-   worker.onmessage=event=>{const value=event.data;if(value.retry){assetRetry();return;}if(value.progress){assetProgress(value.bytes??0,value.cached??false);heartbeat();return;}finish();if(value.error)reject(Error(value.error));else{assetProgress();performance.measure('model-transport',{start,detail:{url,transportBytes:value.transportBytes}});resolve(value.data);}};
+   worker.onmessage=event=>{const value=event.data;if(value.retry){assetRetry();return;}if(value.progress){assetProgress(value.bytes??0,value.cached??false);heartbeat();return;}finish();if(value.error)reject(Error(value.error));else{assetProgress();performance.measure('model-transport',{start,detail:{url,transportBytes:value.transportBytes}});if(assetVersion)void requestAssetCacheMaintenance();resolve(value.data);}};
    worker.onerror=event=>{finish();reject(Error(event.message||'模型解压失败'));};worker.postMessage({url,version:assetVersion,hidden:hidden()});
   });
  }).finally(()=>{inflight.delete(url);assetRequest(-1);});inflight.set(url,promise);return promise;

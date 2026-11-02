@@ -1,0 +1,154 @@
+{
+  "nodeTests": 263,
+  "cacheBenchmark": {
+    "method": "Fresh isolated browser CacheStorage with 150 prior entries, 25 real Cache API complete writes. No 3D scene or graphics benchmark.",
+    "rows": [
+      {
+        "name": "oldCache",
+        "filesWritten": 25,
+        "readyMs": 345,
+        "metadataReads": 4075
+      },
+      {
+        "name": "newCache",
+        "filesWritten": 25,
+        "readyMs": 62,
+        "metadataReads": 0
+      }
+    ]
+  },
+  "warmStartup": {
+    "method": "One mobile-budget browser; freeze immediately after real startup, render one real frame, verify warm CacheStorage reuse and dispose. Not a phone FPS benchmark.",
+    "runs": [
+      {
+        "loadMs": 8936,
+        "modelAndTextureGETs": 83,
+        "snapshot": {
+          "throttle": 1,
+          "brake": 0,
+          "steer": 0,
+          "boost": false,
+          "touchMode": true,
+          "speed": 0,
+          "phase": "racing",
+          "energy": 40,
+          "airborne": false,
+          "used": false,
+          "quality": "standard",
+          "assets": [
+            "watercraft-mobile",
+            "watercraft-mobile",
+            "watercraft-mobile",
+            "watercraft-mobile",
+            "watercraft-mobile"
+          ],
+          "profile": {
+            "mobile": true,
+            "low": false,
+            "pixelRatio": 1,
+            "maxEdge": 1024,
+            "waterSegments": 160,
+            "reflectionSize": 512,
+            "racerShadowSize": 1024,
+            "cityShadowSize": 1024
+          },
+          "pixelRatio": 1,
+          "waterSegments": 160
+        }
+      },
+      {
+        "loadMs": 4644,
+        "modelAndTextureGETs": 0,
+        "snapshot": {
+          "throttle": 1,
+          "brake": 0,
+          "steer": 0,
+          "boost": false,
+          "touchMode": true,
+          "speed": 0,
+          "phase": "racing",
+          "energy": 40,
+          "airborne": false,
+          "used": false,
+          "quality": "standard",
+          "assets": [
+            "watercraft-mobile",
+            "watercraft-mobile",
+            "watercraft-mobile",
+            "watercraft-mobile",
+            "watercraft-mobile"
+          ],
+          "profile": {
+            "mobile": true,
+            "low": false,
+            "pixelRatio": 1,
+            "maxEdge": 1024,
+            "waterSegments": 160,
+            "reflectionSize": 512,
+            "racerShadowSize": 1024,
+            "cityShadowSize": 1024
+          },
+          "pixelRatio": 1,
+          "waterSegments": 160
+        }
+      }
+    ],
+    "errors": [],
+    "completed": true
+  },
+  "publicBeforeCacheOnlyPatch": {
+    "commit": "40a7dfae75e0001816f4616afb89eb262126d5b0",
+    "defaultBrowserStartup": "timeout 600000 ms, not passed",
+    "http1Startup": {
+      "url": "https://huangyh0825-boop.github.io/velocity-water-city/?v=40a7dfa",
+      "transport": "HTTP/1.1 validation browser",
+      "clients": [
+        {
+          "mobile": false,
+          "navigationAttempts": 1,
+          "loadMs": 338342,
+          "speed": 13,
+          "standardDefault60": true,
+          "qualitySwitchAndHome": true,
+          "httpErrors": []
+        },
+        {
+          "mobile": true,
+          "navigationAttempts": 1,
+          "loadMs": 84855,
+          "speed": 95,
+          "standardDefault60": true,
+          "qualitySwitchAndHome": true,
+          "httpErrors": []
+        }
+      ],
+      "errors": [],
+      "completed": true
+    },
+    "http1Online": {
+      "transport": "HTTP/1.1 validation browser",
+      "url": "https://huangyh0825-boop.github.io/velocity-water-city/?v=40a7dfa",
+      "localBuild": false,
+      "checks": {
+        "hostAndAllReady": true,
+        "allAssetsLoadedAndSharedFiveSecondCountdown": true,
+        "realDrivingAndOpponentBroadcast": true,
+        "offlineReconnectRestoresAuthoritativePose": true,
+        "oneMinuteNoRateLimitDisconnect": true,
+        "exitToHome": true
+      },
+      "errors": [],
+      "touch": false,
+      "player1Packets": 752,
+      "player2Packets": 725
+    }
+  },
+  "userReported": {
+    "firstEntry": "十几分钟后进入",
+    "reentry": "20 秒以内",
+    "device": "not provided",
+    "network": "not provided"
+  },
+  "renderAndPhysicsChanges": false,
+  "firstPublicColdLoadResolved": false
+}
