@@ -55,6 +55,7 @@ test('corrupt complete caches do not bypass the new integrity checks',async()=>{
 test('the smaller model transport decodes exactly and falls back when missing or unsupported',async t=>{
  const original=fixture(),decoded=new TextEncoder().encode('identical scene bytes '.repeat(50));
  const alternate=fixture(new Uint8Array(brotliCompressSync(decoded)));
+ alternate.parts.directory=alternate.parts.sha256+'-'+alternate.parts.partBytes;
  original.parts.brotli=alternate.parts;
  original.parts.decodedBytes=decoded.length;
  original.parts.decodedSHA256=sha(decoded);
@@ -73,7 +74,7 @@ test('the smaller model transport decodes exactly and falls back when missing or
  const paths:string[]=[];
  const fetcher:typeof fetch=async url=>{
   paths.push(String(url));
-  const isBrotli=String(url).includes(alternate.parts.sha256);
+  const isBrotli=String(url).includes('/'+alternate.parts.directory+'/');
   if(isBrotli&&missing)return new Response(null,{status:404});
   const offset=Number(/\/(\d+)\.bin$/.exec(String(url))![1])*32;
   return new Response((isBrotli?alternate.raw:original.raw).slice(offset,offset+32));

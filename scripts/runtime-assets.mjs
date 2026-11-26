@@ -45,7 +45,8 @@ export function runtimeAssets(){
    }});
    if(packed.length>=data.length*.99)continue;
    if(!brotliDecompressSync(packed).equals(decoded))throw Error('Brotli model differs: '+name);
-   entry.brotli=describeParts(packed,1024*1024);
+   entry.brotli=describeParts(packed,512*1024);
+   entry.brotli.directory=entry.brotli.sha256+'-'+entry.brotli.partBytes;
    brotliModels.set(name,packed);
   }
   return{define:{__RUNTIME_ASSET_VERSION__:JSON.stringify(revision),__RUNTIME_ASSET_PARTS__:JSON.stringify(parts)}};
@@ -53,7 +54,7 @@ export function runtimeAssets(){
   let bytes=0;for(const {path,name}of files){const target=resolve(destination,name);mkdirSync(dirname(target),{recursive:true});copyFileSync(path,target);bytes+=statSync(path).size;}
   let partCount=0;
   const publishParts=(entry,data)=>{
-   const folder=resolve(destination,'asset-parts',entry.sha256);
+   const folder=resolve(destination,'asset-parts',entry.directory??entry.sha256);
    mkdirSync(folder,{recursive:true});
    for(let i=0;i<entry.hashes.length;i++){
     writeFileSync(resolve(folder,i+'.bin'),data.subarray(i*entry.partBytes,(i+1)*entry.partBytes));

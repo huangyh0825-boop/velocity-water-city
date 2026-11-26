@@ -1,5 +1,5 @@
 import {downloadModel,type DownloadOptions} from './downloadModel';
-export interface AssetParts {bytes:number;partBytes:number;sha256:string;hashes:string[];decodedBytes?:number;decodedSHA256?:string;brotli?:AssetParts}
+export interface AssetParts {bytes:number;partBytes:number;sha256:string;hashes:string[];directory?:string;decodedBytes?:number;decodedSHA256?:string;brotli?:AssetParts}
 export type AssetPartManifest=Record<string,AssetParts>;
 const manifest:AssetPartManifest=typeof __RUNTIME_ASSET_PARTS__==='undefined'?{}:__RUNTIME_ASSET_PARTS__;
 export function assetParts(url:string){
@@ -33,7 +33,7 @@ export async function downloadAssetParts(url:string,parts:AssetParts,onProgress:
    const saved=await cache?.read(key);
    if(saved&&saved.start===start&&saved.end===end&&saved.total===parts.bytes&&saved.etag===etag&&await hash(saved.data)===expected){bytes.set(new Uint8Array(saved.data),start);onProgress(saved.data.byteLength,true);continue;}
    const base=new URL(url);base.pathname=base.pathname.slice(0,base.pathname.lastIndexOf('/models/')+1);base.search=base.hash='';
-   const partURL=new URL('asset-parts/'+parts.sha256+'/'+index+'.bin',base).href;
+   const partURL=new URL('asset-parts/'+(parts.directory??parts.sha256)+'/'+index+'.bin',base).href;
    for(let attempt=0;;attempt++){
     try{
      // downloadModel provides foreground-aware idle/header deadlines. Retry
@@ -62,7 +62,7 @@ export async function downloadTransportVariants(url:string,parts:AssetParts,onPr
   if(cached)return cached;
   try{
    const packed=await downloadAssetParts(url,parts.brotli,onProgress,fetcher,{
-    ...options,cache:options.brotliCache,headerMs:options.headerMs??10000,idleMs:options.idleMs??15000,retries:1,
+    ...options,cache:options.brotliCache,retries:1,
    });
    const data=stream
     ?await new Response(new Blob([packed.data]).stream().pipeThrough(stream)).arrayBuffer()

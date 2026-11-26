@@ -9,7 +9,7 @@ let files=0,bytes=0,brotliFiles=0,brotliSavings=0;
 async function reassemble(name,entry){
  assert.equal(entry.hashes.length,Math.ceil(entry.bytes/entry.partBytes));const chunks=[];
  for(const [i,hash]of entry.hashes.entries()){
-  const data=await readFile(resolve(root,'asset-parts',entry.sha256,i+'.bin'));assert.equal(sha(data),hash,name+'/'+i);assert.equal(data.length,Math.min(entry.partBytes,entry.bytes-i*entry.partBytes));chunks.push(data);files++;
+  const data=await readFile(resolve(root,'asset-parts',entry.directory??entry.sha256,i+'.bin'));assert.equal(sha(data),hash,name+'/'+i);assert.equal(data.length,Math.min(entry.partBytes,entry.bytes-i*entry.partBytes));chunks.push(data);files++;
  }
  const data=Buffer.concat(chunks);assert.equal(data.length,entry.bytes);assert.equal(sha(data),entry.sha256);
  return data;
