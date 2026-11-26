@@ -1,11 +1,11 @@
-import{assetProgress,assetRetry,assetRequest}from'../core/AssetActivity';import{downloadModel}from'./downloadModel';import{assetCache,assetVersion,requestAssetCacheMaintenance}from'./AssetCache';
+import{assetProgress,assetRetry,assetRequest}from'../core/AssetActivity';import{downloadPublishedAsset}from'./AssetParts';import{assetCache,assetVersion,requestAssetCacheMaintenance}from'./AssetCache';
 const pending:(()=>void)[]=[],inflight=new Map<string,Promise<ArrayBuffer>>();let active=0;
 async function slot<T>(task:()=>Promise<T>){if(active>=3)await new Promise<void>(resolve=>pending.push(resolve));else active++;try{return await task();}finally{const next=pending.shift();if(next)next();else active--;}}
 export async function fetchAssetBytes(url:string,backgroundWorker=false):Promise<ArrayBuffer>{
  let promise=inflight.get(url);if(promise)return promise;
  assetRequest(1);promise=slot(async()=>{
   if(!backgroundWorker||typeof Worker==='undefined'){
-   const {data}=await downloadModel(url,assetProgress,fetch,1024*1024,{cache:assetCache(url),inspectEncoding:url.endsWith('.gz'),onRetry:assetRetry});return backgroundWorker?decompressModel(data):data;
+   const {data}=await downloadPublishedAsset(url,assetProgress,fetch,{cache:assetCache(url),inspectEncoding:url.endsWith('.gz'),onRetry:assetRetry});return backgroundWorker?decompressModel(data):data;
   }
   return new Promise<ArrayBuffer>((resolve,reject)=>{
    const start=performance.now(),worker=new Worker(new URL('./ModelTransport.worker.ts',import.meta.url),{type:'module'});let timeout:ReturnType<typeof setTimeout>;

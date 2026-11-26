@@ -5,6 +5,7 @@ import {textureResourceStats} from '../../src/player/TextureResources';
 import {visualResourceStats} from '../../src/player/VisualAssets';
 const app=new GameApplication(document.querySelector('#app'));
 window.mobileQA={
+ startup(){const g=app.game,gl=g.renderer.getContext(),ext=gl.getExtension('WEBGL_debug_renderer_info');return{boot:g.loading.progress.log,gpu:ext?gl.getParameter(ext.UNMASKED_RENDERER_WEBGL):null,measures:performance.getEntriesByType('measure').filter(m=>m.name.startsWith('startup-')).map(m=>({name:m.name,ms:m.duration}))};},
  resources:()=>({textures:textureResourceStats(),visuals:visualResourceStats(),game:!!app.game}),
  quality(level){app.game.setQuality(level);},
  frameRate(rate){app.game.renderPacer.setRate(rate);},

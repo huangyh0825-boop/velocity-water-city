@@ -1,0 +1,22 @@
+{
+  "method": "One actual unchanged 28.6 MB production boat; native browser fetches over local HTTP with 250 ms header delay per asset response, no body bandwidth throttling, no CacheStorage or HTTP cache; isolates request-latency overhead.",
+  "runs": [
+    {
+      "label": "before",
+      "ms": 28845.799999952316,
+      "bytes": 28635328,
+      "sha": "7cbed1728b920829bfb915f55a6a43a424ff6446b9d085d6fc190f89d4d685c4",
+      "requests": 110,
+      "peak": 1
+    },
+    {
+      "label": "after",
+      "ms": 7396.5,
+      "bytes": 28635328,
+      "sha": "7cbed1728b920829bfb915f55a6a43a424ff6446b9d085d6fc190f89d4d685c4",
+      "requests": 55,
+      "peak": 2
+    }
+  ],
+  "completed": true
+}

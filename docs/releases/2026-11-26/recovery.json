@@ -1,0 +1,46 @@
+{
+  "errors": [],
+  "checks": {
+    "missingPartAndIntegrityFailureFallBackToOriginals": true,
+    "drivingAndHome": true
+  },
+  "interceptions": [
+    "missing city part",
+    "corrupt texture part",
+    "corrupt texture part",
+    "corrupt texture part"
+  ],
+  "snapshot": {
+    "throttle": 1,
+    "brake": 0,
+    "steer": 0,
+    "boost": false,
+    "touchMode": true,
+    "speed": 0,
+    "phase": "racing",
+    "energy": 40,
+    "airborne": false,
+    "used": false,
+    "quality": "standard",
+    "assets": [
+      "watercraft-mobile",
+      "watercraft-mobile",
+      "watercraft-mobile",
+      "watercraft-mobile",
+      "watercraft-mobile"
+    ],
+    "profile": {
+      "mobile": true,
+      "low": false,
+      "pixelRatio": 1,
+      "maxEdge": 1024,
+      "waterSegments": 160,
+      "reflectionSize": 512,
+      "racerShadowSize": 1024,
+      "cityShadowSize": 1024
+    },
+    "pixelRatio": 1,
+    "waterSegments": 160
+  },
+  "completed": true
+}

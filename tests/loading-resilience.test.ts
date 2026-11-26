@@ -31,6 +31,22 @@ test('higher latency links keep small ranges and can reuse old larger cached par
  let now=0;t.mock.method(performance,'now',()=>now+=200);const raw=Uint8Array.from({length:1700000},(_,i)=>(i*7)%256),cache=memoryCache(),seen:number[][]=[];cache.parts.set('0',{data:raw.slice(0,1048576).buffer,start:0,end:1048575,total:raw.length,etag:'"stable"'});
  const result=await downloadModel('https://game.test/resume',()=>{},async(_url,init)=>{const m=/bytes=(\d+)-(\d+)/.exec(new Headers(init?.headers).get('Range')!)!,start=Number(m[1]),end=Math.min(raw.length-1,Number(m[2]));assert.ok(Number(m[2])-start+1<=256*1024);seen.push([start,end]);return new Response(raw.slice(start,end+1),{status:206,headers:{'content-range':`bytes ${start}-${end}/${raw.length}`,etag:'"stable"'}});},1024*1024,{inspectEncoding:false,cache});assert.deepEqual(new Uint8Array(result.data),raw);assert.deepEqual(seen,[[1048576,1310719],[1310720,1572863],[1572864,1699999]]);
 });
+test('parallel ranges fill short responses and disjoint older checkpoints without gaps or duplicate bytes',async t=>{
+ let now=0;t.mock.method(performance,'now',()=>now+=200);const raw=Uint8Array.from({length:1200000},(_,i)=>(i*13)%256),cache=memoryCache();let active=0,peak=0;
+ cache.parts.set('262144',{data:raw.slice(262144,900000).buffer,start:262144,end:899999,total:raw.length,etag:'"same"'});
+ const result=await downloadModel('https://game.test/partial',()=>{},async(_u,init)=>{
+  peak=Math.max(peak,++active);await new Promise(r=>setTimeout(r,2));active--;
+  const m=/bytes=(\d+)-(\d+)/.exec(new Headers(init?.headers).get('Range')!)!,start=Number(m[1]),end=Math.min(raw.length-1,Number(m[2]),start+100000);
+  return new Response(raw.slice(start,end+1),{status:206,headers:{'content-range':`bytes ${start}-${end}/${raw.length}`,etag:'"same"'}});
+ },1024*1024,{inspectEncoding:false,cache});assert.equal(peak,2);assert.deepEqual(new Uint8Array(result.data),raw);
+});
+test('a revision error drains parallel writes and clears all partial and complete cache data',async()=>{
+ const raw=new Uint8Array(8),cache=memoryCache();
+ await assert.rejects(downloadModel('https://game.test/revision',()=>{},async(_u,init)=>{
+  const start=Number(/bytes=(\d+)-/.exec(new Headers(init?.headers).get('Range')!)![1]);if(start===2)await new Promise(r=>setTimeout(r,15));
+  return new Response(raw.slice(start,start+2),{status:206,headers:{'content-range':`bytes ${start}-${start+1}/8`,etag:start===4?'"changed"':'"first"'}});
+ },2,{inspectEncoding:false,cache}),/版本已更新/);assert.equal(cache.parts.size,0);
+});
 test('persistent cache separates asset revisions and unavailable storage never prevents a download',async t=>{
  const stored=new Map<string,Response>(),fake={open:async()=>({match:async(k:string|Request)=>stored.get(typeof k==='string'?k:k.url)?.clone(),put:async(k:string,r:Response)=>{stored.set(k,r.clone());},keys:async()=>[...stored.keys()].map(k=>new Request(k)),delete:async(k:string|Request)=>stored.delete(typeof k==='string'?k:k.url)})};
  const original=globalThis.caches;Object.defineProperty(globalThis,'caches',{configurable:true,value:fake});t.after(()=>Object.defineProperty(globalThis,'caches',{configurable:true,value:original}));

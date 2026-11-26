@@ -165,9 +165,9 @@ export class Game {
     const jets=[this.jet,...this.aiJets];jets.forEach(j=>j.object.visible=true);
     try{await foregroundDeadline(this.renderer.compileAsync(this.scene,this.camera.camera),90000,'Shader 初始化超时，请确认硬件加速可用后重试');}finally{jets.forEach(j=>j.object.visible=false);}
     this.loading.complete('shaders');
-    this.loading.begin('reflection');await yieldToBrowser();await this.citySample.bakeReflections(this.renderer,this.scene);this.loading.complete('reflection');
-    if(!this.low){this.heroLighting.update(this.renderer,this.scene,this.craft.visual);this.aiCraft.forEach((c,i)=>this.aiLighting[i].update(this.renderer,this.scene,c.visual));}
-    await this.renderer.compileAsync(this.scene,this.camera.camera);await yieldToBrowser();this.renderer.render(this.scene,this.camera.camera);
+    this.loading.begin('reflection');await yieldToBrowser();let stageStart=performance.now();await this.citySample.bakeReflections(this.renderer,this.scene);performance.measure('startup-reflection',{start:stageStart});this.loading.complete('reflection');
+    stageStart=performance.now();if(!this.low){this.heroLighting.update(this.renderer,this.scene,this.craft.visual);this.aiCraft.forEach((c,i)=>this.aiLighting[i].update(this.renderer,this.scene,c.visual));}performance.measure('startup-local-shadows',{start:stageStart});
+    stageStart=performance.now();await this.renderer.compileAsync(this.scene,this.camera.camera);performance.measure('startup-final-shaders',{start:stageStart});await yieldToBrowser();stageStart=performance.now();this.renderer.render(this.scene,this.camera.camera);performance.measure('startup-first-frame',{start:stageStart});
     this.loading.begin('scene');if(this.disposed)return;this.camera.obstacles=CameraObstacles.from(this.track,this.citySample.density.sites,this.scene);this.restart();this.initialized=true;this.previous=0;this.accumulator=0;
     this.hud.update(this.craft.model,this.race,false,this.nitro,this.flight,this.tricks,this.session instanceof NetworkRaceSession?this.session.message:undefined);this.loading.complete('scene');this.loading.finish();
   }
