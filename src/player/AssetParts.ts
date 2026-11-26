@@ -1,5 +1,5 @@
 import {downloadModel,type DownloadOptions} from './downloadModel';
-export interface AssetParts {bytes:number;partBytes:number;sha256:string;hashes:string[];decodedBytes?:number;decodedSHA256?:string}
+export interface AssetParts {bytes:number;partBytes:number;sha256:string;hashes:string[];decodedBytes?:number;decodedSHA256?:string;brotli?:AssetParts}
 export type AssetPartManifest=Record<string,AssetParts>;
 const manifest:AssetPartManifest=typeof __RUNTIME_ASSET_PARTS__==='undefined'?{}:__RUNTIME_ASSET_PARTS__;
 export function assetParts(url:string){
@@ -7,15 +7,24 @@ export function assetParts(url:string){
  return index<0?undefined:manifest[decodeURIComponent(parsed.pathname.slice(index+1))];
 }
 const hash=async(data:ArrayBuffer)=>Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',data)),b=>b.toString(16).padStart(2,'0')).join('');
-/** Ordinary immutable GET files, not partial HTTP responses. Both transport
- * formats reconstruct the identical compressed model / KTX2 before decoding. */
-export async function downloadAssetParts(url:string,parts:AssetParts,onProgress:(bytes:number,cached?:boolean)=>void,fetcher:typeof fetch=fetch,options:DownloadOptions={}){
- const cache=options.cache,whole=await cache?.read('complete');
+type Progress=(bytes:number,cached?:boolean)=>void;
+type PublishedOptions=DownloadOptions & {
+ brotliCache?:DownloadOptions['cache'];
+ decodeBrotli?:(data:ArrayBuffer)=>Promise<ArrayBuffer>;
+};
+
+async function readComplete(parts:AssetParts,onProgress:Progress,cache:DownloadOptions['cache']){
+ const whole=await cache?.read('complete');
  // Earlier hosts may have applied HTTP gzip decoding before storing a model.
  // Accept those exact decoded bytes too, preserving already downloaded caches.
  const expectedWhole=whole?.data.byteLength===parts.bytes?parts.sha256:whole?.data.byteLength===parts.decodedBytes?parts.decodedSHA256:undefined;
  if(whole&&expectedWhole&&await hash(whole.data)===expectedWhole){onProgress(whole.data.byteLength,true);return{data:whole.data,sourceBytes:whole.data.byteLength,transportBytes:0,requests:0,ranged:false};}
  if(whole)await cache?.clear();
+}
+/** Ordinary immutable GET files, reassembled and verified before decoding. */
+export async function downloadAssetParts(url:string,parts:AssetParts,onProgress:Progress,fetcher:typeof fetch=fetch,options:DownloadOptions={}){
+ const cache=options.cache,cached=await readComplete(parts,onProgress,cache);
+ if(cached)return cached;
  if(parts.hashes.length!==Math.ceil(parts.bytes/parts.partBytes)||parts.partBytes<1)throw Error('资源分片清单无效');
  const bytes=new Uint8Array(parts.bytes),etag='"sha256-'+parts.sha256+'"';let cursor=0,requests=0,networkBytes=0,failed:unknown;
  const worker=async()=>{while(cursor<parts.hashes.length&&!failed){
@@ -36,14 +45,40 @@ export async function downloadAssetParts(url:string,parts:AssetParts,onProgress:
    }
   }catch(error){failed=error;}
  }};
- // Bound concurrency per asset; ModelTransport admits at most three assets.
+ // ModelTransport limits concurrent assets; each gets at most two parts.
  await Promise.all([worker(),worker()]);if(failed)throw failed;
  const data=bytes.buffer;if(await hash(data)!==parts.sha256){await cache?.clear();throw Error('资源整体校验失败');}
  await cache?.write('complete',{data,start:0,end:parts.bytes-1,total:parts.bytes,etag});
  return{data,sourceBytes:parts.bytes,transportBytes:networkBytes,requests,ranged:false};
 }
-export async function downloadPublishedAsset(url:string,onProgress:(bytes:number,cached?:boolean)=>void,fetcher:typeof fetch=fetch,options:DownloadOptions={}){
+function brotliStream(){
+ try{return new DecompressionStream('brotli' as CompressionFormat);}catch{return undefined;}
+}
+
+export async function downloadTransportVariants(url:string,parts:AssetParts,onProgress:Progress,fetcher:typeof fetch=fetch,options:PublishedOptions={}){
+ const stream=parts.brotli&&brotliStream();
+ if(parts.brotli&&(stream||options.decodeBrotli)){
+  const cached=await readComplete(parts,onProgress,options.cache);
+  if(cached)return cached;
+  try{
+   const packed=await downloadAssetParts(url,parts.brotli,onProgress,fetcher,{
+    ...options,cache:options.brotliCache,headerMs:options.headerMs??10000,idleMs:options.idleMs??15000,retries:1,
+   });
+   const data=stream
+    ?await new Response(new Blob([packed.data]).stream().pipeThrough(stream)).arrayBuffer()
+    :await options.decodeBrotli!(packed.data);
+   if(data.byteLength!==parts.decodedBytes||await hash(data)!==parts.decodedSHA256)throw Error('解压后的模型校验失败');
+   return {...packed,data,sourceBytes:data.byteLength};
+  }catch{
+   // Keep partial checkpoints, and use the previous byte-identical transport.
+   options.onRetry?.(1);
+  }
+ }
+ return downloadAssetParts(url,parts,onProgress,fetcher,options);
+}
+
+export async function downloadPublishedAsset(url:string,onProgress:Progress,fetcher:typeof fetch=fetch,options:PublishedOptions={}){
  const parts=assetParts(url);
- if(parts)try{return await downloadAssetParts(url,parts,onProgress,fetcher,options);}catch{options.onRetry?.(1);/* Original byte-identical files support older mirrors and failed static parts. */}
+ if(parts)try{return await downloadTransportVariants(url,parts,onProgress,fetcher,options);}catch{options.onRetry?.(1);/* Original files support older mirrors and failed static parts. */}
  return downloadModel(url,onProgress,fetcher,1024*1024,options);
 }

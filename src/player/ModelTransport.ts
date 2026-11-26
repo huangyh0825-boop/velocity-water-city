@@ -5,7 +5,8 @@ export async function fetchAssetBytes(url:string,backgroundWorker=false):Promise
  let promise=inflight.get(url);if(promise)return promise;
  assetRequest(1);promise=slot(async()=>{
   if(!backgroundWorker||typeof Worker==='undefined'){
-   const {data}=await downloadPublishedAsset(url,assetProgress,fetch,{cache:assetCache(url),inspectEncoding:url.endsWith('.gz'),onRetry:assetRetry});return backgroundWorker?decompressModel(data):data;
+   const model=url.endsWith('.gz');
+   const {data}=await downloadPublishedAsset(url,assetProgress,fetch,{cache:assetCache(url),brotliCache:model?assetCache(url+'.br'):undefined,inspectEncoding:model,onRetry:assetRetry});return backgroundWorker?decompressModel(data):data;
   }
   return new Promise<ArrayBuffer>((resolve,reject)=>{
    const start=performance.now(),worker=new Worker(new URL('./ModelTransport.worker.ts',import.meta.url),{type:'module'});let timeout:ReturnType<typeof setTimeout>;

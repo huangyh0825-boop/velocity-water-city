@@ -115,9 +115,25 @@ export class CityDensity {
  async loadServices(sample:THREE.Group){
   const materials=new Map([...this.library!.parts.values()].flatMap(list=>list.map(p=>[p.material.name,p.material] as const)));
   sample.traverse(o=>{if(o instanceof THREE.Mesh)for(const m of Array.isArray(o.material)?o.material:[o.material])if(!materials.has(m.name))materials.set(m.name,m);});
-  await this.services.load(materials);
-  if(!this.furnishings){const citizens=await loadAssetGLTF(`${import.meta.env.BASE_URL}models/city-sample/public-citizens.glb`);if(this.disposed)return;
-   this.furnishings=new CityFurnishings(this.track,this.sites,name=>materials.get(name),sample,citizens.scene);this.root.add(this.furnishings.root);}
+  const [citizens,services]=await Promise.allSettled([
+   this.furnishings?undefined:loadAssetGLTF(`${import.meta.env.BASE_URL}models/city-sample/public-citizens.glb`),
+   this.services.load(materials),
+  ]);
+  if(citizens.status==='fulfilled'&&citizens.value){
+   const {scene}=citizens.value;
+   if(services.status==='rejected'||this.disposed||this.furnishings){
+    scene.traverse(o=>{
+     if(!(o instanceof THREE.Mesh))return;
+     o.geometry.dispose();
+     for(const material of Array.isArray(o.material)?o.material:[o.material])material.dispose();
+    });
+   }else{
+    this.furnishings=new CityFurnishings(this.track,this.sites,name=>materials.get(name),sample,scene);
+    this.root.add(this.furnishings.root);
+   }
+  }
+  if(services.status==='rejected')throw services.reason;
+  if(citizens.status==='rejected')throw citizens.reason;
  }
  stats(){return {sites:this.sites.length,waterfront:this.sites.filter(s=>s.layer==='waterfront').length,blocks:this.sites.filter(s=>s.layer==='blocks').length,skyline:this.sites.filter(s=>s.layer==='skyline').length,lods:[0,1,2].map(t=>this.previous.filter(p=>p===t).length),mode:this.combined?'material-batch':'instanced',activeMeshes:this.combined?.meshes.length??[...this.batches.values()].filter(b=>b.used).reduce((n,b)=>n+b.meshes.length,0)};}
  private makeTerrain(){

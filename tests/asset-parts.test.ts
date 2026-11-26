@@ -1,7 +1,8 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {downloadAssetParts,type AssetParts} from '../src/player/AssetParts';
+import {brotliCompressSync,brotliDecompressSync} from 'node:zlib';
+import {downloadAssetParts,downloadTransportVariants,type AssetParts} from '../src/player/AssetParts';
 import type {CachedAsset,DownloadCache} from '../src/player/AssetCache';
 const sha=(bytes:Uint8Array)=>createHash('sha256').update(bytes).digest('hex');
 function fixture(raw=Uint8Array.from({length:130},(_,i)=>i*7)){
@@ -50,4 +51,53 @@ test('corrupt complete caches do not bypass the new integrity checks',async()=>{
  const f=fixture();f.rows.set('complete',{data:new Uint8Array(f.raw.length).buffer,start:0,end:f.raw.length-1,total:f.raw.length});
  const result=await downloadAssetParts('https://game.test/models/a',f.parts,()=>{},async url=>{const i=Number(/\/(\d+)\.bin$/.exec(String(url))![1]);return new Response(f.raw.slice(i*32,(i+1)*32));},{cache:f.cache});
  assert.deepEqual(new Uint8Array(result.data),f.raw);assert.equal(result.requests,5);
+});
+test('the smaller model transport decodes exactly and falls back when missing or unsupported',async t=>{
+ const original=fixture(),decoded=new TextEncoder().encode('identical scene bytes '.repeat(50));
+ const alternate=fixture(new Uint8Array(brotliCompressSync(decoded)));
+ original.parts.brotli=alternate.parts;
+ original.parts.decodedBytes=decoded.length;
+ original.parts.decodedSHA256=sha(decoded);
+ let brotliAvailable=true,missing=false;
+ const NativeStream=DecompressionStream;
+ // Node 22 runs CI. Simulate the browser feature with the same native codec.
+ t.mock.method(globalThis,'DecompressionStream',function(format:string){
+  if(format!=='brotli')return new NativeStream(format as CompressionFormat);
+  if(!brotliAvailable)throw new TypeError('Unsupported format');
+  const chunks:Uint8Array[]=[];
+  return new TransformStream<Uint8Array,Uint8Array>({
+   transform(chunk){chunks.push(chunk);},
+   flush(controller){controller.enqueue(new Uint8Array(brotliDecompressSync(Buffer.concat(chunks))));},
+  });
+ });
+ const paths:string[]=[];
+ const fetcher:typeof fetch=async url=>{
+  paths.push(String(url));
+  const isBrotli=String(url).includes(alternate.parts.sha256);
+  if(isBrotli&&missing)return new Response(null,{status:404});
+  const offset=Number(/\/(\d+)\.bin$/.exec(String(url))![1])*32;
+  return new Response((isBrotli?alternate.raw:original.raw).slice(offset,offset+32));
+ };
+ const url='https://game.test/models/a.glb.gz';
+ const br=await downloadTransportVariants(url,original.parts,()=>{},fetcher,{brotliCache:alternate.cache});
+ assert.deepEqual(new Uint8Array(br.data),decoded);
+ assert.ok(paths.every(p=>p.includes(alternate.parts.sha256)));
+ paths.length=0;
+ const warm=await downloadTransportVariants(url,original.parts,()=>{},fetcher,{brotliCache:alternate.cache});
+ assert.equal(warm.requests,0);
+ assert.deepEqual(new Uint8Array(warm.data),decoded);
+ missing=true;
+ const fallback=await downloadTransportVariants(url,original.parts,()=>{},fetcher);
+ assert.deepEqual(new Uint8Array(fallback.data),original.raw);
+ assert.ok(paths.some(p=>p.includes(alternate.parts.sha256)));
+ brotliAvailable=false;paths.length=0;
+ const legacy=await downloadTransportVariants(url,original.parts,()=>{},fetcher);
+ assert.deepEqual(new Uint8Array(legacy.data),original.raw);
+ assert.ok(paths.every(p=>p.includes(original.parts.sha256)));
+ missing=false;paths.length=0;
+ const decoderFailure=await downloadTransportVariants(url,original.parts,()=>{},fetcher,{
+  decodeBrotli:async()=>{throw Error('decoder unavailable');},
+ });
+ assert.deepEqual(new Uint8Array(decoderFailure.data),original.raw);
+ assert.ok(paths.some(p=>p.includes(alternate.parts.sha256)));
 });
